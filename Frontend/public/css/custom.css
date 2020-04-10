@@ -1,0 +1,45 @@
+.bluebeacon {
+  background-color: #232f3e;
+}
+
+.sprite {
+  background-color: #febd69 !important;
+  border-color: #febd69 !important;
+}
+
+.grey {
+  background-color: #f3f3f3;
+}
+
+#input-group-dropdown-1 {
+  border-color: #f3f3f3 !important;
+}
+
+.bradius025 {
+  border-radius: 0.25rem !important;
+}
+
+.custom-nav {
+  margin-left: 10px;
+}
+
+.custom-nav > a {
+  color: #fff !important;
+  padding-left: 10px;
+}
+
+.dropdown > a {
+  color: #fff !important;
+}
+
+.cart {
+  background-image: url(https://images-na.ssl-images-amazon.com/images/G/01/gno/sprites/nav-sprite-global_bluebeacon-1x_optimized_layout1._CB468670774_.png);
+  background-position: -10px -340px;
+  width: 38px;
+  height: 26px;
+  margin-top: 15px;
+}
+
+#main-search {
+  width: 90%;
+}
