@@ -1,6 +1,8 @@
+import { USERTYPE } from "../action/actionType";
+
 const getType = (state = "customer", action) => {
   switch (action.type) {
-    case "userType":
+    case USERTYPE:
       return action.newState;
     default:
       return state;
