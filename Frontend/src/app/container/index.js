@@ -3,6 +3,7 @@ import topNav from "../container/navbar";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 //import cookie from 'react-cookies';
+import Login from "./Login/Login";
 
 class bodyCont extends React.Component {
   render() {
@@ -12,15 +13,16 @@ class bodyCont extends React.Component {
     }*/
     return (
       <div>
-        <Route path='/' component={topNav} />
+        <Route path="/" component={topNav} />
+        <Route path="/login" component={Login} />
       </div>
     );
   }
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function(state) {
   return {
-    getType: state.getType,
+    getType: state.getType
   };
 };
 

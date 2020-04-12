@@ -8,13 +8,14 @@ import {
   InputGroup,
   Button,
   DropdownButton,
-  Dropdown,
+  Dropdown
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 //import { UserType, Logout } from "../../actions";
+import { logOut } from "./../../../action/UserAction/logoutAction";
 
 class Topnav extends React.Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Topnav extends React.Component {
   }
 
   handleLogout = () => {
+    this.props.logOut({ loginFlag: false });
     /*localStorage.removeItem('user_id');
     localStorage.removeItem('username');
     localStorage.removeItem('type');
@@ -70,49 +72,49 @@ class Topnav extends React.Component {
             `.png`;
         }
       }*/
-    } else redirectVar = <Redirect to='/login' />;
+    } else redirectVar = <Redirect to="/login" />;
     if (localStorage.getItem("token")) {
       xnav = (
-        <Navbar.Collapse id='basic-navbar-nav'>
+        <Navbar.Collapse id="basic-navbar-nav">
           <Form inline style={{ width: 70 + "%" }}>
             <DropdownButton
               as={InputGroup.Prepend}
-              variant='outline-secondary'
-              title='All'
-              id='input-group-dropdown-1'
-              className='grey bradius025'
+              variant="outline-secondary"
+              title="All"
+              id="input-group-dropdown-1"
+              className="grey bradius025"
             >
-              <Dropdown.Item href='#'>Action</Dropdown.Item>
-              <Dropdown.Item href='#'>Another action</Dropdown.Item>
-              <Dropdown.Item href='#'>Something else here</Dropdown.Item>
+              <Dropdown.Item href="#">Action</Dropdown.Item>
+              <Dropdown.Item href="#">Another action</Dropdown.Item>
+              <Dropdown.Item href="#">Something else here</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item href='#'>Separated link</Dropdown.Item>
+              <Dropdown.Item href="#">Separated link</Dropdown.Item>
             </DropdownButton>
             <InputGroup style={{ width: 90 + "%" }}>
               <FormControl
-                type='text'
-                placeholder='Search'
-                aria-label='Search'
-                aria-describedby='basic-addon2'
+                type="text"
+                placeholder="Search"
+                aria-label="Search"
+                aria-describedby="basic-addon2"
                 style={{ borderRadius: 0 + "px" }}
               />
               <InputGroup.Append>
-                <Button variant='outline-secondary' className='sprite'>
+                <Button variant="outline-secondary" className="sprite">
                   <FaSearch />
                 </Button>
               </InputGroup.Append>
             </InputGroup>
           </Form>
           <Nav>
-            <Nav.Link className='custom-nav'>
-              <Link to='/home' style={{ float: "left" }}>
+            <Nav.Link className="custom-nav">
+              <Link to="/home" style={{ float: "left" }}>
                 All
                 <br />
                 <b>Products</b>
               </Link>
             </Nav.Link>
-            <Nav.Link className='custom-nav'>
-              <Link to='/events' style={{ float: "left" }}>
+            <Nav.Link className="custom-nav">
+              <Link to="/events" style={{ float: "left" }}>
                 My
                 <br />
                 <b>Order</b>
@@ -128,26 +130,26 @@ class Topnav extends React.Component {
                   </span>
                 </div>
               }
-              id='collasible-nav-dropdown'
+              id="collasible-nav-dropdown"
               style={{ color: "#FFF" }}
             >
               <NavDropdown.Item>
-                <Link to='/stud_prof'>Profile</Link>
+                <Link to="/stud_prof">Profile</Link>
               </NavDropdown.Item>
               {Applications}
               {eventsApp}
               <NavDropdown.Divider />
               <NavDropdown.Item>
-                <Link to='/' onClick={this.handleLogout}>
+                <Link to="/" onClick={this.handleLogout}>
                   Logout
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link className='custom-nav cart'>
+            <Nav.Link className="custom-nav cart">
               <Link
-                to='/all_students'
+                to="/all_students"
                 style={{ marginLeft: 20 + "px" }}
-                title='Cart-Logo'
+                title="Cart-Logo"
               >
                 Cart
               </Link>
@@ -155,7 +157,7 @@ class Topnav extends React.Component {
           </Nav>
         </Navbar.Collapse>
       );
-    }else {
+    } else {
       xnav = (
         <Navbar.Collapse id="basic-navbar-nav">
           <Form inline className="mr-auto">
@@ -163,7 +165,7 @@ class Topnav extends React.Component {
               type="text"
               placeholder="Search"
               className="mr-sm-3"
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
             />
           </Form>
           <Nav activeKey="/login">
@@ -178,14 +180,14 @@ class Topnav extends React.Component {
       );
     }
     return (
-      <div className='container-fluid bluebeacon'>
+      <div className="container-fluid bluebeacon">
         {redirectVar}
         <div>
-          <Navbar expand='lg'>
+          <Navbar expand="lg">
             <Navbar.Brand style={{ marginRight: 70 + "px" }}>
-              <img src='/logo.png' height='40' alt='amazon-logo' />
+              <img src="/logo.png" height="40" alt="amazon-logo" />
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
             {xnav}
           </Navbar>
         </div>
@@ -194,12 +196,16 @@ class Topnav extends React.Component {
   }
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function(state) {
   return {
     getProfileInfo: state.getProfileInfo,
     getType: state.getType,
-    getCompProfile: state.getCompProfile,
+    getCompProfile: state.getCompProfile
   };
 };
-
-export default connect(mapStateToProps)(Topnav);
+const mapDispatchToProps = dispatch => {
+  return {
+    logOut: payload => dispatch(logOut(payload))
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Topnav);
