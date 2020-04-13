@@ -4,13 +4,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const multer = require('multer');
 
 // User defined module imports
 const Config = require('./config');
+const sellerProfile = require("./routes/Seller/profile");
 
-
-//const { checkAuth } = require("./passport");
 
 const app = express();
 // setting view engine
@@ -31,6 +29,8 @@ app.use(session({
 app.use(cors({ origin: `${Config.applicationAddress}:${Config.applicationPort}`, credentials: true }));
 app.use(express.static('./ProfilePictures/Seller'));
 app.use(express.static('./ProfilePictures/Customer'));
+
+app.use('/seller/profile', sellerProfile);
 
 
 
