@@ -132,7 +132,7 @@ class Topnav extends React.Component {
               style={{ color: "#FFF" }}
             >
               <NavDropdown.Item>
-                <Link to='/stud_prof'>Profile</Link>
+                <Link to='/customer/profile'>Profile</Link>
               </NavDropdown.Item>
               {Applications}
               {eventsApp}
