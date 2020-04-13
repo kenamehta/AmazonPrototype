@@ -5,16 +5,17 @@ class ProfilePic extends Component {
     showeditpicbutton: "none",
     editnamebutton: "block",
     showText: "none",
-    editedName:''
+    editedName: "",
   };
 
-  updateName = (e) =>{
-      console.log("in editing name")
-   
+  updateName = (e) => {
+    console.log("in editing name");
+    console.log(this.state.editedName);
+
     e.preventDefault();
     this.setState({ editnamebutton: "block" });
     this.setState({ showText: "none" });
-  }
+  };
 
   render() {
     return (
@@ -81,30 +82,24 @@ class ProfilePic extends Component {
                   </div>
 
                   <div className="m-3" style={{ display: this.state.showText }}>
-                    <form onSubmit={this.updateName}
+                    <form
+                      onSubmit={this.updateName}
                       class="form-inline"
                       style={{ justifyContent: "center" }}
                     >
-                      <input type="text" className="form-control"></input>
-                      <button
-                        className="btn btn-secondary ml-2"
-                       
-                      >
-                        Cancel
-                      </button>
+                      <input
+                        type="text"
+                        className="form-control"
+                        onChange={(e) => {
+                          e.preventDefault();
+                          this.setState({ editedName: e.target.value });
+                        }}
+                      ></input>
+                      <button className="btn btn-secondary ml-2">Cancel</button>
                       <input
                         type="submit"
                         className="btn sprite ml-1"
                         value="Save"
-                        onChange={(e)=>{
-                            e.preventDefault();
-                            this.setState({editedName:e.target.value})
-                        }}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          this.setState({ editnamebutton: "block" });
-                          this.setState({ showText: "none" });
-                        }}
                       ></input>
                     </form>
                   </div>
