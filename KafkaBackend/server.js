@@ -2,8 +2,13 @@
 var connection = new require("./kafka/Connection");
 var connection_string = new require("./config");
 
+//passport service
+const passportService = require('./services/passport');
 //account services
 const accountService = require("./services/account");
+//profile services
+const profileService = require("./services/profile");
+
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -56,3 +61,5 @@ function handleTopicRequest(topic_name, fname) {
 
 //topics
 handleTopicRequest("account", accountService);
+handleTopicRequest("passport", passportService);
+handleTopicRequest("profile", profileService);

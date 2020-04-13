@@ -1,6 +1,9 @@
 import React from 'react';
 import './BasicProfile.css';
-//import configPath from "./../../../../configApp";
+import configPath from "./../../../../configApp";
+import {
+  Col, Button, FormGroup, Label, Input, FormText,
+} from 'reactstrap';
 import { connect } from 'react-redux';
 import { getSellerProfile, updateSellerProfilePicture, updateSellerDetails } from '../../../../action/UserAction/profileAction';
 
@@ -21,11 +24,11 @@ class BasicProfile extends React.Component {
   }
 
   componentDidMount(){
-    if(!this.props.sellerVisitingOwnProfile) {
-      window.alert('Seller Visiting his profile');
+    if(this.props.sellerVisitingOwnProfile) {
+      console.log('Seller Visiting his profile');
       this.props.getSellerProfile({ emailId: localStorage.getItem('emailId') });
     } else {
-      window.alert('Somebody else visiting seller profile');
+      console.log('Somebody else visiting seller profile');
       this.props.getSellerProfile({ emailId: this.props.sellerEmailId });
     }
   }
@@ -101,7 +104,22 @@ class BasicProfile extends React.Component {
                       className="ml-3 mt-3"
                       style={{ display: this.state.showEditPicButton }}
                     >
-                      <button className="btn btn-secondary">Upload</button>
+                      {/* <button className="btn btn-secondary">Upload</button> */}
+                      <Input type="file" name="profilePicture" id="profilePicture" accept="image/*" onChange={this.profileFileUploadHandler} />
+                      <button className="btn btn-secondary" 
+                        onClick={(e)=>{
+                          if(this.state.selectedFile === null){
+                            window.alert('Please select a file');
+                          } else {
+                            console.log('Uploading new seller profile picture');
+                            const fd = new FormData();
+                            fd.append('emailId', localStorage.getItem('emailId'));
+                            fd.append('file',this.state.selectedFile);
+                            this.props.updateSellerProfilePicture(fd);
+                          }
+                        }}>
+                          Upload
+                      </button>
                     </div>
                   </div>
                   <div className="card-body " align="center">
@@ -122,35 +140,112 @@ class BasicProfile extends React.Component {
                     </div>
 
                     <div className="m-3" style={{ display: this.state.showText }}>
-                      <form onSubmit={this.updateName}
+                      <form onSubmit={(e)=>{
+                        const data = {
+                          emailId:localStorage.getItem('emailId'),
+                          name:this.state.basicDetails.name,
+                          phone:this.state.basicDetails.phone,
+                          street:this.state.basicDetails.street,
+                          city:this.state.basicDetails.city,
+                          state:this.state.basicDetails.state,
+                          country:this.state.basicDetails.country,
+                          zipcode:this.state.basicDetails.zipcode
+                        }
+                        this.props.updateSellerDetails(data);
+                        }
+                      }
                         class="form-inline"
                         style={{ justifyContent: "center" }}
                       >
-                        <input type="text" className="form-control"></input>
-                        <button
-                          className="btn btn-secondary ml-2"
-                        >
-                          Cancel
-                        </button>
+                        <input type="text" className="form-control" placeholder="New Name"
+                        value = {this.state.basicDetails.name}
+                        required
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            name:e.target.value
+                           });
+                        }}></input>
+                        <input type="text" className="form-control" placeholder="Street Address"
+                        required
+                        value = {this.state.basicDetails.street} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({
+                            ...oldState.basicDetails,
+                            street:e.target.value
+                           });
+                        }}></input>
+                        <input type="text" className="form-control" placeholder="City"
+                        required
+                        value = {this.state.basicDetails.city} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            city:e.target.value
+                           });
+                        }}></input>
+                        <input type="text" className="form-control" placeholder="State"
+                        required
+                        value = {this.state.basicDetails.state} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            state:e.target.value
+                           });
+                        }}></input>
+                        <input type="text" className="form-control" placeholder="Country"
+                        required
+                        value = {this.state.basicDetails.country} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            country:e.target.value
+                           });
+                        }}></input>
+                        <input type="number" className="form-control" placeholder="ZipCode"
+                        required
+                        value = {this.state.basicDetails.zipcode} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            zipcode:e.target.value
+                           });
+                        }}></input>
+                        <input type="number" className="form-control" placeholder="Phone"
+                        required
+                        value = {this.state.basicDetails.phone} 
+                        onChange={(e) => {
+                          e.preventDefault();
+                          let oldState = this.state
+                          this.setState({ 
+                            ...oldState.basicDetails,
+                            phone:e.target.value
+                           });
+                        }}></input>
+                        <button className="btn btn-secondary ml-2">Cancel</button>
                         <input
                           type="submit"
                           className="btn sprite ml-1"
                           value="Save"
-                          onChange={(e)=>{
-                              e.preventDefault();
-                              this.setState({editedName:e.target.value})
-                          }}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            this.setState({ editNameButton: "block" });
-                            this.setState({ showText: "none" });
-                          }}
                         ></input>
                       </form>
                     </div>
-
-                    <h6>New Delhi</h6>
-                    <h6>Delhi</h6>
+                    <div style={{ display: this.state.editNameButton }}>
+                      <h6>{this.capitalize(this.state.basicDetails.street)}</h6>
+                      <h6>{this.capitalize(this.state.basicDetails.city)}, {this.capitalize(this.state.basicDetails.state)}, {this.capitalize(this.state.basicDetails.country)}, {this.capitalize(this.state.basicDetails.zipcode)}</h6>
+                    </div>
                   </div>
                 </div>
               </div>

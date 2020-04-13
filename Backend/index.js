@@ -1,15 +1,14 @@
 // inbuilt package imports
-const express = require("express");
-const bodyParser = require("body-parser");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const multer = require("multer");
+const express = require('express');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // User defined module imports
-const Config = require("./config");
+const Config = require('./config');
+const sellerProfile = require("./routes/Seller/profile");
 
-//const { checkAuth } = require("./passport");
 
 const app = express();
 // setting view engine
