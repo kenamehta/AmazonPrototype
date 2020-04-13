@@ -27,6 +27,18 @@ const userReducer = (state = initialState, action) => {
         ...action.payload
       };
     }
+    case REGISTERCUSTOMER: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
+    case REGISTERSELLER: {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
     default:
       return state;
   }

@@ -11,7 +11,10 @@ import {
   Dropdown
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Redirect, Link } from "react-router-dom";
+import {
+  //Redirect,
+  Link
+} from "react-router-dom";
 import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 //import { UserType, Logout } from "../../actions";
@@ -54,9 +57,9 @@ class Topnav extends React.Component {
     let redirectVar = null;
     let Applications = null,
       eventsApp = null;
-    if (localStorage.getItem("token")) {
-      //redirectVar = <Redirect to='/home' />;
-      /* For profile pcture
+    //if (localStorage.getItem("token")) {
+    //redirectVar = <Redirect to='/home' />;
+    /* For profile pcture
       if (this.props.getType == 'Student') {
         if (this.props.studentProfile.profile_pic) {
           prof_pic =
@@ -72,8 +75,8 @@ class Topnav extends React.Component {
             `.png`;
         }
       }*/
-    } else redirectVar = <Redirect to="/login" />;
-    if (localStorage.getItem("token")) {
+    //} else redirectVar = <Redirect to="/login" />;
+    if (localStorage.getItem("loginFlag")) {
       xnav = (
         <Navbar.Collapse id="basic-navbar-nav">
           <Form inline style={{ width: 70 + "%" }}>
@@ -134,7 +137,7 @@ class Topnav extends React.Component {
               style={{ color: "#FFF" }}
             >
               <NavDropdown.Item>
-                <Link to='/customer/profile'>Profile</Link>
+                <Link to="/customer/profile">Profile</Link>
               </NavDropdown.Item>
               {Applications}
               {eventsApp}
@@ -179,7 +182,7 @@ class Topnav extends React.Component {
               <Link to="/login">Login</Link>
             </Nav.Link>
             <Nav.Link className="custom-nav">
-              <Link to="/signup">Create Account</Link>
+              <Link to="/registerCustomer">Create Account</Link>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
@@ -203,6 +206,7 @@ class Topnav extends React.Component {
 }
 
 const mapStateToProps = function(state) {
+  console.log("In navbar");
   return {
     getProfileInfo: state.getProfileInfo,
     getType: state.getType,
