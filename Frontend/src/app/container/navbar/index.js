@@ -140,6 +140,12 @@ class Topnav extends React.Component {
               {eventsApp}
               <NavDropdown.Divider />
               <NavDropdown.Item>
+                <Link to='/seller/profile'>Seller Profile</Link>
+              </NavDropdown.Item>
+              {Applications}
+              {eventsApp}
+              <NavDropdown.Divider />
+              <NavDropdown.Item>
                 <Link to="/" onClick={this.handleLogout}>
                   Logout
                 </Link>
