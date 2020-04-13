@@ -3,7 +3,7 @@ var router = express.Router();
 const kafka = require("../../kafka/client");
 
 //student and company login
-router.post("/login", function(req, res) {
+router.post("/", function(req, res) {
   let msg = req.body;
   msg.route = "login";
   kafka.make_request("account", msg, function(err, results) {

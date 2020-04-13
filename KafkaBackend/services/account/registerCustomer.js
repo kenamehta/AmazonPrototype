@@ -6,6 +6,7 @@ const Mongoose = require("mongoose");
 const uuid = require("uuid/v4");
 
 let registerCustomer = async (msg, callback) => {
+  console.log("in kafka registerCustomer")
   const customer_register_sql = await customerRegister.create({
     _id: uuid(),
     name: msg.name,

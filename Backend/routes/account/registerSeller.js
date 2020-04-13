@@ -3,7 +3,7 @@ var router = express.Router();
 const kafka = require("../../kafka/client");
 
 //Register a seller. Adds new seller record in model sellerRegister
-router.post("/registerSeller", async function(req, res) {
+router.post("/", async function(req, res) {
   console.log(JSON.stringify(req.body));
   let msg = req.body;
   msg.route = "registerSeller";
