@@ -10,6 +10,18 @@
   min-height: 220px;
   min-width: 220px;
 }
+.circular-avatar-image-comment {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    box-shadow: 0 0 0 4px #fff;
+    border-radius: 50%;
+  }
+.avatar-image-comment {
+    min-height: 50px;
+    min-width: 50px;
+  }
 img {
   max-width: 100%;
   border: 0;
@@ -66,4 +78,20 @@ img {
     top: 1px;
     right: -8px;
     border-top: 0;
+}
+ion-icon{
+    color: darkgoldenrod !important;
+    border-color: #febd69 !important;
+    font-size: 18px;
+}
+.profile-at-product-image-container {
+    margin: 10px;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+span:hover{
+    color:darkgoldenrod
 }
