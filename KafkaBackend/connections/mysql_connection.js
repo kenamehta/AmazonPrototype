@@ -1,13 +1,13 @@
 const mysql = require("mysql2");
-const { host, password } = require("./../config");
+const credentials = require("./../config");
 
 // create the connection to database
 var mysql_connection = mysql.createPool({
   connectionLimit: 10,
-  host: host,
+  host: credentials.host,
   port: "3306",
   user: "admin",
-  password: password,
+  password: credentials.password,
   database: "MEHTAK",
   dateStrings: true
 });

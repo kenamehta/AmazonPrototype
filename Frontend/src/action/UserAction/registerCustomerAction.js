@@ -1,5 +1,5 @@
 import { REGISTERCUSTOMER } from "./actionTypes";
-import configPath from "./../configApp";
+import configPath from "./../../configApp";
 import axios from "axios";
 
 //Customer Register Dispatacher

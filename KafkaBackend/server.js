@@ -15,7 +15,7 @@ var options = {
   //   poolSize: 50,
   //   bufferMaxEntries: 0
 };
-Mongoose.connect(connection_string, options)
+Mongoose.connect(connection_string.connection_string, options)
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => {
     console.log("Failed to connect to MongoDB");

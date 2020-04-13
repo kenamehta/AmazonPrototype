@@ -1,5 +1,4 @@
 "use strict";
-var express = require("express");
 const bcrypt = require("bcrypt");
 const { customerRegister } = require("../../models/registration");
 const { customer } = require("../../models/customer.model");

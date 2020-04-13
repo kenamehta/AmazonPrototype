@@ -1,8 +1,8 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const { host, password } = require("./../config");
-
-const seq_connection = new Sequelize("amazon", "admin", password, {
-  host: host,
+const credentials = require("./../config");
+console.log(credentials);
+const seq_connection = new Sequelize("amazon", "admin", credentials.password, {
+  host: credentials.host,
   dialect: "mysql"
 });
 

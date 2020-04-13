@@ -7,17 +7,17 @@ const Dt = Sequelize.DataTypes;
 //cutsomer registration model
 const cust_register = {
   _id: {
-    type: Datatypes.UUID,
+    type: Dt.UUID,
     primaryKey: true,
     allowNull: false,
-    defaultValue: Datatypes.UUIDV1
+    defaultValue: Dt.UUIDV1
   },
   name: {
-    type: Datatypes.STRING(50),
+    type: Dt.STRING(50),
     allowNull: false
   },
   emailId: {
-    type: Datatypes.STRING(50),
+    type: Dt.STRING(50),
     allowNull: false,
     unique: true
   }
@@ -27,17 +27,17 @@ const customerRegister = connection.define("customerRegister", cust_register);
 //cutsomer registration model
 const seller_register = {
   _id: {
-    type: Datatypes.UUID,
+    type: Dt.UUID,
     primaryKey: true,
     allowNull: false,
-    defaultValue: Datatypes.UUIDV1
+    defaultValue: Dt.UUIDV1
   },
   name: {
-    type: Datatypes.STRING(50),
+    type: Dt.STRING(50),
     allowNull: false
   },
   emailId: {
-    type: Datatypes.STRING(50),
+    type: Dt.STRING(50),
     allowNull: false,
     unique: true
   }

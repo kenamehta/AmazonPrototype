@@ -5,7 +5,7 @@ const savedProduct = new Schema(
   {
     productId: { type: String, required: true },
     sellerEmailId: { type: String, required: true },
-    quantity: { type: number, required: true }
+    quantity: { type: Number, required: true }
   },
   {
     timestamps: true
@@ -16,7 +16,7 @@ const cartProduct = new Schema(
   {
     productId: { type: String, required: true },
     sellerEmailId: { type: String, required: true },
-    quantity: { type: number, required: true },
+    quantity: { type: Number, required: true },
     giftFlag: { type: String, default: "false" },
     giftMessage: { type: String, default: "" }
   },

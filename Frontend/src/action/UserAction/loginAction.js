@@ -1,4 +1,4 @@
-import { LOGIN, REGISTERCUSTOMER, REGISTERSELLER, LOGOUT } from "./actionTypes";
+import { LOGIN} from "./actionTypes";
 import configPath from "./../../configApp";
 import axios from "axios";
 

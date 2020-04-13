@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import "../../App.css";
-import axios from "axios";
-import cookie from "react-cookies";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
-import { registerStudent } from "./../../actions/registerAction";
+import { registerSeller } from "./../../../action/UserAction/registerSellerAction";
+import "./register.css";
 
-class RegisterStudent extends Component {
+class RegisterSeller extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,31 +12,31 @@ class RegisterStudent extends Component {
       email: "",
       password1: "",
       password2: "",
-      college_name: "",
       matchPassword: true
     };
   }
   handleSubmit = e => {
     e.preventDefault();
     console.log("inside handleSubmit");
-    if (this.state.password1 != this.state.password2) {
+    if (this.state.password1 !== this.state.password2) {
       console.log("pass1", this.state.password1);
       console.log("pass2", this.state.password2);
       console.log("inside incorrect");
       this.setState({ matchPassword: false });
-    }
-    this.props.registerStudent(this.state);
+    } else this.props.registerSeller(this.state);
   };
   render() {
     let printError = "";
     if (!this.state.matchPassword) {
       printError = "Password Mismatch!!!";
     }
+    console.log(this.props.registerFlag);
     if (!this.props.registerFlag) {
       printError = this.props.res;
       console.log("Error is : ", printError);
     } else {
-      console.log("Registerd Student");
+      alert("redirecting");
+      console.log("Registerd Seller");
       return <Redirect to="/login" />;
     }
     return (
@@ -49,12 +47,9 @@ class RegisterStudent extends Component {
               className="col-md-5 col-md-offset-1 content"
               style={{ margin: "20px" }}
             >
-              <h1 className="heading margin-top">
-                Join the Amazon community
-              </h1>
+              <h1 className="heading margin-top">Join the Amazon community</h1>
               <p style={{ fontSize: "18px", margin: "6px" }}>
-                Discover latest and most affordable products based on your
-                interests.
+                Sell your products here at one of the largest customer base.
               </p>
               <a href="/registerCompany">
                 Do you want to buy? Create an account here.
@@ -67,33 +62,22 @@ class RegisterStudent extends Component {
             >
               <form onSubmit={this.handleSubmit}>
                 <div className="form-group col-10">
-                  <label style={{ fontWeight: "bold" }}>School</label>
-                  <input
-                    name="school"
-                    onChange={e =>
-                      this.setState({ college_name: e.target.value })}
-                    type="text"
-                    placeholder="Enter School"
-                    className="form-control"
-                  />
-                </div>
-                <div className="form-group col-10">
                   <label style={{ fontWeight: "bold" }}>Name</label>
                   <input
                     name="name"
                     onChange={e => this.setState({ name: e.target.value })}
                     type="text"
-                    placeholder="Enter Student's full name"
+                    placeholder="Enter Name"
                     className="form-control"
                   />
                 </div>
                 <div className="form-group col-10">
-                  <label style={{ fontWeight: "bold" }}>Email</label>
+                  <label style={{ fontWeight: "bold" }}>Email-ID</label>
                   <input
                     name="email"
                     onChange={e => this.setState({ email: e.target.value })}
-                    type="email"
-                    placeholder="Enter Email-Id"
+                    type="text"
+                    placeholder="Enter your Email ID"
                     className="form-control"
                   />
                 </div>
@@ -126,7 +110,7 @@ class RegisterStudent extends Component {
                     />
                   </div>
                 </div>
-                <input type="submit" className="btn btn btn-success m-3" />
+                <input type="submit" className="btn btn btn-style m-3" />
                 <div>
                   <h4 style={{ color: "red", fontWeight: "800" }}>
                     {printError}
@@ -142,17 +126,16 @@ class RegisterStudent extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.registerReducer);
+  console.log(state.userReducer);
   return {
-    res: state.registerReducer.res,
-    registerFlag: state.registerReducer.registerFlag
+    res: state.userReducer.res || "",
+    registerFlag: state.userReducer.registerFlag || false
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    registerStudent: payload => dispatch(registerStudent(payload))
+    registerSeller: payload => dispatch(registerSeller(payload))
   };
 };
 
-//export RegisterStudent Component
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterStudent);
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterSeller);
