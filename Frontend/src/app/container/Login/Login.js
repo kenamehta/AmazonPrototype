@@ -57,9 +57,9 @@ class Login extends Component {
       localStorage.removeItem("IDToken");
       localStorage.setItem("ID", this.props.id);
       localStorage.setItem("IDToken", this.props.idToken);
-      if (this.props.category === "customer") {
+      if (this.state.category === "customer") {
         return <Redirect to="/customer/profile" />;
-      } else if (this.props.category === "seller") {
+      } else if (this.state.category === "seller") {
         return <Redirect to="/seller/profile" />;
       } else {
         return <Redirect to="/admin/profile" />;
@@ -69,16 +69,17 @@ class Login extends Component {
       <div>
         {redirectVar}
         <div className="container">
-          <div className="login-form">
+          <div className="login-form mt-5">
             <div className="main-div">
               <div className="panel">
-                <h2>Login</h2>
+                <h2>Sign-In</h2>
                 <p>Please enter your email and password</p>
               </div>
               <div className="form-group">
                 <p>
                   <label>Select category</label>
                   <select
+                    className="ml-2"
                     value={this.state.category}
                     onChange={e => {
                       this.setState({
@@ -125,7 +126,7 @@ class Login extends Component {
                   placeholder="Password"
                 />
               </div>
-              <button onClick={this.submitLogin} className="btn btn-danger">
+              <button onClick={this.submitLogin} className="btn btn-style">
                 Login
               </button>
               <h3 style={{ color: "red" }}>{printError}</h3>
@@ -143,8 +144,7 @@ const mapStateToProps = state => {
     id: state.userReducer.id || "",
     idToken: state.userReducer.idToken || "",
     res: state.userReducer.res || "",
-    loginFlag: state.userReducer.loginFlag || false,
-    category: state.userReducer.category || "customer"
+    loginFlag: state.userReducer.loginFlag || false
   };
 };
 const mapDispatchToProps = dispatch => {

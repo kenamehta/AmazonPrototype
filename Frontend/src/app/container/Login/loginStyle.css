@@ -69,3 +69,7 @@
   font-size: 13px;
   text-decoration: none;
 }
+.btn-style {
+  background-color: #232f3e;
+  color: white;
+}
