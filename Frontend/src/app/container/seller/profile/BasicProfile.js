@@ -1,6 +1,6 @@
 import React from 'react';
 import './BasicProfile.css';
-import configPath from "./../../../../configApp";
+//import configPath from "./../../../../configApp";
 import { connect } from 'react-redux';
 import { getSellerProfile, updateSellerProfilePicture, updateSellerDetails } from '../../../../action/UserAction/profileAction';
 
