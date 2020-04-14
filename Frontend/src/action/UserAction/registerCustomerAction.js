@@ -23,7 +23,7 @@ export const registerCustomer = payload => {
     axios
       .post(configPath.api_host + "/registerCustomer", payload)
       .then(response => {
-        console.log("Status Code : ", response.status);
+        console.log(response);
         if (response.status === 200) {
           dispatch(
             registerCustomerDispatcher({
@@ -34,8 +34,8 @@ export const registerCustomer = payload => {
         }
       })
       .catch(error => {
-        console.log(error.response.data);
         if (error.response) {
+          console.log(error.response.data);
           dispatch(
             registerCustomerDispatcher({
               ...error.response.data,
