@@ -28,7 +28,7 @@ export const registerCustomer = payload => {
           dispatch(
             registerCustomerDispatcher({
               ...response.data,
-              registerFlag: false
+              registerFlag: true
             })
           );
         }
