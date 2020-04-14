@@ -60,6 +60,6 @@ function handleTopicRequest(topic_name, fname) {
 }
 
 //topics
-handleTopicRequest("account", accountService);
+handleTopicRequest("accounts", accountService);
 handleTopicRequest("passport", passportService);
 handleTopicRequest("profile", profileService);

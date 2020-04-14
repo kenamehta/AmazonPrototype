@@ -7,7 +7,7 @@ router.post("/", async function(req, res) {
   console.log("In customer reg API");
   let msg = req.body;
   msg.route = "registerCustomer";
-  kafka.make_request("account", msg, function(err, results) {
+  kafka.make_request("accounts", msg, function(err, results) {
     if (err) {
       res.status(err.status).send(err);
     } else {
