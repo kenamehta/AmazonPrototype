@@ -11,7 +11,7 @@ auth();
 router.post("/", function(req, res) {
   let msg = req.body;
   msg.route = "login";
-  kafka.make_request("account", msg, function(err, results) {
+  kafka.make_request("accounts", msg, function(err, results) {
     if (err) {
       res.status(err.status).send(err);
     } else {
