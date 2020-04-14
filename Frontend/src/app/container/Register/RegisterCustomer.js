@@ -91,8 +91,7 @@ class RegisterCustomer extends Component {
                       required
                       placeholder="Enter Password"
                       className="form-control"
-                      //pattern="(?=.*\d)(?=.*[^\w])(?=.*[A-Za-z]).{8,}"
-                      pattern="(?=.*[A-Za-z]).{8,}"
+                      pattern="(?=.*\d)(?=.*[^\w])(?=.*[A-Za-z]).{8,}"
                     />
                   </div>
                   <div className="form-group col-6">
