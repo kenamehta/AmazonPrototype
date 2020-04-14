@@ -39,6 +39,13 @@ export const registerCustomer = payload => {
               registerFlag: true
             })
           );
+        } else {
+          dispatch(
+            registerCustomerDispatcher({
+              ...response.data,
+              registerFlag: false
+            })
+          );
         }
       })
       .catch(error => {
