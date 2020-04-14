@@ -20,7 +20,8 @@ const cust_register = {
     type: Dt.STRING(50),
     allowNull: false,
     unique: true
-  }
+  },
+  password: { type: Dt.STRING(200), allowNull: false }
 };
 const customerRegister = connection.define("customerRegister", cust_register);
 
@@ -40,7 +41,8 @@ const seller_register = {
     type: Dt.STRING(50),
     allowNull: false,
     unique: true
-  }
+  },
+  password: { type: Dt.STRING(200), allowNull: false }
 };
 const sellerRegister = connection.define("sellerRegister", seller_register);
 

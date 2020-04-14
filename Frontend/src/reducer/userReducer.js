@@ -39,6 +39,12 @@ const userReducer = (state = initialState, action) => {
         ...action.payload
       };
     }
+    case "REFRESHFLAGS": {
+      return {
+        ...state,
+        ...action.payload
+      };
+    }
     default:
       return state;
   }

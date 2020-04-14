@@ -12,6 +12,14 @@ const registerCustomerDispatcher = payload => {
   };
 };
 
+//refresh flags
+export const refreshFlags = payload => {
+  return {
+    type: "REFRESHFLAGS",
+    payload
+  };
+};
+
 //Delayed dispatch to make async call for Customer data
 export const registerCustomer = payload => {
   console.log("Inside registerCustomer thunk");

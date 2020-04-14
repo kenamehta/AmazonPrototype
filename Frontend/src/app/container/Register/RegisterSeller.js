@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
-import { registerSeller } from "./../../../action/UserAction/registerSellerAction";
+import {
+  registerSeller,
+  refreshFlags
+} from "./../../../action/UserAction/registerSellerAction";
 import "./register.css";
 
 class RegisterSeller extends Component {
@@ -25,6 +28,11 @@ class RegisterSeller extends Component {
       this.setState({ matchPassword: false });
     } else this.props.registerSeller(this.state);
   };
+
+  componentWillMount() {
+    this.props.refreshFlags({ res: "", registerFlag: false });
+  }
+
   render() {
     let printError = "";
     if (!this.state.matchPassword) {
@@ -35,7 +43,6 @@ class RegisterSeller extends Component {
       printError = this.props.res;
       console.log("Error is : ", printError);
     } else {
-      alert("redirecting");
       console.log("Registerd Seller");
       return <Redirect to="/login" />;
     }
@@ -51,7 +58,7 @@ class RegisterSeller extends Component {
               <p style={{ fontSize: "18px", margin: "6px" }}>
                 Sell your products here at one of the largest customer base.
               </p>
-              <a href="/registerCompany">
+              <a href="/registerCustomer">
                 Do you want to buy? Create an account here.
               </a>
             </div>
@@ -134,7 +141,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    registerSeller: payload => dispatch(registerSeller(payload))
+    registerSeller: payload => dispatch(registerSeller(payload)),
+    refreshFlags: payload => dispatch(refreshFlags(payload))
   };
 };
 

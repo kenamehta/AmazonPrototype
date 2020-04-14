@@ -1,4 +1,4 @@
-import { LOGIN} from "./actionTypes";
+import { LOGIN } from "./actionTypes";
 import configPath from "./../../configApp";
 import axios from "axios";
 
@@ -6,6 +6,14 @@ import axios from "axios";
 const loginDispatcher = payload => {
   return {
     type: LOGIN,
+    payload
+  };
+};
+
+//refresh flags
+export const refreshFlags = payload => {
+  return {
+    type: "REFRESHFLAGS",
     payload
   };
 };
