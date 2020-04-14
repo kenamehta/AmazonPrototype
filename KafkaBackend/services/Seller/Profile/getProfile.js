@@ -23,6 +23,9 @@ const getProfile = (msg, callback) => {
       };
       res.status = 200;
       res.message = userObject;
+    } else {
+      res.status = 400;
+      res.message = "Not Found";
     }
     callback(null, res);
   });

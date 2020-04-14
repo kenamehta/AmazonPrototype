@@ -35,7 +35,7 @@ router.get("/:emailId", checkAuth, (req, res) => {
   req.body.path = "seller_get";
   req.body.emailId = req.params.emailId;
 
-  kafka.make_request("profile", req.body, function(err, results) {
+  kafka.make_request("sellerProfileService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -50,7 +50,7 @@ router.post("/updateProfileDetails", checkAuth, (req, res) => {
 
   req.body.path = "seller_update_profile";
 
-  kafka.make_request("profile", req.body, function(err, results) {
+  kafka.make_request("sellerProfileService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -73,7 +73,7 @@ router.post(
     }
     console.log(req.body);
 
-    kafka.make_request("profile", req.body, function(err, results) {
+    kafka.make_request("sellerProfileService", req.body, function(err, results) {
       if (err) {
         res.status(500).send("System Error");
       } else {
