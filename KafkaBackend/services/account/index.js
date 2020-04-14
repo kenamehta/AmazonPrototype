@@ -4,6 +4,7 @@ const { registerSeller } = require("./registerSeller");
 const { login } = require("./login");
 
 let handle_request = (msg, callback) => {
+ console.log("in switch")
   switch (msg.route) {
     case "login":
       login(msg, callback);

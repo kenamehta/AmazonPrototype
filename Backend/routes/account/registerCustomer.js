@@ -4,6 +4,7 @@ const kafka = require("../../kafka/client");
 
 //Register a customer. Adds new student record in model customerRegister
 router.post("/", async function(req, res) {
+  console.log("In customer reg API");
   let msg = req.body;
   msg.route = "registerCustomer";
   kafka.make_request("account", msg, function(err, results) {

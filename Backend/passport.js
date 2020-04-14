@@ -2,36 +2,33 @@
 var JwtStrategy = require("passport-jwt").Strategy;
 var ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
-const Config = require('./config');
-const kafka = require('./kafka/client');
+const Config = require("./config");
+const kafka = require("./kafka/client");
 
 // Setup work and export for the JWT passport strategy
 function auth() {
-    var opts = {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
-        secretOrKey: Config.secret
-    };
-    passport.use(
-        new JwtStrategy(opts, (jwt_payload, callback) => {
-            var msg={};
-            msg.user_id = jwt_payload._id;
-            msg.userRole = jwt_payload.userRole;
-            kafka.make_request('passport', msg, function (err, results) {
-                if (err) {
-                  return callback(err, false);
-                }
-                if(results){
-                  callback(null, results);
-                }
-                else {
-                  callback(null, false);
-                }
-            });
-        })
-    )
+  var opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+    secretOrKey: Config.secret
+  };
+  passport.use(
+    new JwtStrategy(opts, (jwt_payload, callback) => {
+      var msg = {};
+      msg.user_id = jwt_payload._id;
+      msg.userRole = jwt_payload.category;
+      kafka.make_request("passport", msg, function(err, results) {
+        if (err) {
+          return callback(err, false);
+        }
+        if (results) {
+          callback(null, results);
+        } else {
+          callback(null, false);
+        }
+      });
+    })
+  );
 }
 
 exports.auth = auth;
 exports.checkAuth = passport.authenticate("jwt", { session: false });
-
-

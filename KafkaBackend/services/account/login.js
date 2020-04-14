@@ -4,10 +4,10 @@ const {
   customerRegister,
   sellerRegister
 } = require("../../models/registration");
-const jwt = require("jsonwebtoken");
-const { secret } = require("../../utils/config");
-const { auth } = require("../../utils/passport");
-auth();
+// const jwt = require("jsonwebtoken");
+// const { secret } = require("../../utils/config");
+// const { auth } = require("../../utils/passport");
+// auth();
 
 let login = async (msg, callback) => {
   let model = "";
@@ -39,19 +39,20 @@ let login = async (msg, callback) => {
             } else {
               console.log("Logged in successfully");
               // const logintoken = await generateToken(result._id);
-              const token = jwt.sign(
-                { _id: result._id, category: msg.category },
-                secret,
-                {
-                  expiresIn: 1008000
-                }
-              );
-              var jwtToken = "JWT " + token;
+              // const token = jwt.sign(
+              //   { _id: result._id, category: msg.category },
+              //   secret,
+              //   {
+              //     expiresIn: 1008000
+              //   }
+              // );
+              // var jwtToken = "JWT " + token;
               return callback(null, {
                 status: 200,
                 id: result._id,
-                res: "Logged in successfully",
-                idToken: jwtToken
+                res: "Logged in successfully"
+                // ,
+                // idToken: jwtToken
               });
             }
           });
