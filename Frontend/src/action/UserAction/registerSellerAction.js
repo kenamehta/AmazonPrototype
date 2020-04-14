@@ -26,7 +26,7 @@ export const registerSeller = payload => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           dispatch(
-            registerSellerDispatcher({ ...response.data, registerFlag: false })
+            registerSellerDispatcher({ ...response.data, registerFlag: true })
           );
         }
       })

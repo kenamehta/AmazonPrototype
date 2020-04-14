@@ -24,7 +24,7 @@ let registerCustomer = async (msg, callback) => {
         emailId: msg.email
       });
       if (customer_register_sql && customer_register_mongo) {
-        return callback(null, { status: 200, res: "Customer Record Inserted" });
+        return callback(null, { status: 200, res: "" });
       } else {
         return callback(
           { status: 500, res: "Error caught while inserting record" },
