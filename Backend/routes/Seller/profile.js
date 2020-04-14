@@ -18,7 +18,7 @@ const s3 = new AWS.S3({
 const profilePictureFileUploadSeller = multer({
   storage: multerS3({
     s3: s3,
-    bucket: GlobalVar['AWS_BUCKET_NAME'],//'mtaas-course-project-nachiket',
+    bucket: Config.AWS_BUCKET_NAME,//'mtaas-course-project-nachiket',
     key: function (req, file, cb) {
         cb(null, 'ProfilePictures/Seller/'+req.body.emailId+'/'+file.originalname)
     }
