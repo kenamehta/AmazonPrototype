@@ -7,7 +7,7 @@ const passportService = require("./services/passport");
 //account services
 const accountService = require("./services/account");
 //profile services
-const profileService = require("./services/profile");
+const sellerProfileService = require("./services/Seller/Profile");
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -67,4 +67,4 @@ function handleTopicRequest(topic_name, fname) {
 //topics
 handleTopicRequest("accounts", accountService);
 handleTopicRequest("passport", passportService);
-handleTopicRequest("profile", profileService);
+handleTopicRequest("sellerProfileService", sellerProfileService);
