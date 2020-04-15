@@ -62,7 +62,7 @@ class Login extends Component {
       console.log("logged in");
       localStorage.removeItem("ID");
       localStorage.removeItem("IDToken");
-      localStorage.setItem("ID", this.props.id);
+      localStorage.setItem("ID", this.props.mongooseId);
       localStorage.setItem("IDToken", this.props.idToken);
       localStorage.setItem("emailId",this.state.email);
       if (this.state.category === "customer") {
@@ -149,7 +149,7 @@ class Login extends Component {
 const mapStateToProps = state => {
   console.log("Login id in mapStateToProps ", state.userReducer.id);
   return {
-    id: state.userReducer.id || "",
+    mongooseId: state.userReducer.mongooseId || "",
     idToken: state.userReducer.idToken || "",
     res: state.userReducer.res || "",
     loginFlag: state.userReducer.loginFlag || false

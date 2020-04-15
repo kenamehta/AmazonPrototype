@@ -6,9 +6,11 @@ function handle_request(msg, callback) {
   const { user_id, userRole } = msg;
   let model = "";
   model =
-  userRole === "customer"
+    userRole === "customer"
       ? customerRegister
-      : userRole === "seller" ? sellerRegister : "";
+      : userRole === "seller"
+      ? sellerRegister
+      : "";
   if (model) {
     model.findOne({ where: { _id: user_id } }, (err, results) => {
       if (err) {

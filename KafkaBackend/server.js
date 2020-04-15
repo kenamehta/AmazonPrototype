@@ -6,9 +6,11 @@ var connection_string = new require("./config");
 const passportService = require("./services/passport");
 //account services
 const accountService = require("./services/account");
-//profile services
+//seller profile services
 const sellerProfileService = require("./services/Seller/Profile");
 
+//customer profile service
+const customerProfileService= require("./services/customer/profile")
 //connect to MongoDB
 const Mongoose = require("mongoose");
 var options = {
@@ -68,3 +70,5 @@ function handleTopicRequest(topic_name, fname) {
 handleTopicRequest("accounts", accountService);
 handleTopicRequest("passport", passportService);
 handleTopicRequest("sellerProfileService", sellerProfileService);
+handleTopicRequest("customerProfile", customerProfileService);
+

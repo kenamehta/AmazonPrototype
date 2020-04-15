@@ -12,30 +12,34 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   accessKeyId: Config.AWS_ACCESS_KEY_ID,
   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  region: Config.AWS_REGION,
+  region: Config.AWS_REGION
 });
 
-const profilePictureFileUploadSeller = multer({
+const profilePictureFileUploadCustomer = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
-    key: function (req, file, cb) {
+    key: function(req, file, cb) {
       cb(
         null,
-        "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
+        "ProfilePictures/Customer/" + req.body.emailId + "/" + file.originalname
       );
-    },
-  }),
+    }
+  })
 });
 
-router.get("/:emailId", (req, res) => {
-  console.log("Inside get of seller/profile/:emailId");
+router.get("/:emailId", checkAuth, (req, res) => {
+  console.log("Inside get of customer/profile/:emailId");
   console.log(req.body);
 
-  req.body.path = "seller_get";
-  req.body.emailId = req.params.emailId;
+//   req.body.path = "";
+//   req.body.emailId = req.params.emailId;
+    let msg=req.body;
+    msg.route='getProfile'
+    msg.params=req.params.emailId
 
-  kafka.make_request("sellerProfileService", req.body, function (err, results) {
+
+  kafka.make_request("customerProfile", msg , function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -44,13 +48,13 @@ router.get("/:emailId", (req, res) => {
   });
 });
 
-router.post("/updateProfileDetails", (req, res) => {
-  console.log("Inside post of seller/profile/updateProfileDetails");
+router.post("/updateProfileDetails", checkAuth, (req, res) => {
+  console.log("Inside post of customer/profile/updateProfileDetails");
   console.log(req.body);
 
-  req.body.path = "seller_update_profile";
+  req.body.path = "updateProfile";
 
-  kafka.make_request("sellerProfileService", req.body, function (err, results) {
+  kafka.make_request("customerProfile", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -61,21 +65,19 @@ router.post("/updateProfileDetails", (req, res) => {
 
 router.post(
   "/updateProfilePicture",
-  profilePictureFileUploadSeller.single("file"),
+  checkAuth,
+  profilePictureFileUploadCustomer.single("file"),
   (req, res) => {
-    console.log("Inside post of seller/profile/updateProfilePicture");
+    console.log("Inside post of customer/profile/updateProfilePicture");
 
-    req.body.path = "seller_update_profilePicture";
+    req.body.path = "updateProfilePicture";
     if (req.file) {
-      console.log("New Seller Profile Picture File: ", req.file);
+      console.log("New customer Profile Picture File: ", req.file);
       req.body.fileUrl = req.file.location;
     }
     console.log(req.body);
 
-    kafka.make_request("sellerProfileService", req.body, function (
-      err,
-      results
-    ) {
+    kafka.make_request("customerProfile", req.body, function(err, results) {
       if (err) {
         res.status(500).send("System Error");
       } else {
@@ -84,5 +86,6 @@ router.post(
     });
   }
 );
+
 
 module.exports = router;

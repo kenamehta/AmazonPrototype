@@ -42,7 +42,7 @@ app.use(express.static("./ProfilePictures/Common"));
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
-
+app.use("/customer/profile", require("./routes/customer/profile"))
 app.use('/seller/profile', sellerProfile);
 app.use('/product', product);
 app.use('/seller/product', product);
