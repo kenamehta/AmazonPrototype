@@ -3,9 +3,9 @@ import configPath from "./../../configApp";
 import { SELLERPROFILE, UPDATEPROFILEPICTURE, UPDATEPROFILE } from './actionTypes';
 
 export const getSellerProfile = (data) => (dispatch) => {
-  axios.defaults.headers.common.authorization = localStorage.getItem('token');
-  axios.defaults.withCredentials = true;
-  axios.get(configPath.api_host + "seller/profile/:" + data.emailId)
+  axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
+  //axios.defaults.withCredentials = true;
+  axios.get(configPath.api_host + "/seller/profile/" + data.emailId)
   .then((resp) => {
     if(resp.status === 200){
       dispatch({
@@ -19,17 +19,20 @@ export const getSellerProfile = (data) => (dispatch) => {
 }
 
 export const updateSellerProfilePicture = (data) => (dispatch) => {
-  axios.defaults.headers.common.authorization = localStorage.getItem('token');
-  axios.defaults.withCredentials = true;
+  axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
+  //axios.defaults.withCredentials = true;
   const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-  axios.post(configPath.api_host + "seller/profile/updateProfilePicture", data, config)
+  axios.post(configPath.api_host + "/seller/profile/updateProfilePicture", data, config)
   .then((response) => {
     if(response.status === 200 ){
       window.alert('Profile Picture Changed Successfully');
       dispatch({
         type:UPDATEPROFILEPICTURE,
-        payload:response.data
+        payload:response.data.profilePictureUrl
       });
+      // since the profilePictureUrl is the same, the dispatch is not changing the store
+      // and thus need to manually refresh the page to get updated image.
+      window.location.reload();
     }
   }).catch((err)=> {
     console.log(err);
@@ -37,9 +40,9 @@ export const updateSellerProfilePicture = (data) => (dispatch) => {
 }
 
 export const updateSellerDetails = (data) => (dispatch) => {
-  axios.defaults.headers.common.authorization = localStorage.getItem('token');
-  axios.defaults.withCredentials = true;
-  axios.post(configPath.api_host + "seller/profile/updateProfileDetails", data)
+  axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
+  //axios.defaults.withCredentials = true;
+  axios.post(configPath.api_host + "/seller/profile/updateProfileDetails", data)
   .then((response) => {
     if(response.status === 200 ){
       window.alert('Profile Details Updated Successfully');

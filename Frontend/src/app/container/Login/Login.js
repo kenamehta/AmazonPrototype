@@ -64,6 +64,7 @@ class Login extends Component {
       localStorage.removeItem("IDToken");
       localStorage.setItem("ID", this.props.mongooseId);
       localStorage.setItem("IDToken", this.props.idToken);
+      localStorage.setItem("emailId",this.state.email);
       if (this.state.category === "customer") {
         return <Redirect to="/customer/profile" />;
       } else if (this.state.category === "seller") {

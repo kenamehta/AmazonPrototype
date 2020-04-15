@@ -4,16 +4,18 @@ const { updateProfile } = require('./updateProfile');
 const { updateProfilePicture } = require('./updateProfilePicture');
 
 function handle_request(msg, callback) {
-  switch (msg.path) {
-    case "seller_get": 
-        getProfile(msg, callback);
-        break;
-    case "seller_update_profile":
-        updateProfile(msg, callback);
-        break;
-    case "seller_update_profilePicture":
-        updateProfilePicture(msg, callback);
-        break;
+  if(msg && msg.path){
+    switch (msg.path) {
+      case "seller_get": 
+          getProfile(msg, callback);
+          break;
+      case "seller_update_profile":
+          updateProfile(msg, callback);
+          break;
+      case "seller_update_profilePicture":
+          updateProfilePicture(msg, callback);
+          break;
+    }
   }
 }
 
