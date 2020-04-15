@@ -6,9 +6,11 @@ function handle_request(msg, callback) {
   const { user_id, userRole } = msg;
   let model = "";
   model =
-    jwt_payload.category === "customer"
+    userRole === "customer"
       ? customerRegister
-      : jwt_payload.category === "seller" ? sellerRegister : "";
+      : userRole === "seller"
+      ? sellerRegister
+      : "";
   if (model) {
     model.findOne({ where: { _id: user_id } }, (err, results) => {
       if (err) {

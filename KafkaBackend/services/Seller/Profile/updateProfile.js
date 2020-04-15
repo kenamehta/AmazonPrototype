@@ -2,6 +2,7 @@
 const seller = require('../../../models/seller.model');
 
 const updateProfile = (msg, callback) => {
+  console.log('Inside updateProfile of Seller');
   var res = {};
   seller.findOne({emailId:msg.emailId}, (err, user) => {
     if(err){
