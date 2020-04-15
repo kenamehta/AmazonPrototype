@@ -18,7 +18,8 @@ class ProfilePic extends Component {
     let data={
       name:this.state.editedName,
       city:this.state.editedCity,
-      state:this.state.editedState
+      state:this.state.editedState,
+      email:localStorage.getItem("emailId")
     }
     this.props.updateProfile(data);
     this.setState({ editnamebutton: "block" });

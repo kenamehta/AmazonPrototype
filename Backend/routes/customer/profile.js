@@ -53,10 +53,10 @@ router.get("/:emailId", (req, res) => {
 router.put("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of customer/profile/updateProfileDetails");
   console.log(req.body);
+  let msg=req.body
+  msg.route = "updateProfile";
 
-  req.body.path = "updateProfile";
-
-  kafka.make_request("customerProfile", req.body, function(err, results) {
+  kafka.make_request("customerProfile", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
