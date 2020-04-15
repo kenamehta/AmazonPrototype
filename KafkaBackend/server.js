@@ -8,9 +8,13 @@ const passportService = require("./services/passport");
 const accountService = require("./services/account");
 //seller profile services
 const sellerProfileService = require("./services/Seller/Profile");
-
 //customer profile service
-const customerProfileService= require("./services/customer/profile")
+const customerProfileService= require("./services/customer/profile");
+//customer product service
+const customerProductService = require("./services/customer/Product");
+//seller product service
+const sellerProductService = require("./services/Seller/Product");
+
 //connect to MongoDB
 const Mongoose = require("mongoose");
 var options = {
@@ -71,4 +75,6 @@ handleTopicRequest("accounts", accountService);
 handleTopicRequest("passport", passportService);
 handleTopicRequest("sellerProfileService", sellerProfileService);
 handleTopicRequest("customerProfile", customerProfileService);
+handleTopicRequest("customerProductService", customerProductService);
+handleTopicRequest("sellerProductService", sellerProductService);
 

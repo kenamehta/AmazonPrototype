@@ -15,15 +15,16 @@ const s3 = new AWS.S3({
   region: Config.AWS_REGION
 });
 
+// file.fieldname is the file1, file2 -> fd.append('file1',this.state.selectedFiles[0]);
 const productImagesUpload = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
     key: function(req, file, cb) {
-      cb(
-        null,
-        "Products/" + req.body.productName + "/" + file.originalname
-      );
+        cb(
+          null,
+          "Products/" + req.body.productName + "/" + file.fieldname + '.jpg'
+        );
     }
   })
 });
@@ -49,26 +50,42 @@ const productImagesUpload = multer({
 */
 // keep it in Seller Product Folder/File
 router.post('/addProduct', productImagesUpload.any(), (req, res) => {
-  console.log("Inside get of seller/product/addProduct");
+  console.log("Inside post of product/seller/addProduct");
   console.log(req.body);
-
   if (req.files) {
     console.log("Product Images req.files array after s3 upload: ", req.files);
-    //req.body.fileUrl = req.file.location;
-  }
+    const productImagesURL = req.files.map((each)=>each.location);
+    console.log(productImagesURL);
+    req.body.productImagesURL = productImagesURL;
 
-  /*
-  req.body.path = "add_product";
-  kafka.make_request("product", req.body, function(err, results) {
+    req.body.path = "product_add";
+    kafka.make_request("sellerProductService", req.body, function(err, results) {
+      if (err) {
+        res.status(500).send("System Error");
+      } else {
+        res.status(results.status).send(results.message);
+      }
+    });
+  } else {
+    res.status(500).send('Error in Uploading Images');
+  }
+});
+
+
+router.get('/existProduct/:productName', (req, res) => {
+  console.log("Inside post of product/seller/existProduct");
+  console.log(req.body);
+
+  req.body.path = "product_exist";
+  req.body.productName = req.params.productName;
+
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
       res.status(results.status).send(results.message);
     }
   });
-  */
- 
- res.status(200).send('Successfully Added');
 });
 
 module.exports = router;
