@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const uniqueValidator = require("mongoose-unique-validator");
 
 const savedProduct = new Schema(
   {
@@ -54,7 +55,7 @@ const card = new Schema(
 
 const customerProfile = new Schema(
   {
-    emailId: { type: String, required: true },
+    emailId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     phone: { type: String, default: "" },
     profilePictureUrl: { type: String, default: "default.png" },
@@ -67,5 +68,6 @@ const customerProfile = new Schema(
     timestamps: true
   }
 );
+customerProfile.plugin(uniqueValidator);
 
 module.exports = mongoose.model("customer", customerProfile);
