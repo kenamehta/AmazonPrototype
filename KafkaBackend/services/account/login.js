@@ -17,7 +17,7 @@ let login = async (msg, callback) => {
       ? customerRegister
       : msg.category === "seller" ? sellerRegister : "admin";
   let email = msg.email;
-  if (model != "admin") {
+  if (model !== "admin") {
     model
       .findOne({ where: { emailId: email } })
       .then(result => {
@@ -27,9 +27,13 @@ let login = async (msg, callback) => {
             matchFlag
           ) {
             if (err) {
-              console.log("Error caught in password comparison");
+              console.log(err);
               return callback(
-                { status: 403, res: "Error caught in password comparison" },
+                {
+                  status: 403,
+                  res: "Error caught in password comparison",
+                  err
+                },
                 null
               );
             } else if (!matchFlag) {
@@ -66,7 +70,7 @@ let login = async (msg, callback) => {
         return callback({ status: 500, res: "Error caught" }, null);
       });
   } else {
-    if (msg.email == "admin" && msg.password == "admin")
+    if (msg.email == "admin@gmail.com" && msg.password == "admin")
       return callback(null, { status: 200, res: "Logged In Successfully" });
     else
       return callback({ status: 403, res: "Admin Password Incorrect" }, null);

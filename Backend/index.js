@@ -8,6 +8,7 @@ const cors = require('cors');
 // User defined module imports
 const Config = require('./config');
 const sellerProfile = require("./routes/Seller/profile");
+const product = require("./routes/Seller/product");
 
 
 const app = express();
@@ -42,6 +43,8 @@ app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
 app.use("/customer/profile", require("./routes/customer/profile"))
 app.use('/seller/profile', sellerProfile);
+app.use('/product', product);
+app.use('/seller/product', product);
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

@@ -12,6 +12,14 @@ const registerCustomerDispatcher = payload => {
   };
 };
 
+//refresh flags
+export const refreshFlags = payload => {
+  return {
+    type: "REFRESHFLAGS",
+    payload
+  };
+};
+
 //Delayed dispatch to make async call for Customer data
 export const registerCustomer = payload => {
   console.log("Inside registerCustomer thunk");
@@ -25,6 +33,13 @@ export const registerCustomer = payload => {
       .then(response => {
         console.log(response);
         if (response.status === 200) {
+          dispatch(
+            registerCustomerDispatcher({
+              ...response.data,
+              registerFlag: true
+            })
+          );
+        } else {
           dispatch(
             registerCustomerDispatcher({
               ...response.data,

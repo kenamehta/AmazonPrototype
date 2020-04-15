@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
-import { registerCustomer } from "./../../../action/UserAction/registerCustomerAction";
+import {
+  registerCustomer,
+  refreshFlags
+} from "./../../../action/UserAction/registerCustomerAction";
 import "./register.css";
 
 class RegisterCustomer extends Component {
@@ -25,6 +28,11 @@ class RegisterCustomer extends Component {
       this.setState({ matchPassword: false });
     } else this.props.registerCustomer(this.state);
   };
+
+  componentWillMount() {
+    this.props.refreshFlags({ res: "", registerFlag: false });
+  }
+
   render() {
     let printError = "";
     if (!this.state.matchPassword) {
@@ -133,7 +141,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    registerCustomer: payload => dispatch(registerCustomer(payload))
+    registerCustomer: payload => dispatch(registerCustomer(payload)),
+    refreshFlags: payload => dispatch(refreshFlags(payload))
   };
 };
 

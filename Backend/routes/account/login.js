@@ -7,7 +7,7 @@ const { auth } = require("../../passport");
 const Config = require("./../../config");
 auth();
 
-//student and company login
+//customer and seller login
 router.post("/", function(req, res) {
   let msg = req.body;
   msg.route = "login";
@@ -16,7 +16,7 @@ router.post("/", function(req, res) {
       res.status(err.status).send(err);
     } else {
       const token = jwt.sign(
-        { _id: result._id, category: msg.category },
+        { _id: results.id, category: msg.category },
         Config.secret,
         {
           expiresIn: 1008000

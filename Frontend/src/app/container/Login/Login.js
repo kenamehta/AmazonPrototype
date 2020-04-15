@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { login } from "./../../../action/UserAction/loginAction";
+import { login, refreshFlags } from "./../../../action/UserAction/loginAction";
 import "./loginStyle.css";
 
 //Define a Login Component
@@ -12,7 +12,7 @@ class Login extends Component {
     super(props);
     //maintain the state required for this component
     this.state = {
-      category: "student",
+      category: "customer",
       email: "",
       password: "",
       authFlag: false,
@@ -22,11 +22,18 @@ class Login extends Component {
       loginFlag: ""
     };
   }
-  //Call the Will Mount to set the auth Flag to false
-  componentDidMount() {
+
+  // componentDidMount() {
+  //   this.setState({
+  //     loginFlag: this.props.loginFlag
+  //   });
+  // }
+
+  componentWillMount() {
     this.setState({
       loginFlag: this.props.loginFlag
     });
+    this.props.refreshFlags({ res: "", registerFlag: false });
   }
 
   //submit Login handler to send a request to the node backend
@@ -88,10 +95,10 @@ class Login extends Component {
                     }}
                     id="myList"
                   >
-                    <option value="student" name="student">
+                    <option value="customer" name="customer">
                       Customer
                     </option>
-                    <option value="company" name="company">
+                    <option value="seller" name="seller">
                       Seller
                     </option>
                     <option value="admin" name="admin">
@@ -149,7 +156,8 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    login: payload => dispatch(login(payload))
+    login: payload => dispatch(login(payload)),
+    refreshFlags: payload => dispatch(refreshFlags(payload))
   };
 };
 
