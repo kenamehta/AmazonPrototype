@@ -6,19 +6,34 @@ class ProfilePic extends Component {
     editnamebutton: "block",
     showText: "none",
     editedName: "",
+    editedCity:'',
+    editedState:''
   };
 
-  updateName = (e) => {
+  updateProfile = (e) => {
     console.log("in editing name");
     console.log(this.state.editedName);
 
     e.preventDefault();
+    let data={
+      name:this.state.editedName,
+      city:this.state.editedCity,
+      state:this.state.editedState
+    }
+    this.props.updateProfile(data);
     this.setState({ editnamebutton: "block" });
     this.setState({ showText: "none" });
   };
+  componentWillReceiveProps(nextProps)
+  {
+    console.log(nextProps)
+  }
 
   render() {
     return (
+     <div>
+      {
+        this.props.profileData.data?
       <div className="container mt-3">
         <div className="row">
           <div className="col-12 col-md-offset-1 shadow_style">
@@ -31,8 +46,9 @@ class ProfilePic extends Component {
                       this.setState({ showeditpicbutton: "block" });
                     }}
                   >
+
                     <img
-                      src="https://images-na.ssl-images-amazon.com/images/S/amazon-avatars-global/ac0da431-c7a3-4385-91e4-874d495c7a1c._CR0,0,375,375_UX460_.jpg"
+                       src={this.props.profileData.data.mainCustomer.profilePictureUrl}
                       alt=""
                       class="avatar-image"
                       style={{ "background-size": "contain" }}
@@ -67,7 +83,9 @@ class ProfilePic extends Component {
                 <div className="card-body " align="center">
                   <div className="d-flex" style={{ justifyContent: "center" }}>
                     <div style={{ display: this.state.editnamebutton }}>
-                      <h3>Puneet Jyot</h3>
+                      <h3>{this.props.profileData.data.mainCustomer.name}</h3>
+                      <h6>New Delhi</h6>
+                      <h6>Delhi</h6>
                     </div>
                     <img
                       alt=""
@@ -83,34 +101,64 @@ class ProfilePic extends Component {
 
                   <div className="m-3" style={{ display: this.state.showText }}>
                     <form
-                      onSubmit={this.updateName}
+                      onSubmit={this.updateProfile}
                       class="form-inline"
                       style={{ justifyContent: "center" }}
                     >
+                    <div className='col-9 m-2'>
                       <input
                         type="text"
                         className="form-control"
+                        placeholder='Enter name'
                         onChange={(e) => {
                           e.preventDefault();
                           this.setState({ editedName: e.target.value });
                         }}
                       ></input>
+                     
+                      </div>
+                      <div className='col-9 m-2'>
+                       <input
+                        type="text"
+                        className="form-control"
+                        placeholder='Enter City'
+                        onChange={(e) => {
+                          e.preventDefault();
+                          this.setState({ editedCity: e.target.value });
+                        }}
+                      ></input>
+                      
+                      </div>
+                      <div className='col-12 m-2'>
+                       <input
+                        type="text"
+                        className="form-control"
+                        placeholder='Enter State'
+                        onChange={(e) => {
+                          e.preventDefault();
+                          this.setState({ editedState: e.target.value });
+                        }}
+                      ></input>
+                      
+                      </div>
+                      <div className='mt-3'>
                       <button className="btn btn-secondary ml-2">Cancel</button>
                       <input
                         type="submit"
                         className="btn sprite ml-1"
                         value="Save"
                       ></input>
+                      </div>
                     </form>
                   </div>
 
-                  <h6>New Delhi</h6>
-                  <h6>Delhi</h6>
+                 
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>:''}
       </div>
     );
   }

@@ -40,15 +40,17 @@ router.get("/:emailId", (req, res) => {
 
 
   kafka.make_request("customerProfile", msg , function(err, results) {
-    if (err) {
+    console.log(results);
+    console.log("while returning")
+    if (results.status!=200) {
       res.status(500).send("System Error");
     } else {
-      res.status(results.status).send(results.message);
+      res.status(results.status).send(results);
     }
   });
 });
 
-router.post("/updateProfileDetails", checkAuth, (req, res) => {
+router.put("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of customer/profile/updateProfileDetails");
   console.log(req.body);
 

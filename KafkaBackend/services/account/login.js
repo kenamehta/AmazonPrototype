@@ -58,6 +58,7 @@ let login = async (msg, callback) => {
                 status: 200,
                 id: result._id,
                 mongooseId,
+                email:mongoose_data.emailId,
                 res: "Logged in successfully"
                 // ,
                 // idToken: jwtToken
