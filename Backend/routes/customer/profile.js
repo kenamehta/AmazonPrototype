@@ -28,7 +28,7 @@ const profilePictureFileUploadCustomer = multer({
   })
 });
 
-router.get("/:emailId", checkAuth, (req, res) => {
+router.get("/:emailId", (req, res) => {
   console.log("Inside get of customer/profile/:emailId");
   console.log(req.body);
 

@@ -8,18 +8,26 @@ const comment=require('../../../models/comment.model')
 let getProfile = async (msg, callback) => {
     let response = {};
     let err = {};
-
-    const mainCustomer= await customer.findOne({
-        emailId:msg.body.emailId
+    try{
+    console.log(msg.params)
+    let mainCustomer= await customer.findOne({
+        emailId:msg.params
     })
+    console.log(mainCustomer)
     const insights= await comment.find({
         customerId:mainCustomer._id
     })
+    console.log(insights)
 
     
-   mainCustomer= {...mainCustomer,insights,comment_cnt:insights.length()}
+   mainCustomer= {...mainCustomer,insights,comment_cnt:insights.length}
+   (response.data = mainCustomer), (response.status = 201);
+   return callback(null, response);
+    }
+    catch(error)
+    {
 
-
+    }
 
 
 
