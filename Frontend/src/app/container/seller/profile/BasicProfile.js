@@ -39,12 +39,16 @@ class BasicProfile extends React.Component {
     if(nextProps.profile){
       const { profile } = nextProps;
       this.setState({
-        basicDetails:profile
-      }, () => {
-        if (!this.props.sellerVisitingOwnProfile) {
-          localStorage.setItem('profilePictureUrl', this.state.basicDetails.profilePictureUrl);
-        }
-      });
+        basicDetails:profile,
+        editNameButton: 'block',
+        showText: 'none',
+      }
+      // , () => {
+      //   if (!this.props.sellerVisitingOwnProfile) {
+      //     localStorage.setItem('profilePictureUrl', this.state.basicDetails.profilePictureUrl);
+      //   }
+      // }
+      );
     }
   }
 
@@ -71,6 +75,9 @@ class BasicProfile extends React.Component {
   }
 
   render(){
+    let profilePictureUrl = configPath.api_host+'/default.png';
+    if(this.state.basicDetails.profilePictureUrl && this.state.basicDetails.profilePictureUrl !== 'default.png')
+      profilePictureUrl = this.state.basicDetails.profilePictureUrl;
     return(
       <div>
         <div className="container mt-3">
@@ -86,8 +93,8 @@ class BasicProfile extends React.Component {
                       }}
                     >
                       <img
-                        src="https://images-na.ssl-images-amazon.com/images/S/amazon-avatars-global/ac0da431-c7a3-4385-91e4-874d495c7a1c._CR0,0,375,375_UX460_.jpg"
-                        alt={this.state.basicDetails.profilePictureUrl}
+                        src={profilePictureUrl}
+                        alt="Profile Picture"
                         class="avatar-image"
                         style={{ "background-size": "contain" }}
                       ></img>
@@ -141,6 +148,7 @@ class BasicProfile extends React.Component {
 
                     <div className="m-3" style={{ display: this.state.showText }}>
                       <form onSubmit={(e)=>{
+                        e.preventDefault();
                         const data = {
                           emailId:localStorage.getItem('emailId'),
                           name:this.state.basicDetails.name,
@@ -163,9 +171,11 @@ class BasicProfile extends React.Component {
                         onChange={(e) => {
                           e.preventDefault();
                           let oldState = this.state
-                          this.setState({ 
-                            ...oldState.basicDetails,
-                            name:e.target.value
+                          this.setState({
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              name:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="text" className="form-control" placeholder="Street Address"
@@ -175,8 +185,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({
-                            ...oldState.basicDetails,
-                            street:e.target.value
+                            basicDetails: {
+                              ...oldState.basicDetails,
+                              street:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="text" className="form-control" placeholder="City"
@@ -186,8 +198,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({ 
-                            ...oldState.basicDetails,
-                            city:e.target.value
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              city:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="text" className="form-control" placeholder="State"
@@ -197,8 +211,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({ 
-                            ...oldState.basicDetails,
-                            state:e.target.value
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              state:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="text" className="form-control" placeholder="Country"
@@ -208,8 +224,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({ 
-                            ...oldState.basicDetails,
-                            country:e.target.value
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              country:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="number" className="form-control" placeholder="ZipCode"
@@ -219,8 +237,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({ 
-                            ...oldState.basicDetails,
-                            zipcode:e.target.value
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              zipcode:e.target.value
+                            }
                            });
                         }}></input>
                         <input type="number" className="form-control" placeholder="Phone"
@@ -230,8 +250,10 @@ class BasicProfile extends React.Component {
                           e.preventDefault();
                           let oldState = this.state
                           this.setState({ 
-                            ...oldState.basicDetails,
-                            phone:e.target.value
+                            basicDetails:{
+                              ...oldState.basicDetails,
+                              phone:e.target.value
+                            }
                            });
                         }}></input>
                         <button className="btn btn-secondary ml-2">Cancel</button>

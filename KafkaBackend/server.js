@@ -39,7 +39,7 @@ function handleTopicRequest(topic_name, fname) {
 
     // Handling the make request that was called from backend server here in this function.
     fname.handle_request(data.data, function(err, res) {
-      console.log("after handle" + JSON.stringify(err));
+      console.log("after handle: " + JSON.stringify(err));
       var result;
       if (err) {
         result = err;

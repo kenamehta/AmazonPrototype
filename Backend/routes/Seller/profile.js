@@ -22,13 +22,13 @@ const profilePictureFileUploadSeller = multer({
     key: function(req, file, cb) {
       cb(
         null,
-        "ProfilePictures/Seller/" + req.body.emailId + "/" + file.originalname
+        "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
       );
     }
   })
 });
 
-router.get("/:emailId", checkAuth, (req, res) => {
+router.get("/:emailId", (req, res) => {
   console.log("Inside get of seller/profile/:emailId");
   console.log(req.body);
 
@@ -44,7 +44,7 @@ router.get("/:emailId", checkAuth, (req, res) => {
   });
 });
 
-router.post("/updateProfileDetails", checkAuth, (req, res) => {
+router.post("/updateProfileDetails", (req, res) => {
   console.log("Inside post of seller/profile/updateProfileDetails");
   console.log(req.body);
 
@@ -61,7 +61,6 @@ router.post("/updateProfileDetails", checkAuth, (req, res) => {
 
 router.post(
   "/updateProfilePicture",
-  checkAuth,
   profilePictureFileUploadSeller.single("file"),
   (req, res) => {
     console.log("Inside post of seller/profile/updateProfilePicture");

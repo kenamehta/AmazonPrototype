@@ -37,6 +37,7 @@ app.use(
 );
 app.use(express.static("./ProfilePictures/Seller"));
 app.use(express.static("./ProfilePictures/Customer"));
+app.use(express.static("./ProfilePictures/Common"));
 
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
