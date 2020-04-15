@@ -13,6 +13,8 @@ function auth() {
   };
   passport.use(
     new JwtStrategy(opts, (jwt_payload, callback) => {
+      console.log('JWT_Payload: ');
+      console.log(jwt_payload);
       var msg = {};
       msg.user_id = jwt_payload._id;
       msg.userRole = jwt_payload.category;

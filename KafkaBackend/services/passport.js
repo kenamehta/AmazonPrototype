@@ -3,6 +3,8 @@
 const { customerRegister, sellerRegister } = require("../models/registration");
 
 function handle_request(msg, callback) {
+  console.log('Inside handle_request of passport service kafka backend');
+  console.log(msg);
   const { user_id, userRole } = msg;
   let model = "";
   model =
@@ -11,16 +13,22 @@ function handle_request(msg, callback) {
       : userRole === "seller"
       ? sellerRegister
       : "";
+  console.log('Selected model is');
+  console.log(model);
   if (model) {
-    model.findOne({ where: { _id: user_id } }, (err, results) => {
-      if (err) {
-        return callback(null, false);
-      }
-      if (results) {
-        callback(null, results);
+    console.log('Executing query now');
+    model.findOne({ where: { _id: user_id } })
+    .then(result => {
+      if(result){
+        console.log('User found: '+result);
+        callback(null, result);
       } else {
+        console.log('User Not found');
         callback(null, false);
       }
+    }).catch(err => {
+      console.log("Error caught: "+err);
+      return callback(null, false);
     });
   } else {
     return callback(null, { user: "admin" });
