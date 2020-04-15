@@ -4,7 +4,7 @@ import { SELLERPROFILE, UPDATEPROFILEPICTURE, UPDATEPROFILE } from './actionType
 
 export const getSellerProfile = (data) => (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
-  axios.defaults.withCredentials = true;
+  //axios.defaults.withCredentials = true;
   axios.get(configPath.api_host + "/seller/profile/" + data.emailId)
   .then((resp) => {
     if(resp.status === 200){
@@ -20,7 +20,7 @@ export const getSellerProfile = (data) => (dispatch) => {
 
 export const updateSellerProfilePicture = (data) => (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
-  axios.defaults.withCredentials = true;
+  //axios.defaults.withCredentials = true;
   const config = { headers: { 'Content-Type': 'multipart/form-data' } };
   axios.post(configPath.api_host + "/seller/profile/updateProfilePicture", data, config)
   .then((response) => {
@@ -41,7 +41,7 @@ export const updateSellerProfilePicture = (data) => (dispatch) => {
 
 export const updateSellerDetails = (data) => (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
-  axios.defaults.withCredentials = true;
+  //axios.defaults.withCredentials = true;
   axios.post(configPath.api_host + "/seller/profile/updateProfileDetails", data)
   .then((response) => {
     if(response.status === 200 ){

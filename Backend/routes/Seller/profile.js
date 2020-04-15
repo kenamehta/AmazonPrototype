@@ -20,15 +20,31 @@ const profilePictureFileUploadSeller = multer({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
-      cb(
-        null,
-        "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
-      );
-    },
+      // const params = {
+      //   Bucket:Config.AWS_BUCKET_NAME,
+      //   Key: "ProfilePictures/Seller/" + req.body.emailId + ".jpg"   
+      // }
+      // s3.headObject(params).promise()
+      // .then(()=>{
+      //     console.log("File Found in S3");
+      //     s3.deleteObject(params).promise()
+      //     .then(()=>{
+      //         console.log("file deleted Successfully");
+              cb(
+                null,
+                "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
+              );
+      //     }).catch((err)=>{
+      //         console.log("ERROR in file " + operation+ "ing : " + JSON.stringify(err));
+      //     })
+      // }).catch((err)=>{
+      //     console.log("File not Found ERROR : " + err.code);
+      // });
+    }
   }),
 });
 
-router.get("/:emailId", (req, res) => {
+router.get("/:emailId", checkAuth, (req, res) => {
   console.log("Inside get of seller/profile/:emailId");
   console.log(req.body);
 
@@ -44,7 +60,7 @@ router.get("/:emailId", (req, res) => {
   });
 });
 
-router.post("/updateProfileDetails", (req, res) => {
+router.post("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of seller/profile/updateProfileDetails");
   console.log(req.body);
 
@@ -61,6 +77,7 @@ router.post("/updateProfileDetails", (req, res) => {
 
 router.post(
   "/updateProfilePicture",
+  checkAuth,
   profilePictureFileUploadSeller.single("file"),
   (req, res) => {
     console.log("Inside post of seller/profile/updateProfilePicture");

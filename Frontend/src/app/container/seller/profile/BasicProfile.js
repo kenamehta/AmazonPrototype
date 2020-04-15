@@ -256,7 +256,13 @@ class BasicProfile extends React.Component {
                             }
                            });
                         }}></input>
-                        <button className="btn btn-secondary ml-2">Cancel</button>
+                        <button className="btn btn-secondary ml-2" onClick = {(e) => {
+                          e.preventDefault();
+                          this.setState({
+                            editNameButton: 'block',
+                            showText: 'none',
+                          })
+                        }}>Cancel</button>
                         <input
                           type="submit"
                           className="btn sprite ml-1"
