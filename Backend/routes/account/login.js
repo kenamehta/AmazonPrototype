@@ -15,18 +15,22 @@ router.post("/", function(req, res) {
     if (err) {
       res.status(err.status).send(err);
     } else {
-      const token = jwt.sign(
-        { _id: results.id, category: msg.category },
-        Config.secret,
-        {
-          expiresIn: 1008000
-        }
-      );
-      var jwtToken = "JWT " + token;
-      res.status(results.status).send({
-        ...results,
-        idToken: jwtToken
-      });
+      if (results.status == 200) {
+        const token = jwt.sign(
+          { _id: results.id, category: msg.category },
+          Config.secret,
+          {
+            expiresIn: 1008000
+          }
+        );
+        var jwtToken = "JWT " + token;
+        res.status(results.status).send({
+          ...results,
+          idToken: jwtToken
+        });
+      } else {
+        res.status(results.status).send(results);
+      }
     }
   });
 });

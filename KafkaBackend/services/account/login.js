@@ -4,6 +4,8 @@ const {
   customerRegister,
   sellerRegister
 } = require("../../models/registration");
+const customer = require("../../models/customer.model");
+const seller = require("../../models/seller.model");
 // const jwt = require("jsonwebtoken");
 // const { secret } = require("../../utils/config");
 // const { auth } = require("../../utils/passport");
@@ -11,11 +13,16 @@ const {
 
 let login = async (msg, callback) => {
   let model = "";
+  let model_mongoose = "";
   console.log(JSON.stringify(msg));
   model =
     msg.category === "customer"
       ? customerRegister
       : msg.category === "seller" ? sellerRegister : "admin";
+  model_mongoose =
+    msg.category === "customer"
+      ? customer
+      : msg.category === "seller" ? seller : "admin";
   let email = msg.email;
   if (model !== "admin") {
     model
@@ -42,18 +49,15 @@ let login = async (msg, callback) => {
               return callback({ status: 403, res: "Password Incorrect" }, null);
             } else {
               console.log("Logged in successfully");
-              // const logintoken = await generateToken(result._id);
-              // const token = jwt.sign(
-              //   { _id: result._id, category: msg.category },
-              //   secret,
-              //   {
-              //     expiresIn: 1008000
-              //   }
-              // );
-              // var jwtToken = "JWT " + token;
+              var mongoose_data = await model_mongoose.findOne({
+                emailId: email
+              });
+              var mongooseId = mongoose_data._id;
+              console.log(mongoose_data);
               return callback(null, {
                 status: 200,
                 id: result._id,
+                mongooseId,
                 res: "Logged in successfully"
                 // ,
                 // idToken: jwtToken
