@@ -1,8 +1,8 @@
 var kafka = require("kafka-node");
 
 /*
-Same thing as connection.js in Backend. Since Kafka Backend act as both consumer and producer,
-we have both these functions here as well.
+  Same thing as connection.js in Backend. Since Kafka Backend act as both consumer and producer,
+  we have both these functions here as well.
 */
 function ConnectionProvider() {
   this.getConsumer = function(topic_name) {

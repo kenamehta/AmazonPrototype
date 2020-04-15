@@ -8,6 +8,8 @@ router.post("/", async function(req, res) {
   let msg = req.body;
   msg.route = "registerCustomer";
   kafka.make_request("accounts", msg, function(err, results) {
+    console.log(err);
+    console.log(results);
     if (err) {
       res.status(err.status).send(err);
     } else {

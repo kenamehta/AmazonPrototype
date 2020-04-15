@@ -3,13 +3,14 @@ var connection = new require("./kafka/Connection");
 var connection_string = new require("./config");
 
 //passport service
-const passportService = require('./services/passport');
+const passportService = require("./services/passport");
 //account services
 const accountService = require("./services/account");
-//profile services
-const profileService = require("./services/profile");
+//seller profile services
+const sellerProfileService = require("./services/Seller/Profile");
 
-
+//customer profile service
+const customerProfileService= require("./services/customer/profile")
 //connect to MongoDB
 const Mongoose = require("mongoose");
 var options = {
@@ -40,13 +41,19 @@ function handleTopicRequest(topic_name, fname) {
 
     // Handling the make request that was called from backend server here in this function.
     fname.handle_request(data.data, function(err, res) {
-      console.log("after handle" + res);
+      console.log("after handle" + JSON.stringify(err));
+      var result;
+      if (err) {
+        result = err;
+      } else {
+        result = res;
+      }
       var payloads = [
         {
           topic: data.replyTo,
           messages: JSON.stringify({
             correlationId: data.correlationId,
-            data: res
+            data: result
           }),
           partition: 0
         }
@@ -62,4 +69,6 @@ function handleTopicRequest(topic_name, fname) {
 //topics
 handleTopicRequest("accounts", accountService);
 handleTopicRequest("passport", passportService);
-handleTopicRequest("profile", profileService);
+handleTopicRequest("sellerProfileService", sellerProfileService);
+handleTopicRequest("customerProfile", customerProfileService);
+

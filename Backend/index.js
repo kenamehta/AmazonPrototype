@@ -40,6 +40,8 @@ app.use(express.static("./ProfilePictures/Customer"));
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
+app.use("/customer/profile", require("./routes/customer/profile"))
+app.use('/seller/profile', sellerProfile);
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

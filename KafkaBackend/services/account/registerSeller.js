@@ -9,12 +9,12 @@ let registerSeller = async (msg, callback) => {
   const seller_register_sql = await sellerRegister.create({
     _id: uuid(),
     name: msg.name,
-    email: msg.email,
+    emailId: msg.email,
     password: bcrypt.hashSync(msg.password1, 10)
   });
   const seller_register_mongo = await seller.create({
     name: msg.name,
-    email: msg.email
+    emailId: msg.email
   });
   if (seller_register_sql && seller_register_mongo)
     return callback(null, { status: 200, res: "Seller Record Inserted" });

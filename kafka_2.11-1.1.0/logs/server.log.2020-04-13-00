@@ -1,7 +1,0 @@
-[2020-04-13 04:17:18,261] WARN Client session timed out, have not heard from server in 7195220ms for sessionid 0x1716f857f0e0003 (org.apache.zookeeper.ClientCnxn)
-[2020-04-13 04:17:18,407] INFO Client session timed out, have not heard from server in 7195220ms for sessionid 0x1716f857f0e0003, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
-[2020-04-13 04:17:18,660] INFO Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
-[2020-04-13 04:17:18,660] INFO Socket connection established to localhost/127.0.0.1:2181, initiating session (org.apache.zookeeper.ClientCnxn)
-[2020-04-13 04:17:18,720] INFO [ZooKeeperClient] Waiting until connected. (kafka.zookeeper.ZooKeeperClient)
-[2020-04-13 04:17:18,940] INFO Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x1716f857f0e0003, negotiated timeout = 6000 (org.apache.zookeeper.ClientCnxn)
-[2020-04-13 04:17:18,940] INFO [ZooKeeperClient] Connected. (kafka.zookeeper.ZooKeeperClient)
