@@ -2,6 +2,7 @@
 const seller = require('../../../models/seller.model');
 
 const getProfile = (msg, callback) => {
+  console.log('Inside getProfile of Seller');
   var res = {};
   seller.findOne({emailId:msg.emailId}, (err, user) => {
     if(err){

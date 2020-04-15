@@ -28,6 +28,7 @@ const productImagesUpload = multer({
   })
 });
 
+// move it to Customer Product Folder/File
 // sends all fields of a product document from mongoDb in response.
 router.get('/list/:productId', checkAuth, (req, res) => {
   console.log("Inside get of product/list/:productId");
@@ -45,6 +46,8 @@ router.get('/list/:productId', checkAuth, (req, res) => {
   });
 });
 
+// move it to Customer Product Folder/File
+// adds a comment for a product. updates average rating and returns the updated product document
 router.post('/customer/addComment', checkAuth, (req, res) => {
   console.log("Inside get of product/customer/addComment");
   console.log(req.body);
@@ -59,5 +62,49 @@ router.post('/customer/addComment', checkAuth, (req, res) => {
   });
 });
 
+
+
+/* 
+  frontend can be as follows:
+
+  filesUploadHandler(e) {
+    this.setState({
+      selectedFiles: e.target.files,
+    }, () => {
+      console.log(this.state.selectedFiles);
+    });
+  }
+
+  const fd = new FormData();
+  fd.append('file', this.state.selectedFiles);
+
+  OR
+  for (var x = 0; x < this.state.selectedFiles.length; x++) {
+    data.append("file" + x, this.state.selectedFiles[x]);
+}
+*/
+// keep it in Seller Product Folder/File
+router.post('/addProduct', checkAuth, productImagesUpload.any(), (req, res) => {
+  console.log("Inside get of seller/product/addProduct");
+  console.log(req.body);
+
+  if (req.files) {
+    console.log("Product Images req.files array after s3 upload: ", req.files);
+    //req.body.fileUrl = req.file.location;
+  }
+
+  /*
+  req.body.path = "add_product";
+  kafka.make_request("product", req.body, function(err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+  */
+ 
+ res.status(200).send('Successfully Added');
+});
 
 module.exports = router;

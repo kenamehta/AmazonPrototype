@@ -44,6 +44,7 @@ app.use("/registerSeller", require("./routes/account/registerSeller"));
 
 app.use('/seller/profile', sellerProfile);
 app.use('/product', product);
+app.use('/seller/product', product);
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");
