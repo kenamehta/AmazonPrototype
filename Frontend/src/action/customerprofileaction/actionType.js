@@ -1,1 +1,3 @@
 export const  GETPROFILE="GETPROFILE";
+export const  UPDATEPROFILE="UPDATEPROFILE";
+

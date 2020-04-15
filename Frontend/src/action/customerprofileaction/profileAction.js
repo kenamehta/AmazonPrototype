@@ -1,14 +1,24 @@
-import { GETPROFILE} from "./actionType";
+import { GETPROFILE,UPDATEPROFILE} from "./actionType";
 import configPath from "./../../configApp";
 import axios from "axios";
 
-//Log In Dispatcher
-const getProfileDispatcher = () => {
+//GET PROFILE Dispatcher
+const getProfileDispatcher = (payload) => {
   return {
-    type: GETPROFILE
+    type: GETPROFILE,
+    payload
 
   };
 };
+
+//update profile Dispatcher
+const updateProfileDispatcher = (payload) => {
+    return {
+      type: UPDATEPROFILE,
+      payload
+  
+    };
+  };
 
 //login thunk function. Delays dispatcher
 export const getProfile = () => {
@@ -16,28 +26,37 @@ export const getProfile = () => {
    
     //make a get request to fetch customer profile
     axios
-      .get(configPath.api_host + `/customer/profile/${}`, payload)
+      .get(configPath.api_host + `/customer/profile/${localStorage.getItem("emailId")}`)
       .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
-          localStorage.setItem("loginFlag", "true");
-          dispatch(loginDispatcher({ ...response.data, loginFlag: true }));
+         console.log(response.data)
+          dispatch(getProfileDispatcher(response.data));
         }
       })
       .catch(error => {
-        console.log(error);
-        if (error.response) {
-          console.log(error.response.data);
-          console.log("inside error of thunk ", {
-            ...error.response.data,
-            loginFlag: false
-          });
-          dispatch(
-            loginDispatcher({ ...error.response.data, loginFlag: false })
-          );
-        } else {
-          dispatch(loginDispatcher({ res: "Network error", loginFlag: false }));
-        }
+       console.log(error)
       });
   };
 };
+
+export const updateProfile = (payload) => {
+    return dispatch => {
+        axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
+
+      //make a put request to update customer profile
+      console.log("in update profile action")
+      axios
+        .put(configPath.api_host + `/customer/profile/updateProfileDetails`,payload)
+        .then(response => {
+          console.log("Status Code : ", response.status);
+          if (response.status === 200) {
+           console.log(response.data)
+            dispatch(updateProfileDispatcher(response.data));
+          }
+        })
+        .catch(error => {
+         console.log(error)
+        });
+    };
+  };

@@ -28,7 +28,7 @@ const profilePictureFileUploadCustomer = multer({
   })
 });
 
-router.get("/:emailId", checkAuth, (req, res) => {
+router.get("/:emailId", (req, res) => {
   console.log("Inside get of customer/profile/:emailId");
   console.log(req.body);
 
@@ -40,21 +40,23 @@ router.get("/:emailId", checkAuth, (req, res) => {
 
 
   kafka.make_request("customerProfile", msg , function(err, results) {
-    if (err) {
+    console.log(results);
+    console.log("while returning")
+    if (results.status!=200) {
       res.status(500).send("System Error");
     } else {
-      res.status(results.status).send(results.message);
+      res.status(results.status).send(results);
     }
   });
 });
 
-router.post("/updateProfileDetails", checkAuth, (req, res) => {
+router.put("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of customer/profile/updateProfileDetails");
   console.log(req.body);
+  let msg=req.body
+  msg.route = "updateProfile";
 
-  req.body.path = "updateProfile";
-
-  kafka.make_request("customerProfile", req.body, function(err, results) {
+  kafka.make_request("customerProfile", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {

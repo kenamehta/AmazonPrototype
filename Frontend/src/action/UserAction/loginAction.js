@@ -27,9 +27,10 @@ export const login = payload => {
     axios
       .post(configPath.api_host + "/login", payload)
       .then(response => {
-        console.log("Status Code : ", response.status);
+        console.log("Status Code : ", response);
         if (response.status === 200) {
           localStorage.setItem("loginFlag", "true");
+          localStorage.setItem('emailId',response.data.email)
           dispatch(loginDispatcher({ ...response.data, loginFlag: true }));
         }
       })

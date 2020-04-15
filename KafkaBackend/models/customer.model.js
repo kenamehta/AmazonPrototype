@@ -59,6 +59,8 @@ const customerProfile = new Schema(
     name: { type: String, required: true },
     phone: { type: String, default: "" },
     profilePictureUrl: { type: String, default: "default.png" },
+    city:{ type: String, default: "" },
+    state:{ type: String, default: "" },
     savedProducts: [savedProduct],
     cartProducts: [cartProduct],
     addresses: [address],
