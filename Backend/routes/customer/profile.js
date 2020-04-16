@@ -22,7 +22,7 @@ const profilePictureFileUploadCustomer = multer({
     key: function(req, file, cb) {
       cb(
         null,
-        "ProfilePictures/Customer/" + req.body.emailId + "/" + file.originalname
+        "ProfilePictures/Customer/" + req.body.emailId + ".jpg"
       );
     }
   })
