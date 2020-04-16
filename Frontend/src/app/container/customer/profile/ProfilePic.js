@@ -85,8 +85,8 @@ class ProfilePic extends Component {
                   <div className="d-flex" style={{ justifyContent: "center" }}>
                     <div style={{ display: this.state.editnamebutton }}>
                       <h3>{this.props.profileData.data.mainCustomer.name}</h3>
-                      <h6>New Delhi</h6>
-                      <h6>Delhi</h6>
+                      <h6>{this.props.profileData.data.mainCustomer.city}</h6>
+                      <h6>{this.props.profileData.data.mainCustomer.state}</h6>
                     </div>
                     <img
                       alt=""
