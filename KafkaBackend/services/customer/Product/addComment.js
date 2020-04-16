@@ -30,21 +30,29 @@ const addComment = (msg, callback) => {
           console.log('Comment Successfully Created');
 
           // updating product averageRating
-          const numberOfComments = comment.find({productId: msg.productId}).count();
-          console.log('Total number of comments for product: '+productId+' is: '+numberOfComments);
-          const newRating = ((foundProduct.averageRating * (numberOfComments - 1)) + parseInt(msg.rating)) / numberOfComments ;
-          console.log('Product new Average Rating: '+newRating);
-          foundProduct.averageRating = newRating;
-
-          foundProduct.save((productSaveError) => {
-            if(productSaveError){
+          comment.find({productId: msg.productId}, (err, results) => {
+            if(err){
               res.status = 500;
               res.message = 'Database Error';
               callback(null, res);
             } else {
-              res.status = 200;
-              res.message = foundProduct
-              callback(null, res);
+              const numberOfComments = results.length;
+              console.log('Total number of comments for product: '+msg.productId+' is: '+numberOfComments);
+              const newRating = ((foundProduct.averageRating * (numberOfComments - 1)) + parseInt(msg.rating)) / numberOfComments ;
+              console.log('Product new Average Rating: '+newRating);
+              foundProduct.averageRating = newRating;
+
+              foundProduct.save((productSaveError) => {
+                if(productSaveError){
+                  res.status = 500;
+                  res.message = 'Database Error';
+                  callback(null, res);
+                } else {
+                  res.status = 200;
+                  res.message = foundProduct
+                  callback(null, res);
+                }
+              });
             }
           });
         }

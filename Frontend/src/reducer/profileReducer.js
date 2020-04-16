@@ -1,4 +1,4 @@
-import { SELLERPROFILE, UPDATEPROFILEPICTURE, UPDATEPROFILE } from './../action/UserAction/actionTypes';
+import { SELLERPROFILE, SELLERUPDATEPROFILEPICTURE , SELLERUPDATEPROFILE } from '../action/Seller/Profile/actionType';
 
 const initialState = { 
   user: {}
@@ -11,7 +11,7 @@ export default function (state = initialState, action) {
         ...state,
         user: action.payload
       }
-    case UPDATEPROFILEPICTURE:
+    case SELLERUPDATEPROFILEPICTURE:
         return {
           ...state,
           user: {
@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
             profilePictureUrl:action.payload
           }
         }
-    case UPDATEPROFILE:
+    case SELLERUPDATEPROFILE:
       return {
         ...state,
         user: {

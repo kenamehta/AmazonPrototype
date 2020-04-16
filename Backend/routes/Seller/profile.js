@@ -12,17 +12,17 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   accessKeyId: Config.AWS_ACCESS_KEY_ID,
   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  region: Config.AWS_REGION,
+  region: Config.AWS_REGION
 });
 
 const profilePictureFileUploadSeller = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
-    key: function (req, file, cb) {
+    key: function(req, file, cb) {
       // const params = {
       //   Bucket:Config.AWS_BUCKET_NAME,
-      //   Key: "ProfilePictures/Seller/" + req.body.emailId + ".jpg"   
+      //   Key: "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
       // }
       // s3.headObject(params).promise()
       // .then(()=>{
@@ -30,10 +30,7 @@ const profilePictureFileUploadSeller = multer({
       //     s3.deleteObject(params).promise()
       //     .then(()=>{
       //         console.log("file deleted Successfully");
-              cb(
-                null,
-                "ProfilePictures/Seller/" + req.body.emailId + ".jpg"
-              );
+      cb(null, "ProfilePictures/Seller/" + req.body.emailId + ".jpg");
       //     }).catch((err)=>{
       //         console.log("ERROR in file " + operation+ "ing : " + JSON.stringify(err));
       //     })
@@ -41,7 +38,7 @@ const profilePictureFileUploadSeller = multer({
       //     console.log("File not Found ERROR : " + err.code);
       // });
     }
-  }),
+  })
 });
 
 router.get("/:emailId", checkAuth, (req, res) => {
@@ -51,7 +48,7 @@ router.get("/:emailId", checkAuth, (req, res) => {
   req.body.path = "seller_get";
   req.body.emailId = req.params.emailId;
 
-  kafka.make_request("sellerProfileService", req.body, function (err, results) {
+  kafka.make_request("sellerProfileService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -66,7 +63,7 @@ router.post("/updateProfileDetails", checkAuth, (req, res) => {
 
   req.body.path = "seller_update_profile";
 
-  kafka.make_request("sellerProfileService", req.body, function (err, results) {
+  kafka.make_request("sellerProfileService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -89,7 +86,7 @@ router.post(
     }
     console.log(req.body);
 
-    kafka.make_request("sellerProfileService", req.body, function (
+    kafka.make_request("sellerProfileService", req.body, function(
       err,
       results
     ) {

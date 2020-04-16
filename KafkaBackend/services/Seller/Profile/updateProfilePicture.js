@@ -1,21 +1,21 @@
 "use strict";
-const seller = require('../../../models/seller.model');
+const seller = require("../../../models/seller.model");
 
 const updateProfilePicture = (msg, callback) => {
-  console.log('Inside updateProfilePicture of Seller');
+  console.log("Inside updateProfilePicture of Seller");
   var res = {};
-  seller.findOne({emailId:msg.emailId}, (err, user) => {
-    if(err){
+  seller.findById(msg.id, (err, user) => {
+    if (err) {
       res.status = 500;
-      res.message = 'Database Error';
+      res.message = "Database Error";
       callback(null, res);
-    } 
-    if(user){
+    }
+    if (user) {
       user.profilePictureUrl = msg.fileUrl;
-      user.save((saveError) => {
-        if(saveError){
+      user.save(saveError => {
+        if (saveError) {
           res.status = 500;
-          res.message = 'Error in Data';
+          res.message = "Error in Data";
         } else {
           let userObject = {
             profilePictureUrl: user.profilePictureUrl
