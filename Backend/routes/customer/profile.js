@@ -64,7 +64,7 @@ router.put("/updateProfileDetails", checkAuth, (req, res) => {
   });
 });
 
-router.post(
+router.put(
   "/updateProfilePicture",
   checkAuth,
   profilePictureFileUploadCustomer.single("file"),

@@ -1,5 +1,5 @@
 "use strict";
-const seller = require("../../../models/customer.model");
+const customer = require("../../../models/customer.model");
 
 const updateProfilePicture = (msg, callback) => {
   console.log("Inside updateProfilePicture of customer");

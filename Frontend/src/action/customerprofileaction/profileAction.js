@@ -1,4 +1,4 @@
-import { GETPROFILE, UPDATEPROFILE } from "./actionType";
+import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC } from "./actionType";
 import configPath from "./../../configApp";
 import axios from "axios";
 
@@ -75,7 +75,7 @@ export const updateProfile = payload => {
 };
 
 //thunk for updating profile pic for customer
-export const updateProfilePic = payload => {
+export const updateProfilePicture = payload => {
   return dispatch => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
@@ -85,7 +85,7 @@ export const updateProfilePic = payload => {
     console.log("in update profile action");
     axios
       .put(
-        configPath.api_host + `/customer/profile/updateProfilePic`,
+        configPath.api_host + `/customer/profile/updateProfilePicture`,
         payload,
         config
       )

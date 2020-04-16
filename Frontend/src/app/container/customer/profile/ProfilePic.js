@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "../../../../style/ProfilePic.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 class ProfilePic extends Component {
   state = {
     showeditpicbutton: "none",
@@ -76,15 +78,20 @@ class ProfilePic extends Component {
                       </div>
                       <div
                         className="ml-3 mt-3"
-                        style={{ display: this.state.showeditpicbutton }}
+                        style={{
+                          display: this.state.showeditpicbutton,
+                          justifyContent: "center"
+                        }}
                       >
                         {/* <div className='a-popover-inner'>
                 <div className='a-row'> */}
-                        <Input
+
+                        <input
                           type="file"
                           name="profilePicture"
                           id="profilePicture"
                           accept="image/*"
+                          className="form-control"
                           onChange={e => {
                             this.setState(
                               { selectedFile: e.target.files[0] },
@@ -107,10 +114,11 @@ class ProfilePic extends Component {
                               fd.append("id", localStorage.getItem("ID"));
                               fd.append("file", this.state.selectedFile);
                               this.props.updateProfilePicture(fd);
+                              this.setState({ showeditpicbutton: "none" });
                             }
                           }}
                         >
-                          Upload
+                          Update
                         </button>
                       </div>
                     </div>

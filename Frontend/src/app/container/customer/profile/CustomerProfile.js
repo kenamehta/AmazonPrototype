@@ -2,11 +2,12 @@ import React, { Component } from "react";
 import ProfilePic from "./ProfilePic";
 import Insights from "./Insights";
 import { connect } from "react-redux";
+
 import {
   getProfile,
   updateProfile,
   updateProfilePicture
-} from "../../../../action/customerprofileaction/profileAction";
+} from "../../../../action/customerProfileAction/profileAction";
 
 class CustomerProfile extends Component {
   state = {};
@@ -19,7 +20,7 @@ class CustomerProfile extends Component {
         <ProfilePic
           profileData={this.props.profiledata}
           updateProfile={this.props.updateProfile}
-          updateProfilePicture={this.props.updateProfilePic}
+          updateProfilePicture={this.props.updateProfilePicture}
         />
         <Insights profileData={this.props.profiledata} />
       </div>
