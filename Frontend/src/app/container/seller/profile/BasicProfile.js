@@ -7,7 +7,7 @@ import {
   getSellerProfile,
   updateSellerProfilePicture,
   updateSellerDetails
-} from "../../../../action/UserAction/profileAction";
+} from "../../../../action/Seller/Profile/profileAction";
 
 class BasicProfile extends React.Component {
   constructor(props) {
@@ -145,6 +145,7 @@ class BasicProfile extends React.Component {
                               "id",
                               localStorage.getItem("ID")
                             );
+                            fd.append("emailId", localStorage.getItem("emailId"));
                             fd.append("file", this.state.selectedFile);
                             this.props.updateSellerProfilePicture(fd);
                           }
@@ -182,6 +183,7 @@ class BasicProfile extends React.Component {
                         onSubmit={e => {
                           e.preventDefault();
                           const data = {
+                            id: localStorage.getItem("ID"),
                             emailId: localStorage.getItem("emailId"),
                             name: this.state.basicDetails.name,
                             phone: this.state.basicDetails.phone,

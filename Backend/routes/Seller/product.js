@@ -72,6 +72,11 @@ router.post('/addProduct', productImagesUpload.any(), (req, res) => {
 });
 
 
+/*
+When seller adds a product, we first need to see if the product with given name already exists or not
+Status 200 if product exist and 400 on not.
+if 400 then call addProduct api
+*/
 router.get('/existProduct/:productName', (req, res) => {
   console.log("Inside post of product/seller/existProduct");
   console.log(req.body);

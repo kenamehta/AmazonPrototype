@@ -1,6 +1,6 @@
 import axios from 'axios';
-import configPath from "./../../configApp";
-import { SELLERPROFILE, UPDATEPROFILEPICTURE, UPDATEPROFILE } from './actionTypes';
+import configPath from "../../../configApp";
+import { SELLERPROFILE, SELLERUPDATEPROFILEPICTURE, SELLERUPDATEPROFILE } from './actionType';
 
 export const getSellerProfile = (data) => (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem('IDToken');
@@ -27,7 +27,7 @@ export const updateSellerProfilePicture = (data) => (dispatch) => {
     if(response.status === 200 ){
       window.alert('Profile Picture Changed Successfully');
       dispatch({
-        type:UPDATEPROFILEPICTURE,
+        type:SELLERUPDATEPROFILEPICTURE,
         payload:response.data.profilePictureUrl
       });
       // since the profilePictureUrl is the same, the dispatch is not changing the store
@@ -47,7 +47,7 @@ export const updateSellerDetails = (data) => (dispatch) => {
     if(response.status === 200 ){
       window.alert('Profile Details Updated Successfully');
       dispatch({
-        type:UPDATEPROFILE,
+        type:SELLERUPDATEPROFILE,
         payload:response.data
       });
     }
