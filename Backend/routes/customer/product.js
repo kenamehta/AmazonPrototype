@@ -13,7 +13,7 @@ router.get('/list/:productId', checkAuth, (req, res) => {
   req.body.path = "product_get";
   req.body.productId = req.params.productId;
 
-  kafka.make_request("product", req.body, function(err, results) {
+  kafka.make_request("customerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -29,7 +29,7 @@ router.post('/addComment', checkAuth, (req, res) => {
   console.log(req.body);
 
   req.body.path = "product_add_comment";
-  kafka.make_request("product", req.body, function(err, results) {
+  kafka.make_request("customerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {

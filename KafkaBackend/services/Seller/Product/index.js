@@ -1,14 +1,14 @@
 "use strict";
-const { getProduct } = require('./getProduct');
-const { addComment } = require('./addComment');
+const { addProduct } = require('./addProduct');
+const { existProduct } = require('./existProduct');
 
 function handle_request(msg, callback) {
   switch (msg.path) {
-    case "product_get": 
-        getProduct(msg, callback);
+    case "product_add": 
+        addProduct(msg, callback);
         break;
-    case "product_add_comment":
-        addComment(msg, callback);
+    case "product_exist":
+        existProduct(msg, callback);
         break;
   }
 }
