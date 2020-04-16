@@ -32,17 +32,16 @@ router.get("/:emailId", (req, res) => {
   console.log("Inside get of customer/profile/:emailId");
   console.log(req.body);
 
-//   req.body.path = "";
-//   req.body.emailId = req.params.emailId;
-    let msg=req.body;
-    msg.route='getProfile'
-    msg.params=req.params.emailId
+  //   req.body.path = "";
+  //   req.body.emailId = req.params.emailId;
+  let msg = req.body;
+  msg.route = "getProfile";
+  msg.params = req.params.emailId;
 
-
-  kafka.make_request("customerProfile", msg , function(err, results) {
+  kafka.make_request("customerProfile", msg, function(err, results) {
     console.log(results);
-    console.log("while returning")
-    if (results.status!=200) {
+    console.log("while returning");
+    if (results.status != 200) {
       res.status(500).send("System Error");
     } else {
       res.status(results.status).send(results);
@@ -53,7 +52,7 @@ router.get("/:emailId", (req, res) => {
 router.put("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of customer/profile/updateProfileDetails");
   console.log(req.body);
-  let msg=req.body
+  let msg = req.body;
   msg.route = "updateProfile";
 
   kafka.make_request("customerProfile", msg, function(err, results) {
@@ -72,7 +71,7 @@ router.post(
   (req, res) => {
     console.log("Inside post of customer/profile/updateProfilePicture");
 
-    req.body.path = "updateProfilePicture";
+    req.body.route = "updateProfilePicture";
     if (req.file) {
       console.log("New customer Profile Picture File: ", req.file);
       req.body.fileUrl = req.file.location;
@@ -88,6 +87,5 @@ router.post(
     });
   }
 );
-
 
 module.exports = router;

@@ -2,21 +2,26 @@ import React, { Component } from "react";
 import ProfilePic from "./ProfilePic";
 import Insights from "./Insights";
 import { connect } from "react-redux";
-import {getProfile,updateProfile} from "../../../../action/customerprofileaction/profileAction"
+import {
+  getProfile,
+  updateProfile,
+  updateProfilePicture
+} from "../../../../action/customerprofileaction/profileAction";
 
 class CustomerProfile extends Component {
   state = {};
-  componentWillMount(){
+  componentWillMount() {
     this.props.getProfile();
   }
   render() {
     return (
       <div>
-        <ProfilePic profileData={this.props.profiledata}
+        <ProfilePic
+          profileData={this.props.profiledata}
           updateProfile={this.props.updateProfile}
-
-        ></ProfilePic>
-        <Insights profileData={this.props.profiledata}></Insights>
+          updateProfilePicture={this.props.updateProfilePic}
+        />
+        <Insights profileData={this.props.profiledata} />
       </div>
     );
   }
@@ -25,13 +30,14 @@ class CustomerProfile extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-   profiledata:state.customerProfileReducer.profiledata
+    profiledata: state.customerProfileReducer.profiledata
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getProfile: () => dispatch(getProfile()),
-    updateProfile: (payload) => dispatch(updateProfile(payload))
+    updateProfile: payload => dispatch(updateProfile(payload)),
+    updateProfilePicture: payload => dispatch(updateProfilePicture(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerProfile);
