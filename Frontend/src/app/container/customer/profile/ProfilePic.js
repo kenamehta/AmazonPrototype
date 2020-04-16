@@ -172,7 +172,9 @@ class ProfilePic extends Component {
                             <input
                               type="text"
                               className="form-control"
-                              placeholder="Enter name"
+                              placeholder={
+                                this.props.profileData.data.mainCustomer.name
+                              }
                               onChange={e => {
                                 e.preventDefault();
                                 this.setState({ editedName: e.target.value });
@@ -183,7 +185,14 @@ class ProfilePic extends Component {
                             <input
                               type="text"
                               className="form-control"
-                              placeholder="Enter City"
+                              placeholder={
+                                this.props.profileData.data.mainCustomer
+                                  .city ? (
+                                  this.props.profileData.data.mainCustomer.city
+                                ) : (
+                                  "Enter City..."
+                                )
+                              }
                               onChange={e => {
                                 e.preventDefault();
                                 this.setState({ editedCity: e.target.value });
@@ -194,7 +203,14 @@ class ProfilePic extends Component {
                             <input
                               type="text"
                               className="form-control"
-                              placeholder="Enter State"
+                              placeholder={
+                                this.props.profileData.data.mainCustomer
+                                  .state ? (
+                                  this.props.profileData.data.mainCustomer.state
+                                ) : (
+                                  "Enter State..."
+                                )
+                              }
                               onChange={e => {
                                 e.preventDefault();
                                 this.setState({ editedState: e.target.value });
