@@ -22,11 +22,12 @@ let updateProfile = async (msg, callback) => {
     useFindAndModify: true,
   });
 
-  console.log(updatedCustomer)
+  console.log(updatedCustomer);
   (response.data = updatedCustomer), (response.status = 200);
   return callback(null, response);
 }
 catch(error){
+    console.log(error)
     err.status = 500;
     err.data = {
       errors: {

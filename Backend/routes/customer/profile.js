@@ -59,7 +59,7 @@ router.put("/updateProfileDetails", checkAuth, (req, res) => {
     if (err) {
       res.status(500).send("System Error");
     } else {
-      res.status(results.status).send(results.message);
+      res.status(results.status).send(results);
     }
   });
 });
