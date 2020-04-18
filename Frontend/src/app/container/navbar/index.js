@@ -8,12 +8,12 @@ import {
   InputGroup,
   Button,
   DropdownButton,
-  Dropdown
+  Dropdown,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   //Redirect,
-  Link
+  Link,
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
@@ -77,126 +77,218 @@ class Topnav extends React.Component {
       }*/
     //} else redirectVar = <Redirect to="/login" />;
     if (localStorage.getItem("loginFlag")) {
-      xnav = (
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Form inline style={{ width: 70 + "%" }}>
-            <DropdownButton
-              as={InputGroup.Prepend}
-              variant="outline-secondary"
-              title="All"
-              id="input-group-dropdown-1"
-              className="grey bradius025"
-            >
-              <Dropdown.Item href="#">Action</Dropdown.Item>
-              <Dropdown.Item href="#">Another action</Dropdown.Item>
-              <Dropdown.Item href="#">Something else here</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#">Separated link</Dropdown.Item>
-            </DropdownButton>
-            <InputGroup style={{ width: 90 + "%" }}>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                aria-label="Search"
-                aria-describedby="basic-addon2"
-                style={{ borderRadius: 0 + "px" }}
-              />
-              <InputGroup.Append>
-                <Button variant="outline-secondary" className="sprite">
-                  <FaSearch />
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
-          </Form>
-          <Nav>
-            <Nav.Link className="custom-nav">
-              <Link to="/home" style={{ float: "left" }}>
-                All
-                <br />
-                <b>Products</b>
-              </Link>
-            </Nav.Link>
-            <Nav.Link className="custom-nav">
-              <Link to="/events" style={{ float: "left" }}>
-                My
-                <br />
-                <b>Order</b>
-              </Link>
-            </Nav.Link>
-            <NavDropdown
-              title={
-                <div style={{ display: "inline-block" }}>
-                  Hello Pranav
-                  <br />
-                  <span>
-                    <b>Accounts &amp; List</b>
-                  </span>
-                </div>
-              }
-              id="collasible-nav-dropdown"
-              style={{ color: "#FFF" }}
-            >
-              <NavDropdown.Item>
-                <Link to="/customer/profile">Profile</Link>
-              </NavDropdown.Item>
-              {Applications}
-              {eventsApp}
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link to='/seller/profile'>Seller Profile</Link>
-              </NavDropdown.Item>
-              {Applications}
-              {eventsApp}
-              <NavDropdown.Divider />
-              <NavDropdown.Item>
-                <Link to="/" onClick={this.handleLogout}>
-                  Logout
-                </Link>
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link className="custom-nav cart">
-              <Link
-                to="/all_students"
-                style={{ marginLeft: 20 + "px" }}
-                title="Cart-Logo"
+      if (localStorage.getItem("category") == "seller") {
+        xnav = (
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Form inline style={{ width: 70 + "%" }}>
+              <DropdownButton
+                as={InputGroup.Prepend}
+                variant='outline-secondary'
+                title='All'
+                id='input-group-dropdown-1'
+                className='grey bradius025'
               >
-                Cart
-              </Link>
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      );
+                <Dropdown.Item href='#'>Action</Dropdown.Item>
+                <Dropdown.Item href='#'>Another action</Dropdown.Item>
+                <Dropdown.Item href='#'>Something else here</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href='#'>Separated link</Dropdown.Item>
+              </DropdownButton>
+              <InputGroup style={{ width: 90 + "%" }}>
+                <FormControl
+                  type='text'
+                  placeholder='Search'
+                  aria-label='Search'
+                  aria-describedby='basic-addon2'
+                  style={{ borderRadius: 0 + "px" }}
+                />
+                <InputGroup.Append>
+                  <Button variant='outline-secondary' className='sprite'>
+                    <FaSearch />
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
+            <Nav>
+              <Nav.Link className='custom-nav'>
+                <Link to='/home' style={{ float: "left" }}>
+                  My
+                  <br />
+                  <b>Products</b>
+                </Link>
+              </Nav.Link>
+              {/*<Nav.Link className='custom-nav'>
+                <Link to='/events' style={{ float: "left" }}>
+                  My
+                  <br />
+                  <b>Order</b>
+                </Link>
+              </Nav.Link>*/}
+              <NavDropdown
+                title={
+                  <div style={{ display: "inline-block" }}>
+                    Hello Pranav
+                    <br />
+                    <span>
+                      <b>Accounts &amp; List</b>
+                    </span>
+                  </div>
+                }
+                id='collasible-nav-dropdown'
+                style={{ color: "#FFF" }}
+              >
+                <NavDropdown.Item>
+                  <Link to='/customer/profile'>Profile</Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to='/seller/profile'>Seller Profile</Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to='/' onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+              {/*<Nav.Link className='custom-nav cart'>
+                <Link
+                  to='/all_students'
+                  style={{ marginLeft: 20 + "px" }}
+                  title='Cart-Logo'
+                >
+                  Cart
+                </Link>
+              </Nav.Link>*/}
+            </Nav>
+          </Navbar.Collapse>
+        );
+      } else {
+        xnav = (
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Form inline style={{ width: 70 + "%" }}>
+              <DropdownButton
+                as={InputGroup.Prepend}
+                variant='outline-secondary'
+                title='All'
+                id='input-group-dropdown-1'
+                className='grey bradius025'
+              >
+                <Dropdown.Item href='#'>Action</Dropdown.Item>
+                <Dropdown.Item href='#'>Another action</Dropdown.Item>
+                <Dropdown.Item href='#'>Something else here</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href='#'>Separated link</Dropdown.Item>
+              </DropdownButton>
+              <InputGroup style={{ width: 90 + "%" }}>
+                <FormControl
+                  type='text'
+                  placeholder='Search'
+                  aria-label='Search'
+                  aria-describedby='basic-addon2'
+                  style={{ borderRadius: 0 + "px" }}
+                />
+                <InputGroup.Append>
+                  <Button variant='outline-secondary' className='sprite'>
+                    <FaSearch />
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
+            <Nav>
+              <Nav.Link className='custom-nav'>
+                <Link to='/home' style={{ float: "left" }}>
+                  All
+                  <br />
+                  <b>Products</b>
+                </Link>
+              </Nav.Link>
+              <Nav.Link className='custom-nav'>
+                <Link to='/events' style={{ float: "left" }}>
+                  My
+                  <br />
+                  <b>Order</b>
+                </Link>
+              </Nav.Link>
+              <NavDropdown
+                title={
+                  <div style={{ display: "inline-block" }}>
+                    Hello Pranav
+                    <br />
+                    <span>
+                      <b>Accounts &amp; List</b>
+                    </span>
+                  </div>
+                }
+                id='collasible-nav-dropdown'
+                style={{ color: "#FFF" }}
+              >
+                <NavDropdown.Item>
+                  <Link to='/customer/profile'>Profile</Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to='/seller/profile'>Seller Profile</Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to='/' onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+              <Nav.Link className='custom-nav cart'>
+                <Link
+                  to='/all_students'
+                  style={{ marginLeft: 20 + "px" }}
+                  title='Cart-Logo'
+                >
+                  Cart
+                </Link>
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        );
+      }
     } else {
       xnav = (
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Form inline className="mr-auto">
+        <Navbar.Collapse id='basic-navbar-nav'>
+          <Form inline className='mr-auto'>
             <FormControl
-              type="text"
-              placeholder="Search"
-              className="mr-sm-3"
+              type='text'
+              placeholder='Search'
+              className='mr-sm-3'
               style={{ display: "none" }}
             />
           </Form>
-          <Nav activeKey="/login">
-            <Nav.Link className="custom-nav">
-              <Link to="/login">Login</Link>
+          <Nav activeKey='/login'>
+            <Nav.Link className='custom-nav'>
+              <Link to='/login'>Login</Link>
             </Nav.Link>
-            <Nav.Link className="custom-nav">
-              <Link to="/registerCustomer">Create Account</Link>
+            <Nav.Link className='custom-nav'>
+              <Link to='/registerCustomer'>Create Account</Link>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       );
     }
     return (
-      <div className="container-fluid bluebeacon">
+      <div className='container-fluid bluebeacon'>
         {redirectVar}
         <div>
-          <Navbar expand="lg">
+          <Navbar expand='lg'>
             <Navbar.Brand style={{ marginRight: 70 + "px" }}>
-              <img src="/logo.png" height="40" alt="amazon-logo" />
+              <img src='/logo.png' height='40' alt='amazon-logo' />
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls='basic-navbar-nav' />
             {xnav}
           </Navbar>
         </div>
@@ -205,17 +297,17 @@ class Topnav extends React.Component {
   }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   console.log("In navbar");
   return {
     getProfileInfo: state.getProfileInfo,
     getType: state.getType,
-    getCompProfile: state.getCompProfile
+    getCompProfile: state.getCompProfile,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    logOut: payload => dispatch(logOut(payload))
+    logOut: (payload) => dispatch(logOut(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);
