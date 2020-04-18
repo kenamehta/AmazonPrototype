@@ -14,6 +14,8 @@ const customerProfileService= require("./services/customer/profile");
 const customerProductService = require("./services/customer/Product");
 //seller product service
 const sellerProductService = require("./services/Seller/Product");
+//admin product service
+const adminProductService = require("./services/admin/Product");
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -77,4 +79,5 @@ handleTopicRequest("sellerProfileService", sellerProfileService);
 handleTopicRequest("customerProfile", customerProfileService);
 handleTopicRequest("customerProductService", customerProductService);
 handleTopicRequest("sellerProductService", sellerProductService);
+handleTopicRequest("adminProductService", adminProductService);
 

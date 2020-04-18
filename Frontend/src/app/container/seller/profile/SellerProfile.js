@@ -1,27 +1,27 @@
-import React from 'react';
-import BasicProfile from './BasicProfile';
-import { connect } from 'react-redux';
+import React from "react";
+import BasicProfile from "./BasicProfile";
+import Container from "react-bootstrap/Container";
+import { connect } from "react-redux";
 
 class SellerProfile extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {
-      
-    }
+    this.state = {};
   }
 
-  render(){
+  render() {
     let sellerVisitingOwnProfile = true;
-    if(this.props.match.params.id){
+    if (this.props.match.params.id) {
       sellerVisitingOwnProfile = false;
     }
-    return(
-      <div>
-        <div>
-          <BasicProfile sellerVisitingOwnProfile = {sellerVisitingOwnProfile} sellerEmailId = {this.props.match.params.id}/>
-        </div>
-      </div>
-    )
+    return (
+      <Container>
+        <BasicProfile
+          sellerVisitingOwnProfile={sellerVisitingOwnProfile}
+          sellerEmailId={this.props.match.params.id}
+        />
+      </Container>
+    );
   }
 }
 
@@ -29,4 +29,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile.user,
 });
 
-export default connect(mapStateToProps,{ })(SellerProfile);
+export default connect(mapStateToProps, {})(SellerProfile);

@@ -1,0 +1,74 @@
+.ProfilePicImage {
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.ProfilePicButtononImage {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  border-radius: 50%;
+  width: 184px;
+  height: 184px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 3.8px solid rgba(255, 255, 255, 0);
+  color: rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  font-weight: Bold;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.ProfilePicButtononImage:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.ProfileCard {
+  margin: 10px auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.editbutton {
+  background-color: white;
+  border: none;
+}
+
+.editbutton:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.btn-primary:focus,
+.btn-primary:active {
+  box-shadow: none !important;
+  outline: 0px !important;
+  background-color: transparent !important;
+}
+
+.save {
+  background-color: rgb(254, 189, 105);
+  color: rgba(0, 0, 0, 0.98);
+  border: none;
+  margin-left: 15px;
+}
+
+.save:hover {
+  background-color: rgba(254, 189, 105, 0.8);
+}
+
+.cancel {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.98);
+  border: none;
+}
+
+.cancel:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}

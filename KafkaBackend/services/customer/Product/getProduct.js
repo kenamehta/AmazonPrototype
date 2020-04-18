@@ -11,36 +11,36 @@ const getProduct = (msg, callback) => {
   // the product is in order and customer can go to order and visit product page.
   // for showing all products in database, we will use another api that will have validFlag true and thus
   // would not show deleted products in search.
-  product.findOne({ _id:msg.productId }, (err, product) => {
+  product.findById(msg.productId, (err, foundProduct) => {
     if(err){
       res.status = 500;
       res.message = 'Database Error';
       callback(null, res);
     }
-    if(product){
+    if(foundProduct){
       const date = new Date();
       // getting date in mm/dd/yyyy format
       const myCustomDate = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
 
       // checking if myCustomDate already exists in clickCount array
-      const index = product.clickCount.map((each) => {
+      const index = foundProduct.clickCount.map((each) => {
         return each.date;
       }).indexOf(myCustomDate);
 
       if ( index === -1 ) {
-        product.clickCount.push({date: myCustomDate, count: 1});
+        foundProduct.clickCount.push({date: myCustomDate, count: 1});
       } else {
-        product.clickCount[i].count = product.clickCount[i].count + 1;
+        foundProduct.clickCount[i].count = foundProduct.clickCount[i].count + 1;
       }
 
       // updating clickCount in database
-      product.save((saveError) => {
+      foundProduct.save((saveError) => {
         if(saveError){
           res.status = 500;
           res.message = 'Database Error';
         } else {
           res.status = 200;
-          res.message = product;
+          res.message = foundProduct;
         }
         callback(null, res);
       });

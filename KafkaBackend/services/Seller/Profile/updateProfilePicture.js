@@ -11,7 +11,8 @@ const updateProfilePicture = (msg, callback) => {
       callback(null, res);
     }
     if (user) {
-      user.profilePictureUrl = msg.fileUrl;
+      if(msg.fileUrl)
+        user.profilePictureUrl = msg.fileUrl;
       user.save(saveError => {
         if (saveError) {
           res.status = 500;

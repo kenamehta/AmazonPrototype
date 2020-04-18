@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import {
   getProfile,
   updateProfile,
-  updateProfilePicture
-} from "../../../../action/customerProfileAction/profileAction";
+  updateProfilePicture,
+} from "../../../../action/customerprofileaction/profileAction";
 
 class CustomerProfile extends Component {
   state = {};
@@ -28,17 +28,17 @@ class CustomerProfile extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state);
   return {
-    profiledata: state.customerProfileReducer.profiledata
+    profiledata: state.customerProfileReducer.profiledata,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getProfile: () => dispatch(getProfile()),
-    updateProfile: payload => dispatch(updateProfile(payload)),
-    updateProfilePicture: payload => dispatch(updateProfilePicture(payload))
+    updateProfile: (payload) => dispatch(updateProfile(payload)),
+    updateProfilePicture: (payload) => dispatch(updateProfilePicture(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerProfile);

@@ -23,11 +23,7 @@ const profilePictureFileUploadCustomer = multer({
       //cb(null, "ProfilePictures/Customer/" + req.body.emailId + ".jpg");
       cb(
         null,
-        "ProfilePictures/Customer/" + req.body.emailId + ".jpg"
       );
-    }
-  })
-});
 
 router.get("/:emailId", (req, res) => {
   console.log("Inside get of customer/profile/:emailId");

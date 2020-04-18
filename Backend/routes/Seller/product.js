@@ -21,9 +21,10 @@ const productImagesUpload = multer({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
     key: function(req, file, cb) {
+      //console.log(req.body);
         cb(
           null,
-          "Products/" + req.body.productName + "/" + file.fieldname + '.jpg'
+          "Products/" + req.body.productName + "/" + file.fieldname + Date.now() + '.jpg'
         );
     }
   })
@@ -49,11 +50,11 @@ const productImagesUpload = multer({
 }
 */
 // keep it in Seller Product Folder/File
-router.post('/addProduct', productImagesUpload.any(), (req, res) => {
+router.post('/addProduct', productImagesUpload.any(), checkAuth, (req, res) => {
   console.log("Inside post of product/seller/addProduct");
   console.log(req.body);
   if (req.files) {
-    console.log("Product Images req.files array after s3 upload: ", req.files);
+    console.log("Product Images req.files array after s3 upload: ");
     const productImagesURL = req.files.map((each)=>each.location);
     console.log(productImagesURL);
     req.body.productImagesURL = productImagesURL;
@@ -73,16 +74,20 @@ router.post('/addProduct', productImagesUpload.any(), (req, res) => {
 
 
 /*
-When seller adds a product, we first need to see if the product with given name already exists or not
-Status 200 if product exist and 400 on not.
-if 400 then call addProduct api
-*/
-router.get('/existProduct/:productName', (req, res) => {
-  console.log("Inside post of product/seller/existProduct");
-  console.log(req.body);
+  When seller adds a product, we first need to see if the product with given name already exists or not
+  Status 200 if product exist and 400 on not.
+  if 400 then call addProduct api
 
+  Spoke to Puneet. Product Name is unique. So Seller cannot change a Product Name.
+  checking for exact match, case insensitive in the backend
+  so AMAZON and amazon is same product
+*/
+router.get('/existProduct/:productName', checkAuth, (req, res) => {
+  console.log("Inside get of product/seller/existProduct");
+ 
   req.body.path = "product_exist";
   req.body.productName = req.params.productName;
+  console.log(req.body);
 
   kafka.make_request("sellerProductService", req.body, function(err, results) {
     if (err) {
@@ -92,5 +97,63 @@ router.get('/existProduct/:productName', (req, res) => {
     }
   });
 });
+
+
+// Removing of a product by seller. Will only soft delete, set validFlag = false
+// expecting productId in req.body
+router.post('/removeProduct', checkAuth ,(req, res) => {
+  console.log("Inside post of product/seller/removeProduct");
+  console.log(req.body);
+
+  req.body.path = "product_delete";
+
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
+    if(err){
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+
+// Seller cannot change Product Name. Do not give this editing field option in frontend. Assuming Product Name to be unique.
+// Expecting productId to be given in req.body
+router.post('/updateProduct', checkAuth, productImagesUpload.any() ,(req, res) => {
+  console.log("Inside post of product/seller/updateProduct");
+  console.log(req.body);
+
+  if(req.files){
+    console.log("Product Images req.files array after s3 upload: ", req.files);
+    const productImagesURL = req.files.map((each)=>each.location);
+    console.log(productImagesURL);
+    req.body.productImagesURL = productImagesURL;
+  }
+
+  req.body.path = "product_update";
+
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
+    if(err){
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+
+router.get('/productCategories', checkAuth, (req, res) => {
+  console.log("Inside get of product/seller/productCategories");
+  console.log(req.body);
+
+  req.body.path = "get_product_categories";
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+})
 
 module.exports = router;
