@@ -2,7 +2,7 @@ import {
   GETPROFILE,
   UPDATEPROFILE,
   UPDATEPROFILEPIC,
-} from "../action/customerprofileaction/actionType";
+} from "../action/customerProfileAction/actionType";
 
 const initialState = {
   profiledata: {},
