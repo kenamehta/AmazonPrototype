@@ -23,7 +23,7 @@ const profilePictureFileUploadCustomer = multer({
       //cb(null, "ProfilePictures/Customer/" + req.body.emailId + ".jpg");
       cb(
         null,
-        "ProfilePictures/Customer/" + req.body.emailId + "/" + file.originalname
+        "ProfilePictures/Customer/" + req.body.emailId + Date.now() + file.originalname
       );
     }
   })

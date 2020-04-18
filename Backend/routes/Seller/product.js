@@ -23,7 +23,7 @@ const productImagesUpload = multer({
     key: function(req, file, cb) {
         cb(
           null,
-          "Products/" + req.body.productName + "/" + file.fieldname + '.jpg'
+          "Products/" + req.body.productName + "/" + file.fieldname + Date.now() + '.jpg'
         );
     }
   })
