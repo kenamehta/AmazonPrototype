@@ -8,12 +8,12 @@ import {
   InputGroup,
   Button,
   DropdownButton,
-  Dropdown
+  Dropdown,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   //Redirect,
-  Link
+  Link,
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
@@ -80,20 +80,21 @@ class Topnav extends React.Component {
       xnav = (
         <Navbar.Collapse id="basic-navbar-nav">
           <Form inline style={{ width: 70 + "%" }}>
-            <DropdownButton
-              as={InputGroup.Prepend}
-              variant="outline-secondary"
-              title="All"
-              id="input-group-dropdown-1"
-              className="grey bradius025"
-            >
-              <Dropdown.Item href="#">Action</Dropdown.Item>
-              <Dropdown.Item href="#">Another action</Dropdown.Item>
-              <Dropdown.Item href="#">Something else here</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item href="#">Separated link</Dropdown.Item>
-            </DropdownButton>
             <InputGroup style={{ width: 90 + "%" }}>
+              <DropdownButton
+                as={InputGroup.Prepend}
+                variant="outline-secondary"
+                title="All"
+                id="input-group-dropdown-1"
+                className="grey bradius025"
+              >
+                <Dropdown.Item href="#">Action</Dropdown.Item>
+                <Dropdown.Item href="#">Another action</Dropdown.Item>
+                <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="#">Separated link</Dropdown.Item>
+              </DropdownButton>
+
               <FormControl
                 type="text"
                 placeholder="Search"
@@ -109,23 +110,20 @@ class Topnav extends React.Component {
             </InputGroup>
           </Form>
           <Nav>
-            <Nav.Link className="custom-nav">
-              <Link to="/home" style={{ float: "left" }}>
-                All
-                <br />
-                <b>Products</b>
-              </Link>
-            </Nav.Link>
-            <Nav.Link className="custom-nav">
-              <Link to="/events" style={{ float: "left" }}>
-                My
-                <br />
-                <b>Order</b>
-              </Link>
-            </Nav.Link>
+            <Link to="/home" style={{ float: "left" }} className="custom-nav">
+              All
+              <br />
+              <b>Products</b>
+            </Link>
+            <Link to="/events" style={{ float: "left" }} className="custom-nav">
+              My
+              <br />
+              <b>Order</b>
+            </Link>
             <NavDropdown
+              className="custom-nav"
               title={
-                <div style={{ display: "inline-block" }}>
+                <div style={{ display: "inline-block", color: "#FFF" }}>
                   Hello Pranav
                   <br />
                   <span>
@@ -134,7 +132,6 @@ class Topnav extends React.Component {
                 </div>
               }
               id="collasible-nav-dropdown"
-              style={{ color: "#FFF" }}
             >
               <NavDropdown.Item>
                 <Link to="/customer/profile">Profile</Link>
@@ -143,7 +140,7 @@ class Topnav extends React.Component {
               {eventsApp}
               <NavDropdown.Divider />
               <NavDropdown.Item>
-                <Link to='/seller/profile'>Seller Profile</Link>
+                <Link to="/seller/profile">Seller Profile</Link>
               </NavDropdown.Item>
               {Applications}
               {eventsApp}
@@ -154,15 +151,15 @@ class Topnav extends React.Component {
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link className="custom-nav cart">
-              <Link
-                to="/all_students"
-                style={{ marginLeft: 20 + "px" }}
-                title="Cart-Logo"
-              >
-                Cart
-              </Link>
-            </Nav.Link>
+            <Link
+              to="/all_students"
+              style={{ position: "relative", whiteSpace: "nowrap" }}
+              className="custom-nav"
+            >
+              <span id="num-item">0</span>
+              <div className="cart"></div>
+              <span id="span-cart">Cart</span>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       );
@@ -178,12 +175,12 @@ class Topnav extends React.Component {
             />
           </Form>
           <Nav activeKey="/login">
-            <Nav.Link className="custom-nav">
-              <Link to="/login">Login</Link>
-            </Nav.Link>
-            <Nav.Link className="custom-nav">
-              <Link to="/registerCustomer">Create Account</Link>
-            </Nav.Link>
+            <Link to="/login" className="custom-nav">
+              Login
+            </Link>
+            <Link to="/registerCustomer" className="custom-nav">
+              Create Account
+            </Link>
           </Nav>
         </Navbar.Collapse>
       );
@@ -205,17 +202,17 @@ class Topnav extends React.Component {
   }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   console.log("In navbar");
   return {
     getProfileInfo: state.getProfileInfo,
     getType: state.getType,
-    getCompProfile: state.getCompProfile
+    getCompProfile: state.getCompProfile,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    logOut: payload => dispatch(logOut(payload))
+    logOut: (payload) => dispatch(logOut(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);
