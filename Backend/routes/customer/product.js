@@ -6,8 +6,10 @@ const kafka = require("../../kafka/client");
 
 // move it to Customer Product Folder/File
 // sends all fields of a product document from mongoDb in response.
+// not checking for ValidFlag = true in the backend
+// to suffice if customer ordered a product and seller soft deletes it, that customer could still product page from his/her orders
 router.get('/list/:productId', checkAuth, (req, res) => {
-  console.log("Inside get of product/list/:productId");
+  console.log("Inside get of product/customer/list/:productId");
   console.log(req.body);
 
   req.body.path = "product_get";
@@ -30,6 +32,24 @@ router.post('/addComment', checkAuth, (req, res) => {
 
   req.body.path = "product_add_comment";
   kafka.make_request("customerProductService", req.body, function(err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+/*
+Expecting product_id, seller_email_id, quantity.
+If product is a gift, provide giftMessage which is a required field in frontend
+*/
+router.post('/addToCart', checkAuth, (req, res) => {
+  console.log('Inside get of product/customer/addToCart');
+  console.log(req.body);
+
+  req.body.path = "product_add_cart";
+  kafka.make_request("customerProductService", req.body, function(err, results){
     if (err) {
       res.status(500).send("System Error");
     } else {
