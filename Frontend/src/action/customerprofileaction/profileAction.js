@@ -1,6 +1,6 @@
 import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC } from "./actionType";
 import configPath from "../../configApp";
-import axios from 'axios';
+import axios from 'axios'
 
 //GET PROFILE Dispatcher
 const getProfileDispatcher = payload => {
