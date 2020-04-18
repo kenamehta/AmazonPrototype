@@ -30,7 +30,7 @@ const profilePictureFileUploadSeller = multer({
       //     s3.deleteObject(params).promise()
       //     .then(()=>{
       //         console.log("file deleted Successfully");
-      cb(null, "ProfilePictures/Seller/" + req.body.emailId + ".jpg");
+      cb(null, "ProfilePictures/Seller/" + req.body.emailId + Date.now() + ".jpg");
       //     }).catch((err)=>{
       //         console.log("ERROR in file " + operation+ "ing : " + JSON.stringify(err));
       //     })
