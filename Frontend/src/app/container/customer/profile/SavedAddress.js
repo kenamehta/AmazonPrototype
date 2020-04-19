@@ -5,7 +5,7 @@ import "../../../../style/ProfilePic.css";
 import {
    addAddress,deleteAddress
    
-  } from "../../../../action/customerProfileAction/profileAction";
+  } from "../../../../action/customerprofileaction/profileAction";
   
 
 class SavedAddress extends Component {

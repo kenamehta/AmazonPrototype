@@ -45,7 +45,7 @@ const card = new Schema(
   {
     cardName: { type: String, required: true },
     cardNumber: { type: String, required: true },
-    expirationDate: { type: String, required: true },
+    expirationDate: { type: Date, required: true },
     cvv: { type: String, required: true }
   },
   {

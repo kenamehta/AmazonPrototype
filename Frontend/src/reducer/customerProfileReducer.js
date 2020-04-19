@@ -2,9 +2,9 @@ import {
   GETPROFILE,
   UPDATEPROFILE,
   UPDATEPROFILEPIC,
-  DELETEADDRESS,
-  ADDADDRESS
-} from "../action/customerProfileAction/actionType";
+  ADDADDRESS,
+  DELETEADDRESS
+} from "../action/customerprofileaction/actionType";
 
 const initialState = {
   profiledata: {},
