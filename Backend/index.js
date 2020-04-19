@@ -10,6 +10,7 @@ const Config = require('./config');
 const sellerProfile = require("./routes/Seller/profile");
 const sellerProduct = require("./routes/Seller/product");
 const customerProduct = require("./routes/customer/product");
+const adminProduct = require("./routes/admin/product");
 
 
 const app = express();
@@ -47,6 +48,7 @@ app.use("/customer/profile", require("./routes/customer/profile"))
 app.use('/seller/profile', sellerProfile);
 app.use('/product/customer', customerProduct);
 app.use('/product/seller', sellerProduct);
+app.use('/product/admin', adminProduct);
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

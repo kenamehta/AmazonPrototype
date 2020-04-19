@@ -38,8 +38,10 @@ const addComment = (msg, callback) => {
             } else {
               const numberOfComments = results.length;
               console.log('Total number of comments for product: '+msg.productId+' is: '+numberOfComments);
-              const newRating = ((foundProduct.averageRating * (numberOfComments - 1)) + parseInt(msg.rating)) / numberOfComments ;
+              // rounding to nearest 0.5 by using formulae (Math.round(num*2)/2)
+              const newRating = Math.round((((foundProduct.averageRating * (numberOfComments - 1)) + parseInt(msg.rating)) / numberOfComments)*2)/2 ;
               console.log('Product new Average Rating: '+newRating);
+
               foundProduct.averageRating = newRating;
 
               foundProduct.save((productSaveError) => {

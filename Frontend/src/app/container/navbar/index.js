@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 //import { UserType, Logout } from "../../actions";
 import { logOut } from "./../../../action/UserAction/logoutAction";
+import { getCategory } from "./../../../action/ProductAction/productCategory";
 
 class Topnav extends React.Component {
   constructor(props) {
@@ -36,20 +37,7 @@ class Topnav extends React.Component {
   };
 
   componentDidMount() {
-    /* For page refresh 
-    if (localStorage.getItem('type') == 'Company') {
-      this.props.dispatch(UserType(localStorage.getItem('type')));
-      let data = {
-        user_id: localStorage.getItem('user_id')
-      };
-      this.props.dispatch(companyProfileData(data));
-    } else {
-      this.props.dispatch(UserType(localStorage.getItem('type')));
-      let data = {
-        user_id: localStorage.getItem('user_id')
-      };
-      this.props.dispatch(studentProfileData(data));
-    }*/
+    this.props.getCategory();
   }
 
   render() {
@@ -76,6 +64,9 @@ class Topnav extends React.Component {
         }
       }*/
     //} else redirectVar = <Redirect to="/login" />;
+    let cat = this.props.category.map(({ _id, name }) => {
+      return <Dropdown.Item key={_id}>{name}</Dropdown.Item>;
+    });
     if (localStorage.getItem("loginFlag")) {
       if (localStorage.getItem("category") == "seller") {
         xnav = (
@@ -88,11 +79,7 @@ class Topnav extends React.Component {
                 id='input-group-dropdown-1'
                 className='grey bradius025'
               >
-                <Dropdown.Item href='#'>Action</Dropdown.Item>
-                <Dropdown.Item href='#'>Another action</Dropdown.Item>
-                <Dropdown.Item href='#'>Something else here</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href='#'>Separated link</Dropdown.Item>
+                {cat}
               </DropdownButton>
               <InputGroup style={{ width: 90 + "%" }}>
                 <FormControl
@@ -110,20 +97,11 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Nav.Link className='custom-nav'>
-                <Link to='/home' style={{ float: "left" }}>
-                  My
-                  <br />
-                  <b>Products</b>
-                </Link>
-              </Nav.Link>
-              {/*<Nav.Link className='custom-nav'>
-                <Link to='/events' style={{ float: "left" }}>
-                  My
-                  <br />
-                  <b>Order</b>
-                </Link>
-              </Nav.Link>*/}
+              <Link to='/home' className='custom-nav' style={{ float: "left" }}>
+                My
+                <br />
+                <b>Products</b>
+              </Link>
               <NavDropdown
                 title={
                   <div style={{ display: "inline-block" }}>
@@ -134,8 +112,9 @@ class Topnav extends React.Component {
                     </span>
                   </div>
                 }
+                className='custom-nav'
                 id='collasible-nav-dropdown'
-                style={{ color: "#FFF" }}
+                style={{ display: "Block", color: "#FFF" }}
               >
                 <NavDropdown.Item>
                   <Link to='/customer/profile'>Profile</Link>
@@ -155,15 +134,6 @@ class Topnav extends React.Component {
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
-              {/*<Nav.Link className='custom-nav cart'>
-                <Link
-                  to='/all_students'
-                  style={{ marginLeft: 20 + "px" }}
-                  title='Cart-Logo'
-                >
-                  Cart
-                </Link>
-              </Nav.Link>*/}
             </Nav>
           </Navbar.Collapse>
         );
@@ -171,20 +141,17 @@ class Topnav extends React.Component {
         xnav = (
           <Navbar.Collapse id='basic-navbar-nav'>
             <Form inline style={{ width: 70 + "%" }}>
-              <DropdownButton
-                as={InputGroup.Prepend}
-                variant='outline-secondary'
-                title='All'
-                id='input-group-dropdown-1'
-                className='grey bradius025'
-              >
-                <Dropdown.Item href='#'>Action</Dropdown.Item>
-                <Dropdown.Item href='#'>Another action</Dropdown.Item>
-                <Dropdown.Item href='#'>Something else here</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href='#'>Separated link</Dropdown.Item>
-              </DropdownButton>
               <InputGroup style={{ width: 90 + "%" }}>
+                <DropdownButton
+                  as={InputGroup.Prepend}
+                  variant='outline-secondary'
+                  title='All'
+                  id='input-group-dropdown-1'
+                  className='grey bradius025'
+                >
+                  {cat}
+                </DropdownButton>
+
                 <FormControl
                   type='text'
                   placeholder='Search'
@@ -200,23 +167,24 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Nav.Link className='custom-nav'>
-                <Link to='/home' style={{ float: "left" }}>
-                  All
-                  <br />
-                  <b>Products</b>
-                </Link>
-              </Nav.Link>
-              <Nav.Link className='custom-nav'>
-                <Link to='/events' style={{ float: "left" }}>
-                  My
-                  <br />
-                  <b>Order</b>
-                </Link>
-              </Nav.Link>
+              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
+                All
+                <br />
+                <b>Products</b>
+              </Link>
+              <Link
+                to='/events'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                My
+                <br />
+                <b>Order</b>
+              </Link>
               <NavDropdown
+                className='custom-nav'
                 title={
-                  <div style={{ display: "inline-block" }}>
+                  <div style={{ display: "inline-block", color: "#FFF" }}>
                     Hello Pranav
                     <br />
                     <span>
@@ -225,7 +193,6 @@ class Topnav extends React.Component {
                   </div>
                 }
                 id='collasible-nav-dropdown'
-                style={{ color: "#FFF" }}
               >
                 <NavDropdown.Item>
                   <Link to='/customer/profile'>Profile</Link>
@@ -245,15 +212,15 @@ class Topnav extends React.Component {
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
-              <Nav.Link className='custom-nav cart'>
-                <Link
-                  to='/all_students'
-                  style={{ marginLeft: 20 + "px" }}
-                  title='Cart-Logo'
-                >
-                  Cart
-                </Link>
-              </Nav.Link>
+              <Link
+                to='/all_students'
+                style={{ position: "relative", whiteSpace: "nowrap" }}
+                className='custom-nav'
+              >
+                <span id='num-item'>0</span>
+                <div className='cart'></div>
+                <span id='span-cart'>Cart</span>
+              </Link>
             </Nav>
           </Navbar.Collapse>
         );
@@ -270,12 +237,12 @@ class Topnav extends React.Component {
             />
           </Form>
           <Nav activeKey='/login'>
-            <Nav.Link className='custom-nav'>
-              <Link to='/login'>Login</Link>
-            </Nav.Link>
-            <Nav.Link className='custom-nav'>
-              <Link to='/registerCustomer'>Create Account</Link>
-            </Nav.Link>
+            <Link to='/login' className='custom-nav'>
+              Login
+            </Link>
+            <Link to='/registerCustomer' className='custom-nav'>
+              Create Account
+            </Link>
           </Nav>
         </Navbar.Collapse>
       );
@@ -303,11 +270,13 @@ const mapStateToProps = function (state) {
     getProfileInfo: state.getProfileInfo,
     getType: state.getType,
     getCompProfile: state.getCompProfile,
+    category: state.categoryReducer.category,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: (payload) => dispatch(logOut(payload)),
+    getCategory: () => dispatch(getCategory()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

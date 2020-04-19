@@ -1,29 +1,63 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "airbnb"
-    ],
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "no-console":"off",
-        "no-alert":"off"
-    }
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "no-console": "off",
+    "no-alert": "off",
+    "quotes": "off",
+    "spaced-comment": "off",
+    "arrow-body-style": "off",
+    "comma-dangle": "off",
+    "prefer-template": "off",
+    "operator-linebreak": "off",
+    "comma-spacing": "off",
+    "no-trailing-spaces": "off",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off",
+    "no-param-reassign": "off",
+    "class-methods-use-this": "off",
+    "react/destructuring-assignment": "off",
+    "max-len": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/sort-comp": "off",
+    "no-undef": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/heading-has-content": "off",
+    "jsx-a11y/iframe-has-title": "off",
+    "react/no-unescaped-entities": "off",
+    "no-restricted-syntax": "off",
+    "radix": "off",
+    "react/no-deprecated": "off",
+    "react/button-has-type": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": "off",
+    "consistent-return": "off",
+    "camelcase": "off",
+    "import/prefer-default-export": "off",
+    "react/no-unused-state": "off",
+    "react/jsx-indent": "off",
+    "no-plusplus": "off",
+    "react/no-access-state-in-setstate": "off",
+    "import/no-named-as-default": "off",
+    "import/no-named-as-default-member": "off",
+    "import/order": "off",
+    "react/jsx-closing-tag-location": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off"
+  }
 }

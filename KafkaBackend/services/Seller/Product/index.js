@@ -3,6 +3,7 @@ const { addProduct } = require('./addProduct');
 const { existProduct } = require('./existProduct');
 const { removeProduct } = require('./removeProduct');
 const { updateProduct } = require('./updateProduct');
+const { getProductCategories } = require('./getProductCategories');
 
 function handle_request(msg, callback) {
   switch (msg.path) {
@@ -17,6 +18,9 @@ function handle_request(msg, callback) {
         break;
     case "product_update":
         updateProduct(msg, callback);
+        break;
+    case "get_product_categories":
+        getProductCategories(msg, callback);
         break;
   }
 }

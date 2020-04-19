@@ -12,7 +12,7 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   accessKeyId: Config.AWS_ACCESS_KEY_ID,
   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  region: Config.AWS_REGION
+  region: Config.AWS_REGION,
 });
 
 // file.fieldname is the file1, file2 -> fd.append('file1',this.state.selectedFiles[0]);
@@ -20,13 +20,19 @@ const productImagesUpload = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
-    key: function(req, file, cb) {
-        cb(
-          null,
-          "Products/" + req.body.productName + "/" + file.fieldname + '.jpg'
-        );
-    }
-  })
+    key: function (req, file, cb) {
+      //console.log(req.body);
+      cb(
+        null,
+        "Products/" +
+          req.body.productName +
+          "/" +
+          file.fieldname +
+          Date.now() +
+          ".jpg"
+      );
+    },
+  }),
 });
 
 /* 
@@ -49,17 +55,20 @@ const productImagesUpload = multer({
 }
 */
 // keep it in Seller Product Folder/File
-router.post('/addProduct', productImagesUpload.any(), (req, res) => {
+router.post("/addProduct", productImagesUpload.any(), checkAuth, (req, res) => {
   console.log("Inside post of product/seller/addProduct");
   console.log(req.body);
   if (req.files) {
-    console.log("Product Images req.files array after s3 upload: ", req.files);
-    const productImagesURL = req.files.map((each)=>each.location);
+    console.log("Product Images req.files array after s3 upload: ");
+    const productImagesURL = req.files.map((each) => each.location);
     console.log(productImagesURL);
     req.body.productImagesURL = productImagesURL;
 
     req.body.path = "product_add";
-    kafka.make_request("sellerProductService", req.body, function(err, results) {
+    kafka.make_request("sellerProductService", req.body, function (
+      err,
+      results
+    ) {
       if (err) {
         res.status(500).send("System Error");
       } else {
@@ -67,10 +76,9 @@ router.post('/addProduct', productImagesUpload.any(), (req, res) => {
       }
     });
   } else {
-    res.status(500).send('Error in Uploading Images');
+    res.status(500).send("Error in Uploading Images");
   }
 });
-
 
 /*
   When seller adds a product, we first need to see if the product with given name already exists or not
@@ -81,14 +89,14 @@ router.post('/addProduct', productImagesUpload.any(), (req, res) => {
   checking for exact match, case insensitive in the backend
   so AMAZON and amazon is same product
 */
-router.get('/existProduct/:productName', checkAuth, (req, res) => {
+router.get("/existProduct/:productName", checkAuth, (req, res) => {
   console.log("Inside get of product/seller/existProduct");
-  console.log(req.body);
 
   req.body.path = "product_exist";
   req.body.productName = req.params.productName;
+  console.log(req.body);
 
-  kafka.make_request("sellerProductService", req.body, function(err, results) {
+  kafka.make_request("sellerProductService", req.body, function (err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -97,17 +105,16 @@ router.get('/existProduct/:productName', checkAuth, (req, res) => {
   });
 });
 
-
 // Removing of a product by seller. Will only soft delete, set validFlag = false
 // expecting productId in req.body
-router.post('/removeProduct', checkAuth ,(req, res) => {
+router.post("/removeProduct", checkAuth, (req, res) => {
   console.log("Inside post of product/seller/removeProduct");
   console.log(req.body);
 
   req.body.path = "product_delete";
 
-  kafka.make_request("sellerProductService", req.body, function(err, results) {
-    if(err){
+  kafka.make_request("sellerProductService", req.body, function (err, results) {
+    if (err) {
       res.status(500).send("System Error");
     } else {
       res.status(results.status).send(results.message);
@@ -115,24 +122,48 @@ router.post('/removeProduct', checkAuth ,(req, res) => {
   });
 });
 
-
 // Seller cannot change Product Name. Do not give this editing field option in frontend. Assuming Product Name to be unique.
 // Expecting productId to be given in req.body
-router.post('/updateProduct', checkAuth, productImagesUpload.any() ,(req, res) => {
-  console.log("Inside post of product/seller/updateProduct");
+router.post(
+  "/updateProduct",
+  checkAuth,
+  productImagesUpload.any(),
+  (req, res) => {
+    console.log("Inside post of product/seller/updateProduct");
+    console.log(req.body);
+
+    if (req.files) {
+      console.log(
+        "Product Images req.files array after s3 upload: ",
+        req.files
+      );
+      const productImagesURL = req.files.map((each) => each.location);
+      console.log(productImagesURL);
+      req.body.productImagesURL = productImagesURL;
+    }
+
+    req.body.path = "product_update";
+
+    kafka.make_request("sellerProductService", req.body, function (
+      err,
+      results
+    ) {
+      if (err) {
+        res.status(500).send("System Error");
+      } else {
+        res.status(results.status).send(results.message);
+      }
+    });
+  }
+);
+
+router.get("/productCategories", checkAuth, (req, res) => {
+  console.log("Inside get of product/seller/productCategories");
   console.log(req.body);
 
-  if(req.files){
-    console.log("Product Images req.files array after s3 upload: ", req.files);
-    const productImagesURL = req.files.map((each)=>each.location);
-    console.log(productImagesURL);
-    req.body.productImagesURL = productImagesURL;
-  }
-
-  req.body.path = "product_update";
-
-  kafka.make_request("sellerProductService", req.body, function(err, results) {
-    if(err){
+  req.body.path = "get_product_categories";
+  kafka.make_request("sellerProductService", req.body, function (err, results) {
+    if (err) {
       res.status(500).send("System Error");
     } else {
       res.status(results.status).send(results.message);

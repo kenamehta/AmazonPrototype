@@ -112,7 +112,7 @@ class ProfilePic extends Component {
                               );
                               const fd = new FormData();
                               fd.append("id", localStorage.getItem("ID"));
-                              //fd.append("emailId", localStorage.getItem("emailId"));
+                              fd.append("emailId", localStorage.getItem("emailId"));
                               fd.append("file", this.state.selectedFile);
                               this.props.updateProfilePicture(fd);
                               this.setState({ showeditpicbutton: "none" });
