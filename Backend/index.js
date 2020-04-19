@@ -1,17 +1,16 @@
 // inbuilt package imports
-const express = require('express');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
+const express = require("express");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 // User defined module imports
-const Config = require('./config');
+const Config = require("./config");
 const sellerProfile = require("./routes/Seller/profile");
 const sellerProduct = require("./routes/Seller/product");
 const customerProduct = require("./routes/customer/product");
 const adminProduct = require("./routes/admin/product");
-
 
 const app = express();
 // setting view engine
@@ -44,11 +43,13 @@ app.use(express.static("./ProfilePictures/Common"));
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
-app.use("/customer/profile", require("./routes/customer/profile"))
-app.use('/seller/profile', sellerProfile);
-app.use('/product/customer', customerProduct);
-app.use('/product/seller', sellerProduct);
-app.use('/product/admin', adminProduct);
+app.use("/customer/profile", require("./routes/customer/profile"));
+app.use("/seller/profile", sellerProfile);
+app.use("/product/customer", customerProduct);
+app.use("/product/seller", sellerProduct);
+app.use("/product/admin", adminProduct);
+app.use("/customer/payment", require("./routes/customer/payment"));
+app.use("/customer/address", require("./routes/customer/address"));
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

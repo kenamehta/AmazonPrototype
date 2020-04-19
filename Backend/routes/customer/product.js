@@ -8,14 +8,17 @@ const kafka = require("../../kafka/client");
 // sends all fields of a product document from mongoDb in response.
 // not checking for ValidFlag = true in the backend
 // to suffice if customer ordered a product and seller soft deletes it, that customer could still product page from his/her orders
-router.get('/list/:productId', checkAuth, (req, res) => {
+router.get("/list/:productId", checkAuth, (req, res) => {
   console.log("Inside get of product/customer/list/:productId");
   console.log(req.body);
 
   req.body.path = "product_get";
   req.body.productId = req.params.productId;
 
-  kafka.make_request("customerProductService", req.body, function(err, results) {
+  kafka.make_request("customerProductService", req.body, function (
+    err,
+    results
+  ) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -45,12 +48,15 @@ router.get('/listAllProducts', (req, res) => {
 
 // move it to Customer Product Folder/File
 // adds a comment for a product. updates average rating and returns the updated product document
-router.post('/addComment', checkAuth, (req, res) => {
+router.post("/addComment", checkAuth, (req, res) => {
   console.log("Inside get of product/customer/addComment");
   console.log(req.body);
 
   req.body.path = "product_add_comment";
-  kafka.make_request("customerProductService", req.body, function(err, results) {
+  kafka.make_request("customerProductService", req.body, function (
+    err,
+    results
+  ) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -63,12 +69,15 @@ router.post('/addComment', checkAuth, (req, res) => {
 Expecting product_id, seller_email_id, quantity.
 If product is a gift, provide giftMessage which is a required field in frontend
 */
-router.post('/addToCart', checkAuth, (req, res) => {
-  console.log('Inside get of product/customer/addToCart');
+router.post("/addToCart", checkAuth, (req, res) => {
+  console.log("Inside get of product/customer/addToCart");
   console.log(req.body);
 
   req.body.path = "product_add_cart";
-  kafka.make_request("customerProductService", req.body, function(err, results){
+  kafka.make_request("customerProductService", req.body, function (
+    err,
+    results
+  ) {
     if (err) {
       res.status(500).send("System Error");
     } else {

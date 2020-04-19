@@ -1,10 +1,20 @@
 .bluebeacon {
-  background-color: #232f3e;
+  background-color: #232f3e !important;
 }
 
 .sprite {
   background-color: #febd69 !important;
   border-color: #febd69 !important;
+}
+
+
+.sprite-button {
+  background-color: #febd69 !important;
+  border-color: #febd69 !important;
+  color:white !important;
+}
+.link-color{
+  color:#0066c0
 }
 
 .grey {

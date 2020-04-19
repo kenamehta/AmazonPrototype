@@ -1,9 +1,12 @@
+/*eslint-disable */
+
 import React from "react";
 import "./BasicProfile.css";
 import configPath from "./../../../../configApp";
+import { Input } from "reactstrap";
+import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -17,6 +20,7 @@ import {
   updateSellerProfilePicture,
   updateSellerDetails,
 } from "../../../../action/Seller/Profile/profileAction";
+import AddProduct from "./AddProduct";
 
 class BasicProfile extends React.Component {
   constructor(props) {
@@ -79,6 +83,7 @@ class BasicProfile extends React.Component {
     e.preventDefault();
     let oldState = this.state;
     this.setState({
+      //[e.target.name]: e.target.value,
       basicDetails: {
         ...oldState.basicDetails,
         [e.target.id]: e.target.value,
@@ -104,6 +109,7 @@ class BasicProfile extends React.Component {
   }
 
   handleClose = () => {
+    e.preventDefault();
     this.setState({
       show: false,
     });
@@ -151,11 +157,11 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <Row style={{ position: "relative" }}>
           <Image
-            className="ProfilePicImage"
+            className='ProfilePicImage'
             src={profilePictureUrl}
-            roundedcircle="true"
+            roundedcircle='true'
           />
-          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
+          <Button className='ProfilePicButtononImage' onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
@@ -171,9 +177,9 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <>
           <Image
-            className="ProfilePicImage"
+            className='ProfilePicImage'
             src={profilePictureUrl}
-            roundedcircle="true"
+            roundedcircle='true'
           />
         </>
       );
@@ -183,7 +189,7 @@ class BasicProfile extends React.Component {
     if (this.props.sellerVisitingOwnProfile) {
       button = (
         <Button
-          className="editbutton"
+          className='editbutton'
           onClick={(e) => {
             this.setState({ editNameButton: "none" });
             this.setState({ showText: "block" });
@@ -195,7 +201,7 @@ class BasicProfile extends React.Component {
     }
 
     return (
-      <Card className="ProfileCard">
+      <Card className='ProfileCard'>
         <ModalPicture
           show={this.state.show}
           close={this.handleClose}
@@ -241,11 +247,11 @@ class BasicProfile extends React.Component {
         >
           <Row>
             <Col md={12}>
-              <Form.Group controlId="name">
+              <Form.Group controlId='name'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.name}
                   required
                 />
@@ -254,11 +260,11 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId="street">
+              <Form.Group controlId='street'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.street}
                   required
                 />
@@ -267,22 +273,22 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId="city">
+              <Form.Group controlId='city'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.city}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId="state">
+              <Form.Group controlId='state'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.state}
                   required
                 />
@@ -291,22 +297,22 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId="country">
+              <Form.Group controlId='country'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.country}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId="zipcode">
+              <Form.Group controlId='zipcode'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.zipcode}
                   required
                 />
@@ -315,11 +321,11 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId="phone">
+              <Form.Group controlId='phone'>
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type="text"
-                  className="form-control"
+                  type='text'
+                  className='form-control'
                   placeholder={this.state.basicDetails.phone}
                   required
                 />
@@ -328,7 +334,7 @@ class BasicProfile extends React.Component {
           </Row>
           <Card.Footer style={{ textAlign: "right" }}>
             <Button
-              className="cancel"
+              className='cancel'
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
@@ -340,7 +346,7 @@ class BasicProfile extends React.Component {
               Cancel
             </Button>
             <Button
-              className="save"
+              className='save'
               onClick={(e) => {
                 e.preventDefault();
                 const data = {
