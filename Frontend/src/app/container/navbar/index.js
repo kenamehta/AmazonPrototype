@@ -72,16 +72,17 @@ class Topnav extends React.Component {
         xnav = (
           <Navbar.Collapse id='basic-navbar-nav'>
             <Form inline style={{ width: 70 + "%" }}>
-              <DropdownButton
-                as={InputGroup.Prepend}
-                variant='outline-secondary'
-                title='All'
-                id='input-group-dropdown-1'
-                className='grey bradius025'
-              >
-                {cat}
-              </DropdownButton>
               <InputGroup style={{ width: 90 + "%" }}>
+                <DropdownButton
+                  as={InputGroup.Prepend}
+                  variant='outline-secondary'
+                  title='All'
+                  id='input-group-dropdown-1'
+                  className='grey bradius025'
+                >
+                  {cat}
+                </DropdownButton>
+
                 <FormControl
                   type='text'
                   placeholder='Search'
@@ -97,7 +98,7 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Link to='/home' className='custom-nav' style={{ float: "left" }}>
+              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
                 My
                 <br />
                 <b>Products</b>

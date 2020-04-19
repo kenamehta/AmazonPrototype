@@ -3,7 +3,7 @@
 import React from "react";
 import "./BasicProfile.css";
 import configPath from "./../../../../configApp";
-import { Input } from "reactstrap";
+
 import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
@@ -109,7 +109,6 @@ class BasicProfile extends React.Component {
   }
 
   handleClose = () => {
-    e.preventDefault();
     this.setState({
       show: false,
     });
