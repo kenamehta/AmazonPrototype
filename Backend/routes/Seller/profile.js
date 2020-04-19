@@ -57,7 +57,9 @@ router.get("/:emailId", checkAuth, (req, res) => {
   });
 });
 
-router.post("/updateProfileDetails", checkAuth, (req, res) => {
+// send emailId and _id for seller
+// sellerEmailId to look up products in product model and update seller's name there too.
+router.post("/updateProfileDetails", (req, res) => {
   console.log("Inside post of seller/profile/updateProfileDetails");
   console.log(req.body);
 

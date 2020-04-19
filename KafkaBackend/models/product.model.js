@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 const Schema = mongoose.Schema;
 
 // date in clickCount can be mm/dd/yyy. Before insertion or updation, get your date in this format?
@@ -10,6 +11,7 @@ const clickCount = new Schema({
 });
 
 const product = new Schema({
+  sellerId:{type: mongoose.Schema.Types.ObjectId, ref: "seller"},
   validFlag:{type:String,default:"true"},
   sellerEmailId:{type:String,required:true},
   sellerName:{type:String,required:true},
@@ -23,5 +25,7 @@ const product = new Schema({
 },{
   timestamps:true
 });
+
+product.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('product',product);

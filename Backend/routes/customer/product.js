@@ -24,6 +24,25 @@ router.get('/list/:productId', checkAuth, (req, res) => {
   });
 });
 
+
+// Common API for both customer and seller get Products
+router.get('/listAllProducts', (req, res) => {
+  console.log('Inside product/customer/listAllProducts')
+  
+  console.log(req.query);
+  const body = {
+    path: "products_get",
+    ...req.query
+  }
+  kafka.make_request("customerProductService", body, function(err, results){
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
 // move it to Customer Product Folder/File
 // adds a comment for a product. updates average rating and returns the updated product document
 router.post('/addComment', checkAuth, (req, res) => {

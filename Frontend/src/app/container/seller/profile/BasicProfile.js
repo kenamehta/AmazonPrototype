@@ -354,6 +354,7 @@ class BasicProfile extends React.Component {
                   country: this.state.basicDetails.country,
                   zipcode: this.state.basicDetails.zipcode,
                 };
+                //console.log(data);
                 this.props.updateSellerDetails(data);
               }}
             >

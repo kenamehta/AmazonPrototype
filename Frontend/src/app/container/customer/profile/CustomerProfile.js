@@ -7,7 +7,7 @@ import {
   getProfile,
   updateProfile,
   updateProfilePicture,
-} from "../../../../action/customerProfileAction/profileAction";
+} from "../../../../action/customerprofileaction/profileAction";
 
 class CustomerProfile extends Component {
   state = {};
