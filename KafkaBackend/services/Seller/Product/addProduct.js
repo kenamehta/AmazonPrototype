@@ -7,7 +7,8 @@ const addProduct = (msg, callback) => {
 
   const date = new Date();
   // getting date in mm/dd/yyyy format
-  const myCustomDate = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
+  const myCustomDate =
+    date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 
   let productToCreate = product({
     sellerEmailId: msg.emailId,
@@ -17,42 +18,43 @@ const addProduct = (msg, callback) => {
     productPrice: msg.productPrice,
     productDescription: msg.productDescription,
     photos: msg.productImagesURL,
-    clickCount: [{date: myCustomDate, count: 0}]
+    clickCount: [{ date: myCustomDate, count: 0 }],
   });
-
+  console.log(productToCreate);
   productToCreate.save((productSaveError) => {
-    if(productSaveError){
+    if (productSaveError) {
       res.status = 500;
-      res.message = 'Database Error';
+      res.message = "Database Error";
       callback(null, res);
     } else {
       // assuming msg.productCategory will always be valid from frontend
-      category.findOne({name: msg.productCategory}, (err, result) => {
-        if(err){
+      category.findOne({ name: msg.productCategory }, (err, result) => {
+        if (err) {
           res.status = 500;
-          res.message = 'Database Error';
+          res.message = "Database Error";
           callback(null, res);
-        } if(result){
+        }
+        if (result) {
           result.productCount = result.productCount + 1;
           result.save((incrementSaveError) => {
-            if(incrementSaveError){
+            if (incrementSaveError) {
               res.status = 500;
-              res.message = 'Database Error';
+              res.message = "Database Error";
               callback(null, res);
             } else {
               res.status = 200;
-              res.message = 'Success';
+              res.message = "Success";
               callback(null, res);
             }
           });
         } else {
           res.status = 400;
-          res.message = 'Product Category Not found';
+          res.message = "Product Category Not found";
           callback(null, res);
         }
       });
     }
-  })
+  });
 };
 
 exports.addProduct = addProduct;
