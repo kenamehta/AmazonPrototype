@@ -20,14 +20,30 @@ let addOrUpdatePayment = async (msg, callback) => {
           cvv: msg.cvv
         };
         //const cust = await customer.findOne({ _id: msg.params.id });
-        var paymentArr = result.paymentCards;
+        // var paymentArr = result.paymentCards;
         let idx = -1;
-        for (let i = 0; i < paymentArr.length; i++) {
-          if (paymentArr._id == msg.card_id) {
+        for (let i = 0; i < result.paymentCards; i++) {
+          if (result.paymentCards._id == msg.card_id) {
             idx = i;
             break;
           }
         }
+        if (idx !== -1) {
+          result.paymentCards[idx] = experience;
+          result
+            .save()
+            .then(() => {
+              return callback(null, {
+                status: 200,
+                experience: experienceAdd.EXPERIENCE
+              });
+            })
+            .catch(err => {
+              console.log("Inside catch of updateExperience");
+              callback(null, "Error");
+            });
+        } else callback(null, "Error");
+
         var EXPERIENCE_other = EXPERIENCE.filter(ex => {
           console.log(ex.COMPANY_NAME);
           return ex.COMPANY_NAME != msg.COMPANY_NAME;
