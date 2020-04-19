@@ -2,6 +2,8 @@
 const { getProfile } = require("./getProfile");
 const { updateProfile } = require("./updateProfile");
 const { updateProfilePicture } = require("./updateProfilePicture");
+const { addOrUpdatePayment } = require("./addOrUpdatePayment");
+const { deletePayment } = require("./deletePayment");
 
 let handle_request = (msg, callback) => {
   console.log("in switch");
@@ -15,6 +17,12 @@ let handle_request = (msg, callback) => {
       break;
     case "updateProfilePicture":
       updateProfilePicture(msg, callback);
+      break;
+    case "addOrUpdatePayment":
+      addOrUpdatePayment(msg, callback);
+      break;
+    case "deletePayment":
+      deletePayment(msg, callback);
       break;
   }
 };
