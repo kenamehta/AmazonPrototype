@@ -55,7 +55,8 @@ const productImagesUpload = multer({
 }
 */
 // keep it in Seller Product Folder/File
-router.post("/addProduct", productImagesUpload.any(), checkAuth, (req, res) => {
+// get seller's _id as sellerId in req body
+router.post("/addProduct", productImagesUpload.any(), (req, res) => {
   console.log("Inside post of product/seller/addProduct");
   console.log(req.body);
   if (req.files) {

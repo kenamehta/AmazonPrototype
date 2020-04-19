@@ -48,7 +48,7 @@ router.get('/listAllProducts', (req, res) => {
 
 // move it to Customer Product Folder/File
 // adds a comment for a product. updates average rating and returns the updated product document
-router.post("/addComment", checkAuth, (req, res) => {
+router.post("/addComment", (req, res) => {
   console.log("Inside get of product/customer/addComment");
   console.log(req.body);
 
