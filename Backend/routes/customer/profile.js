@@ -21,7 +21,13 @@ const profilePictureFileUploadCustomer = multer({
     bucket: Config.AWS_BUCKET_NAME,
     key: function (req, file, cb) {
       //cb(null, "ProfilePictures/Customer/" + req.body.emailId + ".jpg");
-      cb(null);
+      cb(
+        null,
+        "ProfilePictures/Customer/" +
+          req.body.emailId +
+          Date.now() +
+          file.originalname
+      );
     },
   }),
 });
