@@ -11,6 +11,7 @@ const addProduct = (msg, callback) => {
     date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 
   let productToCreate = product({
+    sellerId: msg.sellerId,
     sellerEmailId: msg.emailId,
     sellerName: msg.sellerName,
     productName: msg.productName,
