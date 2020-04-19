@@ -24,6 +24,12 @@ let handle_request = (msg, callback) => {
     case "deletePayment":
       deletePayment(msg, callback);
       break;
+      case "addOrUpdateAddress":
+        addOrUpdateAddress(msg, callback);
+      break;
+    case "deleteAddress":
+      deleteAddress(msg, callback);
+      break;
   }
 };
 
