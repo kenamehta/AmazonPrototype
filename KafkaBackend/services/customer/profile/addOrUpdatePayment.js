@@ -1,7 +1,5 @@
 "use strict";
-var express = require("express");
 const customer = require("../../../models/customer.model");
-const Mongoose = require("mongoose");
 
 let addOrUpdatePayment = async (msg, callback) => {
   console.log(msg);
