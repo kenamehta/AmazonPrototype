@@ -29,7 +29,7 @@ let addOrUpdatePayment = async (msg, callback) => {
           }
         }
         if (idx !== -1) {
-          result.paymentCards[idx] = experience;
+          result.paymentCards[idx] = newPayment;
           result
             .save()
             .then(() => {
