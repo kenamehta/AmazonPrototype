@@ -1,4 +1,0 @@
-[2020-04-16 11:00:05,598] TRACE [Controller id=0] Checking need to trigger auto leader balancing (kafka.controller.KafkaController)
-[2020-04-16 11:00:05,599] DEBUG [Controller id=0] Preferred replicas by broker Map(0 -> Map(sellerProfileService-0 -> Vector(0), customerProfile-0 -> Vector(0), passport-0 -> Vector(0), sellerProductService-0 -> Vector(0), profile-0 -> Vector(0), customerProductService-0 -> Vector(0), response_topic_amazon-0 -> Vector(0), response_topic-0 -> Vector(0), accounts-0 -> Vector(0))) (kafka.controller.KafkaController)
-[2020-04-16 11:00:05,599] DEBUG [Controller id=0] Topics not in preferred replica for broker 0 Map() (kafka.controller.KafkaController)
-[2020-04-16 11:00:05,599] TRACE [Controller id=0] Leader imbalance ratio for broker 0 is 0.0 (kafka.controller.KafkaController)
