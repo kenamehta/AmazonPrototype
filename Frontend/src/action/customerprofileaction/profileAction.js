@@ -53,7 +53,6 @@ export const updateProfile = (payload) => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
-
     //make a put request to update customer profile
     console.log("in update profile action");
     axios

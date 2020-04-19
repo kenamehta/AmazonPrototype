@@ -12,21 +12,24 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   accessKeyId: Config.AWS_ACCESS_KEY_ID,
   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  region: Config.AWS_REGION
+  region: Config.AWS_REGION,
 });
 
 const profilePictureFileUploadCustomer = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
-    key: function(req, file, cb) {
+    key: function (req, file, cb) {
       //cb(null, "ProfilePictures/Customer/" + req.body.emailId + ".jpg");
       cb(
         null,
-        "ProfilePictures/Customer/" + req.body.emailId + Date.now() + file.originalname
+        "ProfilePictures/Customer/" +
+          req.body.emailId +
+          Date.now() +
+          file.originalname
       );
-    }
-  })
+    },
+  }),
 });
 
 router.get("/:emailId", (req, res) => {
@@ -39,7 +42,7 @@ router.get("/:emailId", (req, res) => {
   msg.route = "getProfile";
   msg.params = req.params.emailId;
 
-  kafka.make_request("customerProfile", msg, function(err, results) {
+  kafka.make_request("customerProfile", msg, function (err, results) {
     console.log(results);
     console.log("while returning");
     if (results.status != 200) {
@@ -56,7 +59,7 @@ router.put("/updateProfileDetails", checkAuth, (req, res) => {
   let msg = req.body;
   msg.route = "updateProfile";
 
-  kafka.make_request("customerProfile", msg, function(err, results) {
+  kafka.make_request("customerProfile", msg, function (err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -79,7 +82,7 @@ router.put(
     }
     console.log(req.body);
 
-    kafka.make_request("customerProfile", req.body, function(err, results) {
+    kafka.make_request("customerProfile", req.body, function (err, results) {
       if (err) {
         res.status(500).send("System Error");
       } else {
@@ -88,6 +91,5 @@ router.put(
     });
   }
 );
-    
-module.exports = router;
 
+module.exports = router;
