@@ -18,6 +18,8 @@ function auth() {
       var msg = {};
       msg.user_id = jwt_payload._id;
       msg.userRole = jwt_payload.category;
+      console.log("msg in backend: ");
+      console.log(msg);
       kafka.make_request("passport", msg, function(err, results) {
         if (err) {
           return callback(err, false);
