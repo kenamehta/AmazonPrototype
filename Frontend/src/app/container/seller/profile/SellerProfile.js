@@ -27,7 +27,7 @@ class SellerProfile extends React.Component {
     if (localStorage.getItem("category") == "seller") {
       add = (
         <Button
-          className='bluebeacon'
+          className="bluebeacon addProductButton"
           style={{
             float: "right",
             borderRadius: 15 + "px",

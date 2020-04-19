@@ -31,6 +31,7 @@ class BasicProfile extends React.Component {
       basicDetails: "",
       selectedFile: null,
       show: false,
+      errorMessage: "",
     };
     this.capitalize = this.capitalize.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -89,8 +90,8 @@ class BasicProfile extends React.Component {
       },
     });
 
-    console.log(e.target.id);
-    console.log(e.target.value);
+    //console.log(e.target.id);
+    //console.log(e.target.value);
   }
 
   capitalize(word, splitParam = " ") {
@@ -130,7 +131,10 @@ class BasicProfile extends React.Component {
   onUpload = (e) => {
     e.preventDefault();
     if (this.state.selectedFile === null) {
-      window.alert("Please select a file");
+      //window.alert("Please select a file");
+      this.setState({
+        errorMessage: "Please select a file",
+      });
     } else {
       console.log("Uploading new seller profile picture");
       const fd = new FormData();
@@ -155,11 +159,11 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <Row style={{ position: "relative" }}>
           <Image
-            className='ProfilePicImage'
+            className="ProfilePicImage"
             src={profilePictureUrl}
-            roundedcircle='true'
+            roundedcircle="true"
           />
-          <Button className='ProfilePicButtononImage' onClick={this.handleShow}>
+          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
@@ -175,9 +179,9 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <>
           <Image
-            className='ProfilePicImage'
+            className="ProfilePicImage"
             src={profilePictureUrl}
-            roundedcircle='true'
+            roundedcircle="true"
           />
         </>
       );
@@ -187,7 +191,7 @@ class BasicProfile extends React.Component {
     if (this.props.sellerVisitingOwnProfile) {
       button = (
         <Button
-          className='editbutton'
+          className="editbutton"
           onClick={(e) => {
             this.setState({ editNameButton: "none" });
             this.setState({ showText: "block" });
@@ -199,12 +203,13 @@ class BasicProfile extends React.Component {
     }
 
     return (
-      <Card className='ProfileCard'>
+      <Card className="ProfileCard">
         <ModalPicture
           show={this.state.show}
           close={this.handleClose}
           onUpload={this.onUpload}
           profileFileUploadHandler={this.profileFileUploadHandler}
+          errorMessage={this.state.errorMessage}
         />
         {sellerPhoto}
         <Container
@@ -217,7 +222,7 @@ class BasicProfile extends React.Component {
               textAlign: "center",
             }}
           >
-            {this.capitalize(this.state.basicDetails.name)} {button}
+            {this.capitalize(this.props.profile.name)} {button}
           </Card.Title>
           <Card.Subtitle
             style={{
@@ -226,14 +231,12 @@ class BasicProfile extends React.Component {
               lineHeight: "1.5em",
             }}
           >
-            {this.capitalize(this.state.basicDetails.street)} <br></br>
-            {`${this.capitalize(
-              this.state.basicDetails.city
-            )} ${this.capitalize(
-              this.state.basicDetails.state
-            )} ${this.capitalize(
-              this.state.basicDetails.country
-            )} ${this.capitalize(this.state.basicDetails.zipcode)}`}
+            {this.capitalize(this.props.profile.street)} <br></br>
+            {`${this.capitalize(this.props.profile.city)} ${this.capitalize(
+              this.props.profile.state
+            )} ${this.capitalize(this.props.profile.country)} ${this.capitalize(
+              this.props.profile.zipcode
+            )}`}
           </Card.Subtitle>
         </Container>
         <Container
@@ -245,12 +248,12 @@ class BasicProfile extends React.Component {
         >
           <Row>
             <Col md={12}>
-              <Form.Group controlId='name'>
+              <Form.Group controlId="name">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.name}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.name}
                   required
                 />
               </Form.Group>
@@ -258,12 +261,12 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId='street'>
+              <Form.Group controlId="street">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.street}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.street}
                   required
                 />
               </Form.Group>
@@ -271,23 +274,23 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId='city'>
+              <Form.Group controlId="city">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.city}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.city}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId='state'>
+              <Form.Group controlId="state">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.state}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.state}
                   required
                 />
               </Form.Group>
@@ -295,23 +298,23 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId='country'>
+              <Form.Group controlId="country">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.country}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.country}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId='zipcode'>
+              <Form.Group controlId="zipcode">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.zipcode}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.zipcode}
                   required
                 />
               </Form.Group>
@@ -319,12 +322,12 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId='phone'>
+              <Form.Group controlId="phone">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
-                  placeholder={this.state.basicDetails.phone}
+                  type="text"
+                  className="form-control"
+                  value={this.state.basicDetails.phone}
                   required
                 />
               </Form.Group>
@@ -332,10 +335,12 @@ class BasicProfile extends React.Component {
           </Row>
           <Card.Footer style={{ textAlign: "right" }}>
             <Button
-              className='cancel'
+              className="cancel"
               onClick={(e) => {
                 e.preventDefault();
+                let oldState = this.state;
                 this.setState({
+                  basicDetails: this.props.profile,
                   editNameButton: "block",
                   showText: "none",
                 });
@@ -344,7 +349,7 @@ class BasicProfile extends React.Component {
               Cancel
             </Button>
             <Button
-              className='save'
+              className="save"
               onClick={(e) => {
                 e.preventDefault();
                 const data = {

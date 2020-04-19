@@ -45,8 +45,8 @@
   background-color: rgba(0, 0, 0, 0.06);
 }
 
-.btn-primary:focus,
-.btn-primary:active {
+.ProfilePicButtononImage:focus,
+.ProfilePicButtononImage:active {
   box-shadow: none !important;
   outline: 0px !important;
   background-color: transparent !important;
@@ -63,6 +63,13 @@
   background-color: rgba(254, 189, 105, 0.8);
 }
 
+.save:focus {
+  background-color: rgba(254, 189, 105, 0.8);
+  color: rgba(0, 0, 0, 0.98);
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
 .cancel {
   background-color: rgba(0, 0, 0, 0.06);
   color: rgba(0, 0, 0, 0.98);
@@ -71,4 +78,29 @@
 
 .cancel:hover {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.cancel:focus {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.98);
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.addProductButton {
+}
+
+.addProductButton:hover {
+  background-color: rgba(35, 47, 62, 0.9) !important;
+}
+
+.addProductButton:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+
+.errormessage {
+  color: #f10f10;
+  padding-top: 10px;
+  margin: 0;
 }
