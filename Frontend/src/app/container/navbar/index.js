@@ -68,7 +68,7 @@ class Topnav extends React.Component {
       return <Dropdown.Item key={_id}>{name}</Dropdown.Item>;
     });
     if (localStorage.getItem("loginFlag")) {
-      if (localStorage.getItem("category") == "seller") {
+      if (localStorage.getItem("category") === "seller") {
         xnav = (
           <Navbar.Collapse id='basic-navbar-nav'>
             <Form inline style={{ width: 70 + "%" }}>

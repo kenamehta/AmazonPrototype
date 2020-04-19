@@ -1,34 +1,44 @@
-import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC,ADDADDRESS,GETADDRESS,DELETEADDRESS } from "./actionType";
+import {
+  GETPROFILE,
+  UPDATEPROFILE,
+  UPDATEPROFILEPIC,
+  ADDADDRESS,
+  DELETEADDRESS,
+  GETPAYMENT,
+  ADDORUPDATEPAYMENT,
+  DELETEPAYMENT,
+  GETADDRESS
+} from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
 //GET PROFILE Dispatcher
-const getProfileDispatcher = (payload) => {
+const getProfileDispatcher = payload => {
   return {
     type: GETPROFILE,
-    payload,
+    payload
   };
 };
 
 //update profile Dispatcher
-const updateProfileDispatcher = (payload) => {
+const updateProfileDispatcher = payload => {
   return {
     type: UPDATEPROFILE,
-    payload,
+    payload
   };
 };
 
 //update profile Dispatcher
-const updateProfilePicDispatcher = (payload) => {
+const updateProfilePicDispatcher = payload => {
   return {
     type: UPDATEPROFILEPIC,
-    payload,
+    payload
   };
 };
-const addAddressDispatcher = (payload) => {
+const addAddressDispatcher = payload => {
   return {
     type: ADDADDRESS,
-    payload,
+    payload
   };
 };
 const getAddressDispatcher = (payload) => {
@@ -40,34 +50,52 @@ const getAddressDispatcher = (payload) => {
 const deleteAddressDispatcher = (payload) => {
   return {
     type: DELETEADDRESS,
-    payload,
+    payload
+  };
+};
+const getPaymentDispatcher = payload => {
+  return {
+    type: GETPAYMENT,
+    payload
+  };
+};
+const addOrUpdatePaymentDispatcher = payload => {
+  return {
+    type: ADDORUPDATEPAYMENT,
+    payload
+  };
+};
+const deletePaymentDispatcher = payload => {
+  return {
+    type: DELETEPAYMENT,
+    payload
   };
 };
 
 //login thunk function. Delays dispatcher
 export const getProfile = () => {
-  return (dispatch) => {
+  return dispatch => {
     //make a get request to fetch customer profile
     axios
       .get(
         configPath.api_host +
           `/customer/profile/${localStorage.getItem("emailId")}`
       )
-      .then((response) => {
+      .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
           dispatch(getProfileDispatcher(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 };
 
-export const updateProfile = (payload) => {
-  return (dispatch) => {
+export const updateProfile = payload => {
+  return dispatch => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
@@ -78,22 +106,22 @@ export const updateProfile = (payload) => {
         configPath.api_host + `/customer/profile/updateProfileDetails`,
         payload
       )
-      .then((response) => {
+      .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
           dispatch(updateProfileDispatcher(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 };
 
 //thunk for updating profile pic for customer
-export const updateProfilePicture = (payload) => {
-  return (dispatch) => {
+export const updateProfilePicture = payload => {
+  return dispatch => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
@@ -106,14 +134,14 @@ export const updateProfilePicture = (payload) => {
         payload,
         config
       )
-      .then((response) => {
+      .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
           dispatch(updateProfilePicDispatcher(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -152,21 +180,21 @@ export const addAddress = (payload) => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
-    
+
     console.log("in update profile action");
     axios
       .post(
         configPath.api_host + `/customer/address/${localStorage.getItem("ID")}`,
         payload
       )
-      .then((response) => {
+      .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
           dispatch(addAddressDispatcher(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
@@ -178,21 +206,98 @@ export const deleteAddress = (payload) => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
-    
+
     console.log("in update profile action");
     axios
       .delete(
         configPath.api_host + `/customer/address/${localStorage.getItem("ID")}`,
         payload
       )
-      .then((response) => {
+      .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
           dispatch(deleteAddressDispatcher(response.data));
         }
       })
-      .catch((error) => {
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+//get customer payment thunk
+export const getPayment = payload => {
+  return dispatch => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+
+    console.log("in update profile action");
+    axios
+      .get(
+        configPath.api_host + `/customer/payment/${localStorage.getItem("ID")}`
+      )
+      .then(response => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(getPaymentDispatcher(response.data));
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+//payment add or update thunk
+export const addOrUpdatePayment = payload => {
+  return dispatch => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+
+    console.log("in update profile action");
+    axios
+      .post(
+        configPath.api_host + `/customer/payment/${localStorage.getItem("ID")}`,
+        payload
+      )
+      .then(response => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(addOrUpdatePaymentDispatcher(response.data));
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+};
+
+//delete customer payment thunk
+export const deletePayment = payload => {
+  return dispatch => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+
+    console.log("in update profile action");
+    axios
+      .delete(
+        configPath.api_host + `/customer/payment/${localStorage.getItem("ID")}`,
+        payload
+      )
+      .then(response => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(deletePaymentDispatcher(response.data));
+        }
+      })
+      .catch(error => {
         console.log(error);
       });
   };
