@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import {
+  Link,
+} from "react-router-dom";
 
 class Insights extends Component {
   state = {};
@@ -37,6 +40,25 @@ class Insights extends Component {
                   </div>
                 </div>
               </div>
+              <div className="card" align="center">
+                <div></div>
+                <div className="card-body">
+                  <h4 className="card-title">Ordering and shopping preferences</h4>
+                  <div className='d-flex m-3 justify-content-center'>
+                    <div className="upload-photo mr-2">
+                    <Link to="/address" >
+                    <span className='link-color'>Your Addresses</span>
+                    </Link>
+                    </div>
+
+                    <div className="upload-photo ml-2">
+                    <Link to="/paymentcard" >
+                   <span className='link-color'>Your Payment options</span> 
+                   </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="col-6 p-0">
               <div className="card">
@@ -47,7 +69,7 @@ class Insights extends Component {
                     <h5 className="card-subtitle mb-2 d-flex">
                       <div
                         className="circular-avatar-image-comment m-3 image-edit-avatar"
-                        onClick={e => {
+                        onClick={(e) => {
                           this.setState({ showeditpicbutton: "block" });
                         }}
                       >
@@ -61,7 +83,10 @@ class Insights extends Component {
                           style={{ "background-size": "contain" }}
                         />
                       </div>
-                      <div className="mt-4"> {this.props.profileData.data.mainCustomer.name}</div>
+                      <div className="mt-4">
+                        {" "}
+                        {this.props.profileData.data.mainCustomer.name}
+                      </div>
                       <div className="mt-1">
                         <h6
                           className="text-muted mt-4 ml-2"

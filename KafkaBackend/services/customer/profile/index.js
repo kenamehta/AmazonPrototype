@@ -3,6 +3,7 @@ const { getProfile } = require("./getProfile");
 const { updateProfile } = require("./updateProfile");
 const { updateProfilePicture } = require("./updateProfilePicture");
 const { addOrUpdatePayment } = require("./addOrUpdatePayment");
+
 const { deletePayment } = require("./deletePayment");
 
 let handle_request = (msg, callback) => {
@@ -24,12 +25,7 @@ let handle_request = (msg, callback) => {
     case "deletePayment":
       deletePayment(msg, callback);
       break;
-      case "addOrUpdateAddress":
-        addOrUpdateAddress(msg, callback);
-      break;
-    case "deleteAddress":
-      deleteAddress(msg, callback);
-      break;
+     
   }
 };
 

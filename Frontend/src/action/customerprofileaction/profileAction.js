@@ -1,4 +1,4 @@
-import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC } from "./actionType";
+import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC,ADDADDRESS,DELETEADDRESS } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
@@ -22,6 +22,18 @@ const updateProfileDispatcher = (payload) => {
 const updateProfilePicDispatcher = (payload) => {
   return {
     type: UPDATEPROFILEPIC,
+    payload,
+  };
+};
+const addAddressDispatcher = (payload) => {
+  return {
+    type: ADDADDRESS,
+    payload,
+  };
+};
+const deleteAddressDispatcher = (payload) => {
+  return {
+    type: DELETEADDRESS,
     payload,
   };
 };
@@ -94,6 +106,55 @@ export const updateProfilePicture = (payload) => {
         if (response.status === 200) {
           console.log(response.data);
           dispatch(updateProfilePicDispatcher(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const addAddress = (payload) => {
+  return (dispatch) => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+    
+    console.log("in update profile action");
+    axios
+      .post(
+        configPath.api_host + `/customer/address/${localStorage.getItem("ID")}`,
+        payload
+      )
+      .then((response) => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(addAddressDispatcher(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const deleteAddress = (payload) => {
+  return (dispatch) => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+    
+    console.log("in update profile action");
+    axios
+      .delete(
+        configPath.api_host + `/customer/address/${localStorage.getItem("ID")}`,
+        payload
+      )
+      .then((response) => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(deleteAddressDispatcher(response.data));
         }
       })
       .catch((error) => {
