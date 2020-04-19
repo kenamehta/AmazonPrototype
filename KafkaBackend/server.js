@@ -9,13 +9,17 @@ const accountService = require("./services/account");
 //seller profile services
 const sellerProfileService = require("./services/Seller/Profile");
 //customer profile service
-const customerProfileService= require("./services/customer/profile");
+const customerProfileService = require("./services/customer/profile");
 //customer product service
 const customerProductService = require("./services/customer/Product");
 //seller product service
 const sellerProductService = require("./services/Seller/Product");
 //admin product service
 const adminProductService = require("./services/admin/Product");
+//customer Payment service
+const customerPaymentService = require("./services/customer/payment");
+//customer Address service
+const customerAddressService = require("./services/customer/address");
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -80,4 +84,5 @@ handleTopicRequest("customerProfile", customerProfileService);
 handleTopicRequest("customerProductService", customerProductService);
 handleTopicRequest("sellerProductService", sellerProductService);
 handleTopicRequest("adminProductService", adminProductService);
-
+handleTopicRequest("customerPaymentService", customerPaymentService);
+handleTopicRequest("customerAddressService", customerAddressService);
