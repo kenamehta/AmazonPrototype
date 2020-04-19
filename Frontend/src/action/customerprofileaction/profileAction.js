@@ -1,4 +1,4 @@
-import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC,ADDADDRESS,DELETEADDRESS } from "./actionType";
+import { GETPROFILE, UPDATEPROFILE, UPDATEPROFILEPIC,ADDADDRESS,GETADDRESS,DELETEADDRESS } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
@@ -26,6 +26,12 @@ const updateProfilePicDispatcher = (payload) => {
   };
 };
 const addAddressDispatcher = (payload) => {
+  return {
+    type: ADDADDRESS,
+    payload,
+  };
+};
+const getAddressDispatcher = (payload) => {
   return {
     type: ADDADDRESS,
     payload,
@@ -112,7 +118,36 @@ export const updateProfilePicture = (payload) => {
       });
   };
 };
+//thunk for getting addresses
+export const getAddress = () => {
+  //make a get request to fetch saved addresses 
+  return (dispatch) => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
+    
+    console.log("in update profile action");
+    axios
+      .get(
+        configPath.api_host + `/customer/address/${localStorage.getItem("ID")}`
+        
+      )
+      .then((response) => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(getAddressDispatcher(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
 export const addAddress = (payload) => {
+  //make a post request to add saved addresses 
   return (dispatch) => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
@@ -138,6 +173,7 @@ export const addAddress = (payload) => {
 };
 
 export const deleteAddress = (payload) => {
+  //make a delete request to delete saved addresses 
   return (dispatch) => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"

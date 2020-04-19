@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import "../../../../style/ProfilePic.css";
-
+import { connect } from "react-redux";
 
 import {
-   addAddress,deleteAddress
-   
-  } from "../../../../action/customerprofileaction/profileAction";
-  
+  addAddress,
+  deleteAddress,
+  getAddress,
+} from "../../../../action/customerprofileaction/profileAction";
 
 class SavedAddress extends Component {
   state = {
     modalShow: "none",
+    modalShowEdit:'none',
     name: "",
     street: "",
     city: "",
@@ -21,7 +22,7 @@ class SavedAddress extends Component {
   };
 
   addAddress = (e) => {
-      e.preventDefault();
+    e.preventDefault();
     let payload = {
       addressName: this.state.name,
       street: this.state.street,
@@ -67,18 +68,21 @@ class SavedAddress extends Component {
               <h5 style={{ fontSize: "13px" }}>USA</h5>
               <h5 style={{ fontSize: "13px" }}>Phone number: 20156568888</h5>
               <span
-                className="link-color"
+                className="link-color image-edit-avatar"
                 style={{
                   fontSize: "13px",
                   bottom: "20px",
                   left: "22px",
                   position: "absolute",
                 }}
+                onClick={(e) => {
+                this.setState({ modalShowEdit: "block" });
+              }}
               >
                 Edit
               </span>
               <span
-                className="link-color"
+                className="link-color image-edit-avatar"
                 style={{
                   fontSize: "13px",
                   bottom: "20px",
@@ -164,181 +168,384 @@ class SavedAddress extends Component {
             </span>
           </div>
         </div>
-        
-        <div className="modal mt-5" align='center' style={{ display: this.state.modalShow }}>
-              <div
-                className="modal-content col-5"
-                style={{ fontFamily: "Suisse" }}
+
+        <div
+          className="modal mt-5"
+          align="center"
+          style={{ display: this.state.modalShow }}
+        >
+          <div className="modal-content col-5" style={{ fontFamily: "Suisse" }}>
+            <div className="container">
+              <span
+                className="close image-edit-avatar"
+                onClick={(e) => {
+                  this.setState({ modalShow: "none" });
+                  this.setState({ addSuccessMsg: "" });
+                }}
               >
-                <div className="container">
-                  <span
-                    className="close image-edit-avatar"
-                    onClick={(e) => {
-                      this.setState({ modalShow: "none" });
-                      this.setState({ addSuccessMsg: "" });
+                &times;
+              </span>
+              {this.state.addSuccessMsg ? (
+                <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
+              ) : (
+                ""
+              )}
+              <div align="center">
+                <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                  Add Address
+                </h3>
+              </div>
+              <form onSubmit={this.addAddress}>
+                <div className="form-group col-md-11">
+                  <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="form-control"
+                    placeholder="Enter Name"
+                    onChange={(e) => {
+                      this.setState({ name: e.target.value });
+                    }}
+                    required
+                  ></input>
+                </div>
+
+                <div className="form-group col-md-11">
+                  <div>
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      Street
+                    </label>
+                  </div>
+
+                  <label
+                    style={{
+                      fontWeight: "500",
+                      fontSize: "13px",
+                      marginBottom: "5px",
                     }}
                   >
-                    &times;
-                  </span>
-                  {this.state.addSuccessMsg ? (
-                    <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
-                  ) : (
-                    ""
-                  )}
-                  <div align="center">
-                    <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
-                      Add Address
-                    </h3>
-                  </div>
-                  <form onSubmit={this.addAddress}>
-                    <div className="form-group col-md-11">
-                      <label
-                        style={{ fontWeight: "bold", marginBottom: "5px" }}
-                      >
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        className="form-control"
-                        placeholder="Enter Name"
-                        onChange={(e) => {
-                          this.setState({ name: e.target.value });
-                        }}
-                        required
-                      ></input>
-                    </div>
-
-                    <div className="form-group col-md-11">
-                      <div>
-                        <label
-                          style={{
-                            fontWeight: "bold",
-                            marginBottom: "5px",
-                          }}
-                        >
-                          Street
-                        </label>
-                      </div>
-
-                      <label
-                        style={{
-                          fontWeight: "500",
-                          fontSize: "13px",
-                          marginBottom: "5px",
-                        }}
-                      >
-                        Please enter Street
-                      </label>
-                      <input
-                        type="text"
-                        id="street"
-                        name="street"
-                        className="form-control"
-                        placeholder="Eg. 190 Ryland Street"
-                        onChange={(e) => {
-                          this.setState({ street: e.target.value });
-                        }}
-                        required
-                      ></input>
-                    </div>
-                    <div className="col-md-11 d-flex p-0">
-                      <div className="form-group col-md-6 ">
-                        <label
-                          style={{
-                            fontWeight: "bold",
-                            marginBottom: "5px",
-                          }}
-                        >
-                          State
-                        </label>
-                        <input
-                          type="text"
-                          id="state"
-                          name="state"
-                          className="form-control"
-                          placeholder="Eg. California"
-                          onChange={(e) => {
-                            this.setState({ state: e.target.value });
-                          }}
-                          required
-                        ></input>
-                      </div>
-                      <div className="form-group col-md-6">
-                        <label
-                          style={{
-                            fontWeight: "bold",
-                            marginBottom: "5px",
-                          }}
-                        >
-                          Country
-                        </label>
-                        <input
-                          type="text"
-                          id="country"
-                          name="country"
-                          className="form-control"
-                          placeholder="Eg. USA"
-                          onChange={(e) => {
-                            this.setState({
-                              country: e.target.value,
-                            });
-                          }}
-                          required
-                        ></input>
-                      </div>
-                    </div>
-                    <div className="form-group col-md-11">
-                      <label
-                        style={{ fontWeight: "bold", marginBottom: "5px" }}
-                      >
-                        Zipcode
-                      </label>
-                      <input
-                        type="number"
-                        id="zipcode"
-                        name="zipcode"
-                        className="form-control"
-                        placeholder="Enter Zipcode"
-                        onChange={(e) => {
-                          this.setState({ zipcode: e.target.value });
-                        }}
-                        required
-                      ></input>
-                    </div>
-                    <div className="form-group col-md-11">
-                      <label
-                        style={{ fontWeight: "bold", marginBottom: "5px" }}
-                      >
-                        Phone Number
-                      </label>
-                      <input
-                        type="number"
-                        id="phnumber"
-                        name="phnumber"
-                        className="form-control"
-                        placeholder="Enter Phone number"
-                        onChange={(e) => {
-                          this.setState({ phone: e.target.value });
-                        }}
-                        required
-                      ></input>
-                    </div>
-                    <div className="form-group col-md-8 m-3">
-                      <input
-                        type="submit"
-                        className="btn btn btn-primary"
-                      ></input>
-                    </div>
-                  </form>
+                    Please enter Street
+                  </label>
+                  <input
+                    type="text"
+                    id="street"
+                    name="street"
+                    className="form-control"
+                    placeholder="Eg. 190 Ryland Street"
+                    onChange={(e) => {
+                      this.setState({ street: e.target.value });
+                    }}
+                    required
+                  ></input>
                 </div>
-              </div>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6 ">
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      className="form-control"
+                      placeholder="Eg. California"
+                      onChange={(e) => {
+                        this.setState({ state: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      id="country"
+                      name="country"
+                      className="form-control"
+                      placeholder="Eg. USA"
+                      onChange={(e) => {
+                        this.setState({
+                          country: e.target.value,
+                        });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6">
+                    <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                      City
+                    </label>
+                    <input
+                      type="number"
+                      id="city"
+                      name="city"
+                      className="form-control"
+                      placeholder="Enter city"
+                      onChange={(e) => {
+                        this.setState({ city: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                      Zipcode
+                    </label>
+                    <input
+                      type="number"
+                      id="zipcode"
+                      name="zipcode"
+                      className="form-control"
+                      placeholder="Enter Zipcode"
+                      onChange={(e) => {
+                        this.setState({ zipcode: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="form-group col-md-11">
+                  <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                    Phone Number
+                  </label>
+                  <input
+                    type="number"
+                    id="phnumber"
+                    name="phnumber"
+                    className="form-control"
+                    placeholder="Enter Phone number"
+                    onChange={(e) => {
+                      this.setState({ phone: e.target.value });
+                    }}
+                    required
+                  ></input>
+                </div>
+                <div className="form-group col-md-8 m-3">
+                  <input type="submit" className="btn btn btn-primary"></input>
+                </div>
+              </form>
             </div>
+          </div>
+        </div>
 
+        <div
+          className="modal mt-5 editmodal"
+          align="center"
+          style={{ display: this.state.modalShowEdit }}
+        >
+          <div className="modal-content col-5" style={{ fontFamily: "Suisse" }}>
+            <div className="container">
+              <span
+                className="close image-edit-avatar"
+                onClick={(e) => {
+                  this.setState({ modalShowEdit: "none" });
+                  this.setState({ addSuccessMsg: "" });
+                }}
+              >
+                &times;
+              </span>
+              {this.state.addSuccessMsg ? (
+                <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
+              ) : (
+                ""
+              )}
+              <div align="center">
+                <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                  Add Address
+                </h3>
+              </div>
+              <form onSubmit={this.addAddress}>
+                <div className="form-group col-md-11">
+                  <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="form-control"
+                    placeholder="Enter Name"
+                    onChange={(e) => {
+                      this.setState({ name: e.target.value });
+                    }}
+                    required
+                  ></input>
+                </div>
+
+                <div className="form-group col-md-11">
+                  <div>
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      Street
+                    </label>
+                  </div>
+
+                  <label
+                    style={{
+                      fontWeight: "500",
+                      fontSize: "13px",
+                      marginBottom: "5px",
+                    }}
+                  >
+                    Please enter Street
+                  </label>
+                  <input
+                    type="text"
+                    id="street"
+                    name="street"
+                    className="form-control"
+                    placeholder="Eg. 190 Ryland Street"
+                    onChange={(e) => {
+                      this.setState({ street: e.target.value });
+                    }}
+                    required
+                  ></input>
+                </div>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6 ">
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      State
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      className="form-control"
+                      placeholder="Eg. California"
+                      onChange={(e) => {
+                        this.setState({ state: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: "5px",
+                      }}
+                    >
+                      Country
+                    </label>
+                    <input
+                      type="text"
+                      id="country"
+                      name="country"
+                      className="form-control"
+                      placeholder="Eg. USA"
+                      onChange={(e) => {
+                        this.setState({
+                          country: e.target.value,
+                        });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6">
+                    <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                      City
+                    </label>
+                    <input
+                      type="number"
+                      id="city"
+                      name="city"
+                      className="form-control"
+                      placeholder="Enter city"
+                      onChange={(e) => {
+                        this.setState({ city: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                      Zipcode
+                    </label>
+                    <input
+                      type="number"
+                      id="zipcode"
+                      name="zipcode"
+                      className="form-control"
+                      placeholder="Enter Zipcode"
+                      onChange={(e) => {
+                        this.setState({ zipcode: e.target.value });
+                      }}
+                      required
+                    ></input>
+                  </div>
+                </div>
+                <div className="form-group col-md-11">
+                  <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
+                    Phone Number
+                  </label>
+                  <input
+                    type="number"
+                    id="phnumber"
+                    name="phnumber"
+                    className="form-control"
+                    placeholder="Enter Phone number"
+                    onChange={(e) => {
+                      this.setState({ phone: e.target.value });
+                    }}
+                    required
+                  ></input>
+                </div>
+                <div className="form-group col-md-8 m-3">
+                  <input type="submit" className="btn btn btn-primary"></input>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default SavedAddress;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    addressArray: state.customerProfileReducer.addressArray,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAddress: () => dispatch(getAddress()),
+    addAddress: (payload) => dispatch(addAddress(payload)),
+    deleteAddress: (payload) => dispatch(deleteAddress(payload)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SavedAddress);
