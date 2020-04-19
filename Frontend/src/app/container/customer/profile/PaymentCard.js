@@ -84,9 +84,9 @@ class PaymentCard extends Component {
                 >
                   {card.cardName}
                 </h5>
-                <h5 style={{ fontSize: "13px" }}>Card Number: {card.cardNumber}</h5>
+                <h5 style={{ fontSize: "13px" }}>Card Number: {card.cardNumber.slice(0,-5)+"XXXXX"}</h5>
                 <h5 style={{ fontSize: "13px" }}>Expire on: {card.expirationDate.split("T")[0]}</h5>
-                <h5 style={{ fontSize: "13px" }}>CVV: {card.cvv}</h5>
+                <h5 style={{ fontSize: "13px" }}>CVV: {"XX"+card.cvv.slice(2)}</h5>
                 <h5 style={{ fontSize: "13px" }}>Added on: {card.createdAt.split("T")[0]}</h5>
                
                 <span
