@@ -11,7 +11,7 @@ import {
 class SavedAddress extends Component {
   state = {
     modalShow: "none",
-    modalShowEdit:'none',
+    modalShowEdit: "none",
     name: "",
     street: "",
     city: "",
@@ -20,6 +20,10 @@ class SavedAddress extends Component {
     zipcode: "",
     phone: "",
   };
+
+  componentWillMount() {
+    this.props.getAddress();
+  }
 
   addAddress = (e) => {
     e.preventDefault();
@@ -39,8 +43,10 @@ class SavedAddress extends Component {
   render() {
     return (
       <div className="container mt-5" style={{ display: "block" }}>
+         {this.props.addressArray?
         <div className="row">
           <h2 className="m-3">Your Addresses</h2>
+        
           <div className="my-4 d-flex">
             <div
               className="col-4 mx-3 image-edit-avatar first-desktop-address-tile align-content-center"
@@ -54,19 +60,20 @@ class SavedAddress extends Component {
                 <h3 style={{ color: "#767676" }}>Add Address</h3>
               </div>
             </div>
-
+              {this.props.addressArray.addresses.map(address=>(
             <div className="col-4 mx-3 rest-desktop-address-tile">
               <h5
                 className="pt-4"
                 style={{ fontSize: "13px", fontWeight: "700" }}
               >
-                PuneetJyot Singh
+                {address.addressName}
               </h5>
-              <h5 style={{ fontSize: "13px" }}>190 Ryland Street</h5>
-              <h5 style={{ fontSize: "13px" }}>Apt 3105</h5>
-              <h5 style={{ fontSize: "13px" }}>San Jose, CA</h5>
-              <h5 style={{ fontSize: "13px" }}>USA</h5>
-              <h5 style={{ fontSize: "13px" }}>Phone number: 20156568888</h5>
+              <h5 style={{ fontSize: "13px" }}>{address.street}</h5>
+              <h5 style={{ fontSize: "13px" }}>{address.city}</h5>
+              <h5 style={{ fontSize: "13px" }}>{address.state}</h5>
+              <h5 style={{ fontSize: "13px" }}>{address.country}</h5>
+              <h5 style={{ fontSize: "13px" }}>Zip: {address.zipcode}</h5>
+              <h5 style={{ fontSize: "13px" }}>Phone number: {address.phone}</h5>
               <span
                 className="link-color image-edit-avatar"
                 style={{
@@ -76,8 +83,8 @@ class SavedAddress extends Component {
                   position: "absolute",
                 }}
                 onClick={(e) => {
-                this.setState({ modalShowEdit: "block" });
-              }}
+                  this.setState({ modalShowEdit: "block" });
+                }}
               >
                 Edit
               </span>
@@ -93,7 +100,7 @@ class SavedAddress extends Component {
                 Delete
               </span>
             </div>
-
+              ))}
             <div className="col-4 mx-3 rest-desktop-address-tile">
               <h5
                 className="pt-4"
@@ -168,7 +175,7 @@ class SavedAddress extends Component {
             </span>
           </div>
         </div>
-
+:''}
         <div
           className="modal mt-5"
           align="center"
@@ -373,7 +380,7 @@ class SavedAddress extends Component {
               )}
               <div align="center">
                 <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
-                  Add Address
+                  Edit Address
                 </h3>
               </div>
               <form onSubmit={this.addAddress}>
