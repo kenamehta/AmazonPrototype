@@ -20,6 +20,9 @@ const ModalPicture = (props) => {
         <p className="errormessage">{props.errormessage}</p>
       </Modal.Body>
       <Modal.Footer>
+        <Button className="cancel" onClick={props.close}>
+          Close
+        </Button>
         <Button className="save" onClick={props.onUpload}>
           Upload
         </Button>
