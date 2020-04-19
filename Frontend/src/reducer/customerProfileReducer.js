@@ -3,19 +3,23 @@ import {
   UPDATEPROFILE,
   UPDATEPROFILEPIC,
   ADDADDRESS,
-  DELETEADDRESS,GETADDRESS
+  DELETEADDRESS,
+  GETADDRESS,
+  GETPAYMENT,
+  ADDORUPDATEPAYMENT,
+  DELETEPAYMENT
 } from "../action/customerprofileaction/actionType";
 
 const initialState = {
-  profiledata: {},
+  profiledata: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case GETPROFILE:
       return {
         ...state,
-        profiledata: action.payload,
+        profiledata: action.payload
       };
     case UPDATEPROFILE:
       console.log(state);
@@ -29,10 +33,10 @@ export default function (state = initialState, action) {
               ...state.profiledata.data.mainCustomer,
               name: action.payload.data.name,
               city: action.payload.data.city,
-              state: action.payload.data.state,
-            },
-          },
-        },
+              state: action.payload.data.state
+            }
+          }
+        }
       };
     case UPDATEPROFILEPIC:
       return {
@@ -43,10 +47,10 @@ export default function (state = initialState, action) {
             ...state.profiledata.data,
             mainCustomer: {
               ...state.profiledata.data.mainCustomer,
-              profilePictureUrl: action.payload.profilePictureUrl,
-            },
-          },
-        },
+              profilePictureUrl: action.payload.profilePictureUrl
+            }
+          }
+        }
       };
       case GETADDRESS:
         return {
@@ -59,11 +63,26 @@ export default function (state = initialState, action) {
          addressArray:action.payload
         };
 
-        case DELETEADDRESS:
-        return {
-          ...state,
-         addressArray:action.payload
-        };
+    case DELETEADDRESS:
+      return {
+        ...state,
+        addressArray: action.payload
+      };
+    case GETPAYMENT:
+      return {
+        ...state,
+        paymentArr: action.payload
+      };
+    case ADDORUPDATEPAYMENT:
+      return {
+        ...state,
+        paymentArr: action.payload
+      };
+    case DELETEPAYMENT:
+      return {
+        ...state,
+        paymentArr: action.payload
+      };
 
     default:
       return state;
