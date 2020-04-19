@@ -6,14 +6,14 @@ let deleteAddress = async (msg, callback) => {
   customer
     .findOne({
       _id: msg.params.id,
-      "addresses._id": msg.data.address_id
+      "addresses._id": msg.address_id
     })
     .then(async result => {
       console.log(result);
       if (result) {
         let idx = -1;
         for (let i = 0; i < result.addresses.length; i++) {
-          if (result.addresses[i]._id == msg.data.address_id) {
+          if (result.addresses[i]._id == msg.address_id) {
             idx = i;
             break;
           }

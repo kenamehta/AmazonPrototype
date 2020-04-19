@@ -14,153 +14,125 @@ class PaymentCard extends Component {
     cardName: "",
     cardNumber: "",
     expirationDate: "",
-    cvv: ""
+    cvv: "",
+    editcard:'',
+    addSuccessMsg:''
   };
+
+  componentWillMount() {
+    this.props.getPayment();
+  }
+
+  componentWillReceiveProps(nextProps){
+      if(nextProps.msgSuccess)
+      { 
+          this.setState({addSuccessMsg:nextProps.msgSuccess})
+
+      }
+  }
+
+  deletePayment= () =>{
+     let payload={
+          data:{
+            card_id:this.state.editedId
+          }
+      }
+       this.props.deletePayment(payload)
+  }
+
 
   addOrUpdatePayment = e => {
     e.preventDefault();
     let payload = {
+        card_id:this.state.editcard._id,
       cardName: this.state.cardName,
       cardNumber: this.state.cardNumber,
       expirationDate: this.state.expirationDate,
       cvv: this.state.cvv
     };
+    console.log(payload)
     this.props.addOrUpdatePayment(payload);
   };
 
   render() {
     return (
       <div className="container mt-5" style={{ display: "block" }}>
-        <div className="row">
+       
           <h2 className="m-3">Your Payment Details</h2>
-          <div className="my-4 d-flex">
+          {this.props.paymentArr ? (
+          <div className="my-4 d-flex scroll">
             <div
-              className="col-4 mx-3 image-edit-avatar first-desktop-address-tile align-content-center"
-              onClick={e => {
+              className="col-3 mx-3 image-edit-avatar first-desktop-address-tile align-content-center"
+              onClick={(e) => {
                 this.setState({ modalShow: "block" });
               }}
             >
               <div className="a-box-inner a-padding-extra-large">
-                <div className="a-box-inner a-padding-extra-large" />
-                <div className="address-plus-icon" />
+                <div className="a-box-inner a-padding-extra-large"></div>
+                <div className="address-plus-icon"></div>
                 <h3 style={{ color: "#767676" }}>Add Payment</h3>
               </div>
             </div>
-
-            <div className="col-4 mx-3 rest-desktop-address-tile">
-              <h5
-                className="pt-4"
-                style={{ fontSize: "13px", fontWeight: "700" }}
+            {this.props.paymentArr.paymentCards.map((card) => (
+              <div
+                className="col-3 mx-3 rest-desktop-address-tile"
+                key={card._id}
               >
-                PuneetJyot Singh
-              </h5>
-              <h5 style={{ fontSize: "13px" }}>190 Ryland Street</h5>
-              <h5 style={{ fontSize: "13px" }}>Apt 3105</h5>
-              <h5 style={{ fontSize: "13px" }}>San Jose, CA</h5>
-              <h5 style={{ fontSize: "13px" }}>USA</h5>
-              <h5 style={{ fontSize: "13px" }}>Phone number: 20156568888</h5>
-              <span
-                className="link-color image-edit-avatar"
-                style={{
-                  fontSize: "13px",
-                  bottom: "20px",
-                  left: "22px",
-                  position: "absolute"
-                }}
-                onClick={e => {
-                  this.setState({ modalShow: "block" });
-                }}
-              >
-                Edit
-              </span>
-              <span
-                className="link-color image-edit-avatar"
-                style={{
-                  fontSize: "13px",
-                  bottom: "20px",
-                  left: "62px",
-                  position: "absolute"
-                }}
-              >
-                Delete
-              </span>
-            </div>
-
-            <div className="col-4 mx-3 rest-desktop-address-tile">
-              <h5
-                className="pt-4"
-                style={{ fontSize: "13px", fontWeight: "700" }}
-              >
-                PuneetJyot Singh
-              </h5>
-              <h5 style={{ fontSize: "13px" }}>190 Ryland Street</h5>
-              <h5 style={{ fontSize: "13px" }}>Apt 3105</h5>
-              <h5 style={{ fontSize: "13px" }}>San Jose, CA</h5>
-              <h5 style={{ fontSize: "13px" }}>USA</h5>
-              <h5 style={{ fontSize: "13px" }}>Phone number: 20156568888</h5>
-              <span
-                className="link-color"
-                style={{
-                  fontSize: "13px",
-                  bottom: "20px",
-                  left: "22px",
-                  position: "absolute"
-                }}
-              >
-                Edit
-              </span>
-              <span
-                className="link-color"
-                style={{
-                  fontSize: "13px",
-                  bottom: "20px",
-                  left: "62px",
-                  position: "absolute"
-                }}
-              >
-                Delete
-              </span>
-            </div>
+                <h5
+                  className="pt-4"
+                  style={{ fontSize: "13px", fontWeight: "700" }}
+                >
+                  {card.cardName}
+                </h5>
+                <h5 style={{ fontSize: "13px" }}>Card Number: {card.cardNumber}</h5>
+                <h5 style={{ fontSize: "13px" }}>Expire on: {card.expirationDate.split("T")[0]}</h5>
+                <h5 style={{ fontSize: "13px" }}>CVV: {card.cvv}</h5>
+                <h5 style={{ fontSize: "13px" }}>Added on: {card.createdAt.split("T")[0]}</h5>
+               
+                <span
+                  className="link-color image-edit-avatar"
+                  style={{
+                    fontSize: "13px",
+                    bottom: "20px",
+                    left: "22px",
+                    position: "absolute",
+                  }}
+                  onClick={(e) => {
+                    this.setState({ modalShow: "block" });
+                    this.setState({editcard:card})
+                    this.setState({editedId:card._id},()=>{
+                        console.log(this.state.editedId);
+                        console.log(this.state.editcard)
+                    });
+                  }}
+                >
+                  Edit
+                </span>
+                <span
+                  className="link-color image-edit-avatar"
+                  style={{
+                    fontSize: "13px",
+                    bottom: "20px",
+                    left: "62px",
+                    position: "absolute",
+                  }}
+                  onClick={(e) => {
+                    
+                    this.setState({editedId:card._id},()=>{
+                        this.deletePayment();
+                        console.log(this.state.editedId)
+                    })
+                    
+                  }}
+                >
+                  Delete
+                </span>
+              </div>
+            ))}
           </div>
-
-          <div className="col-4 mx-3 rest-desktop-address-tile">
-            <h5
-              className="pt-4"
-              style={{ fontSize: "13px", fontWeight: "700" }}
-            >
-              PuneetJyot Singh
-            </h5>
-
-            <h5 style={{ fontSize: "13px" }}>190 Ryland Street</h5>
-            <h5 style={{ fontSize: "13px" }}>Apt 3105</h5>
-            <h5 style={{ fontSize: "13px" }}>San Jose, CA</h5>
-            <h5 style={{ fontSize: "13px" }}>USA</h5>
-            <h5 style={{ fontSize: "13px" }}>Phone number: 20156568888</h5>
-            <span
-              className="link-color"
-              style={{
-                fontSize: "13px",
-                bottom: "20px",
-                left: "22px",
-                position: "absolute"
-              }}
-            >
-              Edit
-            </span>
-            <span
-              className="link-color"
-              style={{
-                fontSize: "13px",
-                bottom: "20px",
-                left: "62px",
-                position: "absolute"
-              }}
-            >
-              Delete
-            </span>
-          </div>
-        </div>
-
+        ) : (
+          ""
+        )}
         <div
           className="modal mt-5"
           align="center"
@@ -173,6 +145,7 @@ class PaymentCard extends Component {
                 onClick={e => {
                   this.setState({ modalShow: "none" });
                   this.setState({ addSuccessMsg: "" });
+                  this.setState({editcard:''})
                 }}
               >
                 &times;
@@ -184,7 +157,7 @@ class PaymentCard extends Component {
               )}
               <div align="center">
                 <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
-                  Add Payment
+                {this.state.editcard?'Edit Payment Details': "Add Payment Details"}
                 </h3>
               </div>
               <form onSubmit={this.addOrUpdatePayment}>
@@ -197,11 +170,11 @@ class PaymentCard extends Component {
                     id="name"
                     name="name"
                     className="form-control"
-                    placeholder="Enter Card Name"
+                    placeholder={this.state.editcard?this.state.editcard.cardName:'Enter Card name'}
                     onChange={e => {
                       this.setState({ cardName: e.target.value });
                     }}
-                    required
+                    
                   />
                 </div>
                 <div className="form-group col-md-11">
@@ -213,11 +186,11 @@ class PaymentCard extends Component {
                     id="number"
                     name="number"
                     className="form-control"
-                    placeholder="Enter Card Number"
+                    placeholder={this.state.editcard?this.state.editcard.cardNumber:'Enter Card number'}
                     onChange={e => {
                       this.setState({ cardNumber: e.target.value });
                     }}
-                    required
+                    
                   />
                 </div>
                 <div className="form-group col-md-11">
@@ -229,10 +202,11 @@ class PaymentCard extends Component {
                     id="date"
                     name="date"
                     className="form-control"
+                    
                     onChange={e => {
                       this.setState({ expirationDate: e.target.value });
                     }}
-                    required
+                    
                   />
                 </div>
                 <div className="form-group col-md-11">
@@ -244,11 +218,11 @@ class PaymentCard extends Component {
                     id="cvv"
                     name="cvv"
                     className="form-control"
-                    placeholder="Enter CVV"
+                    placeholder={this.state.editcard?this.state.editcard.cvv:'Enter Card cvv'}
                     onChange={e => {
                       this.setState({ cvv: e.target.value });
                     }}
-                    required
+                    
                   />
                 </div>
                 <div className="form-group col-md-8 m-3">
@@ -266,7 +240,8 @@ class PaymentCard extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    paymentArr: state.customerProfileReducer.paymentArr
+    paymentArr: state.customerProfileReducer.paymentArr,
+    msgSuccess: state.customerProfileReducer.msgSuccess
   };
 };
 const mapDispatchToProps = dispatch => {

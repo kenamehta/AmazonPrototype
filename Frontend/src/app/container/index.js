@@ -1,8 +1,7 @@
 import React from "react";
 import topNav from "../container/navbar";
 import CustomerProfile from "./customer/profile/CustomerProfile";
-import SavedAddress from "./customer/profile/SavedAddress";
-import PaymentCard from "./customer/profile/PaymentCard";
+import PaymentAndAddressPage from "./customer/profile/PaymentAndAddressPage";
 
 import SellerProfile from "./seller/profile/SellerProfile";
 import { Route } from "react-router-dom";
@@ -22,8 +21,8 @@ class bodyCont extends React.Component {
         <Route path="/login" component={Login} />
         <Route path="/registerCustomer" component={RegisterCustomer} />
         <Route path="/registerSeller" component={RegisterSeller} />
-        <Route path="/address" component={SavedAddress} />
-        <Route path="/paymentcard" component={PaymentCard} />
+        <Route path="/addressandpayment" component={PaymentAndAddressPage} />
+        {/* <Route path="/paymentcard" component={PaymentCard} /> */}
       </div>
     );
   }

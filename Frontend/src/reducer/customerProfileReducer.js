@@ -60,7 +60,8 @@ export default function(state = initialState, action) {
       case ADDADDRESS:
         return {
           ...state,
-         addressArray:action.payload
+         addressArray:action.payload,
+         msgSuccess:"Address added/edited successfully"
         };
 
     case DELETEADDRESS:
@@ -76,7 +77,8 @@ export default function(state = initialState, action) {
     case ADDORUPDATEPAYMENT:
       return {
         ...state,
-        paymentArr: action.payload
+        paymentArr: action.payload,
+        msgSuccess:"Card added/edited successfully"
       };
     case DELETEPAYMENT:
       return {

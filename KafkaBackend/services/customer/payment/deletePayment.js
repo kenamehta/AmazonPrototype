@@ -6,14 +6,14 @@ let deletePayment = async (msg, callback) => {
   customer
     .findOne({
       _id: msg.params.id,
-      "paymentCards._id": msg.data.card_id
+      "paymentCards._id": msg.card_id
     })
     .then(async result => {
       console.log(result);
       if (result) {
         let idx = -1;
         for (let i = 0; i < result.paymentCards.length; i++) {
-          if (result.paymentCards[i]._id == msg.data.card_id) {
+          if (result.paymentCards[i]._id == msg.card_id) {
             idx = i;
             break;
           }

@@ -43,7 +43,7 @@ const addAddressDispatcher = payload => {
 };
 const getAddressDispatcher = (payload) => {
   return {
-    type: ADDADDRESS,
+    type: GETADDRESS,
     payload,
   };
 };

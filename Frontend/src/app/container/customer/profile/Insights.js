@@ -46,16 +46,16 @@ class Insights extends Component {
                   <h4 className="card-title">Ordering and shopping preferences</h4>
                   <div className='d-flex m-3 justify-content-center'>
                     <div className="upload-photo mr-2">
-                    <Link to="/address" >
-                    <span className='link-color'>Your Addresses</span>
+                    <Link to="/addressandpayment" >
+                    <span className='link-color'>Your Addresses and payment options</span>
                     </Link>
                     </div>
 
-                    <div className="upload-photo ml-2">
+                    {/* <div className="upload-photo ml-2">
                     <Link to="/paymentcard" >
                    <span className='link-color'>Your Payment options</span> 
                    </Link>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
