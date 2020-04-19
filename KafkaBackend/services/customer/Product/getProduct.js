@@ -1,5 +1,6 @@
 "use strict";
 const product = require("../../../models/product.model");
+const comment = require("../../../models/comment.model");
 
 // sends all fields of a product document from mongoDb in response.
 const getProduct = (msg, callback) => {
@@ -30,19 +31,43 @@ const getProduct = (msg, callback) => {
       if ( index === -1 ) {
         foundProduct.clickCount.push({date: myCustomDate, count: 1});
       } else {
-        foundProduct.clickCount[i].count = foundProduct.clickCount[i].count + 1;
+        foundProduct.clickCount[index].count = foundProduct.clickCount[index].count + 1;
       }
 
-      // updating clickCount in database
-      foundProduct.save((saveError) => {
-        if(saveError){
+      // getting all comments for the product.
+      comment.find({productId:msg.productId},(err,allComments) => {
+        if(err){
           res.status = 500;
           res.message = 'Database Error';
-        } else {
-          res.status = 200;
-          res.message = foundProduct;
-        }
-        callback(null, res);
+          callback(null, res);
+        } 
+        // console.log(allComments);
+        // updating clickCount in database
+        foundProduct.save((saveError) => {
+          if(saveError){
+            res.status = 500;
+            res.message = 'Database Error';
+          } else {
+            res.status = 200;
+            const obj = {
+              validFlag:foundProduct.validFlag,
+              averageRating:foundProduct.averageRating,
+              photos:foundProduct.photos,
+              _id:foundProduct._id,
+              sellerId:foundProduct.sellerId,
+              sellerEmailId:foundProduct.sellerEmailId,
+              sellerName:foundProduct.sellerName,
+              productName:foundProduct.productName,
+              productCategory:foundProduct.productCategory,
+              productPrice:foundProduct.productPrice,
+              productDescription:foundProduct.productDescription,
+              clickCount:foundProduct.clickCount,
+              comments: allComments
+            }
+            res.message = obj;
+          }
+          callback(null, res);
+        });
       });
     } else {
       res.status = 400;

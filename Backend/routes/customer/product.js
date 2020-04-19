@@ -8,7 +8,7 @@ const kafka = require("../../kafka/client");
 // sends all fields of a product document from mongoDb in response.
 // not checking for ValidFlag = true in the backend
 // to suffice if customer ordered a product and seller soft deletes it, that customer could still product page from his/her orders
-router.get("/list/:productId", checkAuth, (req, res) => {
+router.get("/list/:productId", (req, res) => {
   console.log("Inside get of product/customer/list/:productId");
   console.log(req.body);
 
