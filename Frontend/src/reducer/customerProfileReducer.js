@@ -2,6 +2,8 @@ import {
   GETPROFILE,
   UPDATEPROFILE,
   UPDATEPROFILEPIC,
+  ADDADDRESS,
+  DELETEADDRESS
 } from "../action/customerprofileaction/actionType";
 
 const initialState = {
@@ -46,6 +48,18 @@ export default function (state = initialState, action) {
           },
         },
       };
+
+      case ADDADDRESS:
+        return {
+          ...state,
+         addressArray:action.payload
+        };
+
+        case DELETEADDRESS:
+        return {
+          ...state,
+         addressArray:action.payload
+        };
 
     default:
       return state;

@@ -1,6 +1,9 @@
 import React from "react";
 import topNav from "../container/navbar";
 import CustomerProfile from "./customer/profile/CustomerProfile";
+import SavedAddress from "./customer/profile/SavedAddress";
+import PaymentCard from "./customer/profile/PaymentCard";
+
 import SellerProfile from "./seller/profile/SellerProfile";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
@@ -19,6 +22,8 @@ class bodyCont extends React.Component {
         <Route path="/login" component={Login} />
         <Route path="/registerCustomer" component={RegisterCustomer} />
         <Route path="/registerSeller" component={RegisterSeller} />
+        <Route path="/address" component={SavedAddress} />
+        <Route path="/paymentcard" component={PaymentCard} />
       </div>
     );
   }
