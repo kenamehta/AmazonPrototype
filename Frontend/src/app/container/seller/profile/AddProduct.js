@@ -14,29 +14,97 @@ class AddProduct extends React.Component {
     this.state = {
       file: null,
       name: "",
+      nameError: "",
       category: "",
+      categoryError: "",
       price: "",
+      priceError: "",
       desc: "",
+      descError: "",
+      nameExist: false,
     };
     this.editProfileHandlerSubmit = this.editProfileHandlerSubmit.bind(this);
     this.handleFile = this.handleFile.bind(this);
+    this.checkNameEventHandler = this.checkNameEventHandler.bind(this);
+  }
+
+  checkNameEventHandler(e) {
+    console.log(e);
+    if (this.state.name === "") {
+      e.preventDefault();
+      this.setState({
+        nameError: "Product name is mandatory",
+      });
+    } else {
+      axios
+        .get(
+          configPath.api_host +
+            `/product/seller/existProduct/` +
+            this.state.name
+        )
+        .then((response) => {
+          console.log("Status Code : ", response.status);
+          if (response.status === 200) {
+            e.preventDefault();
+            this.setState({
+              nameError:
+                "Product name already present, Please enter a new product name",
+              nameExist: true,
+            });
+          }
+        })
+        .catch((error) => {
+          e.preventDefault();
+          this.setState({
+            nameError: "",
+            nameExist: false,
+          });
+        });
+    }
   }
 
   editProfileHandlerSubmit(e) {
     e.preventDefault();
     //console.log(this.state);
-    if (
-      this.state.name === "" ||
-      this.state.category === "" ||
-      this.state.price === "" ||
-      this.state.desc === "" ||
-      this.state.file === null
-    ) {
-      window.alert("Please enter all fields");
+    let error = 0;
+    if (this.state.name === "") {
+      this.setState({
+        nameError: "Name is mandatory",
+      });
+      error = 1;
+    }
+    if (this.state.category === "") {
+      this.setState({
+        categoryError: "Category is mandatory",
+      });
+      error = 1;
+    }
+    if (this.state.price === "") {
+      this.setState({
+        priceError: "Price is mandatory",
+      });
+      error = 1;
+    }
+    if (this.state.desc === "") {
+      this.setState({
+        descError: "Description is mandatory",
+      });
+      error = 1;
+    }
+    if (this.state.file === null) {
+      this.setState({
+        fileError: "File is mandatory",
+      });
+      error = 1;
     } else if (this.state.file.length > 5) {
-      window.alert("Max 5 uploads allowed");
-    } else {
+      this.setState({
+        fileError: "Max 5 files can be uploaded",
+      });
+      error = 1;
+    }
+    if (error === 0 && this.state.nameExist === false) {
       const fd = new FormData();
+      fd.append("sellerId", this.props.profile.userId);
       fd.append("emailId", this.props.profile.emailId);
       fd.append("sellerName", this.props.profile.name);
       fd.append("productName", this.state.name);
@@ -84,10 +152,14 @@ class AddProduct extends React.Component {
                 type='text'
                 placeholder='Enter product name'
                 value={this.state.name}
+                onBlur={this.checkNameEventHandler}
                 onChange={(e) => {
                   this.setState({ name: e.target.value });
                 }}
               />
+              <Form.Text style={{ color: "red" }}>
+                {this.state.nameError}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formBasicCategory'>
@@ -101,6 +173,9 @@ class AddProduct extends React.Component {
               >
                 {cat}
               </Form.Control>
+              <Form.Text style={{ color: "red" }}>
+                {this.state.categoryError}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formPrice'>
@@ -113,6 +188,9 @@ class AddProduct extends React.Component {
                   this.setState({ price: e.target.value });
                 }}
               />
+              <Form.Text style={{ color: "red" }}>
+                {this.state.priceError}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formBasicDesc'>
@@ -125,6 +203,9 @@ class AddProduct extends React.Component {
                   this.setState({ desc: e.target.value });
                 }}
               />
+              <Form.Text style={{ color: "red" }}>
+                {this.state.descError}
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId='formPrice'>
@@ -134,6 +215,9 @@ class AddProduct extends React.Component {
                 multiple
                 onChange={(e) => this.handleFile(e)}
               />
+              <Form.Text style={{ color: "red" }}>
+                {this.state.fileError}
+              </Form.Text>
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>

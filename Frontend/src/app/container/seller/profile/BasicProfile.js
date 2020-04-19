@@ -20,7 +20,6 @@ import {
   updateSellerProfilePicture,
   updateSellerDetails,
 } from "../../../../action/Seller/Profile/profileAction";
-import AddProduct from "./AddProduct";
 
 class BasicProfile extends React.Component {
   constructor(props) {

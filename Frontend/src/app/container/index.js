@@ -15,22 +15,22 @@ class bodyCont extends React.Component {
   render() {
     return (
       <div>
-        <Route path="/" component={topNav} />
-        <Route path="/customer/profile" component={CustomerProfile} />
-        <Route path="/seller/profile" component={SellerProfile} />
-        <Route path="/login" component={Login} />
-        <Route path="/registerCustomer" component={RegisterCustomer} />
-        <Route path="/registerSeller" component={RegisterSeller} />
-        <Route path="/addressandpayment" component={PaymentAndAddressPage} />
+        <Route path='/' component={topNav} />
+        <Route path='/customer/profile' component={CustomerProfile} />
+        <Route path='/seller/profile' component={SellerProfile} />
+        <Route path='/login' component={Login} />
+        <Route path='/registerCustomer' component={RegisterCustomer} />
+        <Route path='/registerSeller' component={RegisterSeller} />
+        <Route path='/addressandpayment' component={PaymentAndAddressPage} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
       </div>
     );
   }
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
   return {
-    getType: state.getType
+    getType: state.getType,
   };
 };
 
