@@ -37,7 +37,7 @@ class AddProduct extends React.Component {
       window.alert("Max 5 uploads allowed");
     } else {
       const fd = new FormData();
-      fd.append("emailID", this.props.profile.emailId);
+      fd.append("emailId", this.props.profile.emailId);
       fd.append("sellerName", this.props.profile.name);
       fd.append("productName", this.state.name);
       fd.append("productCategory", this.state.category);
@@ -51,6 +51,7 @@ class AddProduct extends React.Component {
         .then((response) => {
           console.log("Status Code : ", response.status);
           if (response.status === 200) {
+            this.props.handleClose();
             alert("Successfully added");
           }
         })
@@ -136,7 +137,9 @@ class AddProduct extends React.Component {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='secondary'>Close</Button>
+            <Button variant='secondary' onClick={this.props.handleClose}>
+              Close
+            </Button>
             <Button variant='primary' type='submit'>
               Save changes
             </Button>
