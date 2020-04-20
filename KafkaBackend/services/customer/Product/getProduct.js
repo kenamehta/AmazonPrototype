@@ -51,6 +51,7 @@ const getProduct = (msg, callback) => {
               _id:eachComment._id,
               customerId:eachComment.customerId,
               productId:eachComment.productId,
+              title:eachComment.title,
               comment:eachComment.comment,
               rating:eachComment.rating,
               customerEmailId:result.emailId,
