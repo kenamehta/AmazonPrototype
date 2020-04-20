@@ -17,8 +17,10 @@
   },
   "plugins": ["react"],
   "rules": {
+    "curly": "off",
     "no-console": "off",
     "no-alert": "off",
+    "jsx-quotes": "off",
     "quotes": "off",
     "spaced-comment": "off",
     "arrow-body-style": "off",

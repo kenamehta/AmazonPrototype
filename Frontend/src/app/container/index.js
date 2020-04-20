@@ -1,5 +1,5 @@
 import React from "react";
-import topNav from "../container/navbar";
+import topNav from "./navbar";
 import CustomerProfile from "./customer/profile/CustomerProfile";
 import PaymentAndAddressPage from "./customer/profile/PaymentAndAddressPage";
 
@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import Login from "./Login/Login";
 import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
+import ProductList from "./products/productsList";
 
 class bodyCont extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class bodyCont extends React.Component {
         <Route path='/login' component={Login} />
         <Route path='/registerCustomer' component={RegisterCustomer} />
         <Route path='/registerSeller' component={RegisterSeller} />
+        <Route path='/productlist' component={ProductList} />
         <Route path='/addressandpayment' component={PaymentAndAddressPage} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
       </div>

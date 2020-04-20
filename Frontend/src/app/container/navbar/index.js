@@ -98,7 +98,11 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
+              <Link
+                to='/productlist'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
                 My
                 <br />
                 <b>Products</b>
@@ -168,7 +172,11 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
+              <Link
+                to='/productlist'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
                 All
                 <br />
                 <b>Products</b>
