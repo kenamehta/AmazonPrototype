@@ -28,7 +28,7 @@ router.get("/list/:productId", (req, res) => {
 });
 
 
-// Common API for both customer and seller get Products
+// Common API for customer seller and admin get Products
 router.get('/listAllProducts', (req, res) => {
   console.log('Inside product/customer/listAllProducts')
   

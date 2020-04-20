@@ -17,7 +17,7 @@ const product = new Schema({
   sellerName:{type:String,required:true},
   productName:{type:String,required:true},
   productCategory:{type:String,required:true},
-  productPrice:{type:String,required:true},
+  productPrice:{type:Number,required:true},
   averageRating:{type:Number,default:0.0},
   productDescription:{type:String,required:true},
   photos:[String],
