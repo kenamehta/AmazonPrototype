@@ -1,6 +1,6 @@
 import React from "react";
 import "./ProductPage.css";
-import { Container, Image, Row, Col } from "react-bootstrap";
+import { Container, Image, Col } from "react-bootstrap";
 import { connect } from "react-redux";
 // import { getProduct } from "../../../../action/ProductAction/productAction";
 
@@ -44,16 +44,16 @@ class ProductPictures extends React.Component {
     console.log(img);
     return (
       <>
-        <Col md={1} lg={1} xl={1}>
+        <Col md={1} xs={1} sm={1} lg={1} xl={1} style={{ height: "500px" }}>
           <Container>{photos}</Container>
         </Col>
-        <Col md={5} lg={4} xl={3}>
+        <Col md={5} xs={11} sm={11} lg={4} xl={3}>
           <Image
             src={img}
             className="bigImage"
             style={{
               // width: "500px",
-              // height: "550px",
+              height: "500px",
               paddingTop: "27px",
               paddingBottom: "27px",
               margin: "auto 0",

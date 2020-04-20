@@ -1,7 +1,8 @@
 import React from "react";
 import "./ProductPage.css";
-import { Container, Row, Image } from "react-bootstrap";
+import { Container, Image } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
+import { Link } from "react-router-dom";
 
 class ProductReview extends React.Component {
   constructor(props) {
@@ -18,6 +19,34 @@ class ProductReview extends React.Component {
     let title = this.props.comment.title;
     let customerPicture = this.props.comment.customerProfilePictureUrl;
     let customerName = this.props.comment.customerName;
+    let customerId = this.props.comment.customerId;
+
+    let day = "";
+    let month = "";
+    let year = "";
+
+    if (date) {
+      date = date.split("T")[0];
+      year = date.split("-")[0];
+      month = date.split("-")[1];
+      day = date.split("-")[2];
+    }
+
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    date = `${months[month - 1]} ${day}, ${year}`;
 
     return (
       <Container style={{ margin: "0 0 25px 0" }}>
@@ -27,7 +56,8 @@ class ProductReview extends React.Component {
             src={customerPicture}
             roundedcircle="true"
           />
-          <h1
+          <Link
+            to={`/customer/profile/${customerId}`}
             style={{
               fontSize: "13px",
               lineHeight: "19px",
@@ -37,10 +67,11 @@ class ProductReview extends React.Component {
               cursor: "pointer",
               paddingLeft: "10px",
               verticalAlign: "middle",
+              textDecoration: "none",
             }}
           >
             {customerName}
-          </h1>
+          </Link>
         </div>
         <StarRatings
           rating={rating}

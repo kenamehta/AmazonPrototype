@@ -27,6 +27,7 @@ class ProductPage extends React.Component {
     //Check if customer is signed in if not redirect to login page
     let title = "";
     let seller = "";
+    let sellerId = "";
     let avgRating = 0;
     let numOfRatings = 0;
     let price = 0;
@@ -35,6 +36,7 @@ class ProductPage extends React.Component {
     if (this.props.product) {
       title = this.props.product.productName;
       seller = this.props.product.sellerName;
+      sellerId = this.props.product.sellerId;
       avgRating = this.props.product.averageRating;
       numOfRatings = this.props.product.comments.length;
       price = this.props.product.productPrice;
@@ -45,13 +47,16 @@ class ProductPage extends React.Component {
     }
 
     return (
-      <Container fluid>
+      <Container fluid style={{ minWidth: "500px" }}>
         <Row sm={1} xs={1} md={1} style={{ marginTop: "3%" }}>
           <ProductPictures></ProductPictures>
           <Col md={6} lg={5} xl={6}>
             <h1 className="title">{title}</h1>
             <h1 className="seller">
-              by <Link className="sellerLink">{seller}</Link>
+              by{" "}
+              <Link className="sellerLink" to={`/seller/profile/${sellerId}`}>
+                {seller}
+              </Link>
             </h1>
             <StarRatings
               rating={avgRating}
