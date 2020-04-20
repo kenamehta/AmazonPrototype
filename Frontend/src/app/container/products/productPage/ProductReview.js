@@ -15,13 +15,16 @@ class ProductReview extends React.Component {
     let rating = this.props.comment.rating;
     let comment = this.props.comment.comment;
     let date = this.props.comment.createdAt;
+    let title = this.props.comment.title;
+    let customerPicture = this.props.comment.customerProfilePictureUrl;
+    let customerName = this.props.comment.customerName;
 
     return (
-      <Container style={{ margin: "0 0 10px 0" }}>
+      <Container style={{ margin: "0 0 25px 0" }}>
         <div>
           <Image
             className="customerImage"
-            src="https://www.jumpstarttech.com/files/2018/08/Network-Profile.png"
+            src={customerPicture}
             roundedcircle="true"
           />
           <h1
@@ -36,7 +39,7 @@ class ProductReview extends React.Component {
               verticalAlign: "middle",
             }}
           >
-            Name
+            {customerName}
           </h1>
         </div>
         <StarRatings
@@ -48,6 +51,7 @@ class ProductReview extends React.Component {
           numberOfStars={5}
           name="rating"
         />
+        <h1 className="commentTitle">{title}</h1>
         <p
           style={{
             fontSize: "13px",
