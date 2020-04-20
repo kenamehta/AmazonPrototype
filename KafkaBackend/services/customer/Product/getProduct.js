@@ -1,6 +1,7 @@
 "use strict";
 const product = require("../../../models/product.model");
 const comment = require("../../../models/comment.model");
+const customer = require("../../../models/customer.model");
 
 // sends all fields of a product document from mongoDb in response.
 const getProduct = (msg, callback) => {
@@ -35,13 +36,34 @@ const getProduct = (msg, callback) => {
       }
 
       // getting all comments for the product.
-      comment.find({productId:msg.productId},(err,allComments) => {
+      comment.find({productId:msg.productId},async(err,allComments) => {
         if(err){
           res.status = 500;
           res.message = 'Database Error';
           callback(null, res);
         } 
-        // console.log(allComments);
+        //console.log(allComments);
+        let allCommentsWithUserDetails = []
+        for(const eachComment of allComments){
+          try{
+            const result = await customer.findById(eachComment.customerId);
+            allCommentsWithUserDetails.push({
+              _id:eachComment._id,
+              customerId:eachComment.customerId,
+              productId:eachComment.productId,
+              comment:eachComment.comment,
+              rating:eachComment.rating,
+              customerEmailId:result.emailId,
+              customerName:result.name,
+              customerProfilePictureUrl:result.profilePictureUrl,
+            });
+          } catch(error){
+            res.status = 500;
+            res.message = 'Database Error';
+            callback(null, res);
+          }
+        }
+        // console.log(allCommentsWithUserDetails);
         // updating clickCount in database
         foundProduct.save((saveError) => {
           if(saveError){
@@ -62,7 +84,7 @@ const getProduct = (msg, callback) => {
               productPrice:foundProduct.productPrice,
               productDescription:foundProduct.productDescription,
               clickCount:foundProduct.clickCount,
-              comments: allComments
+              comments: allCommentsWithUserDetails
             }
             res.message = obj;
           }
