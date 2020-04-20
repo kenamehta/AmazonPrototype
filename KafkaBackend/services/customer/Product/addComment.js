@@ -17,6 +17,7 @@ const addComment = (msg, callback) => {
       let commentToCreate = comment({
         customerId: msg.customerId,
         productId: msg.productId,
+        title:msg.title,
         comment: msg.comment,
         rating: parseInt(msg.rating)
       });

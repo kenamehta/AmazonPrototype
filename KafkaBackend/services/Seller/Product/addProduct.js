@@ -16,7 +16,7 @@ const addProduct = (msg, callback) => {
     sellerName: msg.sellerName,
     productName: msg.productName,
     productCategory: msg.productCategory,
-    productPrice: msg.productPrice,
+    productPrice: (Math.round(parseFloat(msg.productPrice) * 100) / 100),
     productDescription: msg.productDescription,
     photos: msg.productImagesURL,
     clickCount: [{ date: myCustomDate, count: 0 }],

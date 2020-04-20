@@ -14,7 +14,7 @@ const updateProduct = (msg, callback) => {
     } 
     if(foundProduct){
       foundProduct.productCategory = msg.productCategory;
-      foundProduct.productPrice = msg.productPrice;
+      foundProduct.productPrice = (Math.round(parseFloat(msg.productPrice) * 100) / 100);
       foundProduct.productDescription = msg.productDescription;
       if(msg.productImagesURL){
         foundProduct.photos = msg.productImagesURL;
