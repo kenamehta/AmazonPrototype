@@ -54,6 +54,8 @@ const getProduct = (msg, callback) => {
               title:eachComment.title,
               comment:eachComment.comment,
               rating:eachComment.rating,
+              createdAt:eachComment.createdAt,
+              updatedAt:eachComment.updatedAt,
               customerEmailId:result.emailId,
               customerName:result.name,
               customerProfilePictureUrl:result.profilePictureUrl,
