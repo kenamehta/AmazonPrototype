@@ -1,5 +1,5 @@
 import React from "react";
-import topNav from "../container/navbar";
+import topNav from "./navbar";
 import CustomerProfile from "./customer/profile/CustomerProfile";
 import PaymentAndAddressPage from "./customer/profile/PaymentAndAddressPage";
 
@@ -10,6 +10,8 @@ import { connect } from "react-redux";
 import Login from "./Login/Login";
 import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
+import ProductList from "./products/productsList";
+import ProductPage from "./products/productPage/ProductPage";
 
 class bodyCont extends React.Component {
   render() {
@@ -22,13 +24,15 @@ class bodyCont extends React.Component {
         <Route path='/registerCustomer' component={RegisterCustomer} />
         <Route path='/registerSeller' component={RegisterSeller} />
         <Route path='/addressandpayment' component={PaymentAndAddressPage} />
+        <Route path='/productlist' component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
+        <Route path='/productPage/:id' component={ProductPage} />
       </div>
     );
   }
 }
 
-const mapStateToProps = function (state) {
+const mapStateToProps = (state) => {
   return {
     getType: state.getType,
   };
