@@ -21,18 +21,11 @@ let getProfile = async (msg, callback) => {
      $match : { customerId: mainCustomer._id+''}
     },
     {
-      "$project": {
-        "newproductId": {
-          "$toObjectId": "$productId"
-        }
-      }
-    },
-    {
-     $lookup:{
-       from:"product",
-       localField:"productId",
-       foreignField:"_id",
-       as:"product"
+     "$lookup":{
+       "from":"products",
+       "localField":"productId",
+       "foreignField":"_id",
+       "as":"productInfo"
      } 
     }
   ]);
