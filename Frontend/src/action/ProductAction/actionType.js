@@ -1,1 +1,2 @@
 export const CATEGORY = "GETPRODUCTCATEGORY";
+export const GET_PRODUCT = "GET_PRODUCT";
