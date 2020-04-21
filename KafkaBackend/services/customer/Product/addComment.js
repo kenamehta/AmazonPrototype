@@ -1,6 +1,7 @@
 "use strict";
 const product = require("../../../models/product.model");
 const comment = require("../../../models/comment.model");
+const mongoose = require("mongoose");
 
 const addComment = (msg, callback) => {
   var res = {};
@@ -16,7 +17,7 @@ const addComment = (msg, callback) => {
       // msg.customerId is _id of customer
       let commentToCreate = comment({
         customerId: msg.customerId,
-        productId: msg.productId,
+        productId: mongoose.Types.ObjectId(msg.productId),
         title:msg.title,
         comment: msg.comment,
         rating: parseInt(msg.rating)
