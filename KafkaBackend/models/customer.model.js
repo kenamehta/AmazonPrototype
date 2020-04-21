@@ -5,8 +5,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 const savedProduct = new Schema(
   {
     productId: { type: String, required: true },
-    sellerEmailId: { type: String, required: true },
-    quantity: { type: Number, required: true }
+    sellerEmailId: { type: String, required: true }
   },
   {
     timestamps: true

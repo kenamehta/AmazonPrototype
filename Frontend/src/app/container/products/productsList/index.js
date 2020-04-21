@@ -1,13 +1,12 @@
-/*eslint-disable */
-
 import React from "react";
-import BasicProfile from "./BasicProfile";
-import Container from "react-bootstrap/Container";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Filter from "./filter";
+import Sort from "./sort";
+import List from "./list";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
-import AddProduct from "./AddProduct";
+import AddProduct from "../../seller/profile/AddProduct";
 
-class SellerProfile extends React.Component {
+class ProductListContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = { setShow: false };
@@ -19,10 +18,6 @@ class SellerProfile extends React.Component {
   };
 
   render() {
-    let sellerVisitingOwnProfile = true;
-    if (this.props.match.params.id) {
-      sellerVisitingOwnProfile = false;
-    }
     var add;
     if (localStorage.getItem("category") == "seller") {
       add = (
@@ -44,11 +39,16 @@ class SellerProfile extends React.Component {
       );
     }
     return (
-      <Container>
-        <BasicProfile
-          sellerVisitingOwnProfile={sellerVisitingOwnProfile}
-          sellerEmailId={this.props.match.params.id}
-        />
+      <Container fluid>
+        <Sort />
+        <Row>
+          <Col lg={2} md={2} sm={2} xs={12}>
+            <Filter />
+          </Col>
+          <Col lg={10} md={10} sm={10} xs={12}>
+            <List />
+          </Col>
+        </Row>
         {add}
         <AddProduct show={this.state.setShow} handleClose={this.handleClose} />
       </Container>
@@ -57,7 +57,7 @@ class SellerProfile extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  profile: state.profile.user,
+  product: state.product.allProducts,
 });
 
-export default connect(mapStateToProps, {})(SellerProfile);
+export default connect(mapStateToProps)(ProductListContainer);

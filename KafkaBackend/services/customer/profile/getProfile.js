@@ -21,11 +21,19 @@ let getProfile = async (msg, callback) => {
      $match : { customerId: mainCustomer._id+''}
     },
     {
+<<<<<<< HEAD
      "$lookup":{
        "from":"products",
        "localField":"productId",
        "foreignField":"_id",
        "as":"productInfo"
+=======
+     $lookup:{
+       from:"products",
+       localField:"productId",
+       foreignField:"_id",
+       as:"product"
+>>>>>>> 8ecadc409381e2e74fc8522b7d66da379a39923f
      } 
     }
   ]);

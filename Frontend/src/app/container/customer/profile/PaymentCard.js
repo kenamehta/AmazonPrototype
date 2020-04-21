@@ -63,9 +63,9 @@ class PaymentCard extends Component {
                 this.setState({ modalShow: "block" });
               }}
             >
-              <div className='a-box-inner a-padding-extra-large'>
+              <div className='a-box-inner'>
                 <div className='a-box-inner a-padding-extra-large'></div>
-                <div className='address-plus-icon'></div>
+                <div className='address-plus-icon a-padding-extra-large'></div>
                 <h3 style={{ color: "#767676" }}>Add Payment</h3>
               </div>
             </div>

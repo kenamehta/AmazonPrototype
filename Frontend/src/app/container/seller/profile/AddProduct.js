@@ -13,6 +13,7 @@ class AddProduct extends React.Component {
     super(props);
     this.state = {
       file: null,
+      fileName: "",
       name: "",
       nameError: "",
       category: "",
@@ -146,11 +147,11 @@ class AddProduct extends React.Component {
         </Modal.Header>
         <Form onSubmit={this.editProfileHandlerSubmit}>
           <Modal.Body>
-            <Form.Group controlId="formBasicName">
+            <Form.Group controlId='formBasicName'>
               <Form.Label>Product Name</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter product name"
+                type='text'
+                placeholder='Enter product name'
                 value={this.state.name}
                 onBlur={this.checkNameEventHandler}
                 onChange={(e) => {
@@ -162,14 +163,14 @@ class AddProduct extends React.Component {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="formBasicCategory">
+            <Form.Group controlId='formBasicCategory'>
               <Form.Label>Category</Form.Label>
               <Form.Control
                 value={this.state.category}
                 onChange={(e) => {
                   this.setState({ category: e.target.value });
                 }}
-                as="select"
+                as='select'
               >
                 {cat}
               </Form.Control>
@@ -178,11 +179,11 @@ class AddProduct extends React.Component {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="formPrice">
+            <Form.Group controlId='formPrice'>
               <Form.Label>Price</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter price"
+                type='text'
+                placeholder='Enter price'
                 value={this.state.price}
                 onChange={(e) => {
                   this.setState({ price: e.target.value });
@@ -193,11 +194,11 @@ class AddProduct extends React.Component {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="formBasicDesc">
+            <Form.Group controlId='formBasicDesc'>
               <Form.Label>Product Description</Form.Label>
               <Form.Control
-                as="textarea"
-                rows="3"
+                as='textarea'
+                rows='3'
                 value={this.state.desc}
                 onChange={(e) => {
                   this.setState({ desc: e.target.value });
@@ -208,10 +209,10 @@ class AddProduct extends React.Component {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="formPrice">
+            <Form.Group controlId='formPrice'>
               <Form.Label>Upload</Form.Label>
               <Form.Control
-                type="file"
+                type='file'
                 multiple
                 onChange={(e) => this.handleFile(e)}
               />
@@ -221,10 +222,28 @@ class AddProduct extends React.Component {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button className="cancel" onClick={this.props.handleClose}>
+            <Button
+              className='cancel'
+              onClick={(e) => {
+                this.props.handleClose();
+                this.setState({
+                  file: null,
+                  fileError: "",
+                  name: "",
+                  nameError: "",
+                  category: "",
+                  categoryError: "",
+                  price: "",
+                  priceError: "",
+                  desc: "",
+                  descError: "",
+                  nameExist: false,
+                });
+              }}
+            >
               Close
             </Button>
-            <Button className="save" type="submit">
+            <Button className='save' type='submit'>
               Save changes
             </Button>
           </Modal.Footer>
