@@ -99,7 +99,7 @@ hr {
   outline: none !important;
 }
 
-h2 {
+h2 .subtitle {
   font-weight: 700;
   font-size: 21px;
   line-height: 1.3;
@@ -117,7 +117,7 @@ h2 {
   margin-left: 10px;
 }
 
-h3 {
+h3 .sub-subtitle {
   font-weight: 700;
   color: #111;
   font-family: "Amazon Ember", Arial, sans-serif;
@@ -189,4 +189,31 @@ h3 {
 .commentTitle:hover {
   color: #e77600;
   text-decoration: underline;
+}
+
+.addToSaveForLater {
+  background: linear-gradient(to bottom, #f6c88f, #ed9220);
+  color: rgb(17, 17, 17);
+  border: solid 1px;
+  border-color: #ca7c1b #be751a #a56616;
+  border-radius: 3px;
+  margin-top: 20px;
+  width: 100%;
+  font-size: 13px;
+  position: relative;
+  white-space: nowrap;
+}
+
+.addToSaveForLater:hover {
+  background: linear-gradient(to bottom, #ddac71, #ed9220);
+  color: rgb(17, 17, 17);
+  border-color: #ca7c1b #be751a #a56616;
+}
+
+.addToSaveForLater:focus {
+  color: rgb(17, 17, 17) !important;
+  background: linear-gradient(to bottom, #f6c88f, #ed9220) !important;
+  box-shadow: 0 0 3px 2px rgba(228, 121, 17, 0.5) !important;
+  border-color: #ca7c1b #be751a #a56616 !important;
+  outline: none !important;
 }
