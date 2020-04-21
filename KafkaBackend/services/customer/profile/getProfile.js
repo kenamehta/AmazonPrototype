@@ -18,7 +18,7 @@ let getProfile = async (msg, callback) => {
     //   customerId: mainCustomer._id
     // })
     const insights = await comment.aggregate([{
-     "$match" : { customerId: mainCustomer._id+''}
+     $match : { customerId: mainCustomer._id+''}
     },
     {
       "$project": {
@@ -28,11 +28,11 @@ let getProfile = async (msg, callback) => {
       }
     },
     {
-     "$lookup":{
-       "from":"product",
-       "localField":"newproductId",
-       "foreignField":"_id",
-       "as":"products"
+     $lookup:{
+       from:"product",
+       localField:"productId",
+       foreignField:"_id",
+       as:"product"
      } 
     }
   ]);
