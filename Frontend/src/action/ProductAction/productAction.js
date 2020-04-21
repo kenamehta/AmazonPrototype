@@ -1,12 +1,37 @@
-import { ALLPRODUCTS } from "./actionType";
+import { GET_PRODUCT, ALLPRODUCTS } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
+
+const getProductDispatcher = (payload) => {
+  return {
+    type: GET_PRODUCT,
+    payload,
+  };
+};
 
 const getAllProductsDispatcher = (payload) => {
   return {
     type: ALLPRODUCTS,
     payload,
   };
+};
+
+export const getProduct = (productId) => async (dispatch) => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
+
+  console.log("CALINGGG");
+  try {
+    const res = await axios.get(
+      configPath.api_host + `/product/customer/list/${productId}`
+    );
+
+    if (res.status === 200) {
+      console.log(res.data);
+      dispatch(getProductDispatcher(res.data));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getAllProducts = (data) => {
@@ -19,7 +44,7 @@ export const getAllProducts = (data) => {
     if (localStorage.getItem("category") === "seller")
       sellerEmailId = localStorage.getItem("emailId");
     const url =
-      "/product/customer/listAllProducts?limit=10&page=" +
+      "/product/customer/listAllProducts?limit=20&page=" +
       data.page +
       "&orderOn=" +
       data.orderOn +

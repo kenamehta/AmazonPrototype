@@ -95,3 +95,29 @@ b:hover {
   margin: 0 auto !important;
   text-align: center;
 }
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.a-price-symbol {
+  top: -0.5em;
+  font-size: 12px;
+}
+
+.a-price-whole {
+  font-size: 21px;
+}
+
+.a-price-fraction {
+  top: -0.5em;
+  font-size: 12px;
+}
+
+..a-price {
+  text-decoration: none;
+  position: relative;
+  line-height: normal;
+}

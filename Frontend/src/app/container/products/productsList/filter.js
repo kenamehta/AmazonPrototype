@@ -3,6 +3,7 @@ import { Container, Form } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
+import { connect } from "react-redux";
 
 class Filter extends React.Component {
   constructor(props) {
@@ -32,14 +33,15 @@ class Filter extends React.Component {
               starDimension='20px'
               starSpacing='2px'
               starRatedColor='#FBB730'
+              starEmptyColor='#FFF'
             />
-            <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           </div>
           <StarRatings
             rating={4}
             starDimension='20px'
             starSpacing='2px'
             starRatedColor='#FBB730'
+            starEmptyColor='#FFF'
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
@@ -47,6 +49,7 @@ class Filter extends React.Component {
             starDimension='20px'
             starSpacing='2px'
             starRatedColor='#FBB730'
+            starEmptyColor='#FFF'
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
@@ -54,6 +57,7 @@ class Filter extends React.Component {
             starDimension='20px'
             starSpacing='2px'
             starRatedColor='#FBB730'
+            starEmptyColor='#FFF'
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
@@ -61,6 +65,7 @@ class Filter extends React.Component {
             starDimension='20px'
             starSpacing='2px'
             starRatedColor='#FBB730'
+            starEmptyColor='#FFF'
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
         </div>
@@ -80,4 +85,8 @@ class Filter extends React.Component {
   }
 }
 
-export default Filter;
+const mapStateToProps = (state) => ({
+  product: state.product.allProducts,
+});
+
+export default connect(mapStateToProps)(Filter);

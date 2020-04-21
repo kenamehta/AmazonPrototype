@@ -1,8 +1,10 @@
 import React from "react";
 import { Form, Col, Row } from "react-bootstrap";
+import { connect } from "react-redux";
 
 class Sort extends React.Component {
   render() {
+    const prop = this.props.product;
     return (
       <Row className='custom-sort'>
         <Col lg={6} md={6} sm={6} xs={12}>
@@ -13,7 +15,7 @@ class Sort extends React.Component {
               fontSize: "13px",
             }}
           >
-            1-20 of over 10,000 results from "
+            {prop.page}-{prop.limit} of over {prop.total} results from "
             <span style={{ color: "#D56625", fontWeight: "700" }}>
               paper towels
             </span>
@@ -47,4 +49,8 @@ class Sort extends React.Component {
   }
 }
 
-export default Sort;
+const mapStateToProps = (state) => ({
+  product: state.product.allProducts,
+});
+
+export default connect(mapStateToProps)(Sort);
