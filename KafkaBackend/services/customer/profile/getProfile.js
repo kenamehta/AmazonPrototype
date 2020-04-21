@@ -29,7 +29,7 @@ let getProfile = async (msg, callback) => {
     // },
     {
      $lookup:{
-       from:"product",
+       from:"products",
        localField:"productId",
        foreignField:"_id",
        as:"product"

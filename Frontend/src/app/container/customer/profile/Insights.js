@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import {
   Link,
 } from "react-router-dom";
+import StarRatings from "react-star-ratings";
+
 
 class Insights extends Component {
   state = {};
   render() {
+    let avgRating = 0;
     return (
       <div>
         {this.props.profileData.data ? (
@@ -103,13 +106,15 @@ class Insights extends Component {
 
                     <hr className="p-0" />
                     <div className="d-flex">
-                      <p className="card-text">
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                      </p>
+                    <StarRatings
+              rating={5}
+              starRatedColor="#f0c14b"
+              starEmptyColor="rgb(255, 255, 255)"
+              starDimension="16px"
+              starSpacing="1px"
+              numberOfStars={5}
+              name="rating"
+            />
                       <p
                         className="mx-2"
                         style={{ color: "#c45500", fontWeight: "bold" }}
@@ -119,7 +124,7 @@ class Insights extends Component {
                     </div>
 
                     <h6 className="card-title">
-                      Perfectly keeps hair in shape
+                      {comment.title}
                     </h6>
                     <p className="card-text ">
                     {comment.comment}
@@ -129,21 +134,24 @@ class Insights extends Component {
                         <div className="profile-at-product-image-container upload-photo">
                           <img
                             alt=""
-                            src="https://m.media-amazon.com/images/I/51b7VgD5BPL.jpg"
+                            src={comment.product[0].photos[0]}
                             class="profile-at-product-image"
                           />
                         </div>
                         <div className="upload-photo">
                           <span className="mr-2">
-                            Aussie Spray Gel, with Bamboo & Kakadu Plum,
-                            Headstrong Volume
+                            {comment.product[0].productName}
                           </span>
 
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star-half" />
+                          <StarRatings
+              rating={comment.rating}
+              starRatedColor="#f0c14b"
+              starEmptyColor="rgb(255, 255, 255)"
+              starDimension="16px"
+              starSpacing="1px"
+              numberOfStars={comment.product[0].averageRating}
+              name="rating"
+            />
                         </div>
                       </div>
                     </div>
