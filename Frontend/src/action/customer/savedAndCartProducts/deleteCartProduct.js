@@ -1,31 +1,32 @@
-import { MOVESAVEDTOCART } from "./actionTypes";
+import { DELETESAVEDPRODUCTS } from "./actionTypes";
 import configPath from "../../../configApp";
 import axios from "axios";
 
-const moveSavedToCartDispatcher = payload => {
+const deleteSavedProductsDispatcher = payload => {
   return {
-    type: MOVESAVEDTOCART,
+    type: DELETESAVEDPRODUCTS,
     payload
   };
 };
 
-export const moveSavedToCart = payload => {
+export const deleteSavedProducts = payload => {
+  console.log("hello");
   return dispatch => {
-    //make a post request to move products from saved to cart
+    //make a delete request to delete product from saved
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
     axios
-      .post(
+      .delete(
         configPath.api_host +
-          `/customer/savedProducts/${localStorage.getItem("ID")}`,
+          `/customer/cartProducts/cart/${localStorage.getItem("ID")}`,
         payload
       )
       .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
-          dispatch(moveSavedToCartDispatcher(response.data));
+          dispatch(deleteSavedProductsDispatcher(response.data));
         }
       })
       .catch(error => {

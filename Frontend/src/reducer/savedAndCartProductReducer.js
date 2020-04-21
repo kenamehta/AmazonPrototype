@@ -1,5 +1,5 @@
 import {
-  GETSAVEDPRODUCTS,
+  GETSAVEDANDCARTPRODUCTS,
   DELETESAVEDPRODUCTS,
   MOVESAVEDTOCART
 } from "../action/customer/savedProducts/actionTypes";
@@ -8,7 +8,7 @@ const initialState = { savedCnt: 0, cartCnt: 0 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GETSAVEDPRODUCTS:
+    case GETSAVEDANDCARTPRODUCTS:
       return {
         ...state,
         ...action.payload

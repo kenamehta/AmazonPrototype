@@ -10,7 +10,22 @@ router.get("/:id", (req, res) => {
   msg.params = req.params;
   msg.route = "getProducts";
 
-  kafka.make_request("customerProductService", req.body, function(
+  kafka.make_request("savedAndCartProductService", msg, function(err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results);
+    }
+  });
+});
+
+router.delete("/cart/:id", (req, res) => {
+  console.log("Inside delete of /customer/cartProducts/cart/:id");
+  req.body.cartProductId = req.params.id;
+  console.log(req.body);
+
+  req.body.route = "deleteCartProduct";
+  kafka.make_request("savedAndCartProductService", req.body, function(
     err,
     results
   ) {
@@ -22,35 +37,19 @@ router.get("/:id", (req, res) => {
   });
 });
 
-
-router.delete("/cart/:id", (req, res) => {
-  console.log("Inside delete of /customer/cartProducts/cart/:id");
-  req.body.cartProductId = req.params.id;
-  console.log(req.body);
-
-  req.body.route = "deleteCartProduct";
-  kafka.make_request("savedAndCartProductService", req.body, function(err, results) {
-    if (err) {
-      res.status(500).send("System Error");
-    } else {
-      res.status(results.status).send(results.message);
-    }
-  });
-});
-
-// Common API for customer seller and admin get Products
-router.delete("/:id", (req, res) => {
+// Delete saved product
+router.delete("/saved/:id", (req, res) => {
   console.log(req.query);
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
   msg.route = "deleteSavedProduct";
 
-  kafka.make_request("customerProductService", body, function(err, results) {
+  kafka.make_request("savedAndCartProductService", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
-      res.status(results.status).send(results.message);
+      res.status(results.status).send(results);
     }
   });
 });
@@ -66,7 +65,7 @@ router.post("/addToCart", (req, res) => {
   console.log(req.body);
 
   req.body.route = "addToCart";
-  kafka.make_request("savedAndCartProductService", req.body, function (
+  kafka.make_request("savedAndCartProductService", req.body, function(
     err,
     results
   ) {
@@ -77,14 +76,13 @@ router.post("/addToCart", (req, res) => {
     }
   });
 });
-
 
 router.post("/addToSaveForLater", (req, res) => {
   console.log("Inside post of /customer/cartProducts/addToSaveForLater");
   console.log(req.body);
 
   req.body.route = "addToSaveForLater";
-  kafka.make_request("savedAndCartProductService", req.body, function (
+  kafka.make_request("savedAndCartProductService", req.body, function(
     err,
     results
   ) {
@@ -96,26 +94,21 @@ router.post("/addToSaveForLater", (req, res) => {
   });
 });
 
-
 // move saved product to cart
-router.post("/:id", (req, res) => {
+router.post("/saved/:id", (req, res) => {
   console.log(req.params);
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
-  req.route = "moveSavedToCart";
+  msg.route = "moveSavedToCart";
 
-  kafka.make_request("customerProductService", req.body, function(
-    err,
-    results
-  ) {
+  kafka.make_request("savedAndCartProductService", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
-      res.status(results.status).send(results.message);
+      res.status(results.status).send(results);
     }
   });
 });
-
 
 module.exports = router;
