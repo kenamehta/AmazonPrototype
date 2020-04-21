@@ -65,6 +65,9 @@ class Insights extends Component {
                 <div className="card-body">
                   <h4 className="card-title">Commuity Activity</h4>
                   <hr />
+                  {this.props.profileData.data.insights.map(comment=>(
+
+                 
                   <div className="card" style={{ padding: "10px" }}>
                     <h5 className="card-subtitle mb-2 d-flex">
                       <div
@@ -92,7 +95,8 @@ class Insights extends Component {
                           className="text-muted mt-4 ml-2"
                           style={{ fontSize: "13px" }}
                         >
-                          reviewed a product- 20/03/2019
+                          {/* reviewed a product- {this.props.profileData.data.insights} */}
+                          reviewed a product- {comment.createdAt.split("T")[0]}
                         </h6>
                       </div>
                     </h5>
@@ -118,11 +122,7 @@ class Insights extends Component {
                       Perfectly keeps hair in shape
                     </h6>
                     <p className="card-text ">
-                      A spray gel that makes hair not too hard but helps in
-                      keeping the hair style in shape. It also gives out nice
-                      fragrance and I don't think it is anything damageful to
-                      the hair. But anyways I would recommend anyone looking to
-                      buy hair spray gel for themselves.
+                    {comment.comment}
                     </p>
                     <div className="card">
                       <div className="card-body d-flex">
@@ -148,6 +148,7 @@ class Insights extends Component {
                       </div>
                     </div>
                   </div>
+                  ))}
                 </div>
               </div>
             </div>
