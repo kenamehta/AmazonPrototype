@@ -20,6 +20,8 @@ const adminProductService = require("./services/admin/Product");
 const customerPaymentService = require("./services/customer/payment");
 //customer Address service
 const customerAddressService = require("./services/customer/address");
+//saved and Cart Product Service
+const savedAndCartProductService = require("./services/customer/savedAndCartProducts");
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -86,3 +88,5 @@ handleTopicRequest("sellerProductService", sellerProductService);
 handleTopicRequest("adminProductService", adminProductService);
 handleTopicRequest("customerPaymentService", customerPaymentService);
 handleTopicRequest("customerAddressService", customerAddressService);
+handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
+

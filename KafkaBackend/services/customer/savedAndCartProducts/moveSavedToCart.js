@@ -26,7 +26,10 @@ let moveSavedToCart = async (msg, callback) => {
             .then(() => {
               return callback(null, {
                 status: 200,
-                savedProducts: result.savedProducts
+                savedProducts: result.savedProducts,
+                cartProducts: result.cartProducts,
+                savedCnt: result.savedCnt.length - 1,
+                cardCnt: result.cartProducts.length + 1
               });
             })
             .catch(err => {

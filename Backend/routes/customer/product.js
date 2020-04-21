@@ -65,25 +65,6 @@ router.post("/addComment", (req, res) => {
   });
 });
 
-/*
-Expecting product_id, seller_email_id, quantity.
-If product is a gift, provide giftMessage which is a required field in frontend
-*/
-router.post("/addToCart", checkAuth, (req, res) => {
-  console.log("Inside get of product/customer/addToCart");
-  console.log(req.body);
 
-  req.body.path = "product_add_cart";
-  kafka.make_request("customerProductService", req.body, function (
-    err,
-    results
-  ) {
-    if (err) {
-      res.status(500).send("System Error");
-    } else {
-      res.status(results.status).send(results.message);
-    }
-  });
-});
 
 module.exports = router;
