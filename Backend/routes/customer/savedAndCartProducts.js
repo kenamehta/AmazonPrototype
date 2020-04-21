@@ -3,7 +3,7 @@ const router = express.Router();
 const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
-//get saved product route
+//get saved and carts product route
 router.get("/:id", (req, res) => {
   console.log(req.params);
   msg = req.body;

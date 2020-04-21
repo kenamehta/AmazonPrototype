@@ -9,11 +9,13 @@ let deleteSavedProduct = async (msg, callback) => {
       "savedProducts._id": msg.productId
     })
     .then(async result => {
+      let savedCnt = 0;
       console.log(result);
       if (result) {
         let idx = -1;
         for (let i = 0; i < result.savedProducts.length; i++) {
           if (result.savedProducts[i]._id == msg.productId) {
+            savedCnt++;
             idx = i;
             break;
           }
@@ -25,7 +27,8 @@ let deleteSavedProduct = async (msg, callback) => {
             .then(() => {
               return callback(null, {
                 status: 200,
-                savedProducts: result.savedProducts
+                savedProducts: result.savedProducts,
+                savedCnt: savedCnt - 1
               });
             })
             .catch(err => {
