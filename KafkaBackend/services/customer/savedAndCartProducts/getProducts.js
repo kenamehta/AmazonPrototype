@@ -6,6 +6,7 @@ const customer = require("../../../models/customer.model");
 const getProducts = async (msg, callback) => {
   var savedIds = [];
   let savedCnt = 0;
+  let cartCnt = 0;
   const cust = await customer.findById(msg.params.id);
   if (cust.savedProducts) {
     cust.savedProducts.map(c => {
@@ -24,8 +25,8 @@ const getProducts = async (msg, callback) => {
   if (savedProductsArr) {
     return callback(null, {
       status: 200,
-      // where is cnt defined?
-      cnt,
+      savedCnt,
+      cartCnt,
       savedProductsArr,
       cartProductsArr
     });

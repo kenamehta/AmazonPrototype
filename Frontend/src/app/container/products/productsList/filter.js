@@ -19,9 +19,9 @@ class Filter extends React.Component {
   render() {
     return (
       <Container style={{ borderRight: "1px solid #CCC" }}>
-        <Form.Group controlId='formSearchSeller' style={{ marginTop: "10px" }}>
+        <Form.Group controlId="formSearchSeller" style={{ marginTop: "10px" }}>
           <Form.Label style={{ fontWeight: 800 }}>Search By Seller</Form.Label>
-          <Form.Control type='text' placeholder='Seller Name' />
+          <Form.Control type="text" placeholder="Seller Name" />
         </Form.Group>
         <div>
           <p style={{ fontWeight: 800, margin: "10px 0 5px 0" }}>
@@ -30,42 +30,42 @@ class Filter extends React.Component {
           <div>
             <StarRatings
               rating={5}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
           </div>
           <StarRatings
             rating={4}
-            starDimension='20px'
-            starSpacing='2px'
-            starRatedColor='#FBB730'
-            starEmptyColor='#FFF'
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="#FBB730"
+            starEmptyColor="#FFF"
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
             rating={3}
-            starDimension='20px'
-            starSpacing='2px'
-            starRatedColor='#FBB730'
-            starEmptyColor='#FFF'
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="#FBB730"
+            starEmptyColor="#FFF"
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
             rating={2}
-            starDimension='20px'
-            starSpacing='2px'
-            starRatedColor='#FBB730'
-            starEmptyColor='#FFF'
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="#FBB730"
+            starEmptyColor="#FFF"
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
           <StarRatings
             rating={1}
-            starDimension='20px'
-            starSpacing='2px'
-            starRatedColor='#FBB730'
-            starEmptyColor='#FFF'
+            starDimension="20px"
+            starSpacing="2px"
+            starRatedColor="#FBB730"
+            starEmptyColor="#FFF"
           />
           <span style={{ fontSize: "14px", fontWeight: "700" }}> & Up</span>
         </div>
