@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import {
   Link,
 } from "react-router-dom";
+import StarRatings from "react-star-ratings";
+
 
 class Insights extends Component {
   state = {};
   render() {
+    let avgRating = 0;
     return (
       <div>
         {this.props.profileData.data ? (
@@ -65,6 +68,9 @@ class Insights extends Component {
                 <div className="card-body">
                   <h4 className="card-title">Commuity Activity</h4>
                   <hr />
+                  {this.props.profileData.data.insights.map(comment=>(
+
+                 
                   <div className="card" style={{ padding: "10px" }}>
                     <h5 className="card-subtitle mb-2 d-flex">
                       <div
@@ -92,20 +98,23 @@ class Insights extends Component {
                           className="text-muted mt-4 ml-2"
                           style={{ fontSize: "13px" }}
                         >
-                          reviewed a product- 20/03/2019
+                          {/* reviewed a product- {this.props.profileData.data.insights} */}
+                          reviewed a product- {comment.createdAt.split("T")[0]}
                         </h6>
                       </div>
                     </h5>
 
                     <hr className="p-0" />
                     <div className="d-flex">
-                      <p className="card-text">
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                        <ion-icon name="star" />
-                      </p>
+                    <StarRatings
+              rating={5}
+              starRatedColor="#f0c14b"
+              starEmptyColor="rgb(255, 255, 255)"
+              starDimension="16px"
+              starSpacing="1px"
+              numberOfStars={5}
+              name="rating"
+            />
                       <p
                         className="mx-2"
                         style={{ color: "#c45500", fontWeight: "bold" }}
@@ -115,39 +124,39 @@ class Insights extends Component {
                     </div>
 
                     <h6 className="card-title">
-                      Perfectly keeps hair in shape
+                      {comment.title}
                     </h6>
                     <p className="card-text ">
-                      A spray gel that makes hair not too hard but helps in
-                      keeping the hair style in shape. It also gives out nice
-                      fragrance and I don't think it is anything damageful to
-                      the hair. But anyways I would recommend anyone looking to
-                      buy hair spray gel for themselves.
+                    {comment.comment}
                     </p>
                     <div className="card">
                       <div className="card-body d-flex">
                         <div className="profile-at-product-image-container upload-photo">
                           <img
                             alt=""
-                            src="https://m.media-amazon.com/images/I/51b7VgD5BPL.jpg"
+                            src={comment.product[0].photos[0]}
                             class="profile-at-product-image"
                           />
                         </div>
                         <div className="upload-photo">
                           <span className="mr-2">
-                            Aussie Spray Gel, with Bamboo & Kakadu Plum,
-                            Headstrong Volume
+                            {comment.product[0].productName}
                           </span>
 
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star" />
-                          <ion-icon name="star-half" />
+                          <StarRatings
+              rating={comment.rating}
+              starRatedColor="#f0c14b"
+              starEmptyColor="rgb(255, 255, 255)"
+              starDimension="16px"
+              starSpacing="1px"
+              numberOfStars={comment.product[0].averageRating}
+              name="rating"
+            />
                         </div>
                       </div>
                     </div>
                   </div>
+                  ))}
                 </div>
               </div>
             </div>

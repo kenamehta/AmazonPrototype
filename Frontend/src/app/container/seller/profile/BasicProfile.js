@@ -231,7 +231,9 @@ class BasicProfile extends React.Component {
               this.props.profile.state
             )} ${this.capitalize(this.props.profile.country)} ${this.capitalize(
               this.props.profile.zipcode
-            )}`}
+            )}`}{" "}
+            <br></br>
+            {`Phone Number: ${this.capitalize(this.props.profile.phone)}`}
           </Card.Subtitle>
         </Container>
         <Container

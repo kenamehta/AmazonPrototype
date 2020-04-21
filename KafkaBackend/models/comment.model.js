@@ -1,14 +1,18 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+//const ObjectId = Schema.Types.ObjectId;
 
-const comment = new Schema({
-  customerId:{type:String,required:true},
-  productId:{type:String,required:true},
-  title:{type:String,required:true},
-  comment:{type:String,required:true},
-  rating:{type:Number,required:true}
-},{
-  timestamps:true
-});
+const comment = new Schema(
+  {
+    customerId: { type: String, required: true },
+    productId: { type: mongoose.Schema.ObjectId, required: true },
+    title: { type: String, required: true },
+    comment: { type: String, required: true },
+    rating: { type: Number, required: true },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-module.exports = mongoose.model('comment',comment);
+module.exports = mongoose.model("comment", comment);

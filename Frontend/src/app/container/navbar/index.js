@@ -194,7 +194,7 @@ class Topnav extends React.Component {
                 className='custom-nav'
                 title={
                   <div style={{ display: "inline-block", color: "#FFF" }}>
-                    Hello Pranav
+                    Hello Pranav Baby
                     <br />
                     <span>
                       <b>Accounts &amp; List</b>
