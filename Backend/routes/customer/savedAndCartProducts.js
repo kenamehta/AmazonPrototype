@@ -22,6 +22,22 @@ router.get("/:id", (req, res) => {
   });
 });
 
+
+router.delete("/cart/:id", (req, res) => {
+  console.log("Inside delete of /customer/cartProducts/cart/:id");
+  req.body.cartProductId = req.params.id;
+  console.log(req.body);
+
+  req.body.route = "deleteCartProduct";
+  kafka.make_request("savedAndCartProductService", req.body, function(err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
 // Common API for customer seller and admin get Products
 router.delete("/:id", (req, res) => {
   console.log(req.query);
@@ -38,6 +54,48 @@ router.delete("/:id", (req, res) => {
     }
   });
 });
+
+/*
+Expecting product_id, seller_email_id, quantity.
+If product is a gift, provide giftMessage which is a required field in frontend
+Keeping it above move saved product to cart api since :id is catching addToCart
+It returns all cart products of customer along with each product detail
+*/
+router.post("/addToCart", (req, res) => {
+  console.log("Inside post of /customer/cartProducts/addToCart");
+  console.log(req.body);
+
+  req.body.route = "addToCart";
+  kafka.make_request("savedAndCartProductService", req.body, function (
+    err,
+    results
+  ) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+
+router.post("/addToSaveForLater", (req, res) => {
+  console.log("Inside post of /customer/cartProducts/addToSaveForLater");
+  console.log(req.body);
+
+  req.body.route = "addToSaveForLater";
+  kafka.make_request("savedAndCartProductService", req.body, function (
+    err,
+    results
+  ) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
 
 // move saved product to cart
 router.post("/:id", (req, res) => {
@@ -58,5 +116,6 @@ router.post("/:id", (req, res) => {
     }
   });
 });
+
 
 module.exports = router;

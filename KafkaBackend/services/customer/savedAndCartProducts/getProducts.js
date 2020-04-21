@@ -24,6 +24,7 @@ const getProducts = async (msg, callback) => {
   if (savedProductsArr) {
     return callback(null, {
       status: 200,
+      // where is cnt defined?
       cnt,
       savedProductsArr,
       cartProductsArr
