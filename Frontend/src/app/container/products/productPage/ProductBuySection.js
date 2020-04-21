@@ -2,6 +2,7 @@ import React from "react";
 import "./ProductPage.css";
 import { Container, Button, Dropdown } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
+import { MdWatchLater } from "react-icons/md";
 
 class ProductBuySection extends React.Component {
   constructor(props) {
@@ -17,6 +18,10 @@ class ProductBuySection extends React.Component {
   };
 
   addToCart = (e) => {
+    e.preventDefault();
+  };
+
+  addToSaveForLater = (e) => {
     e.preventDefault();
   };
 
@@ -76,6 +81,24 @@ class ProductBuySection extends React.Component {
             }}
           />
           Add to Cart
+        </Button>
+        <Button className="addToSaveForLater" onClick={this.addToSaveForLater}>
+          <MdWatchLater
+            className="bluebeacon"
+            style={{
+              color: "#fff",
+              position: "absolute",
+              top: "2px",
+              left: "2px",
+              height: "28px",
+              width: "25px",
+              backgroundPosition: "-35px -5px",
+              padding: "3px",
+              border: "solid 1px #232f3e",
+              borderRadius: "3px",
+            }}
+          />
+          Save for Later
         </Button>
       </Container>
     );

@@ -86,7 +86,7 @@ class ProductPage extends React.Component {
         <hr></hr>
         <Row sm={1} xs={1} md={2}>
           <Col lg={5} xl={4}>
-            <h2>Customer reviews</h2>
+            <h2 className="subtitle">Customer reviews</h2>
             <div
               style={{
                 marginBottom: "5px",
@@ -104,7 +104,7 @@ class ProductPage extends React.Component {
               <h1 className="avgStars">{`${avgRating} out of 5`}</h1>
             </div>
             <hr></hr>
-            <h3>Review this product</h3>
+            <h3 className="sub-subtitle">Review this product</h3>
             <h1 className="seller" style={{ marginBottom: "18px" }}>
               Share your thoughts with other customers
             </h1>
