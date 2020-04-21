@@ -2,6 +2,10 @@
 const customer = require("../../../models/customer.model");
 const product = require("../../../models/product.model");
 
+/*
+  input: id -> user _id, productId -> product's _id, sellerEmailId, quantity
+  if gift then giftFlag & giftMessage
+*/
 const addToCart = (msg, callback) => {
   console.log('Inside addToCart in Kafka');
   var res = {};
@@ -17,7 +21,7 @@ const addToCart = (msg, callback) => {
         sellerEmailId: msg.sellerEmailId,
         quantity: parseInt(msg.quantity),
       }
-      if(msg.giftFlag === 'true'){
+      if(msg.giftFlag && msg.giftFlag === 'true'){
         productDetails.giftFlag = 'true';
         productDetails.giftMessage = msg.giftMessage;
       }

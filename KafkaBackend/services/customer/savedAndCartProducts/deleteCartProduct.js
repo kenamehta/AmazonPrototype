@@ -2,6 +2,9 @@
 const customer = require("../../../models/customer.model");
 const product = require("../../../models/product.model");
 
+/*
+  input: id -> user _id, cartProductId -> product's _id
+*/
 const deleteCartProduct = (msg, callback) => {
   var res = {};
   customer.findById(msg.id, (err, result) => {

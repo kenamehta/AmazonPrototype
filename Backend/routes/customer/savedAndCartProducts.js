@@ -97,6 +97,24 @@ router.post("/addToSaveForLater", (req, res) => {
 });
 
 
+router.post("/moveFromCartToSaveForLater", (req, res) => {
+  console.log("Inside post of /customer/cartProducts/moveFromCartToSaveForLater");
+  console.log(req.body);
+
+  req.body.route = "moveCartToSaved";
+  kafka.make_request("savedAndCartProductService", req.body, function (
+    err,
+    results
+  ) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });  
+});
+
+
 // move saved product to cart
 router.post("/:id", (req, res) => {
   console.log(req.params);
