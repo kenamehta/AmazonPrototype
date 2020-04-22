@@ -3,10 +3,16 @@ import "./ProductPage.css";
 import { Container, Button, Dropdown } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdWatchLater } from "react-icons/md";
+import { connect } from "react-redux";
+
+import { addToSaveForLater } from "../../../../action/customer/savedAndCartProducts/addToSaveForLater";
+import { addToCart } from "../../../../action/customer/savedAndCartProducts/addToCart";
 
 class ProductBuySection extends React.Component {
   constructor(props) {
     super(props);
+    //console.log('props in productbuysections.js');
+    //console.log(props);
     this.state = {
       productId: "5e9c885e24f691220b95ef2a",
       qty: 1,
@@ -19,13 +25,30 @@ class ProductBuySection extends React.Component {
 
   addToCart = (e) => {
     e.preventDefault();
+    const data = {
+      id:localStorage.getItem("ID"),
+      productId:this.props.product._id,
+      sellerEmailId:this.props.product.sellerEmailId,
+      quantity:this.state.qty
+    }
+    
+    this.props.dispatch(addToCart(data));
+    this.setState({ qty: 1 });
   };
 
   addToSaveForLater = (e) => {
     e.preventDefault();
+    const data = {
+      id:localStorage.getItem("ID"),
+      productId:this.props.product._id,
+      sellerEmailId:this.props.product.sellerEmailId
+    }
+    this.props.dispatch(addToSaveForLater(data));
   };
 
   render() {
+    console.log('Render of ProductBuySection called');
+    console.log(this.props);
     return (
       <Container className="buyContainer">
         <Dropdown>
@@ -61,6 +84,24 @@ class ProductBuySection extends React.Component {
             </Dropdown.Item>
             <Dropdown.Item href="#" onClick={() => this.setState({ qty: 4 })}>
               4
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 5 })}>
+              5
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 6 })}>
+              6
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 7 })}>
+              7
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 8 })}>
+              8
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 9 })}>
+              9
+            </Dropdown.Item>
+            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 10 })}>
+              10
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -105,4 +146,12 @@ class ProductBuySection extends React.Component {
   }
 }
 
-export default ProductBuySection;
+const mapStateToProps = (state) => ({
+  product: state.product.product,
+});
+
+
+export default connect(mapStateToProps)(ProductBuySection);
+
+
+//export default ProductBuySection;

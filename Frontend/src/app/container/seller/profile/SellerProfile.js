@@ -10,6 +10,9 @@ import AddProduct from "./AddProduct";
 class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props in seller profile');
+    console.log(props);
+
     this.state = { setShow: false };
   }
 
@@ -20,11 +23,19 @@ class SellerProfile extends React.Component {
 
   render() {
     let sellerVisitingOwnProfile = true;
-    if (this.props.match.params.id) {
+    console.log('this.props.location.pathname');
+    console.log(this.props.location.pathname)
+    /*
+      const a = '/seller/profile/2013uec1108@mnit.ac.in';
+      let ab = a.split("/");
+      console.log(ab)
+      ab = ["","seller","profile","2013uec1108@mnit.ac.in"]
+    */
+    if (this.props.location.pathname.split("/").length > 3) {
       sellerVisitingOwnProfile = false;
     }
     var add;
-    if (localStorage.getItem("category") == "seller") {
+    if (localStorage.getItem("category") === "seller") {
       add = (
         <Button
           className='bluebeacon addProductButton'
@@ -47,7 +58,7 @@ class SellerProfile extends React.Component {
       <Container>
         <BasicProfile
           sellerVisitingOwnProfile={sellerVisitingOwnProfile}
-          sellerEmailId={this.props.match.params.id}
+          sellerEmailId={this.props.location.pathname.split("/").length > 3 ? this.props.location.pathname.split("/")[3]:''}
         />
         {add}
         <AddProduct show={this.state.setShow} handleClose={this.handleClose} />

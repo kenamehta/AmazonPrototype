@@ -47,8 +47,16 @@ class List extends React.Component {
         averageRating,
         photos,
       }) => {
-        const num = productPrice.split(".")[0];
-        const dec = productPrice.split(".")[1];
+        let num = "";
+        let dec = "";
+        productPrice = productPrice.toString();
+        if(productPrice.indexOf(".") !== -1){
+          num = productPrice.split(".")[0];
+          dec = productPrice.split(".")[1];
+        } else {
+          num = productPrice;
+          dec = "0";
+        }
         return (
           <Card
             key={_id}
