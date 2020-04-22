@@ -1,27 +1,27 @@
 import React, { Component } from "react";
-import CartProducts from "./CartProducts"
-import SavedProducts from "./SavedProducts"
-import { getSavedAndCartProducts } from "./../../../../action/customer/savedProducts/getSavedAndCartProducts";
-import { deleteSavedProduct } from "./../../../../action/customer/savedProducts/deleteSavedProduct";
-import { moveSavedToCart } from "./../../../../action/customer/savedProducts/moveSavedToCart";
+import CartProducts from "./CartProducts";
+import SavedProducts from "./SavedProducts";
+import { getSavedAndCartProducts } from "./../../../../action/customer/savedAndCartProducts/getSavedAndCartProducts";
+import { deleteSavedProduct } from "./../../../../action/customer/savedAndCartProducts/deleteSavedProduct";
+import { moveSavedToCart } from "./../../../../action/customer/savedAndCartProducts/moveSavedToCart";
 import { connect } from "react-redux";
-
-componentWillMount(){
-    this.props.getSavedAndCartProducts();
-}
+import "./cartAndSaved.css";
 
 class CartAndSaved extends Component {
   state = {};
+  componentWillMount() {
+    this.props.getSavedAndCartProducts();
+  }
   render() {
     return (
       <div>
         <CartProducts
-          savedProductsArr={this.props.savedProductsArr}
-          savedCnt={this.props.savedCnt}
-        />
-        <SavedProducts
           cartProductsArr={this.props.cartProductsArr}
           cartCnt={this.props.cartCnt}
+        />
+        <SavedProducts
+          savedProductsArr={this.props.savedProductsArr}
+          savedCnt={this.props.savedCnt}
           deleteSavedProduct={this.props.deleteSavedProduct}
           moveSavedToCart={this.props.moveSavedToCart}
         />

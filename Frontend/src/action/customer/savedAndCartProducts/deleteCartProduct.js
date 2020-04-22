@@ -1,15 +1,15 @@
-import { DELETESAVEDPRODUCTS } from "./actionTypes";
+import { DELETECARTPRODUCT } from "./actionTypes";
 import configPath from "../../../configApp";
 import axios from "axios";
 
-const deleteSavedProductsDispatcher = payload => {
+const deleteCartProductDispatcher = payload => {
   return {
-    type: DELETESAVEDPRODUCTS,
+    type: DELETECARTPRODUCT,
     payload
   };
 };
 
-export const deleteSavedProducts = payload => {
+export const deleteCartProduct = payload => {
   console.log("hello");
   return dispatch => {
     //make a delete request to delete product from saved
@@ -19,14 +19,14 @@ export const deleteSavedProducts = payload => {
     axios
       .delete(
         configPath.api_host +
-          `/customer/savedProducts/${localStorage.getItem("ID")}`,
+          `/customer/cartProducts/cart/${localStorage.getItem("ID")}`,
         payload
       )
       .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
-          dispatch(deleteSavedProductsDispatcher(response.data));
+          dispatch(deleteCartProductDispatcher(response.data));
         }
       })
       .catch(error => {

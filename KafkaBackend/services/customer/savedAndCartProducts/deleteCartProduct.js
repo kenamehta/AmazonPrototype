@@ -8,13 +8,13 @@ const product = require("../../../models/product.model");
 const deleteCartProduct = (msg, callback) => {
   var res = {};
   customer.findById(msg.id, (err, result) => {
-    if(err){
+    if (err) {
       res.status = 500;
-      res.message = 'Database Error';
+      res.message = "Database Error";
       callback(null, res);
     }
-    if(result){
-      console.log('User found');
+    if (result) {
+      console.log("User found");
       console.log(result);
       let idx = -1;
       for (let i = 0; i < result.cartProducts.length; i++) {
@@ -25,12 +25,15 @@ const deleteCartProduct = (msg, callback) => {
       }
       if (idx !== -1) {
         result.cartProducts.splice(idx, 1);
-        result.save()
-          .then(async() => {
+        result
+          .save()
+          .then(async () => {
             let customerCartWithProductDetails = [];
-            for(const eachProductInCart of result.cartProducts){
-              try{
-                const resultProduct = await product.findById(eachProductInCart.productId);
+            for (const eachProductInCart of result.cartProducts) {
+              try {
+                const resultProduct = await product.findById(
+                  eachProductInCart.productId
+                );
                 customerCartWithProductDetails.push({
                   giftFlag: eachProductInCart.giftFlag,
                   giftMessage: eachProductInCart.giftMessage,
@@ -48,31 +51,32 @@ const deleteCartProduct = (msg, callback) => {
                   productDescription: resultProduct.productDescription,
                   photos: resultProduct.photos
                 });
-              } catch(error){
+              } catch (error) {
                 res.status = 500;
-                res.message = 'Database Error';
+                res.message = "Database Error";
                 callback(null, res);
               }
             }
             res.status = 200;
             res.message = customerCartWithProductDetails;
             callback(null, res);
-          }).catch((err) => {
+          })
+          .catch(err => {
             res.status = 500;
-            res.message = 'Database Error';
+            res.message = "Database Error";
             callback(null, res);
           });
-      } else{
+      } else {
         res.status = 400;
-        res.message = 'Cart Product Not found';
+        res.message = "Cart Product Not found";
         callback(null, res);
       }
     } else {
       res.status = 400;
-      res.message = 'User Not found';
+      res.message = "User Not found";
       callback(null, res);
     }
   });
-}
+};
 
 exports.deleteCartProduct = deleteCartProduct;

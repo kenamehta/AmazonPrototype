@@ -1,27 +1,30 @@
 import {
-  GETSAVEDPRODUCTS,
+  GETSAVEDANDCARTPRODUCTS,
   DELETESAVEDPRODUCTS,
-  MOVESAVEDTOCART
-} from "../action/customer/savedProducts/actionTypes";
+  MOVESAVEDTOCART,
+  DELETECARTPRODUCT
+} from "../action/customer/savedAndCartProducts/actionTypes";
 
 const initialState = { savedCnt: 0, cartCnt: 0 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GETSAVEDPRODUCTS:
+    case GETSAVEDANDCARTPRODUCTS:
       return {
         ...state,
         ...action.payload
       };
     case DELETESAVEDPRODUCTS:
-      state.savedCnt = state.savedCnt - 1;
       return {
         ...state,
         ...action.payload
       };
     case MOVESAVEDTOCART:
-      state.savedCnt = state.savedCnt - 1;
-      state.cartCnt = state.cartCnt + 1;
+      return {
+        ...state,
+        ...action.payload
+      };
+    case DELETECARTPRODUCT:
       return {
         ...state,
         ...action.payload

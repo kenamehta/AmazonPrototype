@@ -12,6 +12,7 @@ import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
 import ProductList from "./products/productsList";
 import ProductPage from "./products/productPage/ProductPage";
+import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
 
 class bodyCont extends React.Component {
   render() {
@@ -27,6 +28,7 @@ class bodyCont extends React.Component {
         <Route path='/productlist' component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
         <Route path='/productPage/:id' component={ProductPage} />
+        <Route path='/cart' component={CartAndSaved} />
       </div>
     );
   }
