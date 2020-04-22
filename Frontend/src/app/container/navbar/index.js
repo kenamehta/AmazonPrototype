@@ -222,7 +222,7 @@ class Topnav extends React.Component {
                 </NavDropdown.Item>
               </NavDropdown>
               <Link
-                to='/all_students'
+                to='/cart'
                 style={{ position: "relative", whiteSpace: "nowrap" }}
                 className='custom-nav'
               >

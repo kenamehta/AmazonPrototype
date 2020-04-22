@@ -1,8 +1,13 @@
 "use strict";
 const customer = require("../../../models/customer.model");
+const product = require("../../../models/product.model");
 
 let moveSavedToCart = async (msg, callback) => {
   console.log(msg);
+  let savedCnt = 0,
+    cartCnt = 0;
+  let savedIds = [],
+    cartIds = [];
   customer
     .findOne({
       _id: msg.params.id,
@@ -19,18 +24,17 @@ let moveSavedToCart = async (msg, callback) => {
           }
         }
         if (idx !== -1) {
-          result.cartProducts.push(result.savedProducts(idx));
+          console.log(result.cartProducts);
+          result.cartProducts.push(result.savedProducts[idx]);
           result.savedProducts.splice(idx, 1);
 
           if (result.savedProducts) {
             result.savedProducts.map(c => {
-              savedCnt++;
               savedIds.push(c.productId);
             });
           }
           if (result.cartProducts) {
             result.cartProducts.map(c => {
-              cartCnt++;
               cartIds.push(c.productId);
             });
           }
@@ -45,8 +49,8 @@ let moveSavedToCart = async (msg, callback) => {
                 status: 200,
                 savedProductsArr,
                 cartProductsArr,
-                savedCnt: result.savedCnt.length - 1,
-                cartCnt: result.cartProducts.length + 1
+                savedCnt: savedProductsArr.length,
+                cartCnt: cartProductsArr.length
               });
             })
             .catch(err => {

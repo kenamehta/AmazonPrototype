@@ -2,14 +2,14 @@ import { DELETESAVEDPRODUCTS } from "./actionTypes";
 import configPath from "../../../configApp";
 import axios from "axios";
 
-const deleteSavedProductsDispatcher = payload => {
+const deleteSavedProductDispatcher = payload => {
   return {
     type: DELETESAVEDPRODUCTS,
     payload
   };
 };
 
-export const deleteSavedProducts = payload => {
+export const deleteSavedProduct = payload => {
   console.log("hello");
   return dispatch => {
     //make a delete request to delete product from saved
@@ -26,7 +26,7 @@ export const deleteSavedProducts = payload => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
-          dispatch(deleteSavedProductsDispatcher(response.data));
+          dispatch(deleteSavedProductDispatcher(response.data));
         }
       })
       .catch(error => {

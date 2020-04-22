@@ -1,20 +1,22 @@
 "use strict";
 const customer = require("../../../models/customer.model");
+const product = require("../../../models/product.model");
 
 let deleteSavedProduct = async (msg, callback) => {
   console.log(msg);
   customer
     .findOne({
       _id: msg.params.id,
-      "savedProducts._id": msg.productId
+      "savedProducts.productId": msg.data.productId
     })
     .then(async result => {
       let savedCnt = 0;
+      let savedIds = [];
       console.log(result);
       if (result) {
         let idx = -1;
         for (let i = 0; i < result.savedProducts.length; i++) {
-          if (result.savedProducts[i]._id == msg.productId) {
+          if (result.savedProducts[i].productId == msg.data.productId) {
             savedCnt++;
             idx = i;
             break;
@@ -22,13 +24,20 @@ let deleteSavedProduct = async (msg, callback) => {
         }
         if (idx !== -1) {
           result.savedProducts.splice(idx, 1);
+          result.savedProducts.map(c => {
+            savedIds.push(c.productId);
+          });
+
           result
             .save()
-            .then(() => {
+            .then(async () => {
+              const savedProductsArr = await product.find({
+                _id: { $in: savedIds }
+              });
               return callback(null, {
                 status: 200,
-                savedProducts: result.savedProducts,
-                savedCnt: savedCnt - 1
+                savedProductsArr,
+                savedCnt: savedProductsArr.length
               });
             })
             .catch(err => {

@@ -2,6 +2,9 @@
 const customer = require("../../../models/customer.model");
 const product = require("../../../models/product.model");
 
+/*
+  input: id -> user _id, productId -> product's _id, sellerEmailId
+*/
 const addToSaveForLater = (msg, callback) => {
   console.log('Inside addToSaveForLater in Kafka');
   var res = {};

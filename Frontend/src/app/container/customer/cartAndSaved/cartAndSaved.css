@@ -1,0 +1,40 @@
+.style__divider___1j_Fp {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #e0e0e0;
+  display: block;
+}
+.productImg {
+  max-width: 100%;
+  border: 0;
+}
+.stock_style {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: #007600 !important;
+}
+.name_style:hover {
+  color: darkgoldenrod;
+}
+.delete_style,
+.move_style {
+  color: #0066c0;
+}
+.delete_style:hover {
+  color: darkgoldenrod;
+  cursor: pointer;
+}
+.move_style:hover {
+  color: darkgoldenrod;
+  cursor: pointer;
+}
+.price_style {
+  font-size: 17px !important;
+  line-height: 1.255 !important;
+  font-weight: 700 !important;
+  color: #b12704 !important;
+}
+.action_style {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}

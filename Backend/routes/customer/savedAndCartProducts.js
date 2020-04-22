@@ -39,7 +39,7 @@ router.delete("/cart/:id", (req, res) => {
 
 // Delete saved product
 router.delete("/saved/:id", (req, res) => {
-  console.log(req.query);
+  console.log(req.params);
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -82,6 +82,25 @@ router.post("/addToSaveForLater", (req, res) => {
   console.log(req.body);
 
   req.body.route = "addToSaveForLater";
+  kafka.make_request("savedAndCartProductService", req.body, function(
+    err,
+    results
+  ) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+router.post("/moveFromCartToSaveForLater", (req, res) => {
+  console.log(
+    "Inside post of /customer/cartProducts/moveFromCartToSaveForLater"
+  );
+  console.log(req.body);
+
+  req.body.route = "moveCartToSaved";
   kafka.make_request("savedAndCartProductService", req.body, function(
     err,
     results

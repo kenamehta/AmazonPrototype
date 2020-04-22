@@ -6,19 +6,15 @@ const customer = require("../../../models/customer.model");
 const getProducts = async (msg, callback) => {
   var savedIds = [];
   var cartIds = [];
-  let savedCnt = 0;
-  let cartCnt = 0;
   const cust = await customer.findById(msg.params.id);
   if (cust.savedProducts) {
     cust.savedProducts.map(c => {
-      savedCnt++;
       savedIds.push(c.productId);
     });
   }
   console.log(savedIds);
   if (cust.cartProducts) {
     cust.cartProducts.map(c => {
-      cartCnt++;
       cartIds.push(c.productId);
     });
   }
@@ -29,8 +25,8 @@ const getProducts = async (msg, callback) => {
   console.log(cartProductsArr);
   return callback(null, {
     status: 200,
-    savedCnt,
-    cartCnt,
+    savedCnt: savedProductsArr.length,
+    cartCnt: cartProductsArr.length,
     savedProductsArr: savedProductsArr || [],
     cartProductsArr: cartProductsArr || []
   });
