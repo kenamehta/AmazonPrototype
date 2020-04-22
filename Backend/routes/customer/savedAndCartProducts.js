@@ -113,7 +113,6 @@ router.post("/moveFromCartToSaveForLater", (req, res) => {
   });
 });
 
-<<<<<<< HEAD
 
 // need to test this
 router.post("/updateProductInCart", (req, res) => {
@@ -133,8 +132,6 @@ router.post("/updateProductInCart", (req, res) => {
   });
 })
 
-=======
->>>>>>> 09981b79be5fd64577a89fba6c68a09bfaf4b247
 // move saved product to cart
 router.post("/saved/:id", (req, res) => {
   console.log(req.params);
