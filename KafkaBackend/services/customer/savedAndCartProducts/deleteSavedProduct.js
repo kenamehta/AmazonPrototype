@@ -6,7 +6,7 @@ let deleteSavedProduct = async (msg, callback) => {
   customer
     .findOne({
       _id: msg.params.id,
-      "savedProducts._id": msg.productId
+      "savedProducts.productId": msg.productId
     })
     .then(async result => {
       let savedCnt = 0;
@@ -14,7 +14,7 @@ let deleteSavedProduct = async (msg, callback) => {
       if (result) {
         let idx = -1;
         for (let i = 0; i < result.savedProducts.length; i++) {
-          if (result.savedProducts[i]._id == msg.productId) {
+          if (result.savedProducts[i].productId == msg.productId) {
             savedCnt++;
             idx = i;
             break;
