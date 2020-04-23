@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import "../../../../style/ProfilePic.css";
 import { connect } from "react-redux";
-
 import {
   addAddress,
   deleteAddress,
-  getAddress,
+  getAddress
 } from "../../../../action/customerprofileaction/profileAction";
 
 class SavedAddress extends Component {
@@ -21,7 +20,7 @@ class SavedAddress extends Component {
     phone: "",
     editaddress: "",
     editedId: "",
-    addSuccessMsg: "",
+    addSuccessMsg: ""
   };
 
   componentWillMount() {
@@ -37,13 +36,13 @@ class SavedAddress extends Component {
   deleteAddress = () => {
     let payload = {
       data: {
-        address_id: this.state.editedId,
-      },
+        address_id: this.state.editedId
+      }
     };
     this.props.deleteAddress(payload);
   };
 
-  addAddress = (e) => {
+  addAddress = e => {
     e.preventDefault();
     let payload = {
       addressName: this.state.name,
@@ -52,13 +51,13 @@ class SavedAddress extends Component {
       state: this.state.state,
       country: this.state.country,
       zipcode: this.state.zipcode,
-      phone: this.state.phone,
+      phone: this.state.phone
     };
 
     this.props.addAddress(payload);
   };
 
-  editAddress = (e) => {
+  editAddress = e => {
     e.preventDefault();
     let payload = {
       address_id: this.state.editedId,
@@ -68,7 +67,7 @@ class SavedAddress extends Component {
       state: this.state.state,
       country: this.state.country,
       zipcode: this.state.zipcode,
-      phone: this.state.phone,
+      phone: this.state.phone
     };
 
     this.props.addAddress(payload);
@@ -76,29 +75,29 @@ class SavedAddress extends Component {
 
   render() {
     return (
-      <div className='container mt-5' style={{ display: "block" }}>
-        <h2 className='m-3'>Your Addresses</h2>
+      <div className="container mt-5" style={{ display: "block" }}>
+        <h2 className="m-3">Your Addresses</h2>
         {this.props.addressArray ? (
-          <div className='my-4 d-flex scroll'>
+          <div className="my-4 d-flex scroll">
             <div
-              className='col-3 mx-3 image-edit-avatar first-desktop-address-tile align-content-center'
-              onClick={(e) => {
+              className="col-3 mx-3 image-edit-avatar first-desktop-address-tile align-content-center"
+              onClick={e => {
                 this.setState({ modalShow: "block" });
               }}
             >
-              <div className='a-box-inner'>
-                <div className='a-box-inner a-padding-extra-large'></div>
-                <div className='address-plus-icon a-padding-extra-large'></div>
+              <div className="a-box-inner">
+                <div className="a-box-inner a-padding-extra-large" />
+                <div className="address-plus-icon a-padding-extra-large" />
                 <h3 style={{ color: "#767676" }}>Add Address</h3>
               </div>
             </div>
-            {this.props.addressArray.addresses.map((address) => (
+            {this.props.addressArray.addresses.map(address => (
               <div
-                className='col-3 mx-3 rest-desktop-address-tile'
+                className="col-3 mx-3 rest-desktop-address-tile"
                 key={address._id}
               >
                 <h5
-                  className='pt-4'
+                  className="pt-4"
                   style={{ fontSize: "13px", fontWeight: "700" }}
                 >
                   {address.addressName}
@@ -112,14 +111,14 @@ class SavedAddress extends Component {
                   Phone number: {address.phone}
                 </h5>
                 <span
-                  className='link-color image-edit-avatar'
+                  className="link-color image-edit-avatar"
                   style={{
                     fontSize: "13px",
                     bottom: "20px",
                     left: "22px",
-                    position: "absolute",
+                    position: "absolute"
                   }}
-                  onClick={(e) => {
+                  onClick={e => {
                     this.setState({ modalShowEdit: "block" });
                     this.setState({ editaddress: address });
                     this.setState({ editedId: address._id }, () => {
@@ -131,14 +130,14 @@ class SavedAddress extends Component {
                   Edit
                 </span>
                 <span
-                  className='link-color image-edit-avatar'
+                  className="link-color image-edit-avatar"
                   style={{
                     fontSize: "13px",
                     bottom: "20px",
                     left: "62px",
-                    position: "absolute",
+                    position: "absolute"
                   }}
-                  onClick={(e) => {
+                  onClick={e => {
                     this.setState({ editedId: address._id }, () => {
                       this.deleteAddress();
                       console.log(this.state.editedId);
@@ -154,18 +153,18 @@ class SavedAddress extends Component {
           ""
         )}
         <div
-          className='modal modal-custom mt-5'
-          align='center'
+          className="modal modal-custom mt-5"
+          align="center"
           style={{ display: this.state.modalShow }}
         >
           <div
-            className='modal-content modal-content-custom col-5'
+            className="modal-content modal-content-custom col-5"
             style={{ fontFamily: "Suisse" }}
           >
-            <div className='container'>
+            <div className="container">
               <span
-                className='close image-edit-avatar'
-                onClick={(e) => {
+                className="close image-edit-avatar"
+                onClick={e => {
                   this.setState({ modalShow: "none" });
                   this.setState({ addSuccessMsg: "" });
                 }}
@@ -177,35 +176,35 @@ class SavedAddress extends Component {
               ) : (
                 ""
               )}
-              <div align='center'>
+              <div align="center">
                 <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
                   Add Address
                 </h3>
               </div>
               <form onSubmit={this.addAddress}>
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                     Name
                   </label>
                   <input
-                    type='text'
-                    id='name'
-                    name='name'
-                    className='form-control'
-                    placeholder='Enter Name'
-                    onChange={(e) => {
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="form-control"
+                    placeholder="Enter Name"
+                    onChange={e => {
                       this.setState({ name: e.target.value });
                     }}
                     required
-                  ></input>
+                  />
                 </div>
 
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <div>
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       Street
@@ -216,121 +215,121 @@ class SavedAddress extends Component {
                     style={{
                       fontWeight: "500",
                       fontSize: "13px",
-                      marginBottom: "5px",
+                      marginBottom: "5px"
                     }}
                   >
                     Please enter Street
                   </label>
                   <input
-                    type='text'
-                    id='street'
-                    name='street'
-                    className='form-control'
-                    placeholder='Eg. 190 Ryland Street'
-                    onChange={(e) => {
+                    type="text"
+                    id="street"
+                    name="street"
+                    className="form-control"
+                    placeholder="Eg. 190 Ryland Street"
+                    onChange={e => {
                       this.setState({ street: e.target.value });
                     }}
                     required
-                  ></input>
+                  />
                 </div>
-                <div className='col-md-11 d-flex p-0'>
-                  <div className='form-group col-md-6 '>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6 ">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       State
                     </label>
                     <input
-                      type='text'
-                      id='state'
-                      name='state'
-                      className='form-control'
-                      placeholder='Eg. California'
-                      onChange={(e) => {
+                      type="text"
+                      id="state"
+                      name="state"
+                      className="form-control"
+                      placeholder="Eg. California"
+                      onChange={e => {
                         this.setState({ state: e.target.value });
                       }}
                       required
-                    ></input>
+                    />
                   </div>
-                  <div className='form-group col-md-6'>
+                  <div className="form-group col-md-6">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       Country
                     </label>
                     <input
-                      type='text'
-                      id='country'
-                      name='country'
-                      className='form-control'
-                      placeholder='Eg. USA'
-                      onChange={(e) => {
+                      type="text"
+                      id="country"
+                      name="country"
+                      className="form-control"
+                      placeholder="Eg. USA"
+                      onChange={e => {
                         this.setState({
-                          country: e.target.value,
+                          country: e.target.value
                         });
                       }}
                       required
-                    ></input>
+                    />
                   </div>
                 </div>
-                <div className='col-md-11 d-flex p-0'>
-                  <div className='form-group col-md-6'>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       City
                     </label>
                     <input
-                      type='text'
-                      id='city'
-                      name='city'
-                      className='form-control'
-                      placeholder='Enter city'
-                      onChange={(e) => {
+                      type="text"
+                      id="city"
+                      name="city"
+                      className="form-control"
+                      placeholder="Enter city"
+                      onChange={e => {
                         this.setState({ city: e.target.value });
                       }}
                       required
-                    ></input>
+                    />
                   </div>
-                  <div className='form-group col-md-6'>
+                  <div className="form-group col-md-6">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Zipcode
                     </label>
                     <input
-                      type='number'
-                      id='zipcode'
-                      name='zipcode'
-                      className='form-control'
-                      placeholder='Enter Zipcode'
-                      onChange={(e) => {
+                      type="number"
+                      id="zipcode"
+                      name="zipcode"
+                      className="form-control"
+                      placeholder="Enter Zipcode"
+                      onChange={e => {
                         this.setState({ zipcode: e.target.value });
                       }}
                       required
-                    ></input>
+                    />
                   </div>
                 </div>
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                     Phone Number
                   </label>
                   <input
-                    type='number'
-                    id='phnumber'
-                    name='phnumber'
-                    className='form-control'
-                    placeholder='Enter Phone number'
-                    onChange={(e) => {
+                    type="number"
+                    id="phnumber"
+                    name="phnumber"
+                    className="form-control"
+                    placeholder="Enter Phone number"
+                    onChange={e => {
                       this.setState({ phone: e.target.value });
                     }}
                     required
-                  ></input>
+                  />
                 </div>
-                <div className='form-group col-md-8 m-3'>
-                  <input type='submit' className='btn btn sprite'></input>
+                <div className="form-group col-md-8 m-3">
+                  <input type="submit" className="btn btn sprite" />
                 </div>
               </form>
             </div>
@@ -338,18 +337,18 @@ class SavedAddress extends Component {
         </div>
 
         <div
-          className='modal modal-custom mt-5 editmodal'
-          align='center'
+          className="modal modal-custom mt-5 editmodal"
+          align="center"
           style={{ display: this.state.modalShowEdit }}
         >
           <div
-            className='modal-content modal-content-custom col-5'
+            className="modal-content modal-content-custom col-5"
             style={{ fontFamily: "Suisse" }}
           >
-            <div className='container'>
+            <div className="container">
               <span
-                className='close image-edit-avatar'
-                onClick={(e) => {
+                className="close image-edit-avatar"
+                onClick={e => {
                   this.setState({ modalShowEdit: "none" });
                   this.setState({ addSuccessMsg: "" });
                 }}
@@ -361,34 +360,34 @@ class SavedAddress extends Component {
               ) : (
                 ""
               )}
-              <div align='center'>
+              <div align="center">
                 <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
                   Edit Address
                 </h3>
               </div>
               <form onSubmit={this.editAddress}>
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                     Name
                   </label>
                   <input
-                    type='text'
-                    id='name'
-                    name='name'
-                    className='form-control'
+                    type="text"
+                    id="name"
+                    name="name"
+                    className="form-control"
                     placeholder={this.state.editaddress.addressName}
-                    onChange={(e) => {
+                    onChange={e => {
                       this.setState({ name: e.target.value });
                     }}
-                  ></input>
+                  />
                 </div>
 
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <div>
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       Street
@@ -399,115 +398,115 @@ class SavedAddress extends Component {
                     style={{
                       fontWeight: "500",
                       fontSize: "13px",
-                      marginBottom: "5px",
+                      marginBottom: "5px"
                     }}
                   >
                     Please enter Street
                   </label>
                   <input
-                    type='text'
-                    id='street'
-                    name='street'
-                    className='form-control'
+                    type="text"
+                    id="street"
+                    name="street"
+                    className="form-control"
                     placeholder={this.state.editaddress.street}
-                    onChange={(e) => {
+                    onChange={e => {
                       this.setState({ street: e.target.value });
                     }}
-                  ></input>
+                  />
                 </div>
-                <div className='col-md-11 d-flex p-0'>
-                  <div className='form-group col-md-6 '>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6 ">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       State
                     </label>
                     <input
-                      type='text'
-                      id='state'
-                      name='state'
-                      className='form-control'
+                      type="text"
+                      id="state"
+                      name="state"
+                      className="form-control"
                       placeholder={this.state.editaddress.state}
-                      onChange={(e) => {
+                      onChange={e => {
                         this.setState({ state: e.target.value });
                       }}
-                    ></input>
+                    />
                   </div>
-                  <div className='form-group col-md-6'>
+                  <div className="form-group col-md-6">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px",
+                        marginBottom: "5px"
                       }}
                     >
                       Country
                     </label>
                     <input
-                      type='text'
-                      id='country'
-                      name='country'
-                      className='form-control'
+                      type="text"
+                      id="country"
+                      name="country"
+                      className="form-control"
                       placeholder={this.state.editaddress.country}
-                      onChange={(e) => {
+                      onChange={e => {
                         this.setState({
-                          country: e.target.value,
+                          country: e.target.value
                         });
                       }}
-                    ></input>
+                    />
                   </div>
                 </div>
-                <div className='col-md-11 d-flex p-0'>
-                  <div className='form-group col-md-6'>
+                <div className="col-md-11 d-flex p-0">
+                  <div className="form-group col-md-6">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       City
                     </label>
                     <input
-                      type='text'
-                      id='city'
-                      name='city'
-                      className='form-control'
+                      type="text"
+                      id="city"
+                      name="city"
+                      className="form-control"
                       placeholder={this.state.editaddress.city}
-                      onChange={(e) => {
+                      onChange={e => {
                         this.setState({ city: e.target.value });
                       }}
-                    ></input>
+                    />
                   </div>
-                  <div className='form-group col-md-6'>
+                  <div className="form-group col-md-6">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Zipcode
                     </label>
                     <input
-                      type='number'
-                      id='zipcode'
-                      name='zipcode'
-                      className='form-control'
+                      type="number"
+                      id="zipcode"
+                      name="zipcode"
+                      className="form-control"
                       placeholder={this.state.editaddress.zipcode}
-                      onChange={(e) => {
+                      onChange={e => {
                         this.setState({ zipcode: e.target.value });
                       }}
-                    ></input>
+                    />
                   </div>
                 </div>
-                <div className='form-group col-md-11'>
+                <div className="form-group col-md-11">
                   <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                     Phone Number
                   </label>
                   <input
-                    type='number'
-                    id='phnumber'
-                    name='phnumber'
-                    className='form-control'
+                    type="number"
+                    id="phnumber"
+                    name="phnumber"
+                    className="form-control"
                     placeholder={this.state.editaddress.phone}
-                    onChange={(e) => {
+                    onChange={e => {
                       this.setState({ phone: e.target.value });
                     }}
-                  ></input>
+                  />
                 </div>
-                <div className='form-group col-md-8 m-3'>
-                  <input type='submit' className='btn btn sprite'></input>
+                <div className="form-group col-md-8 m-3">
+                  <input type="submit" className="btn btn sprite" />
                 </div>
               </form>
             </div>
@@ -518,18 +517,18 @@ class SavedAddress extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   console.log(state);
   return {
     addressArray: state.customerProfileReducer.addressArray,
-    msgSuccess: state.customerProfileReducer.msgSuccess,
+    msgSuccess: state.customerProfileReducer.msgSuccess
   };
 };
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     getAddress: () => dispatch(getAddress()),
-    addAddress: (payload) => dispatch(addAddress(payload)),
-    deleteAddress: (payload) => dispatch(deleteAddress(payload)),
+    addAddress: payload => dispatch(addAddress(payload)),
+    deleteAddress: payload => dispatch(deleteAddress(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SavedAddress);

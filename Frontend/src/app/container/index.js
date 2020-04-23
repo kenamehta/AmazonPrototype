@@ -13,30 +13,32 @@ import RegisterSeller from "./Register/RegisterSeller";
 import ProductList from "./products/productsList";
 import ProductPage from "./products/productPage/ProductPage";
 import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
+import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 
 class bodyCont extends React.Component {
   render() {
     return (
       <div>
-        <Route path='/' component={topNav} />
-        <Route path='/customer/profile' component={CustomerProfile} />
-        <Route path='/seller/profile' component={SellerProfile} />
-        <Route path='/login' component={Login} />
-        <Route path='/registerCustomer' component={RegisterCustomer} />
-        <Route path='/registerSeller' component={RegisterSeller} />
-        <Route path='/addressandpayment' component={PaymentAndAddressPage} />
-        <Route path='/productlist' component={ProductList} />
+        <Route path="/" component={topNav} />
+        <Route path="/customer/profile" component={CustomerProfile} />
+        <Route path="/seller/profile" component={SellerProfile} />
+        <Route path="/login" component={Login} />
+        <Route path="/registerCustomer" component={RegisterCustomer} />
+        <Route path="/registerSeller" component={RegisterSeller} />
+        <Route path="/addressandpayment" component={PaymentAndAddressPage} />
+        <Route path="/productlist" component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
-        <Route path='/productPage/:id' component={ProductPage} />
-        <Route path='/cart' component={CartAndSaved} />
+        <Route path="/productPage/:id" component={ProductPage} />
+        <Route path="/cart" component={CartAndSaved} />
+        <Route path="/checkout" component={SelectAddressAndPayment} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    getType: state.getType,
+    getType: state.getType
   };
 };
 
