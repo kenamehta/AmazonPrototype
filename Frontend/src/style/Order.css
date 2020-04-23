@@ -1,0 +1,22 @@
+.custom-view-options-nav {
+  position: relative;
+  padding-left: 5px;
+  border-bottom: 1px solid #ddd;
+
+  margin-bottom: 18px !important;
+
+  width: 100%;
+}
+.custom-active a {
+
+    background-color: green !important;
+  
+  }
+  span:hover {
+    color: darkgoldenrod;
+  }
+  .upload-photo-order {
+    cursor: pointer;
+    
+  }
+ 

@@ -20,6 +20,7 @@ const adminProductService = require("./services/admin/Product");
 const customerPaymentService = require("./services/customer/payment");
 //customer Address service
 const customerAddressService = require("./services/customer/address");
+const orderAddressService= require("./services/customer/orders")
 //saved and Cart Product Service
 const savedAndCartProductService = require("./services/customer/savedAndCartProducts");
 
@@ -88,5 +89,7 @@ handleTopicRequest("sellerProductService", sellerProductService);
 handleTopicRequest("adminProductService", adminProductService);
 handleTopicRequest("customerPaymentService", customerPaymentService);
 handleTopicRequest("customerAddressService", customerAddressService);
+handleTopicRequest("orderAddressService", orderAddressService);
 handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
 
+ 
