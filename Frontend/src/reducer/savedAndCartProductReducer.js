@@ -2,7 +2,8 @@ import {
   GETSAVEDANDCARTPRODUCTS,
   DELETESAVEDPRODUCTS,
   MOVESAVEDTOCART,
-  DELETECARTPRODUCT
+  DELETECARTPRODUCT,
+  MOVECARTTOSAVED
 } from "../action/customer/savedAndCartProducts/actionTypes";
 
 const initialState = { savedCnt: 0, cartCnt: 0 };
@@ -29,6 +30,11 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload
       };
+    case MOVECARTTOSAVED:
+      return {
+        ...state,
+        ...action.payload
+      }
     default:
       return state;
   }

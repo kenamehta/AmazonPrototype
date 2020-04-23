@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class SelectAddress extends Component {
   state = {
@@ -39,6 +40,7 @@ class SelectAddress extends Component {
 
   addAddress = e => {
     e.preventDefault();
+    e.target.reset();
     let payload = {
       addressName: this.state.name,
       street: this.state.street,
@@ -76,7 +78,25 @@ class SelectAddress extends Component {
           className="container mt-5"
           style={{ display: this.state.modalSelected }}
         >
-          <h2 className="m-3">Ship to below Address</h2>
+          <div className="d-flex justify-content-between">
+            <div>
+              <h2 className="m-3">Ship to below Address</h2>
+            </div>
+            <div className="m-3">
+              {this.props.paymentSelectModal === "block" ? this.state
+                .modalSelected === "block" ? (
+                <div className="a-button a-button-primary-proceed a-spacing-medium">
+                  <span className="proceed-order-text-style">
+                    Proceed to Order
+                  </span>
+                </div>
+              ) : (
+                ""
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
           <div className="col-3 mx-3 rest-desktop-address-tile-checkout-selected">
             <div style={{ height: "153px" }}>
               <div className="" style={{ fontSize: "16px", fontWeight: "700" }}>
@@ -109,11 +129,14 @@ class SelectAddress extends Component {
           </div>
         </div>
         {/* End of the selected address block */}
+
         <div
           className="container mt-5"
           style={{ display: this.state.displayAddress }}
         >
           <h2 className="m-3">Your Addresses</h2>
+
+          {/* Below block displays array of addresses */}
           {this.props.addressArray ? (
             <div className="d-flex scroll">
               <div
@@ -175,7 +198,7 @@ class SelectAddress extends Component {
                   <div className="d-flex justify-content-between row-edit-delete">
                     <div className="edit-button-style">
                       <div
-                        className="btn button-style-edit-delete"
+                        className="btn button-style-edit button-style-edit-delete"
                         onClick={e => {
                           this.setState({ modalShowEdit: "block" });
                           this.setState({ editaddress: address });
@@ -190,7 +213,7 @@ class SelectAddress extends Component {
                     </div>
                     <div className="delete-button-style">
                       <div
-                        className="btn button-style-edit-delete"
+                        className="btn button-style-delete button-style-edit-delete"
                         onClick={e => {
                           this.setState({ editedId: address._id }, () => {
                             this.deleteAddress();
@@ -201,7 +224,6 @@ class SelectAddress extends Component {
                         Delete
                       </div>
                     </div>
-                    <div />
                   </div>
                 </div>
               ))}
@@ -209,6 +231,9 @@ class SelectAddress extends Component {
           ) : (
             ""
           )}
+          {/* End of array of addresses */}
+
+          {/* Modal for adding address */}
           <div
             className="modal modal-custom mt-5"
             align="center"
@@ -396,6 +421,7 @@ class SelectAddress extends Component {
                         this.setState({
                           modalSelected: "block",
                           displayAddress: "none",
+                          modalShow: "none",
                           addressNameSel: this.state.addressName,
                           streetSel: this.state.street,
                           citySel: this.state.city,
@@ -432,7 +458,9 @@ class SelectAddress extends Component {
               </div>
             </div>
           </div>
+          {/* End of add address modal */}
 
+          {/* Modal for editing address */}
           <div
             className="modal modal-custom mt-5 editmodal"
             align="center"
@@ -614,9 +642,16 @@ class SelectAddress extends Component {
             </div>
           </div>
         </div>
+        {/* End of edit address modal */}
       </div>
     );
   }
 }
 
-export default SelectAddress;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    paymentSelectModal: state.customerProfileReducer.paymentSelectModal
+  };
+};
+export default connect(mapStateToProps)(SelectAddress);

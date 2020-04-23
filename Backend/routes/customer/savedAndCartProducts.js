@@ -113,6 +113,25 @@ router.post("/moveFromCartToSaveForLater", (req, res) => {
   });
 });
 
+
+// need to test this
+router.post("/updateProductInCart", (req, res) => {
+  console.log("Inside post of /customer/cartProducts/updateProductInCart");
+  console.log(req.body);
+
+  req.body.route = "updateCart";
+  kafka.make_request("savedAndCartProductService", req.body, function (
+    err,
+    results
+  ) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+})
+
 // move saved product to cart
 router.post("/saved/:id", (req, res) => {
   console.log(req.params);

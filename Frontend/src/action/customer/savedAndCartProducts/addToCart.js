@@ -1,42 +1,43 @@
-import { DELETECARTPRODUCT } from "./actionTypes";
+import { ADDTOCART } from "./actionTypes";
 import configPath from "../../../configApp";
 import axios from "axios";
 
-const deleteCartProductDispatcher = payload => {
+const addToCartDispatcher = payload => {
   return {
-    type: DELETECARTPRODUCT,
+    type: ADDTOCART,
     payload
   };
 };
 
-export const deleteCartProduct = payload => {
-  console.log("hello");
-  console.log(payload);
+export const addToCart = payload => {
+  console.log("addToCart action");
   return dispatch => {
-    //make a delete request to delete product from saved
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
     );
     axios
-      .delete(
+      .post(
         configPath.api_host +
-          `/customer/cartProducts/cart/${payload.data.data._id}`,
-        payload.data
+          `/customer/cartProducts/addToCart`,
+        payload
       )
       .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
+          window.alert('Successfully Added to Cart');
           console.log(response.data);
 
+          // Since we are not maintaining uniqueness property in the backend.
           const uniqueCartProductsArray = []
-          const map = new Map();
+          let map = new Map();
           for (const item of response.data) {
             if(!map.has(item.productId)){
                 map.set(item.productId, true);    // set any value to Map
                 uniqueCartProductsArray.push(item);
             }
           }
-          dispatch(deleteCartProductDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:uniqueCartProductsArray.length}));
+
+          dispatch(addToCartDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:uniqueCartProductsArray.length}));
         }
       })
       .catch(error => {

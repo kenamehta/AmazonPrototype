@@ -25,6 +25,8 @@ import {
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props);
+    console.log('props in seller basic profile');
+    console.log(props);
     this.state = {
       showEditPicButton: "none",
       editNameButton: "block",

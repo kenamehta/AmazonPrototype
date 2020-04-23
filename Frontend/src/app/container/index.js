@@ -12,6 +12,8 @@ import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
 import ProductList from "./products/productsList";
 import ProductPage from "./products/productPage/ProductPage";
+import OrderPage from "./customer/order/OrderPage";
+
 import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
 import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 
@@ -26,6 +28,8 @@ class bodyCont extends React.Component {
         <Route path="/registerCustomer" component={RegisterCustomer} />
         <Route path="/registerSeller" component={RegisterSeller} />
         <Route path="/addressandpayment" component={PaymentAndAddressPage} />
+        <Route path="/customer/orders" component={OrderPage} />
+
         <Route path="/productlist" component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
         <Route path="/productPage/:id" component={ProductPage} />

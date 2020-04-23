@@ -142,7 +142,7 @@ class Insights extends Component {
                           <span className="mr-2">
                             {comment.product[0].productName}
                           </span>
-
+<div>
                           <StarRatings
               rating={comment.rating}
               starRatedColor="#f0c14b"
@@ -152,6 +152,7 @@ class Insights extends Component {
               numberOfStars={comment.product[0].averageRating}
               name="rating"
             />
+            </div>
                         </div>
                       </div>
                     </div>

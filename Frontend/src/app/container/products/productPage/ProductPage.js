@@ -16,6 +16,8 @@ import { getProduct } from "../../../../action/ProductAction/productAction";
 class ProductPage extends React.Component {
   constructor(props) {
     super(props);
+    //console.log('props in productpage.js')
+    //console.log(props);
     this.state = { productId: this.props.match.params.id };
   }
 
@@ -27,6 +29,7 @@ class ProductPage extends React.Component {
     //Check if customer is signed in if not redirect to login page
     let title = "";
     let seller = "";
+    let sellerEmailId = "";
     let sellerId = "";
     let avgRating = 0;
     let numOfRatings = 0;
@@ -36,6 +39,7 @@ class ProductPage extends React.Component {
     if (this.props.product) {
       title = this.props.product.productName;
       seller = this.props.product.sellerName;
+      sellerEmailId = this.props.product.sellerEmailId;
       sellerId = this.props.product.sellerId;
       avgRating = this.props.product.averageRating;
       numOfRatings = this.props.product.comments.length;
@@ -45,8 +49,10 @@ class ProductPage extends React.Component {
         <ProductReview key={comment._id} comment={comment}></ProductReview>
       ));
     }
+    console.log('Render called inside productpage.js')
 
     return (
+      
       <Container fluid style={{ minWidth: "500px" }}>
         <Row sm={1} xs={1} md={1} style={{ marginTop: "3%" }}>
           <ProductPictures></ProductPictures>
@@ -54,7 +60,7 @@ class ProductPage extends React.Component {
             <h1 className='title'>{title}</h1>
             <h1 className='seller'>
               by{" "}
-              <Link className='sellerLink' to={`/seller/profile/${sellerId}`}>
+              <Link className='sellerLink' to={`/seller/profile/${sellerEmailId}`}>
                 {seller}
               </Link>
             </h1>
@@ -80,7 +86,7 @@ class ProductPage extends React.Component {
             <h1 className='seller'>{description}</h1>
           </Col>
           <Col lg={2} xl={2}>
-            <ProductBuySection></ProductBuySection>
+            <ProductBuySection ></ProductBuySection>
           </Col>
         </Row>
         <hr></hr>
@@ -122,5 +128,6 @@ class ProductPage extends React.Component {
 const mapStateToProps = (state) => ({
   product: state.product.product,
 });
+
 
 export default connect(mapStateToProps)(ProductPage);

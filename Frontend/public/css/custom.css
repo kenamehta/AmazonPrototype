@@ -12,8 +12,13 @@
   border-color: #febd69 !important;
   color: white !important;
 }
+<<<<<<< HEAD
+.link-color{
+  color:#0066c0 ;
+=======
 .link-color {
   color: #0066c0;
+>>>>>>> 104a3b8af6cffcc0152458a5ab617fe263b7968b
 }
 
 .grey {

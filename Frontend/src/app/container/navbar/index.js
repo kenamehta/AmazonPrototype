@@ -122,13 +122,7 @@ class Topnav extends React.Component {
                 style={{ display: "Block", color: "#FFF" }}
               >
                 <NavDropdown.Item>
-                  <Link to='/customer/profile'>Profile</Link>
-                </NavDropdown.Item>
-                {Applications}
-                {eventsApp}
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link to='/seller/profile'>Seller Profile</Link>
+                  <Link to='/seller/profile'>Profile</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
@@ -182,7 +176,7 @@ class Topnav extends React.Component {
                 <b>Products</b>
               </Link>
               <Link
-                to='/events'
+                to='/customer/orders'
                 style={{ float: "left" }}
                 className='custom-nav'
               >
@@ -205,12 +199,6 @@ class Topnav extends React.Component {
               >
                 <NavDropdown.Item>
                   <Link to='/customer/profile'>Profile</Link>
-                </NavDropdown.Item>
-                {Applications}
-                {eventsApp}
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link to='/seller/profile'>Seller Profile</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}

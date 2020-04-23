@@ -6,6 +6,7 @@ const { addToCart } = require("./addToCart");
 const { deleteCartProduct } = require("./deleteCartProduct");
 const { addToSaveForLater } = require('./addToSaveForLater');
 const { moveCartToSaved } = require('./moveCartToSaved');
+const { updateCart } = require('./updateCart');
 
 let handle_request = (msg, callback) => {
   console.log("in switch");
@@ -31,6 +32,9 @@ let handle_request = (msg, callback) => {
       break;
     case "moveCartToSaved":
       moveCartToSaved(msg, callback);
+      break;
+    case "updateCart":
+      updateCart(msg, callback);
       break;
   }
 };
