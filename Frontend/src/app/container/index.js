@@ -11,6 +11,8 @@ import Login from "./Login/Login";
 import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
 import ProductPage from "./products/productPage/ProductPage";
+import OrderPage from "./customer/order/OrderPage";
+
 
 class bodyCont extends React.Component {
   render() {
@@ -23,6 +25,7 @@ class bodyCont extends React.Component {
         <Route path="/registerCustomer" component={RegisterCustomer} />
         <Route path="/registerSeller" component={RegisterSeller} />
         <Route path="/addressandpayment" component={PaymentAndAddressPage} />
+        <Route path='/customer/orders' component={OrderPage}/>
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
         <Route path="/productPage" component={ProductPage} />
       </div>

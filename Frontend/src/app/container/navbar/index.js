@@ -174,7 +174,7 @@ class Topnav extends React.Component {
                 <b>Products</b>
               </Link>
               <Link
-                to='/events'
+                to='/customer/orders'
                 style={{ float: "left" }}
                 className='custom-nav'
               >

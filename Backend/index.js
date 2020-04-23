@@ -50,6 +50,8 @@ app.use("/product/seller", sellerProduct);
 app.use("/product/admin", adminProduct);
 app.use("/customer/payment", require("./routes/customer/payment"));
 app.use("/customer/address", require("./routes/customer/address"));
+app.use("/customer/orders", require("./routes/customer/order/order"));
+
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");
