@@ -7,14 +7,18 @@
   border-color: #febd69 !important;
 }
 
-
 .sprite-button {
   background-color: #febd69 !important;
   border-color: #febd69 !important;
-  color:white !important;
+  color: white !important;
 }
+<<<<<<< HEAD
 .link-color{
   color:#0066c0 ;
+=======
+.link-color {
+  color: #0066c0;
+>>>>>>> 104a3b8af6cffcc0152458a5ab617fe263b7968b
 }
 
 .grey {
@@ -90,4 +94,35 @@ b:hover {
 
 .nav-link {
   padding: 0 !important;
+}
+
+.margin-auto-custom {
+  margin: 0 auto !important;
+  text-align: center;
+}
+
+.helper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.a-price-symbol {
+  top: -0.5em;
+  font-size: 12px;
+}
+
+.a-price-whole {
+  font-size: 21px;
+}
+
+.a-price-fraction {
+  top: -0.5em;
+  font-size: 12px;
+}
+
+..a-price {
+  text-decoration: none;
+  position: relative;
+  line-height: normal;
 }

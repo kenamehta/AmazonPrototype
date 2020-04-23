@@ -98,7 +98,11 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
+              <Link
+                to='/productlist'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
                 My
                 <br />
                 <b>Products</b>
@@ -118,13 +122,7 @@ class Topnav extends React.Component {
                 style={{ display: "Block", color: "#FFF" }}
               >
                 <NavDropdown.Item>
-                  <Link to='/customer/profile'>Profile</Link>
-                </NavDropdown.Item>
-                {Applications}
-                {eventsApp}
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
-                  <Link to='/seller/profile'>Seller Profile</Link>
+                  <Link to='/seller/profile'>Profile</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
@@ -168,7 +166,11 @@ class Topnav extends React.Component {
               </InputGroup>
             </Form>
             <Nav>
-              <Link to='/home' style={{ float: "left" }} className='custom-nav'>
+              <Link
+                to='/productlist'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
                 All
                 <br />
                 <b>Products</b>
@@ -202,19 +204,13 @@ class Topnav extends React.Component {
                 {eventsApp}
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Link to='/seller/profile'>Seller Profile</Link>
-                </NavDropdown.Item>
-                {Applications}
-                {eventsApp}
-                <NavDropdown.Divider />
-                <NavDropdown.Item>
                   <Link to='/' onClick={this.handleLogout}>
                     Logout
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
               <Link
-                to='/all_students'
+                to='/cart'
                 style={{ position: "relative", whiteSpace: "nowrap" }}
                 className='custom-nav'
               >
