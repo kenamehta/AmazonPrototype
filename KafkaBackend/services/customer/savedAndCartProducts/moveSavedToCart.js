@@ -25,7 +25,14 @@ let moveSavedToCart = async (msg, callback) => {
         }
         if (idx !== -1) {
           console.log(result.cartProducts);
-          result.cartProducts.push(result.savedProducts[idx]);
+
+          // checking if product already present then no moving to cart but removing from saved.
+          // NOT increasing the quantity of product in cart too, if already present in cart
+          const alreadyPresentIndex = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
+          if(alreadyPresentIndex === -1){
+            result.cartProducts.push(result.savedProducts[idx]);
+          }
+          
           result.savedProducts.splice(idx, 1);
 
           if (result.savedProducts) {

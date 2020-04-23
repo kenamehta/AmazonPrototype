@@ -20,12 +20,27 @@ const addToCart = (msg, callback) => {
         productId: msg.productId,
         sellerEmailId: msg.sellerEmailId,
         quantity: parseInt(msg.quantity),
+        giftFlag: 'false',
+        giftMessage: ''
       }
       if(msg.giftFlag && msg.giftFlag === 'true'){
         productDetails.giftFlag = 'true';
         productDetails.giftMessage = msg.giftMessage;
       }
-      result.cartProducts.push(productDetails);
+
+      /*
+      If already present then increasing quantity and overwriting whether newly supplied
+      was given as product or not.
+      */
+      const alreadyPresentIndex = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
+      if(alreadyPresentIndex !== -1){
+        result.cartProducts[alreadyPresentIndex].quantity += productDetails.quantity;
+        result.cartProducts[alreadyPresentIndex].giftFlag = productDetails.giftFlag;
+        result.cartProducts[alreadyPresentIndex].giftMessage = productDetails.giftMessage;
+      } else {
+        result.cartProducts.push(productDetails);
+      }
+
       // console.log(result);
       result.save(async(saveError) => {
         if(saveError){

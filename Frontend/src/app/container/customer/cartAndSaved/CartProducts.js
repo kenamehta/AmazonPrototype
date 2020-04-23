@@ -1,9 +1,13 @@
 import React, { Component } from "react";
-import { Container, Image } from "react-bootstrap";
+import { Container, Image, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+
 class CartProducts extends Component {
-  state = {};
+  constructor(props){
+    super(props);
+    this.state = {};
+  }
   render() {
     return (
       <Container>
@@ -58,6 +62,63 @@ class CartProducts extends Component {
                     </div>
                     <div class="stock_style">In stock</div>
                     <div className="pt-2 action_style">
+                      <span className = "mr-2">
+                        <Dropdown>
+                          <Dropdown.Toggle
+                            style={{
+                              color: "#111",
+                              fontSize: "11px",
+                              backgroundColor: "rgb(231, 233, 236)",
+                              borderRadius: "3px",
+                              borderColor: "#adb1b8 #a2a6ac #8d9096",
+                              borderStyle: "solid",
+                              borderWidth: "1px",
+                              cursor: "pointer",
+                              display: "inline-block",
+                              textAlign: "center",
+                              textDecoration: "none",
+                              verticalAlign: "middle",
+                              padding: "2px 12px 2px 13px",
+                            }}
+                          >
+                            Qty: {this.state.qty}
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 1 })}>
+                              1
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 2 })}>
+                              2
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 3 })}>
+                              3
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 4 })}>
+                              4
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 5 })}>
+                              5
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 6 })}>
+                              6
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 7 })}>
+                              7
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 8 })}>
+                              8
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 9 })}>
+                              9
+                            </Dropdown.Item>
+                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 10 })}>
+                              10
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </span>
+                      <span className="mr-2">|</span>
                       <span
                         className="mr-2 delete_style"
                         onClick={() => {

@@ -18,7 +18,7 @@ const deleteCartProduct = (msg, callback) => {
       console.log(result);
       let idx = -1;
       for (let i = 0; i < result.cartProducts.length; i++) {
-        if (result.cartProducts[i]._id == msg.cartProductId) {
+        if (result.cartProducts[i].productId === msg.productId) {
           idx = i;
           break;
         }
@@ -37,7 +37,8 @@ const deleteCartProduct = (msg, callback) => {
                 customerCartWithProductDetails.push({
                   giftFlag: eachProductInCart.giftFlag,
                   giftMessage: eachProductInCart.giftMessage,
-                  _id: eachProductInCart._id,
+                  //_id: eachProductInCart._id,
+                  _id:resultProduct._id,
                   productId: eachProductInCart.productId,
                   sellerEmailId: eachProductInCart.sellerEmailId,
                   quantity: eachProductInCart.quantity,

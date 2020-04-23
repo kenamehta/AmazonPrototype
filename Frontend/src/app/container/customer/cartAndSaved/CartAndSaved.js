@@ -22,6 +22,7 @@ class CartAndSaved extends Component {
           cartCnt={this.props.cartCnt}
           deleteCartProduct={this.props.deleteCartProduct}
           moveCartToSaved={this.props.moveCartToSaved}
+          
         />
         <SavedProducts
           savedProductsArr={this.props.savedProductsArr}
