@@ -6,8 +6,44 @@ import { Link } from "react-router-dom";
 class CartProducts extends Component {
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = {
+      totalCartPrice:0
+    }
+    this.updateCartHandler = this.updateCartHandler.bind(this);
+    
   }
+
+  componentWillReceiveProps(nextProps){
+    console.log('componentWillReceiveProps called of CartProducts.js');
+    console.log('nextProps of CartProducts.js');
+    console.log(nextProps);
+    let totalPrice = 0;
+    for(const eachCartProduct of nextProps.cartProductsArr){
+      if(eachCartProduct.giftFlag === 'false') {
+        totalPrice += eachCartProduct.quantity * eachCartProduct.productPrice
+      } else {
+        // adding 0.5 if a product is a gift. Multiplying by quantity of that item.
+        totalPrice += eachCartProduct.quantity * eachCartProduct.productPrice + (eachCartProduct.quantity * 0.5)
+      }
+    }
+    this.setState({
+      totalCartPrice:totalPrice
+    });
+  }
+
+  updateCartHandler(quantity,productId,giftFlag,giftMessage){
+    // console.log('Inside updateCartHandler');
+    // console.log(quantity);
+    // console.log(productId);
+    this.props.updateCart({
+      id:localStorage.getItem("ID"),
+      productId: productId,
+      quantity: quantity,
+      giftFlag: giftFlag,
+      giftMessage
+    });
+  }
+
   render() {
     return (
       <Container>
@@ -61,6 +97,29 @@ class CartProducts extends Component {
                       </div>
                     </div>
                     <div class="stock_style">In stock</div>
+                    <div class="checkbox_style" title="Will add $0.5 per quantity of gift">
+                      <input type="checkbox" 
+                            id="giftCheckBox" 
+                            name="giftCheckBox" 
+                            checked={product.giftFlag === 'true'} 
+                            onChange={()=>{
+                              if(product.giftFlag === 'true'){
+                                this.updateCartHandler(product.quantity,product._id,"false","");
+                              } else {
+                                this.updateCartHandler(product.quantity,product._id,"true","");
+                              }
+                              }}/>
+                      <label for="giftCheckBox"> This is a gift</label>
+                      {product.giftFlag === 'true' && 
+                        <form onSubmit={(e)=>{
+                          e.preventDefault();
+                          
+                          this.updateCartHandler(product.quantity,product._id,"true",e.target['giftMessage'].value);
+                        }}>
+                          <input type="text" name="giftMessage" placeholder={product.giftMessage!==""?product.giftMessage:"Enter New Message"} size="70" ></input> {' '}
+                          <input type="submit" value="Submit" on></input>
+                        </form>}
+                    </div>
                     <div className="pt-2 action_style">
                       <span className = "mr-2">
                         <Dropdown>
@@ -81,44 +140,44 @@ class CartProducts extends Component {
                               padding: "2px 12px 2px 13px",
                             }}
                           >
-                            Qty: {this.state.qty}
+                            Qty: {product.quantity}
                           </Dropdown.Toggle>
 
                           <Dropdown.Menu>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 1 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(1,product._id,product.giftFlag,product.giftMessage)}>
                               1
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 2 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(2,product._id,product.giftFlag,product.giftMessage)}>
                               2
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 3 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(3,product._id,product.giftFlag,product.giftMessage)}>
                               3
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 4 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(4,product._id,product.giftFlag,product.giftMessage)}>
                               4
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 5 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(5,product._id,product.giftFlag,product.giftMessage)}>
                               5
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 6 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(6,product._id,product.giftFlag,product.giftMessage)}>
                               6
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 7 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(7,product._id,product.giftFlag,product.giftMessage)}>
                               7
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 8 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(8,product._id,product.giftFlag,product.giftMessage)}>
                               8
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 9 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(9,product._id,product.giftFlag,product.giftMessage)}>
                               9
                             </Dropdown.Item>
-                            <Dropdown.Item href="#" onClick={() => this.setState({ qty: 10 })}>
+                            <Dropdown.Item href="#" onClick={() => this.updateCartHandler(10,product._id,product.giftFlag,product.giftMessage)}>
                               10
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
                       </span>
-                      <span className="mr-2">|</span>
+                      
                       <span
                         className="mr-2 delete_style"
                         onClick={() => {
@@ -153,6 +212,37 @@ class CartProducts extends Component {
           ) : (
             ""
           )}
+          <div>
+            <div class="d-flex">
+              <div class="col-2" 
+                    style={{
+                      width: "12.499999995%",
+                      flex: "0 0 12.499%",
+                      maxWidth: "12.499%"
+                    }}>
+              </div>
+              <div class="col-10" 
+                    style={{
+                      paddingTop: "10px",
+                      paddingBottom: "10px",
+                      fontSize: "17px"
+                    }}>
+                <div className="justify-content-between d-flex">
+                  <div>
+                  </div>
+                  <div>
+                    <span>
+                      <h5>Subtotal:</h5>
+                    </span>
+                    <span className="mr-5 price_style" title="Includes $0.5 per quantity of gift, if any">
+                      ${this.state.totalCartPrice}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="style__divider___1j_Fp mt-2" />
         </div>
       </Container>
     );

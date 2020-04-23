@@ -25,6 +25,7 @@ class List extends React.Component {
   }
 
   render() {
+    console.log('this.props.product in list.js in productsList');
     console.log(this.props.product);
 
     const active = this.props.product.page;
@@ -32,7 +33,29 @@ class List extends React.Component {
 
     for (let number = 1; number <= this.props.product.pages; number++) {
       items.push(
-        <Pagination.Item key={number} active={number === active}>
+        <Pagination.Item key={number} active={number === active} id={number} onClick={(e)=>{
+          // console.log(e.target);
+          // console.log(e.target.id);
+          // console.log(typeof e.target.id);
+          // console.log(typeof active);
+          let newPageNumber = parseInt(e.target.id);
+          if(newPageNumber !== active){
+            const data = {
+              page: newPageNumber,
+              orderOn: "",
+              order: "",
+              sellerEmailId: "",
+              sellerName: "",
+              productName: "",
+              productCategory: "",
+              minPrice: "",
+              maxPrice: "",
+              minRating: "",
+              maxRating: "",
+            };
+            this.props.dispatch(getAllProducts(data));
+          }
+        }}>
           {number}
         </Pagination.Item>
       );

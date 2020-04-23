@@ -28,13 +28,19 @@ const addToCart = (msg, callback) => {
         productDetails.giftMessage = msg.giftMessage;
       }
 
+      let restrictedFlag = false;
+
       /*
-      If already present then increasing quantity and overwriting whether newly supplied
-      was given as product or not.
+        If already present then increasing quantity and overwriting whether newly supplied
+        was given as product or not.
       */
       const alreadyPresentIndex = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
       if(alreadyPresentIndex !== -1){
         result.cartProducts[alreadyPresentIndex].quantity += productDetails.quantity;
+        if(result.cartProducts[alreadyPresentIndex].quantity > 10){
+          restrictedFlag = true;
+          result.cartProducts[alreadyPresentIndex].quantity = 10;
+        }
         result.cartProducts[alreadyPresentIndex].giftFlag = productDetails.giftFlag;
         result.cartProducts[alreadyPresentIndex].giftMessage = productDetails.giftMessage;
       } else {
@@ -76,7 +82,11 @@ const addToCart = (msg, callback) => {
           }
         }
         // console.log(customerCartWithProductDetails);
-        res.status = 200;
+        if(restrictedFlag){
+          res.status = 201;
+        } else {
+          res.status = 200;
+        }
         res.message = customerCartWithProductDetails;
         callback(null, res);
       });

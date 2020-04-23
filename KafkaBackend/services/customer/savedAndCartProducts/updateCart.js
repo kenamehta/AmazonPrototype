@@ -19,11 +19,16 @@ const updateCart = (msg, callback) => {
     }
     if(result){
       // finding index and updating product in database
-      const idx = result.cartProducts.findIndex((element)=>element._id == msg.updatedProductInCart._id);
+      const idx = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
+      console.log(idx);
       if(idx!==-1){
-        result.cartProducts[idx].quantity = parseInt(eachUpdateProduct.quantity);
-        result.cartProducts[idx].giftFlag = eachUpdateProduct.giftFlag;
-        result.cartProducts[idx].giftMessage = eachUpdateProduct.giftMessage;
+        result.cartProducts[idx].quantity = parseInt(msg.quantity);
+        
+        // Always send giftflag and giftmessage
+        // if giftflag now false, but earlier was true, so need to know
+        // if giftflag now true, but earlier was false, so need to know
+        result.cartProducts[idx].giftFlag = msg.giftFlag;
+        result.cartProducts[idx].giftMessage = msg.giftMessage;
         
         result.save(async(saveError) => {
           if(saveError){
