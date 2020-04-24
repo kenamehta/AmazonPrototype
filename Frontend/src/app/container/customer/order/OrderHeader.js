@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 class OrderHeader extends Component {
-    state = {  }
+    state = { 
+      color:"red"
+     }
     render() { 
         return ( <div>
               <h2 className='p-4' style={{fontWeight:"500"}}>Your Orders</h2>
@@ -14,13 +16,13 @@ class OrderHeader extends Component {
  <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
    <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
      <li className="nav-item active mx-5">
-       <a className="nav-link" href="#!" >Orders <span className="sr-only">(current)</span></a>
+       <a className="nav-link " href="/customer/orders"  style={{color:this.state.color}} >Orders <span className="sr-only"></span></a>
      </li>
      <li className="nav-item mx-5">
        <a className="nav-link link-color" style={{color:"#0066c0"}} href="#!"><span>Open orders</span></a>
      </li>
      <li className="nav-item mx-5">
-       <a className="nav-link link-color" style={{color:"#0066c0"}} href="#!"><span>Cancel orders</span></a>
+       <a className="nav-link link-color" style={{color:"#0066c0"}} href="/customer/order/cancelledorders"><span>Cancel orders</span></a>
      </li>
    </ul>
    
