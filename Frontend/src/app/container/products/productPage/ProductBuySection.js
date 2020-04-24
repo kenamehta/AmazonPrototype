@@ -29,7 +29,8 @@ class ProductBuySection extends React.Component {
       id:localStorage.getItem("ID"),
       productId:this.props.product._id,
       sellerEmailId:this.props.product.sellerEmailId,
-      quantity:this.state.qty
+      quantity:this.state.qty,
+      individualProductPrice: this.props.product.productPrice
     }
     
     this.props.dispatch(addToCart(data));

@@ -16,16 +16,20 @@ const addToCart = (msg, callback) => {
       callback(null, res);
     } 
     if(result){
+      // expects now in add to cart individualProductPrice to be sent in request bodt
+      const individualProductPrice = parseFloat(msg.individualProductPrice);
       const productDetails = {
         productId: msg.productId,
         sellerEmailId: msg.sellerEmailId,
         quantity: parseInt(msg.quantity),
+        totalProductPrice: individualProductPrice * parseInt(msg.quantity),
         giftFlag: 'false',
         giftMessage: ''
       }
       if(msg.giftFlag && msg.giftFlag === 'true'){
         productDetails.giftFlag = 'true';
         productDetails.giftMessage = msg.giftMessage;
+        productDetails.totalProductPrice += 0.5 * productDetails.quantity
       }
 
       let restrictedFlag = false;
@@ -43,6 +47,11 @@ const addToCart = (msg, callback) => {
         }
         result.cartProducts[alreadyPresentIndex].giftFlag = productDetails.giftFlag;
         result.cartProducts[alreadyPresentIndex].giftMessage = productDetails.giftMessage;
+        if(msg.giftFlag === 'true'){
+          result.cartProducts[alreadyPresentIndex].totalProductPrice = result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice + 0.5);
+        } else {
+          result.cartProducts[alreadyPresentIndex].totalProductPrice = result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice);
+        }
       } else {
         result.cartProducts.push(productDetails);
       }
@@ -65,6 +74,7 @@ const addToCart = (msg, callback) => {
               productId: eachProductInCart.productId,
               sellerEmailId: eachProductInCart.sellerEmailId,
               quantity: eachProductInCart.quantity,
+              totalProductPrice: eachProductInCart.totalProductPrice,
               createdAt: eachProductInCart.createdAt,
               updatedAt: eachProductInCart.updatedAt,
               sellerName: result.sellerName,
