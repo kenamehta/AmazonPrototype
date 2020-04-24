@@ -23,8 +23,9 @@ let getPayment = async (msg, callback) => {
           validThru: msg.expirationDate,
           cancelOrder: 0
         });
-        if(addOrder){
-            
+        if (addOrder) {
+          const cartProducts = result.cartProducts;
+          
         }
       } else {
         return callback(
