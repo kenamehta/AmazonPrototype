@@ -125,16 +125,6 @@ class CartProducts extends Component {
                         }}
                       />
                       <label for="giftCheckBox"> This is a gift</label>
-<<<<<<< HEAD
-                      {product.giftFlag === 'true' && 
-                        <form onSubmit={(e)=>{
-                          //e.preventDefault();
-                          this.updateCartHandler(product.quantity,product._id,"true",e.target['giftMessage'].value);
-                        }}>
-                          <input type="text" name="giftMessage" placeholder={product.giftMessage!==""?product.giftMessage:"Enter New Message"} size="70" ></input> {' '}
-                          <input type="submit" value="Submit" on></input>
-                        </form>}
-=======
                       {product.giftFlag === "true" && (
                         <form
                           onSubmit={e => {
@@ -165,7 +155,6 @@ class CartProducts extends Component {
                           </div>
                         </form>
                       )}
->>>>>>> c6e116f0cb424484c737ad89bbb6d610ca153149
                     </div>
                     <div className="action_style">
                       <span className="mr-2">
