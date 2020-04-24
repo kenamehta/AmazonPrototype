@@ -24,13 +24,16 @@ let moveSavedToCart = async (msg, callback) => {
           }
         }
         if (idx !== -1) {
+          const individualProductPrice = parseFloat(msg.individualProductPrice);
           console.log(result.cartProducts);
 
           // checking if product already present then no moving to cart but removing from saved.
           // NOT increasing the quantity of product in cart too, if already present in cart
           const alreadyPresentIndex = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
           if(alreadyPresentIndex === -1){
-            result.cartProducts.push(result.savedProducts[idx]);
+            let obj = Object.assign({},result.savedProducts[idx]._doc,{totalProductPrice:individualProductPrice}) ;
+            console.log(obj);
+            result.cartProducts.push(obj);
           }
           
           result.savedProducts.splice(idx, 1);
@@ -58,7 +61,8 @@ let moveSavedToCart = async (msg, callback) => {
             const newData = {
               quantity: foundCartProduct.quantity,
               giftFlag: foundCartProduct.giftFlag,
-              giftMessage: foundCartProduct.giftMessage
+              giftMessage: foundCartProduct.giftMessage,
+              totalProductPrice: foundCartProduct.totalProductPrice
             }
             // _doc contains product info.
             cartProductsArr[i] = Object.assign({},cartProductsArr[i]._doc,newData);

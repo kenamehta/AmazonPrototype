@@ -23,8 +23,8 @@ router.get("/:email", (req, res) => {
     });
   });
 
-  router.post("/cancel/:email", (req, res) => {
-    console.log("Inside get of customer/profile/cancel/:emailId");
+  router.post("/cancel/product/:email", (req, res) => {
+    console.log("Inside get of customer/order/cancel/product/:emailId");
     console.log(req.body);
   
     //   req.body.path = "";

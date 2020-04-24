@@ -6,7 +6,7 @@ class CartProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      totalCartPrice: 0
+      totalCartPrice: 0,
     };
     this.updateCartHandler = this.updateCartHandler.bind(this);
   }
@@ -27,11 +27,11 @@ class CartProducts extends Component {
       }
     }
     this.setState({
-      totalCartPrice: totalPrice
+      totalCartPrice: totalPrice,
     });
   }
 
-  updateCartHandler(quantity, productId, giftFlag, giftMessage) {
+  updateCartHandler(quantity, productId, giftFlag, giftMessage, individualProductPrice) {
     // console.log('Inside updateCartHandler');
     // console.log(quantity);
     // console.log(productId);
@@ -39,8 +39,9 @@ class CartProducts extends Component {
       id: localStorage.getItem("ID"),
       productId: productId,
       quantity: quantity,
+      individualProductPrice: individualProductPrice,
       giftFlag: giftFlag,
-      giftMessage
+      giftMessage,
     });
   }
 
@@ -51,80 +52,30 @@ class CartProducts extends Component {
           <h5>Shopping Cart ({this.props.cartCnt} Items)</h5>
           <div className="style__divider___1j_Fp mt-2" />
 
-          {this.props.cartProductsArr ? (
-            this.props.cartProductsArr.map(product => (
-              <div>
-                <div className="d-flex">
-                  <div
-                    className="col-2"
-                    style={{
-                      width: "12.499999995%",
-                      flex: "0 0 12.499%",
-                      maxWidth: "12.499%"
-                    }}
-                  >
-                    <Image
-                      src={product ? product.photos[0] : ""}
-                      className="productImg"
-                      style={{
-                        //width: "130px",
-                        height: "130px",
-                        paddingTop: "10px",
-                        paddingBottom: "10px",
-                        margin: "auto 0"
-                      }}
-                    />
-                  </div>
-                  <div
-                    className="col-10"
-                    style={{
-                      paddingTop: "10px",
-                      paddingBottom: "10px",
-                      fontSize: "17px"
-                    }}
-                  >
-                    <div className="justify-content-between d-flex">
-                      <div>
-                        <Link
-                          className="name_style"
-                          to={`/productPage/${product._id}`}
-                        >
-                          {product.productName}
-                        </Link>
-                      </div>
-                      <div className="mr-5 price_style">
-                        ${product.productPrice}
-                      </div>
-                    </div>
-                    <div class="stock_style">In stock</div>
+          {this.props.cartProductsArr
+            ? this.props.cartProductsArr.map((product) => (
+                <div>
+                  <div className="d-flex">
                     <div
-                      class="checkbox_style"
-                      title="Will add $0.5 per quantity of gift"
+                      className="col-2"
+                      style={{
+                        width: "12.499999995%",
+                        flex: "0 0 12.499%",
+                        maxWidth: "12.499%",
+                      }}
                     >
-                      <input
-                        type="checkbox"
-                        id="giftCheckBox"
-                        name="giftCheckBox"
-                        checked={product.giftFlag === "true"}
-                        onChange={() => {
-                          if (product.giftFlag === "true") {
-                            this.updateCartHandler(
-                              product.quantity,
-                              product._id,
-                              "false",
-                              ""
-                            );
-                          } else {
-                            this.updateCartHandler(
-                              product.quantity,
-                              product._id,
-                              "true",
-                              ""
-                            );
-                          }
+                      <Image
+                        src={product ? product.photos[0] : ""}
+                        className="productImg"
+                        style={{
+                          //width: "130px",
+                          height: "130px",
+                          paddingTop: "10px",
+                          paddingBottom: "10px",
+                          margin: "auto 0",
                         }}
                       />
-                      <label for="giftCheckBox"> This is a gift</label>
+                      {/* <label for="giftCheckBox"> This is a gift</label>
                       {product.giftFlag === "true" && (
                         <form
                           onSubmit={e => {
@@ -134,7 +85,8 @@ class CartProducts extends Component {
                               product.quantity,
                               product._id,
                               "true",
-                              e.target["giftMessage"].value
+                              e.target["giftMessage"].value,
+                              product.productPrice
                             );
                           }}
                         >
@@ -154,193 +106,294 @@ class CartProducts extends Component {
                             <input type="submit" value="Submit" on />
                           </div>
                         </form>
-                      )}
+                      )} */}
                     </div>
-                    <div className="action_style">
-                      <span className="mr-2">
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            style={{
-                              color: "#111",
-                              fontSize: "11px",
-                              backgroundColor: "rgb(231, 233, 236)",
-                              borderRadius: "3px",
-                              borderColor: "#adb1b8 #a2a6ac #8d9096",
-                              borderStyle: "solid",
-                              borderWidth: "1px",
-                              cursor: "pointer",
-                              display: "inline-block",
-                              textAlign: "center",
-                              textDecoration: "none",
-                              verticalAlign: "middle",
-                              padding: "2px 12px 2px 13px"
+                    <div
+                      className="col-10"
+                      style={{
+                        paddingTop: "10px",
+                        paddingBottom: "10px",
+                        fontSize: "17px",
+                      }}
+                    >
+                      <div className="justify-content-between d-flex">
+                        <div>
+                          <Link
+                            className="name_style"
+                            to={`/productPage/${product._id}`}
+                          >
+                            {product.productName}
+                          </Link>
+                        </div>
+                        <div className="mr-5 price_style" title="Adds $0.5 per quantity">
+                          ${product.totalProductPrice}
+                        </div>
+                      </div>
+                      <div class="stock_style">In stock</div>
+                      <div
+                        class="checkbox_style"
+                        title="Will add $0.5 per quantity of gift"
+                      >
+                        <input
+                          type="checkbox"
+                          id="giftCheckBox"
+                          name="giftCheckBox"
+                          checked={product.giftFlag === "true"}
+                          onChange={() => {
+                            if (product.giftFlag === "true") {
+                              this.updateCartHandler(
+                                product.quantity,
+                                product._id,
+                                "false",
+                                "",
+                                product.productPrice
+                              );
+                            } else {
+                              this.updateCartHandler(
+                                product.quantity,
+                                product._id,
+                                "true",
+                                "",
+                                product.productPrice
+                              );
+                            }
+                          }}
+                        />
+                        <label for="giftCheckBox"> This is a gift</label>
+                        {product.giftFlag === "true" && (
+                          <form
+                            onSubmit={(e) => {
+                              //e.preventDefault();
+
+                              this.updateCartHandler(
+                                product.quantity,
+                                product._id,
+                                "true",
+                                e.target["giftMessage"].value,
+                                product.productPrice
+                              );
                             }}
                           >
-                            Qty: {product.quantity}
-                          </Dropdown.Toggle>
-
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  1,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              1
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  2,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              2
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  3,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              3
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  4,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              4
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  5,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              5
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  6,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              6
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  7,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              7
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  8,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              8
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  9,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              9
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              href="#"
-                              onClick={() =>
-                                this.updateCartHandler(
-                                  10,
-                                  product._id,
-                                  product.giftFlag,
-                                  product.giftMessage
-                                )}
-                            >
-                              10
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      </span>
-                      <div>
-                        <span
-                          className="mr-2 delete_style"
-                          onClick={() => {
-                            this.props.deleteCartProduct({
-                              data: {
-                                data: {
-                                  id: localStorage.getItem("ID"),
-                                  _id: product._id
+                            <div className="mb-2">
+                              <input
+                                type="text"
+                                name="giftMessage"
+                                placeholder={
+                                  product.giftMessage !== ""
+                                    ? product.giftMessage
+                                    : "Enter New Message"
                                 }
-                              }
-                            });
-                          }}
-                        >
-                          Delete
+                                size="70"
+                                required
+                              />{" "}
+                              <input type="submit" value="Submit" on />
+                            </div>
+                          </form>
+                        )}
+                      </div>
+                      <div className="action_style">
+                        <span className="mr-2">
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              style={{
+                                color: "#111",
+                                fontSize: "11px",
+                                backgroundColor: "rgb(231, 233, 236)",
+                                borderRadius: "3px",
+                                borderColor: "#adb1b8 #a2a6ac #8d9096",
+                                borderStyle: "solid",
+                                borderWidth: "1px",
+                                cursor: "pointer",
+                                display: "inline-block",
+                                textAlign: "center",
+                                textDecoration: "none",
+                                verticalAlign: "middle",
+                                padding: "2px 12px 2px 13px",
+                              }}
+                            >
+                              Qty: {product.quantity}
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    1,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                1
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    2,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                2
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    3,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                3
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    4,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                4
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    5,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                5
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    6,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                6
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    7,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                7
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    8,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                8
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    9,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                9
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                href="#"
+                                onClick={() =>
+                                  this.updateCartHandler(
+                                    10,
+                                    product._id,
+                                    product.giftFlag,
+                                    product.giftMessage,
+                                    product.productPrice
+                                  )
+                                }
+                              >
+                                10
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
                         </span>
-                        <span className="mr-2">|</span>
-                        <span
-                          className="move_style"
-                          onClick={() => {
-                            this.props.moveCartToSaved({
-                              id: localStorage.getItem("ID"),
-                              productId: product._id
-                            });
-                          }}
-                        >
-                          Move to Save For Later
-                        </span>
+                        <div>
+                          <span
+                            className="mr-2 delete_style"
+                            onClick={() => {
+                              this.props.deleteCartProduct({
+                                data: {
+                                  data: {
+                                    id: localStorage.getItem("ID"),
+                                    _id: product._id,
+                                  },
+                                },
+                              });
+                            }}
+                          >
+                            Delete
+                          </span>
+                          <span className="mr-2">|</span>
+                          <span
+                            className="move_style"
+                            onClick={() => {
+                              this.props.moveCartToSaved({
+                                id: localStorage.getItem("ID"),
+                                productId: product._id,
+                              });
+                            }}
+                          >
+                            Move to Save For Later
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <div className="style__divider___1j_Fp mt-2" />
                 </div>
-                <div className="style__divider___1j_Fp mt-2" />
-              </div>
-            ))
-          ) : (
-            ""
-          )}
+              ))
+            : ""}
           <div>
             <div class="d-flex">
               <div
@@ -348,7 +401,7 @@ class CartProducts extends Component {
                 style={{
                   width: "12.499999995%",
                   flex: "0 0 12.499%",
-                  maxWidth: "12.499%"
+                  maxWidth: "12.499%",
                 }}
               />
               <div
@@ -356,7 +409,7 @@ class CartProducts extends Component {
                 style={{
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                  fontSize: "17px"
+                  fontSize: "17px",
                 }}
               >
                 <div align="right">

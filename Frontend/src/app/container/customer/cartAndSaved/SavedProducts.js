@@ -75,7 +75,8 @@ class SavedProducts extends Component {
                         className="move_style"
                         onClick={() => {
                           this.props.moveSavedToCart({
-                            productId: product._id
+                            productId: product._id,
+                            individualProductPrice: product.productPrice
                           });
                         }}
                       >

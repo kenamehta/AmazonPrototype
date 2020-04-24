@@ -1,3 +1,4 @@
 export const CATEGORY = "GETPRODUCTCATEGORY";
 export const ALLPRODUCTS = "GETALLPRODUCTS";
 export const GET_PRODUCT = "GET_PRODUCT";
+export const ADDCOMMENT = "ADDCOMMENT";
