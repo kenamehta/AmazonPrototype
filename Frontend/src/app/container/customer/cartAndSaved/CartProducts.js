@@ -31,7 +31,7 @@ class CartProducts extends Component {
     });
   }
 
-  updateCartHandler(quantity, productId, giftFlag, giftMessage) {
+  updateCartHandler(quantity, productId, giftFlag, giftMessage, individualProductPrice) {
     // console.log('Inside updateCartHandler');
     // console.log(quantity);
     // console.log(productId);
@@ -39,6 +39,7 @@ class CartProducts extends Component {
       id: localStorage.getItem("ID"),
       productId: productId,
       quantity: quantity,
+      individualProductPrice: individualProductPrice,
       giftFlag: giftFlag,
       giftMessage,
     });
@@ -74,6 +75,38 @@ class CartProducts extends Component {
                           margin: "auto 0",
                         }}
                       />
+                      {/* <label for="giftCheckBox"> This is a gift</label>
+                      {product.giftFlag === "true" && (
+                        <form
+                          onSubmit={e => {
+                            e.preventDefault();
+
+                            this.updateCartHandler(
+                              product.quantity,
+                              product._id,
+                              "true",
+                              e.target["giftMessage"].value,
+                              product.productPrice
+                            );
+                          }}
+                        >
+                          <div className="mb-2">
+                            <input
+                              type="text"
+                              name="giftMessage"
+                              placeholder={
+                                product.giftMessage !== "" ? (
+                                  product.giftMessage
+                                ) : (
+                                  "Enter New Message"
+                                )
+                              }
+                              size="70"
+                            />{" "}
+                            <input type="submit" value="Submit" on />
+                          </div>
+                        </form>
+                      )} */}
                     </div>
                     <div
                       className="col-10"
@@ -92,8 +125,8 @@ class CartProducts extends Component {
                             {product.productName}
                           </Link>
                         </div>
-                        <div className="mr-5 price_style">
-                          ${product.productPrice}
+                        <div className="mr-5 price_style" title="Adds $0.5 per quantity">
+                          ${product.totalProductPrice}
                         </div>
                       </div>
                       <div class="stock_style">In stock</div>
@@ -112,14 +145,16 @@ class CartProducts extends Component {
                                 product.quantity,
                                 product._id,
                                 "false",
-                                ""
+                                "",
+                                product.productPrice
                               );
                             } else {
                               this.updateCartHandler(
                                 product.quantity,
                                 product._id,
                                 "true",
-                                ""
+                                "",
+                                product.productPrice
                               );
                             }
                           }}
@@ -128,13 +163,14 @@ class CartProducts extends Component {
                         {product.giftFlag === "true" && (
                           <form
                             onSubmit={(e) => {
-                              e.preventDefault();
+                              //e.preventDefault();
 
                               this.updateCartHandler(
                                 product.quantity,
                                 product._id,
                                 "true",
-                                e.target["giftMessage"].value
+                                e.target["giftMessage"].value,
+                                product.productPrice
                               );
                             }}
                           >
@@ -148,6 +184,7 @@ class CartProducts extends Component {
                                     : "Enter New Message"
                                 }
                                 size="70"
+                                required
                               />{" "}
                               <input type="submit" value="Submit" on />
                             </div>
@@ -185,7 +222,8 @@ class CartProducts extends Component {
                                     1,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -198,7 +236,8 @@ class CartProducts extends Component {
                                     2,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -211,7 +250,8 @@ class CartProducts extends Component {
                                     3,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -224,7 +264,8 @@ class CartProducts extends Component {
                                     4,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -237,7 +278,8 @@ class CartProducts extends Component {
                                     5,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -250,7 +292,8 @@ class CartProducts extends Component {
                                     6,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -263,7 +306,8 @@ class CartProducts extends Component {
                                     7,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -276,7 +320,8 @@ class CartProducts extends Component {
                                     8,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -289,7 +334,8 @@ class CartProducts extends Component {
                                     9,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >
@@ -302,7 +348,8 @@ class CartProducts extends Component {
                                     10,
                                     product._id,
                                     product.giftFlag,
-                                    product.giftMessage
+                                    product.giftMessage,
+                                    product.productPrice
                                   )
                                 }
                               >

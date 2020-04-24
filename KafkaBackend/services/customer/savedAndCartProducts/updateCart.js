@@ -22,6 +22,7 @@ const updateCart = (msg, callback) => {
       const idx = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
       console.log(idx);
       if(idx!==-1){
+        const individualProductPrice = parseFloat(msg.individualProductPrice);
         result.cartProducts[idx].quantity = parseInt(msg.quantity);
         
         // Always send giftflag and giftmessage
@@ -29,6 +30,12 @@ const updateCart = (msg, callback) => {
         // if giftflag now true, but earlier was false, so need to know
         result.cartProducts[idx].giftFlag = msg.giftFlag;
         result.cartProducts[idx].giftMessage = msg.giftMessage;
+
+        if(msg.giftFlag === 'true'){
+          result.cartProducts[idx].totalProductPrice = (parseInt(msg.quantity)) * (individualProductPrice + 0.5);
+        } else {
+          result.cartProducts[idx].totalProductPrice = (parseInt(msg.quantity)) * (individualProductPrice);
+        }
         
         result.save(async(saveError) => {
           if(saveError){
@@ -48,6 +55,7 @@ const updateCart = (msg, callback) => {
                 productId: eachProductInCart.productId,
                 sellerEmailId: eachProductInCart.sellerEmailId,
                 quantity: eachProductInCart.quantity,
+                totalProductPrice: eachProductInCart.totalProductPrice,
                 createdAt: eachProductInCart.createdAt,
                 updatedAt: eachProductInCart.updatedAt,
                 sellerName: result.sellerName,

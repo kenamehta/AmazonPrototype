@@ -31,7 +31,8 @@ const getProducts = async (msg, callback) => {
     const newData = {
       quantity: foundCartProduct.quantity,
       giftFlag: foundCartProduct.giftFlag,
-      giftMessage: foundCartProduct.giftMessage
+      giftMessage: foundCartProduct.giftMessage,
+      totalProductPrice: foundCartProduct.totalProductPrice
     }
     // _doc contains product info.
     cartProductsArr[i] = Object.assign({},cartProductsArr[i]._doc,newData);
