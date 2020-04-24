@@ -18,22 +18,19 @@ class CartAndSaved extends Component {
   render() {
     return (
       <div>
-        <div className="col-9">
-          <CartProducts
-            cartProductsArr={this.props.cartProductsArr}
-            cartCnt={this.props.cartCnt}
-            deleteCartProduct={this.props.deleteCartProduct}
-            moveCartToSaved={this.props.moveCartToSaved}
-            updateCart={this.props.updateCart}
-          />
-          <SavedProducts
-            savedProductsArr={this.props.savedProductsArr}
-            savedCnt={this.props.savedCnt}
-            deleteSavedProduct={this.props.deleteSavedProduct}
-            moveSavedToCart={this.props.moveSavedToCart}
-          />
-        </div>
-        <div className="col-3 checkout-box-style" />
+        <CartProducts
+          cartProductsArr={this.props.cartProductsArr}
+          cartCnt={this.props.cartCnt}
+          deleteCartProduct={this.props.deleteCartProduct}
+          moveCartToSaved={this.props.moveCartToSaved}
+          updateCart={this.props.updateCart}
+        />
+        <SavedProducts
+          savedProductsArr={this.props.savedProductsArr}
+          savedCnt={this.props.savedCnt}
+          deleteSavedProduct={this.props.deleteSavedProduct}
+          moveSavedToCart={this.props.moveSavedToCart}
+        />
       </div>
     );
   }
