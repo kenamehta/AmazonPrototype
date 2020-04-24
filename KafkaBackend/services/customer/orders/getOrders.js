@@ -7,10 +7,10 @@ let getOrders = async (msg, callback) => {
   let err = {};
   let orderid = [];
   try {
-    
     const orderproducts = await OrderProduct.findAll({
       where: {
         customer_email_id: msg.params.email,
+        cancelProduct: false
       },
       include: [
         {
@@ -18,28 +18,25 @@ let getOrders = async (msg, callback) => {
         },
       ],
     });
-    
+
     let orderwithproduct = [];
-     Promise.all(
+    Promise.all(
       orderproducts.map(async (orderproduct) => {
-        const products = await product
-          .findOne({
-            _id: orderproduct.dataValues.Product_id,
-          });
-      
-        orderproduct.dataValues.products=products;
-      
+        const products = await product.findOne({
+          _id: orderproduct.dataValues.Product_id,
+        });
+
+        orderproduct.dataValues.products = products;
+
         orderwithproduct.push(orderproduct.dataValues);
-       
+
         return products;
       })
     ).then((allData) => {
-        
-        response.data = orderwithproduct;
-        response.status = 200
+      response.data = orderwithproduct;
+      response.status = 200;
       return callback(null, response);
     });
-   
   } catch (error) {
     console.log(error);
     err.status = 500;

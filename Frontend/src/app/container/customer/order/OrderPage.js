@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import "../../../../style/Order.css";
 import OrderHeader from "./OrderHeader";
 import { connect } from "react-redux";
-import { getOrders,cancelOrderProduct } from "../../../../action/customerprofileaction/customerOrderAction";
+import { getOrders,cancelOrderProducts } from "../../../../action/customerprofileaction/customerOrderAction";
 const _ = require("underscore");
 class OrderPage extends Component {
   state = {
     modifiedorderarray: [],
     value:'',
+    cancelmsg:''
   };
   componentWillReceiveProps(nextProps) {
   console.log(nextProps)
@@ -19,8 +20,13 @@ class OrderPage extends Component {
       for(var k in this.state.modifiedorderarray){
         console.log(this.state.modifiedorderarray[k])
       }
+
      
     });
+
+    if(nextProps.cancelmsg){
+      this.setState({cancelmsg:nextProps.cancelmsg})
+    }
     
   }
 
@@ -31,7 +37,11 @@ class OrderPage extends Component {
   cancelOrderProducts = (e) =>{
     e.preventDefault();
     console.log("in here")
-    this.props.cancelOrderProducts(this.state.cancelOrderProduct)
+    console.log(this.state.cancelOrderProduct._id)
+    let payload={
+      _id:this.state.cancelOrderProduct._id
+    }
+    this.props.cancelOrderProducts(payload)
 
   }
 
@@ -190,15 +200,15 @@ for(let k in this.state.modifiedorderarray)
                 className='close image-edit-avatar'
                 onClick={(e) => {
                   this.setState({ modalShow: "none" });
-                  this.setState({ addSuccessMsg: "" });
+                  this.setState({ cancelmsg: "" });
                   this.setState({ editcard: "" });
                   this.setState({value:''})
                 }}
               >
                 &times;
               </span>
-              {this.state.addSuccessMsg ? (
-                <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
+              {this.state.cancelmsg ? (
+                <p style={{ color: "green" }}>{this.state.cancelmsg}</p>
               ) : (
                 ""
               )}
@@ -290,12 +300,13 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     orders: state.customerOrderReducer.orders,
+    cancelmsg:state.customerOrderReducer.cancelmsg
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     getOrders: () => dispatch(getOrders()),
-    cancelOrderProduct:(payload)=> dispatch(cancelOrderProduct(payload))
+    cancelOrderProducts:(payload)=> dispatch(cancelOrderProducts(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);

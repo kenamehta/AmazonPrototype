@@ -37,14 +37,14 @@ export const getOrders = () => {
   };
 };
 
-export const cancelOrderProduct = (payload) => {
+export const cancelOrderProducts = (payload) => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   return (dispatch) => {
     //make a get request to fetch customer profile
     axios
       .post(
         configPath.api_host +
-          `/customer/orders/cancel/${localStorage.getItem("emailId")}`,payload
+          `/customer/orders/cancel/product/${localStorage.getItem("emailId")}`,payload
       )
       .then((response) => {
         console.log("Status Code : ", response.status);
