@@ -81,7 +81,7 @@ export const getAllProducts = (data) => {
   };
 };
 
-export const addComment = (data) => {
+export const addComment = (data) => async(dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   try{
     const res = await axios.post(
