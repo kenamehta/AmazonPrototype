@@ -3,7 +3,10 @@ import {
   DELETESAVEDPRODUCTS,
   MOVESAVEDTOCART,
   DELETECARTPRODUCT,
-  MOVECARTTOSAVED
+  MOVECARTTOSAVED,
+  ADDTOCART,
+  ADDTOSAVEFORLATER,
+  UPDATECART
 } from "../action/customer/savedAndCartProducts/actionTypes";
 
 const initialState = { savedCnt: 0, cartCnt: 0 };
@@ -31,6 +34,21 @@ export default function(state = initialState, action) {
         ...action.payload
       };
     case MOVECARTTOSAVED:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case ADDTOCART:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case ADDTOSAVEFORLATER:
+      return {
+        ...state,
+        ...action.payload
+      }
+    case UPDATECART:
       return {
         ...state,
         ...action.payload

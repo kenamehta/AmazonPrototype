@@ -1,16 +1,16 @@
-import { ADDTOCART } from "./actionTypes";
+import { UPDATECART } from "./actionTypes";
 import configPath from "../../../configApp";
 import axios from "axios";
 
-const addToCartDispatcher = payload => {
+const updateCartDispatcher = payload => {
   return {
-    type: ADDTOCART,
+    type: UPDATECART,
     payload
   };
 };
 
-export const addToCart = payload => {
-  console.log("addToCart action");
+export const updateCart = payload => {
+  console.log("updateCart action");
   return dispatch => {
     axios.defaults.headers.common.authorization = localStorage.getItem(
       "IDToken"
@@ -18,17 +18,13 @@ export const addToCart = payload => {
     axios
       .post(
         configPath.api_host +
-          `/customer/cartProducts/addToCart`,
+          `/customer/cartProducts/updateProductInCart`,
         payload
       )
       .then(response => {
         console.log("Status Code : ", response.status);
-        if (response.status === 200 || response.status === 201) {
-          if(response.status === 200) {
-            window.alert('Successfully Added to Cart');
-          } else {
-            window.alert('Added to Cart but quantity limited to 10 only!');
-          } 
+        if (response.status === 200) {
+          //window.alert('Successfully Updated Cart');
           console.log(response.data);
           // Since we are not maintaining uniqueness property in the backend.
           const uniqueCartProductsArray = []
@@ -40,7 +36,7 @@ export const addToCart = payload => {
             }
           }
 
-          dispatch(addToCartDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:uniqueCartProductsArray.length}));
+          dispatch(updateCartDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:uniqueCartProductsArray.length}));
         }
       })
       .catch(error => {

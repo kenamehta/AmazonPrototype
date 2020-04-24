@@ -19,11 +19,12 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// id is the productId
 router.delete("/cart/:id", (req, res) => {
   console.log("Inside delete of /customer/cartProducts/cart/:id");
-  req.body.cartProductId = req.params.id;
+  req.body.productId = req.params.id;
   console.log(req.body);
-
+  
   req.body.route = "deleteCartProduct";
   kafka.make_request("savedAndCartProductService", req.body, function(
     err,
@@ -99,7 +100,7 @@ router.post("/moveFromCartToSaveForLater", (req, res) => {
     "Inside post of /customer/cartProducts/moveFromCartToSaveForLater"
   );
   console.log(req.body);
-
+  
   req.body.route = "moveCartToSaved";
   kafka.make_request("savedAndCartProductService", req.body, function(
     err,

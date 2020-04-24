@@ -15,6 +15,7 @@ import ProductPage from "./products/productPage/ProductPage";
 import OrderPage from "./customer/order/OrderPage";
 
 import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
+import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 
 class bodyCont extends React.Component {
   render() {
@@ -33,14 +34,15 @@ class bodyCont extends React.Component {
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
         <Route path="/productPage/:id" component={ProductPage} />
         <Route path="/cart" component={CartAndSaved} />
+        <Route path="/checkout" component={SelectAddressAndPayment} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    getType: state.getType,
+    getType: state.getType
   };
 };
 

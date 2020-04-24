@@ -25,7 +25,14 @@ let moveSavedToCart = async (msg, callback) => {
         }
         if (idx !== -1) {
           console.log(result.cartProducts);
-          result.cartProducts.push(result.savedProducts[idx]);
+
+          // checking if product already present then no moving to cart but removing from saved.
+          // NOT increasing the quantity of product in cart too, if already present in cart
+          const alreadyPresentIndex = result.cartProducts.findIndex((element)=>element.productId === msg.productId);
+          if(alreadyPresentIndex === -1){
+            result.cartProducts.push(result.savedProducts[idx]);
+          }
+          
           result.savedProducts.splice(idx, 1);
 
           if (result.savedProducts) {
@@ -42,6 +49,21 @@ let moveSavedToCart = async (msg, callback) => {
             _id: { $in: savedIds }
           });
           const cartProductsArr = await product.find({ _id: { $in: cartIds } });
+
+          // The entire for loop is created by Sarthak to get cart Product information along with product info
+          // getting cart products info like quantity, giftflag, giftmessage. 
+          for(let i=0; i<cartProductsArr.length; i++) {
+            const foundCartProduct = result.cartProducts.find((item) => item.productId == cartProductsArr[i]._id);
+            //console.log(foundCartProduct);
+            const newData = {
+              quantity: foundCartProduct.quantity,
+              giftFlag: foundCartProduct.giftFlag,
+              giftMessage: foundCartProduct.giftMessage
+            }
+            // _doc contains product info.
+            cartProductsArr[i] = Object.assign({},cartProductsArr[i]._doc,newData);
+          }
+          
           result
             .save()
             .then(() => {
