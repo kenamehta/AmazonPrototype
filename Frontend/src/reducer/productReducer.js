@@ -14,7 +14,7 @@ const initialState = {
     pages: 0,
     total: 0,
   },
-  productSearch: { search: "", category: "All" },
+  productSearch: { search: "", category: "" },
 };
 
 export default function (state = initialState, action) {
@@ -34,13 +34,15 @@ export default function (state = initialState, action) {
       };
 
     case ALLPRODUCTS:
-      console.log(state);
       return { ...state, allProducts: payload };
 
     case PRODUCT_SEARCH:
       return {
         ...state,
-        productSearch: { search: payload.search, category: payload.category },
+        productSearch: {
+          search: payload.search,
+          category: payload.category,
+        },
       };
 
     default:

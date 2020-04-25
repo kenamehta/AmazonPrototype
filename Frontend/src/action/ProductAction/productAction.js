@@ -19,7 +19,7 @@ const getAllProductsDispatcher = (payload) => {
 export const getProduct = (productId) => async (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
 
-  console.log("CALINGGG");
+  console.log("CALINGGG in getProduct in productAction.js");
   try {
     const res = await axios.get(
       configPath.api_host + `/product/customer/list/${productId}`
@@ -84,9 +84,30 @@ export const getAllProducts = (data) => {
 export const updateProductSearch = (search, category) => {
   return {
     type: PRODUCT_SEARCH,
-    newState: {
+    payload: {
       search: search,
       category: category,
     },
   };
+};
+
+export const addComment = (data) => async (dispatch) => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
+  try {
+    const res = await axios.post(
+      configPath.api_host + `product/customer/addComment`,
+      data
+    );
+
+    if (res.status === 200) {
+      console.log(res.data);
+      dispatch(getProductDispatcher(res.data));
+    } else {
+      window.alert(res.data);
+    }
+  } catch (error) {
+    window.alert("Error in addComment action in productActions.js");
+    console.log("Error in addComment action in productActions.js");
+    console.log(error);
+  }
 };

@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Row, Pagination } from "react-bootstrap";
+import "./ProductsList.css";
+import { Card, Row, Pagination, Col } from "react-bootstrap";
 import StarRatings from "react-star-ratings";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -17,6 +18,7 @@ class List extends React.Component {
     for (let number = 1; number <= this.props.product.pages; number++) {
       items.push(
         <Pagination.Item
+          className='pagination'
           key={number}
           active={number === active}
           id={number}
@@ -69,69 +71,95 @@ class List extends React.Component {
           dec = "0";
         }
         return (
-          <Card
-            key={_id}
-            style={{
-              width: "18rem",
-              border: "0",
-              borderBottom: "1px solid rgba(0,0,0,.125)",
-            }}
-          >
-            <div style={{ height: "200px", width: "150px", margin: "auto" }}>
-              <span class='helper'></span>
+          <Col xl={2} lg={3} md={4} sm={5} xs={12} className='line'>
+            <Card key={_id} style={{ border: "none" }} className='class-style'>
+              <div style={{ height: "200px", width: "150px", margin: "auto" }}>
+                <span class='helper'></span>
 
-              <Card.Img
-                variant='top'
-                src={photos[0]}
-                style={{ width: "150px", verticalAlign: "middle" }}
-              />
-            </div>
-            <Card.Body>
-              <Card.Text
-                className='margin-auto-custom'
-                style={{ color: "#000", fontSize: "14px", fontWeight: 700 }}
-              >
-                {sellerName}
-              </Card.Text>
-              <Card.Title
-                className='margin-auto-custom'
-                style={{ color: "#000", fontSize: "18px", fontWeight: 500 }}
-              >
-                <Link to={`/productPage/${_id}`}>{productName}</Link>
-              </Card.Title>
-              <div className='margin-auto-custom'>
-                <StarRatings
-                  rating={averageRating}
-                  starDimension='20px'
-                  starSpacing='2px'
-                  starRatedColor='#FBB730'
-                  starEmptyColor='#FFF'
+                <Card.Img
+                  variant='top'
+                  src={photos[0]}
+                  style={{ width: "150px", verticalAlign: "middle" }}
                 />
               </div>
-              <Card.Text
-                className='margin-auto-custom'
-                style={{ color: "#000" }}
-              >
-                <span className='a-price'>
-                  <span aria-hidden='true'>
-                    <span className='a-price-symbol'>$</span>
-                    <span className='a-price-whole'>
-                      {num}
-                      <span className='a-price-decimal'>.</span>
-                    </span>
-                    <span className='a-price-fraction'>{dec}</span>
-                  </span>
-                </span>
-              </Card.Text>
-            </Card.Body>
-          </Card>
+              <Card.Body>
+                <Card.Title style={{ marginBottom: "0" }}>
+                  <Link className='product-title' to={`/productPage/${_id}`}>
+                    {productName}
+                  </Link>
+                </Card.Title>
+                <Card.Text
+                  style={{
+                    marginBottom: "0",
+                    fontSize: "14px",
+                    fontWeight: "200",
+                  }}
+                  // className="margin-auto-custom"
+                >
+                  {sellerName}
+                </Card.Text>
+                <div
+                // className="margin-auto-custom"
+                >
+                  <StarRatings
+                    rating={averageRating}
+                    starDimension='16px'
+                    starSpacing='2px'
+                    starRatedColor='#FBB730'
+                    starEmptyColor='#FFF'
+                  />
+                </div>
+                <Card.Text
+                  // className="margin-auto-custom"
+                  style={{ color: "#000" }}
+                >
+                  <p className='price-style'>
+                    <p aria-hidden='true'>
+                      <p
+                        className='a-price-symbol'
+                        style={{
+                          verticalAlign: "super",
+                          top: "-.5em",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          display: "inline",
+                        }}
+                      >
+                        $
+                      </p>
+                      <p
+                        className='a-price-whole'
+                        style={{ fontSize: "21px", display: "inline" }}
+                      >
+                        {num}
+                      </p>
+                      <p
+                        className='a-price-fraction'
+                        style={{
+                          verticalAlign: "super",
+                          top: "-.5em",
+                          fontSize: "12px",
+                          fontWeight: "400",
+                          display: "inline",
+                        }}
+                      >
+                        {dec}
+                      </p>
+                    </p>
+                  </p>
+                </Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
         );
       }
     );
     return (
       <div style={{ marginTop: "10px" }}>
-        <Row>
+        <Row xl={12} lg={12} md={12} sm={12} xs={12}>
           {cards}
+        </Row>
+        <Row lg={12} md={12} sm={12} xs={12} className='line2'>
           <Pagination style={{ margin: "10px auto" }}>{items}</Pagination>
         </Row>
       </div>

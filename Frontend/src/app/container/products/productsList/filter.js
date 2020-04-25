@@ -1,5 +1,6 @@
 import React from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, InputGroup, Button } from "react-bootstrap";
+import { FaSearch } from "react-icons/fa";
 import StarRatings from "react-star-ratings";
 import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
@@ -19,10 +20,21 @@ class Filter extends React.Component {
   render() {
     return (
       <Container style={{ borderRight: "1px solid #CCC" }}>
-        <Form.Group controlId='formSearchSeller' style={{ marginTop: "10px" }}>
-          <Form.Label style={{ fontWeight: 800 }}>Search By Seller</Form.Label>
+        <Form.Label style={{ fontWeight: 800, marginTop: "10px" }}>
+          Search By Seller
+        </Form.Label>
+        <InputGroup>
           <Form.Control type='text' placeholder='Seller Name' />
-        </Form.Group>
+          <InputGroup.Append>
+            <Button
+              variant='outline-secondary'
+              className='sprite'
+              onClick={this.onSearch}
+            >
+              <FaSearch />
+            </Button>
+          </InputGroup.Append>
+        </InputGroup>
         <div>
           <p style={{ fontWeight: 800, margin: "10px 0 5px 0" }}>
             Avg. Customer Review

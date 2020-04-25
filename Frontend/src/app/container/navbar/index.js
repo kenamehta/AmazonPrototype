@@ -17,7 +17,10 @@ import { FaSearch } from "react-icons/fa";
 //import { UserType, Logout } from "../../actions";
 import { logOut } from "./../../../action/UserAction/logoutAction";
 import { getCategory } from "./../../../action/ProductAction/productCategory";
-import { getAllProducts } from "../../../action/ProductAction/productAction";
+import {
+  getAllProducts,
+  updateProductSearch,
+} from "../../../action/ProductAction/productAction";
 
 class Topnav extends React.Component {
   constructor(props) {
@@ -71,6 +74,7 @@ class Topnav extends React.Component {
       minRating: "",
       maxRating: "",
     };
+    this.props.updateProductSearch(this.state.search, this.state.category);
     this.props.getAllProducts(data);
     this.setState({
       reDirect: "redirect",
@@ -324,6 +328,8 @@ const mapDispatchToProps = (dispatch) => {
     logOut: (payload) => dispatch(logOut(payload)),
     getCategory: () => dispatch(getCategory()),
     getAllProducts: (payload) => dispatch(getAllProducts(payload)),
+    updateProductSearch: (search, category) =>
+      dispatch(updateProductSearch(search, category)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);
