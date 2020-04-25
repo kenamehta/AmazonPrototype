@@ -7,25 +7,8 @@ import { Link } from "react-router-dom";
 import { getAllProducts } from "../../../../action/ProductAction/productAction";
 
 class List extends React.Component {
-  componentWillMount() {
-    const data = {
-      page: 1,
-      orderOn: "",
-      order: "",
-      sellerEmailId: "",
-      sellerName: "",
-      productName: "",
-      productCategory: "",
-      minPrice: "",
-      maxPrice: "",
-      minRating: "",
-      maxRating: "",
-    };
-    this.props.dispatch(getAllProducts(data));
-  }
-
   render() {
-    console.log('this.props.product in list.js in productsList');
+    console.log("this.props.product in list.js in productsList");
     console.log(this.props.product);
 
     const active = this.props.product.page;
@@ -33,29 +16,34 @@ class List extends React.Component {
 
     for (let number = 1; number <= this.props.product.pages; number++) {
       items.push(
-        <Pagination.Item key={number} active={number === active} id={number} onClick={(e)=>{
-          // console.log(e.target);
-          // console.log(e.target.id);
-          // console.log(typeof e.target.id);
-          // console.log(typeof active);
-          let newPageNumber = parseInt(e.target.id);
-          if(newPageNumber !== active){
-            const data = {
-              page: newPageNumber,
-              orderOn: "",
-              order: "",
-              sellerEmailId: "",
-              sellerName: "",
-              productName: "",
-              productCategory: "",
-              minPrice: "",
-              maxPrice: "",
-              minRating: "",
-              maxRating: "",
-            };
-            this.props.dispatch(getAllProducts(data));
-          }
-        }}>
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          id={number}
+          onClick={(e) => {
+            // console.log(e.target);
+            // console.log(e.target.id);
+            // console.log(typeof e.target.id);
+            // console.log(typeof active);
+            let newPageNumber = parseInt(e.target.id);
+            if (newPageNumber !== active) {
+              const data = {
+                page: newPageNumber,
+                orderOn: "",
+                order: "",
+                sellerEmailId: "",
+                sellerName: "",
+                productName: "",
+                productCategory: "",
+                minPrice: "",
+                maxPrice: "",
+                minRating: "",
+                maxRating: "",
+              };
+              this.props.dispatch(getAllProducts(data));
+            }
+          }}
+        >
           {number}
         </Pagination.Item>
       );
@@ -73,7 +61,7 @@ class List extends React.Component {
         let num = "";
         let dec = "";
         productPrice = productPrice.toString();
-        if(productPrice.indexOf(".") !== -1){
+        if (productPrice.indexOf(".") !== -1) {
           num = productPrice.split(".")[0];
           dec = productPrice.split(".")[1];
         } else {

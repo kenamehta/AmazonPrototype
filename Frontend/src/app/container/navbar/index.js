@@ -11,61 +11,93 @@ import {
   Dropdown,
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  //Redirect,
-  Link,
-} from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaSearch } from "react-icons/fa";
 //import { UserType, Logout } from "../../actions";
 import { logOut } from "./../../../action/UserAction/logoutAction";
 import { getCategory } from "./../../../action/ProductAction/productCategory";
+import { getAllProducts } from "../../../action/ProductAction/productAction";
 
 class Topnav extends React.Component {
   constructor(props) {
     super(props);
     this.handleLogout = this.handleLogout.bind(this);
+    this.state = {
+      category: "All",
+      search: "",
+      reDirect: "",
+    };
   }
 
   handleLogout = () => {
     this.props.logOut({ loginFlag: false });
-    /*localStorage.removeItem('user_id');
-    localStorage.removeItem('username');
-    localStorage.removeItem('type');
-    localStorage.removeItem('token');*/
-    //this.props.dispatch(Logout());
   };
+
+  componentWillMount() {
+    const data = {
+      page: 1,
+      orderOn: "",
+      order: "",
+      sellerEmailId: "",
+      sellerName: "",
+      productName: "",
+      productCategory: "",
+      minPrice: "",
+      maxPrice: "",
+      minRating: "",
+      maxRating: "",
+    };
+    this.props.getAllProducts(data);
+  }
 
   componentDidMount() {
     this.props.getCategory();
   }
+
+  onSearch = () => {
+    let cat = "";
+    if (this.state.category !== "All") cat = this.state.category;
+    const data = {
+      page: 1,
+      orderOn: "",
+      order: "",
+      sellerEmailId: "",
+      sellerName: "",
+      productName: this.state.search,
+      productCategory: cat,
+      minPrice: "",
+      maxPrice: "",
+      minRating: "",
+      maxRating: "",
+    };
+    this.props.getAllProducts(data);
+    this.setState({
+      reDirect: "redirect",
+    });
+  };
 
   render() {
     var xnav;
     let redirectVar = null;
     let Applications = null,
       eventsApp = null;
-    //if (localStorage.getItem("token")) {
-    //redirectVar = <Redirect to='/home' />;
-    /* For profile pcture
-      if (this.props.getType == 'Student') {
-        if (this.props.studentProfile.profile_pic) {
-          prof_pic =
-            `http://localhost:8000/prof_pic/` +
-            this.props.studentProfile.profile_pic +
-            `.jpeg`;
-        }
-      } else {
-        if (this.props.compProfile.prof_pic) {
-          prof_pic =
-            `http://localhost:8000/prof_pic/` +
-            this.props.compProfile.prof_pic +
-            `.png`;
-        }
-      }*/
-    //} else redirectVar = <Redirect to="/login" />;
+    if (this.state.reDirect === "redirect")
+      redirectVar = <Redirect to='/productlist' />;
     let cat = this.props.category.map(({ _id, name }) => {
-      return <Dropdown.Item key={_id}>{name}</Dropdown.Item>;
+      return (
+        <Dropdown.Item
+          key={_id}
+          value={name}
+          onClick={(e) => {
+            this.setState({
+              category: name,
+            });
+          }}
+        >
+          {name}
+        </Dropdown.Item>
+      );
     });
     if (localStorage.getItem("loginFlag")) {
       if (localStorage.getItem("category") === "seller") {
@@ -76,9 +108,9 @@ class Topnav extends React.Component {
                 <DropdownButton
                   as={InputGroup.Prepend}
                   variant='outline-secondary'
-                  title='All'
                   id='input-group-dropdown-1'
                   className='grey bradius025'
+                  title={this.state.category}
                 >
                   {cat}
                 </DropdownButton>
@@ -89,9 +121,17 @@ class Topnav extends React.Component {
                   aria-label='Search'
                   aria-describedby='basic-addon2'
                   style={{ borderRadius: 0 + "px" }}
+                  value={this.state.search}
+                  onChange={(e) => {
+                    this.setState({ search: e.target.value });
+                  }}
                 />
                 <InputGroup.Append>
-                  <Button variant='outline-secondary' className='sprite'>
+                  <Button
+                    variant='outline-secondary'
+                    className='sprite'
+                    onClick={this.onSearch}
+                  >
                     <FaSearch />
                   </Button>
                 </InputGroup.Append>
@@ -144,9 +184,9 @@ class Topnav extends React.Component {
                 <DropdownButton
                   as={InputGroup.Prepend}
                   variant='outline-secondary'
-                  title='All'
                   id='input-group-dropdown-1'
                   className='grey bradius025'
+                  title={this.state.category}
                 >
                   {cat}
                 </DropdownButton>
@@ -157,9 +197,17 @@ class Topnav extends React.Component {
                   aria-label='Search'
                   aria-describedby='basic-addon2'
                   style={{ borderRadius: 0 + "px" }}
+                  value={this.state.search}
+                  onChange={(e) => {
+                    this.setState({ search: e.target.value });
+                  }}
                 />
                 <InputGroup.Append>
-                  <Button variant='outline-secondary' className='sprite'>
+                  <Button
+                    variant='outline-secondary'
+                    className='sprite'
+                    onClick={this.onSearch}
+                  >
                     <FaSearch />
                   </Button>
                 </InputGroup.Append>
@@ -188,7 +236,7 @@ class Topnav extends React.Component {
                 className='custom-nav'
                 title={
                   <div style={{ display: "inline-block", color: "#FFF" }}>
-                    Hello Pranav Baby
+                    Hello Pranav
                     <br />
                     <span>
                       <b>Accounts &amp; List</b>
@@ -268,12 +316,14 @@ const mapStateToProps = function (state) {
     getType: state.getType,
     getCompProfile: state.getCompProfile,
     category: state.categoryReducer.category,
+    productSearch: state.productSearch,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     logOut: (payload) => dispatch(logOut(payload)),
     getCategory: () => dispatch(getCategory()),
+    getAllProducts: (payload) => dispatch(getAllProducts(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

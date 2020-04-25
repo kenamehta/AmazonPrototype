@@ -1,4 +1,4 @@
-import { GET_PRODUCT, ALLPRODUCTS } from "./actionType";
+import { GET_PRODUCT, ALLPRODUCTS, PRODUCT_SEARCH } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
@@ -78,5 +78,15 @@ export const getAllProducts = (data) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+};
+
+export const updateProductSearch = (search, category) => {
+  return {
+    type: PRODUCT_SEARCH,
+    newState: {
+      search: search,
+      category: category,
+    },
   };
 };
