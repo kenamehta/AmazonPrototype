@@ -77,6 +77,16 @@ class List extends React.Component {
         averageRating,
         photos,
       }) => {
+        let titleLink = "";
+        if (this.props.sellerProfile)
+          titleLink = <h1 className="product-title2">{productName}</h1>;
+        else
+          titleLink = (
+            <Link className="product-title" to={`/productPage/${_id}`}>
+              {productName}
+            </Link>
+          );
+
         let num = "";
         let dec = "";
         productPrice = productPrice.toString();
@@ -101,9 +111,7 @@ class List extends React.Component {
               </div>
               <Card.Body>
                 <Card.Title style={{ marginBottom: "0" }}>
-                  <Link className="product-title" to={`/productPage/${_id}`}>
-                    {productName}
-                  </Link>
+                  {titleLink}
                 </Card.Title>
                 <Card.Text
                   style={{
