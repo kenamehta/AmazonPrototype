@@ -1,4 +1,4 @@
-import { GETORDERS, CANCELORDERPRODUCT } from "./actionType";
+import { GETORDERS, CANCELORDERPRODUCT,GETCANCELORDER } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
@@ -14,6 +14,15 @@ const cancelOrderProductDispatcher = (payload) => {
     payload,
   };
 };
+
+const getCancelOrderDispatcher = (payload) => {
+  console.log(payload)
+  return {
+    type: GETCANCELORDER,
+    payload,
+  };
+};
+
 
 export const getOrders = () => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
@@ -58,3 +67,29 @@ export const cancelOrderProducts = (payload) => {
       });
   };
 };
+
+
+export const getCancelOrders = (payload) => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
+  return (dispatch) => {
+    //make a get request to fetch cancelled orders
+    axios
+      .post(
+        configPath.api_host +
+          `/customer/orders/list/cancel/product/${localStorage.getItem("emailId")}`,payload
+      )
+      .then((response) => {
+        console.log("Status Code : ", response.status);
+        if (response.status === 200) {
+          console.log(response.data);
+          dispatch(getCancelOrderDispatcher(response.data));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+
