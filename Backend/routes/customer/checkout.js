@@ -5,7 +5,7 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //get payment details of a customer
-router.get("/:id", (req, res) => {
+router.post("/:id", (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;

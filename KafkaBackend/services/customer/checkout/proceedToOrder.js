@@ -4,7 +4,7 @@ const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
 const uuid = require("uuid/v4");
 
-let getPayment = async (msg, callback) => {
+let proceedToOrder = async (msg, callback) => {
   console.log(msg);
   customer
     .findOne({
@@ -17,16 +17,34 @@ let getPayment = async (msg, callback) => {
           order_id: uuid(),
           CustomerEmailID: result.emailId,
           Address_details: msg.Address_details,
-          cardNumber: msg.cardNumber,
-          cardName: msg.cardName,
-          cvv: msg.cvv,
-          validThru: msg.expirationDate,
+          cardNumber: msg.payment.cardNumber,
+          cardName: msg.payment.cardName,
+          cvv: msg.payment.cvv,
+          validThru: msg.payment.expirationDate,
           cancelOrder: 0
+        }).then(result1 => {
+          if (result) {
+            const cartProducts = result.cartProducts;
+            cartProducts.map(async product => {
+              const addOrder = await OrderProduct.create({
+                _id: uuid(),
+                Product_id: product.productId,
+                quantity: product.quantity,
+                TotalPrice: product.totalProductPrice,
+                seller_email_id: product.sellerEmailId,
+                customer_email_id: result.emailId,
+                giftFlag: product.giftFlag === "false" ? 0 : 1,
+                giftmsg: product.giftMessage,
+                order_id: result1.order_id,
+                Status: "Order placed"
+              });
+            });
+            return callback(null, {
+              status: 200,
+              res: "Successfully added data"
+            });
+          }
         });
-        if (addOrder) {
-          const cartProducts = result.cartProducts;
-          
-        }
       } else {
         return callback(
           {
@@ -42,4 +60,4 @@ let getPayment = async (msg, callback) => {
     });
 };
 
-exports.getPayment = getPayment;
+exports.proceedToOrder = proceedToOrder;
