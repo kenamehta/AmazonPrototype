@@ -118,7 +118,7 @@ for(let k in this.state.modifiedorderarray)
             </div>
             <div className="upload-photo">
               <span className="mr-2">
-                {i.productName}
+                {i.products.productName}
               </span>
               <div>
                 <span
@@ -234,7 +234,7 @@ for(let k in this.state.modifiedorderarray)
             
             <div className="">
               <span className="">
-                {this.state.cancelOrderProduct.productName}
+                {this.state.cancelOrderProduct.products.productName}
               </span>
               <div className=''>
                 <span

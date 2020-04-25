@@ -49,7 +49,7 @@ router.get("/:email", (req, res) => {
     console.log(req.body);
   
     //   req.body.path = "";
-    //   req.body.emailId = req.params.emailId;
+    //   req.body.emailId = req.params.emailId; 
     let msg = req.body;
     msg.route = "getCancelOrders";
     msg.params = req.params;

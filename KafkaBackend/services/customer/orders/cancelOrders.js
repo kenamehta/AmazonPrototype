@@ -10,7 +10,7 @@ let cancelOrders = async (msg, callback) => {
       {cancelProduct:true},
       {
         where: {
-            _id:msg._id
+            _id:msg._id 
         },
       }
     ).then(async resp=>{

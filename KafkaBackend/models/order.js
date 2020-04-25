@@ -39,6 +39,14 @@ const order = {
   cancelOrder: {
     type: Dt.BOOLEAN,
     defaultValue: false
+  },
+  totalOrderPrice:{
+    type: Dt.STRING(50)
+    
+  },
+  totalOrderQuantity:{
+    type: Dt.STRING(50)
+    
   }
 };
 const Order = connection.define("Order", order);
