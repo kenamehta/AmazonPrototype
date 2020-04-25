@@ -6,6 +6,8 @@ const uuid = require("uuid/v4");
 
 let proceedToOrder = async (msg, callback) => {
   console.log(msg);
+  var totalPrice = 0,
+    totalQuantity = 0;
   customer
     .findOne({
       _id: msg.params.id
@@ -14,8 +16,7 @@ let proceedToOrder = async (msg, callback) => {
       console.log(result);
       if (result) {
         const cartProducts = result.cartProducts;
-        let totalPrice = 0,
-          totalQuantity = 0;
+
         cartProducts.map(product => {
           totalQuantity += product.quantity;
           totalPrice += product.totalProductPrice;
