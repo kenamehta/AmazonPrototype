@@ -65,4 +65,28 @@ router.get("/:email", (req, res) => {
     });
   });
   
+  
+  router.post("/list/open/product/:email", (req, res) => {
+    console.log("Inside get of customer/order/cancel/product/:emailId");
+    console.log(req.body);
+  
+    //   req.body.path = "";
+    //   req.body.emailId = req.params.emailId; 
+    let msg = req.body;
+    msg.route = "getCancelOrders";
+    msg.params = req.params;
+  
+    kafka.make_request("orderAddressService", msg, function (err, results) {
+      console.log(results);
+      console.log("while returning");
+      if (results.status != 200) {
+        res.status(500).send("System Error");
+      } else {
+        res.status(results.status).send(results);
+      }
+    });
+  });
+  
+
+
   module.exports = router;
