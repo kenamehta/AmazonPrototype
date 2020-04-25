@@ -13,7 +13,7 @@ import RegisterSeller from "./Register/RegisterSeller";
 import ProductList from "./products/productsList";
 import ProductPage from "./products/productPage/ProductPage";
 import OrderPage from "./customer/order/OrderPage";
-
+import CancelledOrder from "./customer/order/CancelledOrder";
 import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
 import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 
@@ -35,6 +35,8 @@ class bodyCont extends React.Component {
         <Route path="/productPage/:id" component={ProductPage} />
         <Route path="/cart" component={CartAndSaved} />
         <Route path="/checkout" component={SelectAddressAndPayment} />
+        <Route path="/customer/order/cancelledorders" component={CancelledOrder} />
+
       </div>
     );
   }
