@@ -8,7 +8,8 @@ class OrderPage extends Component {
   state = {
     modifiedorderarray: [],
     value:'',
-    cancelmsg:''
+    cancelmsg:'',
+    navarr:["black","#0066c0","#0066c0"]
   };
   componentWillReceiveProps(nextProps) {
   console.log(nextProps)
@@ -175,7 +176,7 @@ for(let k in this.state.modifiedorderarray)
     return (
       <div>
         <div className="container">
-          <OrderHeader></OrderHeader>
+          <OrderHeader navarr={this.state.navarr}></OrderHeader>
           <b>{this.props.orders.length} orders placed in past</b>
          
           {true?(
