@@ -89,11 +89,12 @@ class SelectAddress extends Component {
                   className="a-button a-button-primary-proceed a-spacing-medium"
                   onClick={() => {
                     this.props.proceedToOrder({
-                      Address_details: `${this.state.street},${this.state
-                        .state},${this.state.country},${this.state.zipcode}`,
+                      Address_details: `${this.state.streetSel},${this.state
+                        .stateSel},${this.state.countrySel},${this.state
+                        .zipcodeSel}`,
                       payment: {
                         cardName: this.props.cardName,
-                        cardNumber: this.props.cardName,
+                        cardNumber: this.props.cardNumber,
                         expirationDate: this.props.expirationDate,
                         cvv: this.props.cvv
                       }
