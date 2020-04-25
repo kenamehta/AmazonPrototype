@@ -85,7 +85,21 @@ class SelectAddress extends Component {
             <div className="m-3">
               {this.props.paymentSelectModal === "block" ? this.state
                 .modalSelected === "block" ? (
-                <div className="a-button a-button-primary-proceed a-spacing-medium">
+                <div
+                  className="a-button a-button-primary-proceed a-spacing-medium"
+                  onClick={() => {
+                    this.props.proceedToOrder({
+                      Address_details: `${this.state.street},${this.state
+                        .state},${this.state.country},${this.state.zipcode}`,
+                      payment: {
+                        cardName: this.props.cardName,
+                        cardNumber: this.props.cardName,
+                        expirationDate: this.props.expirationDate,
+                        cvv: this.props.cvv
+                      }
+                    });
+                  }}
+                >
                   <span className="proceed-order-text-style">
                     Proceed to Order
                   </span>
@@ -651,7 +665,11 @@ class SelectAddress extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    paymentSelectModal: state.customerProfileReducer.paymentSelectModal
+    paymentSelectModal: state.customerProfileReducer.paymentSelectModal,
+    cardName: state.customerProfileReducer.cardName,
+    cardNumber: state.customerProfileReducer.cardNumber,
+    expirationDate: state.customerProfileReducer.expirationDate,
+    cvv: state.customerProfileReducer.cvv
   };
 };
 export default connect(mapStateToProps)(SelectAddress);
