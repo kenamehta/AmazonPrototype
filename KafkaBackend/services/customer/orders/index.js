@@ -1,6 +1,8 @@
 "use strict";
 const { getOrders } = require("./getOrders");
 const { cancelOrders } = require("./cancelOrders");
+const { getCancelOrders } = require("./getCancelOrder");
+
 
 let handle_request = (msg, callback) => {
   console.log(msg.route);
@@ -10,6 +12,9 @@ let handle_request = (msg, callback) => {
       break;
     case "getOrders":
       getOrders(msg, callback);
+      break;
+      case "getCancelOrders":
+      getCancelOrders(msg, callback);
       break;
   }
 };
