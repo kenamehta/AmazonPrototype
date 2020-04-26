@@ -36,6 +36,26 @@ class ProductPage extends React.Component {
     let price = 0;
     let description = "";
     let reviews = "";
+    let add = "";
+    if (localStorage.getItem("category") == "seller") {
+      add = (
+        <Button
+          className='bluebeacon addProductButton'
+          style={{
+            float: "right",
+            borderRadius: 15 + "px",
+            borderColor: "#232f3e",
+            right: 40,
+            bottom: 30,
+            position: "fixed",
+            fontSize: 20 + "px",
+          }}
+          onClick={this.handleShow}
+        >
+          Add Product
+        </Button>
+      );
+    }
     if (this.props.product) {
       title = this.props.product.productName;
       seller = this.props.product.sellerName;
@@ -49,10 +69,9 @@ class ProductPage extends React.Component {
         <ProductReview key={comment._id} comment={comment}></ProductReview>
       ));
     }
-    console.log('Render called inside productpage.js')
+    console.log("Render called inside productpage.js");
 
     return (
-      
       <Container fluid style={{ minWidth: "500px" }}>
         <Row sm={1} xs={1} md={1} style={{ marginTop: "3%" }}>
           <ProductPictures></ProductPictures>
@@ -60,7 +79,10 @@ class ProductPage extends React.Component {
             <h1 className='title'>{title}</h1>
             <h1 className='seller'>
               by{" "}
-              <Link className='sellerLink' to={`/seller/profile/${sellerEmailId}`}>
+              <Link
+                className='sellerLink'
+                to={`/seller/profile/${sellerEmailId}`}
+              >
                 {seller}
               </Link>
             </h1>
@@ -86,7 +108,7 @@ class ProductPage extends React.Component {
             <h1 className='seller'>{description}</h1>
           </Col>
           <Col lg={2} xl={2}>
-            <ProductBuySection ></ProductBuySection>
+            <ProductBuySection></ProductBuySection>
           </Col>
         </Row>
         <hr></hr>
@@ -120,6 +142,7 @@ class ProductPage extends React.Component {
             {reviews}
           </Col>
         </Row>
+        {add}
       </Container>
     );
   }
@@ -128,6 +151,5 @@ class ProductPage extends React.Component {
 const mapStateToProps = (state) => ({
   product: state.product.product,
 });
-
 
 export default connect(mapStateToProps)(ProductPage);

@@ -6,11 +6,12 @@ import Container from "react-bootstrap/Container";
 import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import AddProduct from "./AddProduct";
+import List from "../../products/productsList/list";
 
 class SellerProfile extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in seller profile');
+    console.log("props in seller profile");
     console.log(props);
 
     this.state = { setShow: false };
@@ -23,8 +24,8 @@ class SellerProfile extends React.Component {
 
   render() {
     let sellerVisitingOwnProfile = true;
-    console.log('this.props.location.pathname');
-    console.log(this.props.location.pathname)
+    console.log("this.props.location.pathname");
+    console.log(this.props.location.pathname);
     /*
       const a = '/seller/profile/2013uec1108@mnit.ac.in';
       let ab = a.split("/");
@@ -38,7 +39,7 @@ class SellerProfile extends React.Component {
     if (localStorage.getItem("category") === "seller") {
       add = (
         <Button
-          className='bluebeacon addProductButton'
+          className="bluebeacon addProductButton"
           style={{
             float: "right",
             borderRadius: 15 + "px",
@@ -55,11 +56,16 @@ class SellerProfile extends React.Component {
       );
     }
     return (
-      <Container>
+      <Container fluid style={{ padding: "0 10%" }}>
         <BasicProfile
           sellerVisitingOwnProfile={sellerVisitingOwnProfile}
-          sellerEmailId={this.props.location.pathname.split("/").length > 3 ? this.props.location.pathname.split("/")[3]:''}
+          sellerEmailId={
+            this.props.location.pathname.split("/").length > 3
+              ? this.props.location.pathname.split("/")[3]
+              : ""
+          }
         />
+        <List sellerProfile={true} />
         {add}
         <AddProduct show={this.state.setShow} handleClose={this.handleClose} />
       </Container>

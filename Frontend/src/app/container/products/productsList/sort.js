@@ -11,15 +11,17 @@ class Sort extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.setState({
+      search: this.props.search.search,
+    });
+  }
+
   componentDidUpdate(prevProps) {
-    console.log(prevProps);
-    if (this.props.search) {
-      if (prevProps.search.search !== this.props.search.search) {
-        console.log(this.props.search.search);
-        this.setState({
-          search: this.props.search.search,
-        });
-      }
+    if (prevProps.search.search !== this.props.search.search) {
+      this.setState({
+        search: this.props.search.search,
+      });
     }
   }
 

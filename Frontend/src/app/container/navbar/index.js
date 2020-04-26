@@ -37,7 +37,7 @@ class Topnav extends React.Component {
     this.props.logOut({ loginFlag: false });
   };
 
-  componentWillMount() {
+  dispatchAction = () => {
     const data = {
       page: 1,
       orderOn: "",
@@ -52,10 +52,24 @@ class Topnav extends React.Component {
       maxRating: "",
     };
     this.props.getAllProducts(data);
+  };
+
+  componentWillMount() {
+    this.dispatchAction();
   }
 
   componentDidMount() {
     this.props.getCategory();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(this.props);
+    if (prevProps.productSearch !== this.props.productSearch) {
+      console.log("Hello");
+      this.setState({
+        reDirect: "",
+      });
+    }
   }
 
   onSearch = () => {
@@ -74,11 +88,13 @@ class Topnav extends React.Component {
       minRating: "",
       maxRating: "",
     };
-    this.props.updateProductSearch(this.state.search, this.state.category);
     this.props.getAllProducts(data);
-    this.setState({
-      reDirect: "redirect",
-    });
+    this.props.updateProductSearch(this.state.search, this.state.category);
+    var path = window.location.pathname.split("/")[1];
+    if (path !== "productlist" && path !== "productlisting")
+      this.setState({
+        reDirect: "redirect",
+      });
   };
 
   render() {
@@ -86,8 +102,9 @@ class Topnav extends React.Component {
     let redirectVar = null;
     let Applications = null,
       eventsApp = null;
-    if (this.state.reDirect === "redirect")
+    if (this.state.reDirect === "redirect") {
       redirectVar = <Redirect to='/productlist' />;
+    }
     let cat = this.props.category.map(({ _id, name }) => {
       return (
         <Dropdown.Item
@@ -143,9 +160,10 @@ class Topnav extends React.Component {
             </Form>
             <Nav>
               <Link
-                to='/productlist'
+                to='/productlisting'
                 style={{ float: "left" }}
                 className='custom-nav'
+                onClick={this.dispatchAction}
               >
                 My
                 <br />
@@ -166,7 +184,9 @@ class Topnav extends React.Component {
                 style={{ display: "Block", color: "#FFF" }}
               >
                 <NavDropdown.Item>
-                  <Link to='/seller/profile'>Profile</Link>
+                  <Link to='/seller/profile' onClick={this.dispatchAction}>
+                    Profile
+                  </Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
@@ -219,9 +239,10 @@ class Topnav extends React.Component {
             </Form>
             <Nav>
               <Link
-                to='/productlist'
+                to='/productlisting'
                 style={{ float: "left" }}
                 className='custom-nav'
+                onClick={this.dispatchAction}
               >
                 All
                 <br />
@@ -320,7 +341,7 @@ const mapStateToProps = function (state) {
     getType: state.getType,
     getCompProfile: state.getCompProfile,
     category: state.categoryReducer.category,
-    productSearch: state.productSearch,
+    productSearch: state.product.productSearch,
   };
 };
 const mapDispatchToProps = (dispatch) => {
