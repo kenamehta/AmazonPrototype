@@ -11,6 +11,7 @@ const sellerProfile = require("./routes/Seller/profile");
 const sellerProduct = require("./routes/Seller/product");
 const customerProduct = require("./routes/customer/product");
 const adminProduct = require("./routes/admin/product");
+const healthCheck = require("./routes/HealthCheck/healthCheck");
 
 const app = express();
 // setting view engine
@@ -40,6 +41,7 @@ app.use(express.static("./ProfilePictures/Seller"));
 app.use(express.static("./ProfilePictures/Customer"));
 app.use(express.static("./ProfilePictures/Common"));
 
+app.use("/healthCheck",healthCheck);
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
