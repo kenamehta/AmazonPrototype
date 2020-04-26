@@ -46,7 +46,7 @@ class ProductReview extends React.Component {
       "November",
       "December",
     ];
-    date = `${months[month - 1]} ${day}, ${year}`;
+    date = `${months[month - 1]} ${day - 1}, ${year}`;
 
     return (
       <Container style={{ margin: "0 0 25px 0" }}>

@@ -81,22 +81,23 @@ export const getAllProducts = (data) => {
   };
 };
 
-export const addComment = (data) => async(dispatch) => {
+export const addComment = (data) => async (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
-  try{
+  try {
     const res = await axios.post(
-      configPath.api_host + `product/customer/addComment`, data
+      configPath.api_host + `/product/customer/addComment`,
+      data
     );
 
     if (res.status === 200) {
       console.log(res.data);
       dispatch(getProductDispatcher(res.data));
     } else {
-      window.alert(res.data);
+      // window.alert(res.data);
     }
   } catch (error) {
-    window.alert('Error in addComment action in productActions.js');
-    console.log('Error in addComment action in productActions.js');
+    // window.alert('Error in addComment action in productActions.js');
+    console.log("Error in addComment action in productActions.js");
     console.log(error);
   }
-}
+};
