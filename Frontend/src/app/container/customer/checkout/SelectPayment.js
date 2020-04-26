@@ -153,7 +153,11 @@ class SelectPayment extends Component {
                           createdAtSel: card.createdAt
                         });
                         this.props.sendModalStatus({
-                          paymentSelectModal: "block"
+                          paymentSelectModal: "block",
+                          cardName: card.cardName,
+                          cardNumber: card.cardNumber,
+                          expirationDate: card.expirationDate,
+                          cvv: card.cvv
                         });
                       }}
                     >

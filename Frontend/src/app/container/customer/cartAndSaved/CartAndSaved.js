@@ -9,6 +9,7 @@ import { moveCartToSaved } from "./../../../../action/customer/savedAndCartProdu
 import { updateCart } from "./../../../../action/customer/savedAndCartProducts/updateCart";
 import { connect } from "react-redux";
 import "./cartAndSaved.css";
+import { Row } from "react-bootstrap";
 
 class CartAndSaved extends Component {
   state = {};
@@ -18,19 +19,21 @@ class CartAndSaved extends Component {
   render() {
     return (
       <div>
-        <CartProducts
-          cartProductsArr={this.props.cartProductsArr}
-          cartCnt={this.props.cartCnt}
-          deleteCartProduct={this.props.deleteCartProduct}
-          moveCartToSaved={this.props.moveCartToSaved}
-          updateCart = {this.props.updateCart}
-        />
-        <SavedProducts
-          savedProductsArr={this.props.savedProductsArr}
-          savedCnt={this.props.savedCnt}
-          deleteSavedProduct={this.props.deleteSavedProduct}
-          moveSavedToCart={this.props.moveSavedToCart}
-        />
+          <CartProducts
+            cartProductsArr={this.props.cartProductsArr}
+            cartCnt={this.props.cartCnt}
+            deleteCartProduct={this.props.deleteCartProduct}
+            moveCartToSaved={this.props.moveCartToSaved}
+            updateCart={this.props.updateCart}
+          />
+        <Row>
+          <SavedProducts
+            savedProductsArr={this.props.savedProductsArr}
+            savedCnt={this.props.savedCnt}
+            deleteSavedProduct={this.props.deleteSavedProduct}
+            moveSavedToCart={this.props.moveSavedToCart}
+          />
+        </Row>
       </div>
     );
   }

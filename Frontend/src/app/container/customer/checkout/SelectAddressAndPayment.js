@@ -10,6 +10,7 @@ import {
   deletePayment,
   getPayment
 } from "../../../../action/customerprofileaction/profileAction";
+import { proceedToOrder } from "../../../../action/customer/checkout/proceedToOrder";
 import "./SelectAddressAndPayment.css";
 
 class SelectAddressAndPayment extends Component {
@@ -23,6 +24,7 @@ class SelectAddressAndPayment extends Component {
           getAddress={this.props.getAddress}
           addAddress={this.props.addAddress}
           deleteAddress={this.props.deleteAddress}
+          proceedToOrder={this.props.proceedToOrder}
         />
         <SelectPayment
           paymentArr={this.props.paymentArr}
@@ -51,7 +53,8 @@ const mapDispatchToProps = dispatch => {
     deletePayment: payload => dispatch(deletePayment(payload)),
     getAddress: () => dispatch(getAddress()),
     addAddress: payload => dispatch(addAddress(payload)),
-    deleteAddress: payload => dispatch(deleteAddress(payload))
+    deleteAddress: payload => dispatch(deleteAddress(payload)),
+    proceedToOrder: payload => dispatch(proceedToOrder(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(

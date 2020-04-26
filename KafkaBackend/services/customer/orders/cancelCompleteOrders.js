@@ -2,18 +2,48 @@
 const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
 
-let cancelOrders = async (msg, callback) => {
+let cancelCompleteOrders = async (msg, callback) => {
   let response = {};
   let err = {};
   try {
-    const cancelproduct = OrderProduct.update(
-      {cancelProduct:true},
+  console.log(msg._id)
+    const ifProductDelivered= await OrderProduct.findAll({
+        where:{
+            order_id: msg._id ,
+            Status:'Delivered'
+        }
+    }
+    )
+    if(ifProductDelivered.length>0){
+        console.log(ifProductDelivered)
+        console.log("Product is already delivered")
+        err.status = 500;
+    err.data = {
+      errors: {
+        body: "Product is already delivered",
+      },
+    };
+    return callback(err, null)
+    }
+  
+  
+    const cancelproduct = Order.update(
+      {cancelOrder:true},
       {
         where: {
-            _id:msg._id 
+            order_id:msg._id 
         },
       }
     ).then(async resp=>{
+        const cancelproduct = OrderProduct.update(
+            {cancelProduct:true},
+            {
+              where: {
+                  order_id:msg._id 
+              },
+            }
+          ).then(async resp=>{
+    
    
     const orderproducts = await OrderProduct.findAll({
         where: {
@@ -46,6 +76,7 @@ let cancelOrders = async (msg, callback) => {
         return callback(null, response);
       });
     })
+})
   } catch (error) {
     console.log(error);
     err.status = 500;
@@ -58,4 +89,4 @@ let cancelOrders = async (msg, callback) => {
   }
 };
 
-exports.cancelOrders = cancelOrders;
+exports.cancelCompleteOrders = cancelCompleteOrders;
