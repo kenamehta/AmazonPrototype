@@ -20,11 +20,13 @@ const adminProductService = require("./services/admin/Product");
 const customerPaymentService = require("./services/customer/payment");
 //customer Address service
 const customerAddressService = require("./services/customer/address");
-const orderAddressService= require("./services/customer/orders")
+const orderAddressService = require("./services/customer/orders");
 //saved and Cart Product Service
 const savedAndCartProductService = require("./services/customer/savedAndCartProducts");
 //checkout Service
 const checkoutService = require("./services/customer/checkout");
+//tracking Service
+const trackingService = require("./services/tracking");
 
 //connect to MongoDB
 const Mongoose = require("mongoose");
@@ -94,4 +96,4 @@ handleTopicRequest("customerAddressService", customerAddressService);
 handleTopicRequest("orderAddressService", orderAddressService);
 handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
 handleTopicRequest("checkoutService", checkoutService);
- 
+handleTopicRequest("trackingService", trackingService);

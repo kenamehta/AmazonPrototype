@@ -53,7 +53,7 @@ let proceedToOrder = async (msg, callback) => {
                   giftFlag: product.giftFlag === "false" ? 0 : 1,
                   giftmsg: product.giftMessage,
                   order_id: result1.order_id,
-                  Status: "Order placed"
+                  Status: 1
                 });
               })
             ).then(() => {
