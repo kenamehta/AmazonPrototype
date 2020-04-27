@@ -30,6 +30,7 @@ import {
   getCategory,
   deleteCategory,
   setModalFalse,
+  setAddModalFalse,
 } from "./../../../../action/admin/categoryActions.js";
 
 class CategoryList extends Component {
@@ -45,6 +46,9 @@ class CategoryList extends Component {
 
   onSubmit = (e) => {
     this.props.setModalFalse();
+  };
+  onSubmit1 = (e) => {
+    this.props.setAddModalFalse();
   };
   render() {
     console.log(this.props);
@@ -98,6 +102,26 @@ class CategoryList extends Component {
             </Form>
           </ModalBody>
         </Modal>
+        <Modal isOpen={this.props.category.addModal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}> Error</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.onSubmit1}>
+              <FormGroup>
+                <Label for="category">This category exists</Label>
+
+                <Button
+                  color="dark"
+                  style={{ marginTop: "2rem" }}
+                  block
+                  onClick={this.onSubmit1}
+                >
+                  {" "}
+                  OK
+                </Button>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
       </Container>
     );
   }
@@ -107,6 +131,7 @@ CategoryList.propTypes = {
   getCategory: PropTypes.func.isRequired,
   deleteCategory: PropTypes.func.isRequired,
   setModalFalse: PropTypes.func.isRequired,
+  setAddModalFalse: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired,
 };
 
@@ -117,5 +142,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getCategory,
   setModalFalse,
+  setAddModalFalse,
   deleteCategory,
 })(CategoryList);
