@@ -14,7 +14,7 @@ class ProductBuySection extends React.Component {
     //console.log('props in productbuysections.js');
     //console.log(props);
     this.state = {
-      productId: "5e9c885e24f691220b95ef2a",
+      //productId: this.props.product._id,
       qty: 1,
     };
   }
@@ -29,7 +29,8 @@ class ProductBuySection extends React.Component {
       id:localStorage.getItem("ID"),
       productId:this.props.product._id,
       sellerEmailId:this.props.product.sellerEmailId,
-      quantity:this.state.qty
+      quantity:this.state.qty,
+      individualProductPrice: this.props.product.productPrice
     }
     
     this.props.dispatch(addToCart(data));

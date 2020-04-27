@@ -116,7 +116,7 @@ b:hover {
   font-size: 12px;
 }
 
-..a-price {
+.a-price {
   text-decoration: none;
   position: relative;
   line-height: normal;

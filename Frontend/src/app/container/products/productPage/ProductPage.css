@@ -217,3 +217,8 @@ h3 .sub-subtitle {
   border-color: #ca7c1b #be751a #a56616 !important;
   outline: none !important;
 }
+
+.labels {
+  display: block;
+  font-weight: 600;
+}

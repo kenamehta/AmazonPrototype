@@ -12,6 +12,7 @@ const sellerProduct = require("./routes/Seller/product");
 const customerProduct = require("./routes/customer/product");
 const adminProduct = require("./routes/admin/product");
 const adminSeller = require("./routes/admin/seller");
+const healthCheck = require("./routes/HealthCheck/healthCheck");
 
 const app = express();
 // setting view engine
@@ -41,6 +42,7 @@ app.use(express.static("./ProfilePictures/Seller"));
 app.use(express.static("./ProfilePictures/Customer"));
 app.use(express.static("./ProfilePictures/Common"));
 
+app.use("/healthCheck", healthCheck);
 app.use("/login", require("./routes/account/login"));
 app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
@@ -52,10 +54,13 @@ app.use("/product/admin", adminProduct);
 app.use("/admin/seller", adminSeller);
 app.use("/customer/payment", require("./routes/customer/payment"));
 app.use("/customer/address", require("./routes/customer/address"));
+app.use("/customer/orders", require("./routes/customer/order/order"));
+
 app.use(
   "/customer/cartProducts",
   require("./routes/customer/savedAndCartProducts")
 );
+app.use("/customer/checkout", require("./routes/customer/checkout"));
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

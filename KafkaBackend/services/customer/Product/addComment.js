@@ -1,6 +1,8 @@
 "use strict";
 const product = require("../../../models/product.model");
 const comment = require("../../../models/comment.model");
+const customer = require("../../../models/customer.model");
+
 const mongoose = require("mongoose");
 
 const addComment = (msg, callback) => {
@@ -46,14 +48,59 @@ const addComment = (msg, callback) => {
 
               foundProduct.averageRating = newRating;
 
-              foundProduct.save((productSaveError) => {
+              foundProduct.save(async(productSaveError) => {
                 if(productSaveError){
                   res.status = 500;
                   res.message = 'Database Error';
                   callback(null, res);
                 } else {
+
+                  //console.log(allComments);
+                  let allCommentsWithUserDetails = []
+                  for(const eachComment of results){
+                    try{
+                      const result = await customer.findById(msg.customerId);
+                      allCommentsWithUserDetails.push({
+                        _id:eachComment._id,
+                        customerId:msg.customerId,
+                        productId:eachComment.productId,
+                        title:eachComment.title,
+                        comment:eachComment.comment,
+                        rating:eachComment.rating,
+                        createdAt:eachComment.createdAt,
+                        updatedAt:eachComment.updatedAt,
+                        customerEmailId:result.emailId,
+                        customerName:result.name,
+                        customerProfilePictureUrl:result.profilePictureUrl,
+                      });
+                    } catch(error){
+                      res.status = 500;
+                      res.message = 'Database Error';
+                      callback(null, res);
+                    }
+                  }
+
+                  console.log('All comments with user details');
+                  console.log(allCommentsWithUserDetails);
+
+                  const obj = {
+                    validFlag:foundProduct.validFlag,
+                    averageRating:foundProduct.averageRating,
+                    photos:foundProduct.photos,
+                    _id:foundProduct._id,
+                    sellerId:foundProduct.sellerId,
+                    sellerEmailId:foundProduct.sellerEmailId,
+                    sellerName:foundProduct.sellerName,
+                    productName:foundProduct.productName,
+                    productCategory:foundProduct.productCategory,
+                    productPrice:foundProduct.productPrice,
+                    productDescription:foundProduct.productDescription,
+                    clickCount:foundProduct.clickCount,
+                    comments: allCommentsWithUserDetails
+                  }
+
                   res.status = 200;
-                  res.message = foundProduct
+                  res.message = obj
                   callback(null, res);
                 }
               });

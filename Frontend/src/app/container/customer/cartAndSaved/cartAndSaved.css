@@ -13,6 +13,13 @@
   line-height: 1.5 !important;
   color: #007600 !important;
 }
+.checkbox_style {
+  color: #111;
+  vertical-align: top !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  margin-top: 4px !important;
+}
 .name_style:hover {
   color: darkgoldenrod;
 }
@@ -37,4 +44,13 @@
 .action_style {
   font-size: 12px !important;
   line-height: 1.5 !important;
+}
+.checkout-box-style {
+  border: 2px solid black;
+  border-radius: 4px;
+  position: relative;
+  padding: 14px 18px;
+}
+.unable-proceed-style:hover {
+  cursor: not-allowed !important;
 }

@@ -23,10 +23,13 @@ export const addToCart = payload => {
       )
       .then(response => {
         console.log("Status Code : ", response.status);
-        if (response.status === 200) {
-          window.alert('Successfully Added to Cart');
+        if (response.status === 200 || response.status === 201) {
+          if(response.status === 200) {
+            window.alert('Successfully Added to Cart');
+          } else {
+            window.alert('Added to Cart but quantity limited to 10 only!');
+          } 
           console.log(response.data);
-
           // Since we are not maintaining uniqueness property in the backend.
           const uniqueCartProductsArray = []
           let map = new Map();

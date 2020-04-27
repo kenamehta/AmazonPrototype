@@ -6,8 +6,10 @@ import { deleteSavedProduct } from "./../../../../action/customer/savedAndCartPr
 import { moveSavedToCart } from "./../../../../action/customer/savedAndCartProducts/moveSavedToCart";
 import { deleteCartProduct } from "./../../../../action/customer/savedAndCartProducts/deleteCartProduct";
 import { moveCartToSaved } from "./../../../../action/customer/savedAndCartProducts/moveCartToSaved";
+import { updateCart } from "./../../../../action/customer/savedAndCartProducts/updateCart";
 import { connect } from "react-redux";
 import "./cartAndSaved.css";
+import { Row } from "react-bootstrap";
 
 class CartAndSaved extends Component {
   state = {};
@@ -17,18 +19,21 @@ class CartAndSaved extends Component {
   render() {
     return (
       <div>
-        <CartProducts
-          cartProductsArr={this.props.cartProductsArr}
-          cartCnt={this.props.cartCnt}
-          deleteCartProduct={this.props.deleteCartProduct}
-          moveCartToSaved={this.props.moveCartToSaved}
-        />
-        <SavedProducts
-          savedProductsArr={this.props.savedProductsArr}
-          savedCnt={this.props.savedCnt}
-          deleteSavedProduct={this.props.deleteSavedProduct}
-          moveSavedToCart={this.props.moveSavedToCart}
-        />
+          <CartProducts
+            cartProductsArr={this.props.cartProductsArr}
+            cartCnt={this.props.cartCnt}
+            deleteCartProduct={this.props.deleteCartProduct}
+            moveCartToSaved={this.props.moveCartToSaved}
+            updateCart={this.props.updateCart}
+          />
+        <Row>
+          <SavedProducts
+            savedProductsArr={this.props.savedProductsArr}
+            savedCnt={this.props.savedCnt}
+            deleteSavedProduct={this.props.deleteSavedProduct}
+            moveSavedToCart={this.props.moveSavedToCart}
+          />
+        </Row>
       </div>
     );
   }
@@ -49,7 +54,8 @@ const mapDispatchToProps = dispatch => {
     deleteSavedProduct: payload => dispatch(deleteSavedProduct(payload)),
     moveSavedToCart: payload => dispatch(moveSavedToCart(payload)),
     deleteCartProduct: payload => dispatch(deleteCartProduct(payload)),
-    moveCartToSaved: payload => dispatch(moveCartToSaved(payload))
+    moveCartToSaved: payload => dispatch(moveCartToSaved(payload)),
+    updateCart: payload => dispatch(updateCart(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CartAndSaved);

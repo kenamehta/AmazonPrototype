@@ -16,14 +16,18 @@ const moveCartToSaved = (msg, callback) => {
     if(result){
       let idx = -1;
       for (let i = 0; i < result.cartProducts.length; i++) {
-        
         if (result.cartProducts[i].productId === msg.productId) {
           idx = i;
           break;
         }
       }
       if (idx !== -1) {
-        result.savedProducts.push({productId:result.cartProducts[idx].productId,sellerEmailId:result.cartProducts[idx].sellerEmailId});
+
+        const alreadyPresentIndex = result.savedProducts.findIndex((element)=>element.productId === msg.productId);
+        if(alreadyPresentIndex === -1){
+          result.savedProducts.push({productId:result.cartProducts[idx].productId,sellerEmailId:result.cartProducts[idx].sellerEmailId});
+        }
+        
         result.cartProducts.splice(idx, 1);
         result
           .save()
@@ -36,7 +40,8 @@ const moveCartToSaved = (msg, callback) => {
                 customerCartWithProductDetails.push({
                   giftFlag: eachProductInCart.giftFlag,
                   giftMessage: eachProductInCart.giftMessage,
-                  _id: eachProductInCart._id,
+                  //_id: eachProductInCart._id,
+                  _id:result._id,
                   productId: eachProductInCart.productId,
                   sellerEmailId: eachProductInCart.sellerEmailId,
                   quantity: eachProductInCart.quantity,
@@ -63,7 +68,8 @@ const moveCartToSaved = (msg, callback) => {
               try {
                 const result = await product.findById(eachProductInSaveForLater.productId);
                 customerSavedForLaterWithProductDetails.push({
-                  _id: eachProductInSaveForLater._id,
+                  //_id: eachProductInSaveForLater._id,
+                  _id:result._id,
                   productId: eachProductInSaveForLater.productId,
                   sellerEmailId: eachProductInSaveForLater.sellerEmailId,
                   createdAt: eachProductInSaveForLater.createdAt,

@@ -257,7 +257,7 @@ class Topnav extends React.Component {
                 <b>Products</b>
               </Link>
               <Link
-                to="/events"
+                to="/customer/orders"
                 style={{ float: "left" }}
                 className="custom-nav"
               >
@@ -269,7 +269,7 @@ class Topnav extends React.Component {
                 className="custom-nav"
                 title={
                   <div style={{ display: "inline-block", color: "#FFF" }}>
-                    Hello Pranav Baby
+                    Hello Pranav
                     <br />
                     <span>
                       <b>Accounts &amp; List</b>

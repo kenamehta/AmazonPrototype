@@ -12,9 +12,13 @@ import RegisterCustomer from "./Register/RegisterCustomer";
 import RegisterSeller from "./Register/RegisterSeller";
 import ProductList from "./products/productsList";
 import ProductPage from "./products/productPage/ProductPage";
+import OrderPage from "./customer/order/OrderPage";
+import CancelledOrder from "./customer/order/CancelledOrder";
+import OpenOrder from "./customer/order/OpenOrder";
 import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
 import CategoryList from "./admin/category/CategoryList";
 import SellerList from "./admin/seller/SellerList";
+import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 
 class bodyCont extends React.Component {
   render() {
@@ -27,12 +31,19 @@ class bodyCont extends React.Component {
         <Route path="/registerCustomer" component={RegisterCustomer} />
         <Route path="/registerSeller" component={RegisterSeller} />
         <Route path="/addressandpayment" component={PaymentAndAddressPage} />
-        <Route path="/productlist" component={ProductList} />
+        <Route path="/customer/orders" component={OrderPage} />
         <Route path="/admin/inventory" component={CategoryList} />
         <Route path="/admin/seller" component={SellerList} />
+        <Route path="/productlist" component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
         <Route path="/productPage/:id" component={ProductPage} />
         <Route path="/cart" component={CartAndSaved} />
+        <Route path="/checkout" component={SelectAddressAndPayment} />
+        <Route
+          path="/customer/order/cancelledorders"
+          component={CancelledOrder}
+        />
+        <Route path="/customer/order/openorders" component={OpenOrder} />
       </div>
     );
   }

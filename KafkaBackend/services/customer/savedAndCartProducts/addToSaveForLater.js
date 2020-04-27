@@ -19,7 +19,12 @@ const addToSaveForLater = (msg, callback) => {
         productId: msg.productId,
         sellerEmailId: msg.sellerEmailId
       }
-      result.savedProducts.push(productDetails);
+
+      const alreadyPresentIndex = result.savedProducts.findIndex((element)=>element.productId === msg.productId);
+      if(alreadyPresentIndex === -1){
+        result.savedProducts.push(productDetails);
+      }
+
       result.save(async(saveError) => {
         if(saveError){
           res.status = 500;

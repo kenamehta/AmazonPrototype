@@ -17,6 +17,7 @@ const cartProduct = new Schema(
     productId: { type: String, required: true },
     sellerEmailId: { type: String, required: true },
     quantity: { type: Number, required: true, default: 1 },
+    totalProductPrice: {type: Number, required: true},
     giftFlag: { type: String, default: "false" },
     giftMessage: { type: String, default: "" }
   },

@@ -7,11 +7,12 @@ import {
   GETADDRESS,
   GETPAYMENT,
   ADDORUPDATEPAYMENT,
-  DELETEPAYMENT,
+  DELETEPAYMENT
 } from "../action/customerprofileaction/actionType";
 
 const initialState = {
   profiledata: {},
+  paymentSelectModal: "none",
 };
 
 export default function (state = initialState, action) {
@@ -86,6 +87,11 @@ export default function (state = initialState, action) {
         paymentArr: action.payload,
       };
 
+    case "SENDMODALSTATUS":
+      return {
+        ...state,
+        ...action.payload,
+      };
     default:
       return state;
   }
