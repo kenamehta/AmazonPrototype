@@ -1,5 +1,5 @@
 import {
-   GETORDERS,CANCELORDERPRODUCT
+   GETORDERS,CANCELORDERPRODUCT,GETCANCELORDER
   } from "../action/customerprofileaction/actionType";
   
   const initialState = {
@@ -19,7 +19,11 @@ import {
           orders: action.payload.data,
           cancelmsg:'Order Cancelled Succesfully'
         }
-      
+        case GETCANCELORDER:
+          return {
+            ...state,
+            cancelorders: action.payload.data
+          };
       default:
         return state;
     }

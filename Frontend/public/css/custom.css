@@ -121,3 +121,11 @@ b:hover {
   position: relative;
   line-height: normal;
 }
+
+.star-active {
+  font-weight: 700;
+}
+
+.star-inactive {
+  font-weight: 400;
+}

@@ -20,6 +20,8 @@ import { getCategory } from "./../../../action/ProductAction/productCategory";
 import {
   getAllProducts,
   updateProductSearch,
+  updateProductSort,
+  updateProductFilter,
 } from "../../../action/ProductAction/productAction";
 
 class Topnav extends React.Component {
@@ -40,25 +42,25 @@ class Topnav extends React.Component {
   dispatchAction = () => {
     const data = {
       page: 1,
-      orderOn: "",
-      order: "",
+      orderOn: "rating",
+      order: "desc",
       sellerEmailId: "",
       sellerName: "",
       productName: "",
       productCategory: "",
-      minPrice: "",
-      maxPrice: "",
+      minPrice: 0,
+      maxPrice: 2500,
       minRating: "",
       maxRating: "",
     };
     this.props.getAllProducts(data);
+    this.props.updateProductSearch("", "");
+    this.props.updateProductSort("rating", "desc");
+    this.props.updateProductFilter("", 0, 2500);
   };
 
-  componentWillMount() {
-    this.dispatchAction();
-  }
-
   componentDidMount() {
+    this.dispatchAction();
     this.props.getCategory();
   }
 
@@ -70,6 +72,13 @@ class Topnav extends React.Component {
         reDirect: "",
       });
     }
+    if (prevProps.productSearch.seller !== this.props.productSearch.seller) {
+      console.log("Hello");
+      this.setState({
+        category: "All",
+        search: "",
+      });
+    }
   }
 
   onSearch = () => {
@@ -77,19 +86,21 @@ class Topnav extends React.Component {
     if (this.state.category !== "All") cat = this.state.category;
     const data = {
       page: 1,
-      orderOn: "",
-      order: "",
+      orderOn: "rating",
+      order: "desc",
       sellerEmailId: "",
       sellerName: "",
       productName: this.state.search,
       productCategory: cat,
-      minPrice: "",
-      maxPrice: "",
+      minPrice: 0,
+      maxPrice: 2500,
       minRating: "",
       maxRating: "",
     };
     this.props.getAllProducts(data);
-    this.props.updateProductSearch(this.state.search, this.state.category);
+    this.props.updateProductSearch(this.state.search, this.state.category, "");
+    this.props.updateProductSort("rating", "desc");
+    this.props.updateProductFilter("", 0, 2500);
     var path = window.location.pathname.split("/")[1];
     if (path !== "productlist" && path !== "productlisting")
       this.setState({
@@ -351,6 +362,10 @@ const mapDispatchToProps = (dispatch) => {
     getAllProducts: (payload) => dispatch(getAllProducts(payload)),
     updateProductSearch: (search, category) =>
       dispatch(updateProductSearch(search, category)),
+    updateProductFilter: (rating, minPrice, maxPrice) =>
+      dispatch(updateProductSort(rating, minPrice, maxPrice)),
+    updateProductSort: (sortType, sort) =>
+      dispatch(updateProductSort(sortType, sort)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

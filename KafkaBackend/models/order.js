@@ -15,34 +15,39 @@ const order = {
     type: Dt.STRING(50),
     allowNull: false
   },
-    
-  Address_details : {
+
+  Address_details: {
     type: Dt.STRING(50),
     allowNull: false
   },
-  cardNumber : {
+  cardNumber: {
     type: Dt.STRING(50),
     allowNull: false
   },
-  cardName:{
+  cardName: {
     type: Dt.STRING(50),
     allowNull: false
   },
-  cvv:{
+  cvv: {
     type: Dt.STRING(50),
     allowNull: false
   },
-  validThru:{
+  validThru: {
     type: Dt.STRING(50),
     allowNull: false
   },
-  cancelOrder : {
+  cancelOrder: {
     type: Dt.BOOLEAN,
-    defaultValue:false
+    defaultValue: false
+  },
+  totalOrderPrice:{
+    type: Dt.STRING(50)
     
   },
-  
- 
+  totalOrderQuantity:{
+    type: Dt.STRING(50)
+    
+  }
 };
 const Order = connection.define("Order", order);
 
@@ -54,8 +59,7 @@ const orderproduct = {
     allowNull: false,
     defaultValue: Dt.UUIDV1
   },
-  Product_id :
-  {
+  Product_id: {
     type: Dt.STRING(50),
     allowNull: false
   },
@@ -63,48 +67,39 @@ const orderproduct = {
     type: Dt.DOUBLE,
     allowNull: false
   },
-  TotalPrice:{
-      type:Dt.DOUBLE,
-      allowNull:false
+  TotalPrice: {
+    type: Dt.DOUBLE,
+    allowNull: false
   },
-  Status:{
-    type:Dt.STRING(50),
-    allowNull:false
-},
-seller_email_id:{
-    type:Dt.STRING(50),
-    allowNull:false
-},
-customer_email_id:{
-    type:Dt.STRING(50),
-    allowNull:false
-},
-cancelProduct : {
+  Status: {
+    type: Dt.STRING(50),
+    allowNull: false
+  },
+  seller_email_id: {
+    type: Dt.STRING(50),
+    allowNull: false
+  },
+  customer_email_id: {
+    type: Dt.STRING(50),
+    allowNull: false
+  },
+  cancelProduct: {
     type: Dt.BOOLEAN,
-    defaultValue:false
-    
+    defaultValue: false
   },
-  giftFlag : {
+  giftFlag: {
     type: Dt.BOOLEAN,
-    defaultValue:false
-    
+    defaultValue: false
   },
-  giftmsg : {
+  giftmsg: {
     type: Dt.STRING(50)
-    
-    
-  },
-  productName:{
-    type:Dt.STRING(50),
-    allowNull:false
   }
-  
 };
 const OrderProduct = connection.define("OrderProduct", orderproduct);
 
 connection.sync();
 
-OrderProduct.belongsTo(Order,{foreignKey:'order_id'})
+OrderProduct.belongsTo(Order, { foreignKey: "order_id" });
 
 module.exports = {
   Order,
