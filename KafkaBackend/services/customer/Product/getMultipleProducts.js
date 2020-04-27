@@ -5,7 +5,7 @@ const product = require("../../../models/product.model");
 // need to assume limit is fixed
 const getMultipleProducts = (msg, callback) => {
   var res = {};
-  console.log('Inside getMultipleProducts in kafka');
+  console.log("Inside getMultipleProducts in kafka");
   console.log(msg);
 
   // if(msg.orderOn === '' && msg.order === '' && msg.sellerEmailId === '' && msg.sellerName === '' && msg.productName === '' && msg.productCategory === '' && msg.minPrice === '' && msg.maxPrice === '' && msg.minRating === '' && msg.maxRating === ''){
@@ -15,7 +15,7 @@ const getMultipleProducts = (msg, callback) => {
   //       res.status = 500;
   //       res.message = 'Redis Error';
   //       callback(null, res);
-  //     } 
+  //     }
   //     if(redisResult){
   //       console.log('Found in redis');
   //       res.status = 200;
@@ -27,14 +27,14 @@ const getMultipleProducts = (msg, callback) => {
   //         page: parseInt(msg.page),
   //         limit: parseInt(msg.limit),
   //       };
-    
+
   //       var filter = {};
-        
+
   //       console.log('Filter:');
   //       console.log(filter)
   //       console.log('options:');
   //       console.log(options);
-      
+
   //       product.paginate(filter,options,(err, results)=>{
   //         if(err){
   //           res.status = 500;
@@ -57,7 +57,7 @@ const getMultipleProducts = (msg, callback) => {
   //       res.status = 500;
   //       res.message = 'Redis Error';
   //       callback(null, res);
-  //     } 
+  //     }
   //     if(redisResult){
   //       console.log('Found in redis');
   //       res.status = 200;
@@ -69,14 +69,14 @@ const getMultipleProducts = (msg, callback) => {
   //         page: parseInt(msg.page),
   //         limit: parseInt(msg.limit),
   //       };
-    
+
   //       var filter = {sellerEmailId: msg.sellerEmailId};
-        
+
   //       console.log('Filter:');
   //       console.log(filter)
   //       console.log('options:');
   //       console.log(options);
-      
+
   //       product.paginate(filter,options,(err, results)=>{
   //         if(err){
   //           res.status = 500;
@@ -98,22 +98,22 @@ const getMultipleProducts = (msg, callback) => {
       limit: parseInt(msg.limit),
     };
   
-    if(msg.orderOn && msg.orderOn === 'rating'){
-      if(msg.order && msg.order === 'asc'){
+    if (msg.orderOn && msg.orderOn === "rating") {
+      if (msg.order && msg.order === "asc") {
         options = Object.assign(options, {
           sort: { averageRating: 1 },
         });
-      } else if(msg.order && msg.order === 'desc'){
+      } else if (msg.order && msg.order === "desc") {
         options = Object.assign(options, {
           sort: { averageRating: -1 },
         });
       }
-    } else if(msg.orderOn && msg.orderOn === 'price'){
-      if(msg.order && msg.order === 'asc'){
+    } else if (msg.orderOn && msg.orderOn === "price") {
+      if (msg.order && msg.order === "asc") {
         options = Object.assign(options, {
           sort: { productPrice: 1 },
         });
-      } else if(msg.order && msg.order === 'desc'){
+      } else if (msg.order && msg.order === "desc") {
         options = Object.assign(options, {
           sort: { productPrice: -1 },
         });
@@ -179,23 +179,23 @@ const getMultipleProducts = (msg, callback) => {
         averageRating: {$lte:parseFloat(msg.maxRating)},
       });
     }
-  
-    console.log('Filter:');
-    console.log(filter)
-    console.log('options:');
-    console.log(options);
-  
-    product.paginate(filter,options,(err, results)=>{
-      if(err){
-        res.status = 500;
-        res.message = 'Database Error';
-        callback(null, res);
-      }
-      res.status = 200;
-      res.message = results;
+
+  console.log("Filter:");
+  console.log(filter);
+  console.log("options:");
+  console.log(options);
+
+  product.paginate(filter, options, (err, results) => {
+    if (err) {
+      res.status = 500;
+      res.message = "Database Error";
       callback(null, res);
-    });
-//  }
-}
+    }
+    res.status = 200;
+    res.message = results;
+    callback(null, res);
+  });
+  //  }
+};
 
 exports.getMultipleProducts = getMultipleProducts;

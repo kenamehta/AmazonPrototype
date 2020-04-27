@@ -40,13 +40,11 @@ const order = {
     type: Dt.BOOLEAN,
     defaultValue: false
   },
-  totalOrderPrice:{
+  totalOrderPrice: {
     type: Dt.STRING(50)
-    
   },
-  totalOrderQuantity:{
+  totalOrderQuantity: {
     type: Dt.STRING(50)
-    
   }
 };
 const Order = connection.define("Order", order);
@@ -97,11 +95,20 @@ const orderproduct = {
 };
 const OrderProduct = connection.define("OrderProduct", orderproduct);
 
+//static status table
+const statusSchema = {
+  code: { type: Dt.INTEGER },
+  status: { type: Dt.STRING(100) },
+  flag: { type: Dt.STRING(1) }
+};
+const status = connection.define("status", statusSchema);
+
 connection.sync();
 
 OrderProduct.belongsTo(Order, { foreignKey: "order_id" });
 
 module.exports = {
   Order,
-  OrderProduct
+  OrderProduct,
+  status
 };

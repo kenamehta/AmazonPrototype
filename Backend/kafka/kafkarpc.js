@@ -19,7 +19,7 @@ Whenever our server is making a request, it will write to a topic (topic_name) a
 we want to write into the topic.
 */
 
-KafkaRPC.prototype.makeRequest = function(topic_name, content, callback) {
+KafkaRPC.prototype.makeRequest = function (topic_name, content, callback) {
   self = this;
   //generate a unique correlation id for this call
   /*
@@ -36,7 +36,7 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback) {
     */
   //create a timeout for what should happen if we don't get a response
   var tId = setTimeout(
-    function(corr_id) {
+    function (corr_id) {
       //if this ever gets called we didn't get a response in a
       //timely fashion
       console.log("timeout");
@@ -52,14 +52,14 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback) {
   // just an object to store callback function and timeout.
   var entry = {
     callback: callback,
-    timeout: tId //the id for the timeout so we can clear it
+    timeout: tId, //the id for the timeout so we can clear it
   };
 
   //put the entry in the hash so we can match the response later
   self.requests[correlationId] = entry;
 
   //make sure we have a response topic
-  self.setupResponseQueue(self.producer, topic_name, function() {
+  self.setupResponseQueue(self.producer, topic_name, function () {
     console.log("in response");
     //put the request on a topic
 
@@ -73,14 +73,14 @@ KafkaRPC.prototype.makeRequest = function(topic_name, content, callback) {
         messages: JSON.stringify({
           correlationId: correlationId,
           replyTo: "response_topic_amazon",
-          data: content
+          data: content,
         }),
-        partition: 0
-      }
+        partition: 0,
+      },
     ];
     console.log("in response1");
     console.log(self.producer.ready);
-    self.producer.send(payloads, function(err, data) {
+    self.producer.send(payloads, function (err, data) {
       console.log("in response2");
       if (err) console.log(err);
       console.log(data);
@@ -93,7 +93,7 @@ Here we are defining the consumer. So kafka backend would be writing to response
 will now act as a consumer and would subscribe to that topic
 */
 
-KafkaRPC.prototype.setupResponseQueue = function(producer, topic_name, next) {
+KafkaRPC.prototype.setupResponseQueue = function (producer, topic_name, next) {
   //don't mess around if we have a queue
   if (this.response_queue) return next();
 
@@ -103,7 +103,7 @@ KafkaRPC.prototype.setupResponseQueue = function(producer, topic_name, next) {
 
   //subscribe to messages
   var consumer = self.connection.getConsumer("response_topic_amazon");
-  consumer.on("message", function(message) {
+  consumer.on("message", function (message) {
     console.log("msg received");
     var data = JSON.parse(message.value);
     //get the correlationId

@@ -27,10 +27,6 @@ class CategoryModal extends Component {
     });
   };
 
-  onChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
   onSubmit = (e) => {
     const newCategory = {
       name: this.state.name,
@@ -45,7 +41,7 @@ class CategoryModal extends Component {
       <div>
         <Button
           color="dark"
-          style={{ marginBottom: "15px", marginTop: "15px" }}
+          style={{ marginBottom: "5px", marginTop: "5px" }}
           onClick={this.toggle}
         >
           {" "}
@@ -57,14 +53,14 @@ class CategoryModal extends Component {
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
-                <Label for="category">Category</Label>
-                <Input
+                <Label for="category">This category can not be deleted</Label>
+                {/* <Input
                   type="text"
                   name="name"
                   id="category"
                   placeholder="Add category"
                   onChange={this.onChange}
-                ></Input>
+                ></Input> */}
                 <Button
                   color="dark"
                   style={{ marginTop: "2rem" }}

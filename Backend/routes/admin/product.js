@@ -18,11 +18,25 @@ router.post("/addProductCategory", (req, res) => {
   });
 });
 
-router.post('/deleteProductCategory', (req, res) => {
+router.post("/deleteProductCategory", (req, res) => {
   console.log("Inside post of product/admin/deleteProductCategory");
   console.log(req.body);
 
   req.body.path = "deleteProductCategory";
+  kafka.make_request("adminProductService", req.body, function (err, results) {
+    if (err) {
+      res.status(500).send("System Error");
+    } else {
+      res.status(results.status).send(results.message);
+    }
+  });
+});
+
+router.get("/getProductCategory", (req, res) => {
+  console.log("Inside get of product/admin/getProductCategory");
+  console.log(req.body);
+
+  req.body.path = "getProductCategory";
   kafka.make_request("adminProductService", req.body, function (err, results) {
     if (err) {
       res.status(500).send("System Error");

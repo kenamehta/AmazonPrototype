@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 class SelectAddress extends Component {
   state = {
     modalShow: "none",
+    modalOrder: "none",
     modalShowEdit: "none",
     modalSelected: "none",
     displayAddress: "block",
@@ -16,7 +18,8 @@ class SelectAddress extends Component {
     phone: "",
     editaddress: "",
     editedId: "",
-    addSuccessMsg: ""
+    addSuccessMsg: "",
+    redirect: false
   };
 
   componentWillMount() {
@@ -71,8 +74,43 @@ class SelectAddress extends Component {
   };
 
   render() {
+    let redirectVar = null;
+    if (this.state.redirect) {
+      redirectVar = <Redirect to="/cart" />;
+    }
     return (
       <div>
+        {redirectVar}
+
+        {/*Modal for order status*/}
+        <div
+          className="modal modal-custom mt-5"
+          align="center"
+          style={{ display: this.state.modalOrder }}
+        >
+          <div
+            className="modal-content modal-content-custom col-5"
+            style={{ fontFamily: "Suisse" }}
+          >
+            <div className="container">
+              <span
+                className="close image-edit-avatar"
+                onClick={e => {
+                  this.setState({ redirect: true });
+                }}
+              >
+                &times;
+              </span>
+              {this.props.status === 200 ? (
+                <h4>Order placed successfully</h4>
+              ) : (
+                <h4>Failed to place order</h4>
+              )}
+            </div>
+          </div>
+        </div>
+        {/*End of order status modal*/}
+
         {/* Below block displays the selected Address */}
         <div
           className="container mt-5"
@@ -82,12 +120,15 @@ class SelectAddress extends Component {
             <div>
               <h2 className="m-3">Ship to below Address</h2>
             </div>
+
+            {/*block to place order*/}
             <div className="m-3">
               {this.props.paymentSelectModal === "block" ? this.state
                 .modalSelected === "block" ? (
                 <div
                   className="a-button a-button-primary-proceed a-spacing-medium"
                   onClick={() => {
+                    this.setState({ modalOrder: "block" });
                     this.props.proceedToOrder({
                       Address_details: `${this.state.streetSel},${this.state
                         .stateSel},${this.state.countrySel},${this.state
@@ -111,6 +152,7 @@ class SelectAddress extends Component {
                 ""
               )}
             </div>
+            {/*End of order block*/}
           </div>
           <div className="col-3 mx-3 rest-desktop-address-tile-checkout-selected">
             <div style={{ height: "153px" }}>
@@ -670,7 +712,8 @@ const mapStateToProps = state => {
     cardName: state.customerProfileReducer.cardName,
     cardNumber: state.customerProfileReducer.cardNumber,
     expirationDate: state.customerProfileReducer.expirationDate,
-    cvv: state.customerProfileReducer.cvv
+    cvv: state.customerProfileReducer.cvv,
+    status: state.customerCheckoutReducer.status
   };
 };
 export default connect(mapStateToProps)(SelectAddress);

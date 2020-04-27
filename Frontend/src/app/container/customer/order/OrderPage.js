@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import "../../../../style/Order.css";
 import OrderHeader from "./OrderHeader";
 import { connect } from "react-redux";
-import Moment from 'react-moment';
-import 'moment-timezone';
+import Moment from "react-moment";
+import "moment-timezone";
 import { Link } from "react-router-dom";
 
 import {
@@ -18,8 +18,8 @@ class OrderPage extends Component {
     value: "",
     cancelmsg: "",
     navarr: ["black", "#0066c0", "#0066c0"],
-    modalShowOrder:'none',
-    orderdetails:''
+    modalShowOrder: "none",
+    orderdetails: "",
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
@@ -61,37 +61,40 @@ class OrderPage extends Component {
     for (let k in this.state.modifiedorderarray) {
       items.push(
         <div>
-          <div className="card mt-3">
-            <div className="card-header d-flex justify-content-between">
+          <div className='card mt-3'>
+            <div className='card-header d-flex justify-content-between'>
               <div>
                 {this.state.modifiedorderarray.length}
                 <span
-                  className="m-0"
+                  className='m-0'
                   style={{ fontWeight: "300", color: "#555" }}
                 >
                   Order Placed{" "}
                 </span>
                 <br />
-                <span className="m-0" style={{ fontWeight: "300" }}>
+                <span className='m-0' style={{ fontWeight: "300" }}>
                   {" "}
                   {
-                    
-                    <Moment format="D MMM YYYY">{this.state.modifiedorderarray[k][0].Order.createdAt.split(
-                      "T"
-                    )[0]}</Moment>
+                    <Moment format='D MMM YYYY'>
+                      {
+                        this.state.modifiedorderarray[
+                          k
+                        ][0].Order.createdAt.split("T")[0]
+                      }
+                    </Moment>
                   }
                 </span>
               </div>
               <div>
                 {" "}
                 <span
-                  className="m-0"
+                  className='m-0'
                   style={{ fontWeight: "300", color: "#555" }}
                 >
                   Ship To{" "}
                 </span>
                 <br />
-                <span className="m-0 link-color" style={{ fontWeight: "300" }}>
+                <span className='m-0 link-color' style={{ fontWeight: "300" }}>
                   {" "}
                   {this.state.modifiedorderarray[k][0].customer_email_id}
                 </span>
@@ -99,45 +102,42 @@ class OrderPage extends Component {
               <div>
                 {" "}
                 <span
-                  className="m-0"
+                  className='m-0'
                   style={{ fontWeight: "300", color: "#555" }}
                 >
                   Total{" "}
                 </span>
                 <br />
-                <span className="m-0" style={{ fontWeight: "300" }}>
+                <span className='m-0' style={{ fontWeight: "300" }}>
                   {" "}
                   ${this.state.modifiedorderarray[k][0].Order.totalOrderPrice}
                 </span>
               </div>
             </div>
             {this.state.modifiedorderarray[k].map((i) => (
-              <div key={i._id} className="card-body">
-                <div className="card-body d-flex justify-content-between">
-                  <div className="d-flex">
-                    <div className="profile-at-product-image-container upload-photo">
-                    <Link
-                                className="name_style"
-                                to={`/productPage/${i.Product_id}`}
-                              >
-                                 <img
-                        alt=""
-                        src={i.products.photos[0]}
-                        className="profile-at-product-image"
-                      />
-                              </Link>
-                      
-                     
+              <div key={i._id} className='card-body'>
+                <div className='card-body d-flex justify-content-between'>
+                  <div className='d-flex'>
+                    <div className='profile-at-product-image-container upload-photo'>
+                      <Link
+                        className='name_style'
+                        to={`/productPage/${i.Product_id}`}
+                      >
+                        <img
+                          alt=''
+                          src={i.products.photos[0]}
+                          className='profile-at-product-image'
+                        />
+                      </Link>
                     </div>
-                    <div className="upload-photo">
-                    <Link
-                                className="name_style"
-                                to={`/productPage/${i.Product_id}`}
-                              >
-                               <span className="mr-2">{i.products.productName}</span>
-                               
-                              </Link>
-                     
+                    <div className='upload-photo'>
+                      <Link
+                        className='name_style'
+                        to={`/productPage/${i.Product_id}`}
+                      >
+                        <span className='mr-2'>{i.products.productName}</span>
+                      </Link>
+
                       <div>
                         <span
                           style={{
@@ -148,7 +148,7 @@ class OrderPage extends Component {
                         >
                           Sold by:{" "}
                           <span
-                            className="upload-photo-order"
+                            className='upload-photo-order'
                             style={{ color: "#0066c0", fontSize: "15px" }}
                           >
                             {" "}
@@ -156,24 +156,24 @@ class OrderPage extends Component {
                           </span>
                         </span>
                       </div>
-                      <div className="mt-3">
+                      <div className='mt-3'>
                         <a
-                          className="pb-2"
-                          href="#!"
+                          className='pb-2'
+                          href='#!'
                           style={{ backgroundColor: "#e7e9ec" }}
-                          className="btn btn upload-photo-order"
+                          className='btn btn upload-photo-order'
                         >
                           <span>
                             {" "}
-                            <ion-icon name="reload-outline"></ion-icon>
+                            <ion-icon name='reload-outline'></ion-icon>
                           </span>
-                         
+
                           <Link
-                                className="name_style"
-                                to={`/productPage/${i.Product_id}`}
-                              >
-                                <span> Buy it again</span>
-                              </Link>
+                            className='name_style'
+                            to={`/productPage/${i.Product_id}`}
+                          >
+                            <span> Buy it again</span>
+                          </Link>
                         </a>
                       </div>
                     </div>
@@ -181,7 +181,7 @@ class OrderPage extends Component {
                   {i.Status != "Delivered" ? (
                     <div>
                       <button
-                        className="a-button-order p-2"
+                        className='a-button-order p-2'
                         style={{ width: "100%" }}
                         onClick={(e) => {
                           this.setState({
@@ -201,9 +201,9 @@ class OrderPage extends Component {
                 </div>
               </div>
             ))}
-            <div className="d-flex card-footer link-color">
+            <div className='d-flex card-footer link-color'>
               <div
-                className=" upload-photo-order"
+                className=' upload-photo-order'
                 onClick={() => {
                   let payload = {
                     _id: this.state.modifiedorderarray[k][0].Order.order_id,
@@ -216,16 +216,15 @@ class OrderPage extends Component {
               </div>
 
               <div
-                className="ml-3 
-                upload-photo-order"
-               
-                  onClick={(e) => {
-                         
-                          this.setState({ modalShowOrder: "block" },()=>{
-                          this.setState({orderdetails:this.state.modifiedorderarray[k][0]})  
-                          });
-                        }}
-             
+                className='ml-3 
+                upload-photo-order'
+                onClick={(e) => {
+                  this.setState({ modalShowOrder: "block" }, () => {
+                    this.setState({
+                      orderdetails: this.state.modifiedorderarray[k][0],
+                    });
+                  });
+                }}
                 style={{ color: "blue" }}
               >
                 Order Details
@@ -238,24 +237,24 @@ class OrderPage extends Component {
 
     return (
       <div>
-        <div className="container">
+        <div className='container'>
           <OrderHeader navarr={this.state.navarr}></OrderHeader>
           <b>{this.props.orders.length} orders placed in past</b>
 
           {true ? <div>{items}</div> : ""}
         </div>
         <div
-          className="modal modal-custom mt-5"
-          align="center"
+          className='modal modal-custom mt-5'
+          align='center'
           style={{ display: this.state.modalShow }}
         >
           <div
-            className="modal-content modal-content-custom col-5"
+            className='modal-content modal-content-custom col-5'
             style={{ fontFamily: "Suisse" }}
           >
-            <div className="container">
+            <div className='container'>
               <span
-                className="close image-edit-avatar"
+                className='close image-edit-avatar'
                 onClick={(e) => {
                   this.setState({ modalShow: "none" });
                   this.setState({ cancelmsg: "" });
@@ -270,35 +269,35 @@ class OrderPage extends Component {
               ) : (
                 ""
               )}
-              <div align="center">
+              <div align='center'>
                 <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
                   Cancel Orders
                 </h3>
               </div>
               <form onSubmit={this.cancelOrderProducts}>
                 {this.state.cancelOrderProduct ? (
-                  <div className="card">
-                    <div className="card-body">
-                      <div className="d-flex justify-content-between">
-                        <div className="d-flex">
-                          <div className="profile-at-product-image-container upload-photo">
+                  <div className='card'>
+                    <div className='card-body'>
+                      <div className='d-flex justify-content-between'>
+                        <div className='d-flex'>
+                          <div className='profile-at-product-image-container upload-photo'>
                             <img
-                              alt=""
+                              alt=''
                               src={
                                 this.state.cancelOrderProduct.products.photos[0]
                               }
-                              className="profile-at-product-image"
+                              className='profile-at-product-image'
                             />
                           </div>
 
-                          <div className="">
-                            <span className="">
+                          <div className=''>
+                            <span className=''>
                               {
                                 this.state.cancelOrderProduct.products
                                   .productName
                               }
                             </span>
-                            <div className="">
+                            <div className=''>
                               <span
                                 style={{
                                   fontWeight: "500",
@@ -308,7 +307,7 @@ class OrderPage extends Component {
                               >
                                 Sold by:{" "}
                                 <span
-                                  className=""
+                                  className=''
                                   style={{ color: "#0066c0", fontSize: "15px" }}
                                 >
                                   {" "}
@@ -329,7 +328,7 @@ class OrderPage extends Component {
                               >
                                 Order Place on:{" "}
                                 <span
-                                  className="upload-photo-order"
+                                  className='upload-photo-order'
                                   style={{ color: "#0066c0", fontSize: "15px" }}
                                 >
                                   {" "}
@@ -346,8 +345,8 @@ class OrderPage extends Component {
                         <div>
                           <label>
                             <input
-                              type="radio"
-                              value="option1"
+                              type='radio'
+                              value='option1'
                               checked={this.state.value}
                               onClick={(e) => this.setState({ value: "true" })}
                             />
@@ -360,12 +359,12 @@ class OrderPage extends Component {
                   ""
                 )}
 
-                <div className="form-group col-md-8 m-3">
+                <div className='form-group col-md-8 m-3'>
                   <input
                     disabled={!this.state.value}
-                    type="submit"
-                    value="Cancel Order"
-                    className="btn btn sprite"
+                    type='submit'
+                    value='Cancel Order'
+                    className='btn btn sprite'
                   />
                 </div>
               </form>
@@ -374,17 +373,17 @@ class OrderPage extends Component {
         </div>
 
         <div
-          className="modal modal-custom mt-5"
-          align="center"
+          className='modal modal-custom mt-5'
+          align='center'
           style={{ display: this.state.modalShowOrder }}
         >
           <div
-            className="modal-content modal-content-custom"
+            className='modal-content modal-content-custom'
             style={{ fontFamily: "Suisse" }}
           >
-            <div className="container">
+            <div className='container'>
               <span
-                className=" ml-2 close image-edit-avatar"
+                className=' ml-2 close image-edit-avatar'
                 onClick={(e) => {
                   this.setState({ modalShowOrder: "none" });
                 }}
@@ -392,31 +391,60 @@ class OrderPage extends Component {
                 &times;
               </span>
 
-              <div class="card">
-                <div class="card-header" align='left'><h2>Order Details</h2>
-                <h6 style={{fontWeight:"200"}}>Ordered on    <Moment format="D MMM YYYY">{this.state.orderdetails?this.state.orderdetails.Order.createdAt.split("T")[0]:''}</Moment>
-                </h6>
+              <div class='card'>
+                <div class='card-header' align='left'>
+                  <h2>Order Details</h2>
+                  <h6 style={{ fontWeight: "200" }}>
+                    Ordered on{" "}
+                    <Moment format='D MMM YYYY'>
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.createdAt.split("T")[0]
+                        : ""}
+                    </Moment>
+                  </h6>
                 </div>
-                <div class="card-body d-flex justify-content-between">
+                <div class='card-body d-flex justify-content-between'>
                   {/* <h4 class="card-title">Special title treatment</h4> */}
-                 <div className='col-3'>
-                   <h6 style={{fontWeight:'700'}}>Shipping address</h6>
-                   <h6 style={{fontWeight:'400'}}>{this.state.orderdetails?this.state.orderdetails.Order.Address_details:''}</h6>
-
-                   </div>
-                   <div className='col-3'>
-                   <h6 style={{fontWeight:'700'}}>Mailing address</h6>
-                   <h6 style={{fontWeight:'400'}}>{this.state.orderdetails?this.state.orderdetails.Order.Address_details:''}</h6>
-                   </div>
-                   <div className='col-3'>
-                   <h6 style={{fontWeight:'700'}}>Payment Card</h6>
-                   <h6 style={{fontWeight:'400'}}>{this.state.orderdetails?this.state.orderdetails.Order.cardName:''}</h6>
-                   <h6 style={{fontWeight:'400'}}><span className='ml-1'><img src='https://images-na.ssl-images-amazon.com/images/G/01/checkout/payselect/card-logos-small/mc._CB485935095_.gif'></img></span>  XXXX{this.state.orderdetails?this.state.orderdetails.Order.cardNumber.slice(-4):''}</h6>
-                   <h6 style={{fontWeight:'400'}}>{this.state.orderdetails?this.state.orderdetails.Order.validThru:''}</h6>
-                   </div>
-                 
+                  <div className='col-3'>
+                    <h6 style={{ fontWeight: "700" }}>Shipping address</h6>
+                    <h6 style={{ fontWeight: "400" }}>
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.Address_details
+                        : ""}
+                    </h6>
+                  </div>
+                  <div className='col-3'>
+                    <h6 style={{ fontWeight: "700" }}>Mailing address</h6>
+                    <h6 style={{ fontWeight: "400" }}>
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.Address_details
+                        : ""}
+                    </h6>
+                  </div>
+                  <div className='col-3'>
+                    <h6 style={{ fontWeight: "700" }}>Payment Card</h6>
+                    <h6 style={{ fontWeight: "400" }}>
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.cardName
+                        : ""}
+                    </h6>
+                    <h6 style={{ fontWeight: "400" }}>
+                      <span className='ml-1'>
+                        <img src='https://images-na.ssl-images-amazon.com/images/G/01/checkout/payselect/card-logos-small/mc._CB485935095_.gif'></img>
+                      </span>{" "}
+                      XXXX
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.cardNumber.slice(-4)
+                        : ""}
+                    </h6>
+                    <h6 style={{ fontWeight: "400" }}>
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.validThru
+                        : ""}
+                    </h6>
+                  </div>
                 </div>
-                <div class="card-footer link-color">Get Invoice</div>
+                <div class='card-footer link-color'>Get Invoice</div>
               </div>
             </div>
           </div>
