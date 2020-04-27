@@ -24,26 +24,27 @@ class bodyCont extends React.Component {
   render() {
     return (
       <div>
-        <Route path="/" component={topNav} />
-        <Route path="/customer/profile" component={CustomerProfile} />
-        <Route path="/seller/profile" component={SellerProfile} />
-        <Route path="/login" component={Login} />
-        <Route path="/registerCustomer" component={RegisterCustomer} />
-        <Route path="/registerSeller" component={RegisterSeller} />
-        <Route path="/addressandpayment" component={PaymentAndAddressPage} />
-        <Route path="/customer/orders" component={OrderPage} />
-        <Route path="/admin/inventory" component={CategoryList} />
-        <Route path="/admin/seller" component={SellerList} />
-        <Route path="/productlist" component={ProductList} />
+        <Route path='/' component={topNav} />
+        <Route path='/customer/profile' component={CustomerProfile} />
+        <Route path='/seller/profile' component={SellerProfile} />
+        <Route path='/login' component={Login} />
+        <Route path='/registerCustomer' component={RegisterCustomer} />
+        <Route path='/registerSeller' component={RegisterSeller} />
+        <Route path='/addressandpayment' component={PaymentAndAddressPage} />
+        <Route path='/customer/orders' component={OrderPage} />
+        <Route path='/admin/inventory' component={CategoryList} />
+        <Route path='/admin/seller' component={SellerList} />
+        <Route path='/productlist' component={ProductList} />
+        <Route path='/productlisting' component={ProductList} />
         {/* <Route path="/paymentcard" component={PaymentCard} /> */}
-        <Route path="/productPage/:id" component={ProductPage} />
-        <Route path="/cart" component={CartAndSaved} />
-        <Route path="/checkout" component={SelectAddressAndPayment} />
+        <Route path='/productPage/:id' component={ProductPage} />
+        <Route path='/cart' component={CartAndSaved} />
+        <Route path='/checkout' component={SelectAddressAndPayment} />
         <Route
-          path="/customer/order/cancelledorders"
+          path='/customer/order/cancelledorders'
           component={CancelledOrder}
         />
-        <Route path="/customer/order/openorders" component={OpenOrder} />
+        <Route path='/customer/order/openorders' component={OpenOrder} />
       </div>
     );
   }
