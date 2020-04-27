@@ -1,43 +1,172 @@
 import React from "react";
 import "./ProductsList.css";
-import { Card, Row, Pagination, Col } from "react-bootstrap";
+import { Card, Row, Pagination, Col, Button } from "react-bootstrap";
+import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import StarRatings from "react-star-ratings";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { getAllProducts } from "../../../../action/ProductAction/productAction";
 
 class List extends React.Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.state = { active: 1 };
+  }
+
+  nextPage = () => {
+    this.setState({
+      active: this.props.product.page + 1,
+    });
+
+    let cat = "";
+    if (this.props.search.category !== "All") cat = this.props.search.category;
     const data = {
-      page: 1,
-      orderOn: "",
-      order: "",
+      page: this.props.product.page + 1,
+      orderOn: this.props.sort.sortType,
+      order: this.props.sort.sort,
       sellerEmailId: "",
-      sellerName: "",
-      productName: "",
-      productCategory: "",
-      minPrice: "",
-      maxPrice: "",
-      minRating: "",
-      maxRating: "",
+      sellerName: this.props.search.seller,
+      productName: this.props.search.search,
+      productCategory: cat,
+      minPrice: this.props.filter.minPrice,
+      maxPrice: this.props.filter.maxPrice,
+      minRating: 0,
+      maxRating: this.props.filter.rating,
     };
     this.props.dispatch(getAllProducts(data));
-  }
+  };
+
+  prevPage = () => {
+    this.setState({
+      active: this.props.product.page - 1,
+    });
+
+    let cat = "";
+    if (this.props.search.category !== "All") cat = this.props.search.category;
+    const data = {
+      page: this.props.product.page - 1,
+      orderOn: this.props.sort.sortType,
+      order: this.props.sort.sort,
+      sellerEmailId: "",
+      sellerName: this.props.search.seller,
+      productName: this.props.search.search,
+      productCategory: cat,
+      minPrice: this.props.filter.minPrice,
+      maxPrice: this.props.filter.maxPrice,
+      minRating: 0,
+      maxRating: this.props.filter.rating,
+    };
+    this.props.dispatch(getAllProducts(data));
+  };
 
   render() {
     console.log("this.props.product in list.js in productsList");
     console.log(this.props.product);
 
-    const active = this.props.product.page;
     let items = [];
 
-    for (let number = 1; number <= this.props.product.pages; number++) {
+    let start = null;
+    let end = null;
+    let pagPrevButton = null;
+    let pagNextButton = null;
+    let prevEllipsis = null;
+    let nextEllipsis = null;
+
+    if (this.state.active === 1) {
+      start = 1;
+      end = this.state.active + 2;
+
+      if (this.props.product.pages === 1) {
+        end = this.props.product.pages;
+        pagNextButton = (
+          <div className='PaginationDiv'>
+            Next
+            <IoIosArrowRoundForward />
+          </div>
+        );
+      } else {
+        pagNextButton = (
+          <Button className='PaginationButtons' onClick={this.nextPage}>
+            Next
+            <IoIosArrowRoundForward />
+          </Button>
+        );
+      }
+
+      pagPrevButton = (
+        <div className='PaginationDiv'>
+          <IoIosArrowRoundBack />
+          Previous
+        </div>
+      );
+
+      if (this.state.active <= this.props.product.pages - 2)
+        nextEllipsis = <div className='PaginationDiv'>...</div>;
+    } else if (this.state.active === this.props.product.pages) {
+      start = this.state.active - 2;
+      end = this.props.product.pages;
+
+      if (this.props.product.pages === 2) start = 1;
+
+      pagPrevButton = (
+        <Button className='PaginationButtons' onClick={this.prevPage}>
+          <IoIosArrowRoundBack />
+          Previous
+        </Button>
+      );
+      pagNextButton = (
+        <div className='PaginationDiv'>
+          Next
+          <IoIosArrowRoundForward />
+        </div>
+      );
+      if (this.state.active >= 3)
+        prevEllipsis = <div className='PaginationDiv'>...</div>;
+    } else if (
+      this.props.product.pages === 1 ||
+      this.props.product.pages === 2
+    ) {
+      start = 1;
+      end = this.props.product.pages;
+      pagPrevButton = (
+        <div className='PaginationDiv'>
+          <IoIosArrowRoundBack />
+          Previous
+        </div>
+      );
+      pagNextButton = (
+        <Button className='PaginationButtons' onClick={this.nextPage}>
+          Next
+          <IoIosArrowRoundForward />
+        </Button>
+      );
+    } else {
+      start = this.state.active - 1;
+      end = this.state.active + 1;
+      pagPrevButton = (
+        <Button className='PaginationButtons' onClick={this.prevPage}>
+          <IoIosArrowRoundBack />
+          Previous
+        </Button>
+      );
+      pagNextButton = (
+        <Button className='PaginationButtons' onClick={this.nextPage}>
+          Next
+          <IoIosArrowRoundForward />
+        </Button>
+      );
+      if (this.state.active >= 3)
+        prevEllipsis = <div className='PaginationDiv'>...</div>;
+      if (this.state.active <= this.props.product.pages - 2)
+        nextEllipsis = <div className='PaginationDiv'>...</div>;
+    }
+
+    for (let number = start; number <= end; number++) {
       items.push(
         <Pagination.Item
-          className="pagination"
+          className='pagination'
           key={number}
-          active={number === active}
+          active={number === this.state.active}
           id={number}
           onClick={(e) => {
             // console.log(e.target);
@@ -45,22 +174,29 @@ class List extends React.Component {
             // console.log(typeof e.target.id);
             // console.log(typeof active);
             let newPageNumber = parseInt(e.target.id);
-            if (newPageNumber !== active) {
+            if (newPageNumber !== this.state.active) {
+              let cat = "";
+              if (this.props.search.category !== "All")
+                cat = this.props.search.category;
               const data = {
                 page: newPageNumber,
-                orderOn: "",
-                order: "",
+                orderOn: this.props.sort.sortType,
+                order: this.props.sort.sort,
                 sellerEmailId: "",
-                sellerName: "",
-                productName: "",
-                productCategory: "",
-                minPrice: "",
-                maxPrice: "",
-                minRating: "",
-                maxRating: "",
+                sellerName: this.props.search.seller,
+                productName: this.props.search.search,
+                productCategory: cat,
+                minPrice: this.props.filter.minPrice,
+                maxPrice: this.props.filter.maxPrice,
+                minRating: 0,
+                maxRating: this.props.filter.rating,
               };
               this.props.dispatch(getAllProducts(data));
             }
+
+            this.setState({
+              active: newPageNumber,
+            });
           }}
         >
           {number}
@@ -79,10 +215,10 @@ class List extends React.Component {
       }) => {
         let titleLink = "";
         if (this.props.sellerProfile)
-          titleLink = <h1 className="product-title2">{productName}</h1>;
+          titleLink = <h1 className='product-title2'>{productName}</h1>;
         else
           titleLink = (
-            <Link className="product-title" to={`/productPage/${_id}`}>
+            <Link className='product-title' to={`/productPage/${_id}`}>
               {productName}
             </Link>
           );
@@ -98,13 +234,13 @@ class List extends React.Component {
           dec = "0";
         }
         return (
-          <Col xl={2} lg={3} md={4} sm={5} xs={12} className="line">
-            <Card key={_id} style={{ border: "none" }} className="class-style">
+          <Col xl={2} lg={3} md={4} sm={5} xs={12} className='line'>
+            <Card key={_id} style={{ border: "none" }} className='class-style'>
               <div style={{ height: "200px", width: "150px", margin: "auto" }}>
-                <span class="helper"></span>
+                <span class='helper'></span>
 
                 <Card.Img
-                  variant="top"
+                  variant='top'
                   src={photos[0]}
                   style={{ width: "150px", verticalAlign: "middle" }}
                 />
@@ -128,20 +264,20 @@ class List extends React.Component {
                 >
                   <StarRatings
                     rating={averageRating}
-                    starDimension="16px"
-                    starSpacing="2px"
-                    starRatedColor="#FBB730"
-                    starEmptyColor="#FFF"
+                    starDimension='16px'
+                    starSpacing='2px'
+                    starRatedColor='#FBB730'
+                    starEmptyColor='#FFF'
                   />
                 </div>
                 <Card.Text
                   // className="margin-auto-custom"
                   style={{ color: "#000" }}
                 >
-                  <p className="price-style">
-                    <p aria-hidden="true">
+                  <p className='price-style'>
+                    <p aria-hidden='true'>
                       <p
-                        className="a-price-symbol"
+                        className='a-price-symbol'
                         style={{
                           verticalAlign: "super",
                           top: "-.5em",
@@ -153,13 +289,13 @@ class List extends React.Component {
                         $
                       </p>
                       <p
-                        className="a-price-whole"
+                        className='a-price-whole'
                         style={{ fontSize: "21px", display: "inline" }}
                       >
                         {num}
                       </p>
                       <p
-                        className="a-price-fraction"
+                        className='a-price-fraction'
                         style={{
                           verticalAlign: "super",
                           top: "-.5em",
@@ -184,8 +320,14 @@ class List extends React.Component {
         <Row xl={12} lg={12} md={12} sm={12} xs={12}>
           {cards}
         </Row>
-        <Row lg={12} md={12} sm={12} xs={12} className="line2">
-          <Pagination style={{ margin: "10px auto" }}>{items}</Pagination>
+        <Row lg={12} md={12} sm={12} xs={12} className='line2'>
+          <Pagination style={{ margin: "10px auto" }}>
+            {pagPrevButton}
+            {prevEllipsis}
+            <Pagination>{items}</Pagination>
+            {nextEllipsis}
+            {pagNextButton}
+          </Pagination>
         </Row>
       </div>
     );
@@ -194,6 +336,9 @@ class List extends React.Component {
 
 const mapStateToProps = (state) => ({
   product: state.product.allProducts,
+  search: state.product.productSearch,
+  sort: state.product.productSort,
+  filter: state.product.productFilter,
 });
 
 export default connect(mapStateToProps)(List);

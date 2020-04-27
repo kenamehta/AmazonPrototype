@@ -1,4 +1,10 @@
-import { GET_PRODUCT, ALLPRODUCTS } from "../action/ProductAction/actionType";
+import {
+  GET_PRODUCT,
+  ALLPRODUCTS,
+  PRODUCT_SEARCH,
+  PRODUCT_FILTER,
+  PRODUCT_SORT,
+} from "../action/ProductAction/actionType";
 import { LOGOUT } from "../action/UserAction/actionTypes";
 
 const initialState = {
@@ -10,6 +16,13 @@ const initialState = {
     pages: 0,
     total: 0,
   },
+  productSearch: { search: "", category: "", seller: "" },
+  productFilter: {
+    rating: 0,
+    minPrice: "",
+    maxPrice: "",
+  },
+  productSort: { sortType: "rating", sort: "desc" },
 };
 
 export default function (state = initialState, action) {
@@ -26,11 +39,45 @@ export default function (state = initialState, action) {
       return {
         product: null,
         allProducts: { docs: [], page: 0, limit: 0, pages: 0, total: 0 },
+        productFilter: {
+          rating: "",
+          minPrice: "",
+          maxPrice: "",
+        },
+        productSort: { sortType: "rating", sort: "desc" },
       };
 
     case ALLPRODUCTS:
       return { ...state, allProducts: payload };
 
+    case PRODUCT_SEARCH:
+      return {
+        ...state,
+        productSearch: {
+          search: payload.search,
+          category: payload.category,
+          seller: payload.seller,
+        },
+      };
+
+    case PRODUCT_FILTER:
+      return {
+        ...state,
+        productFilter: {
+          rating: payload.rating,
+          minPrice: payload.minPrice,
+          maxPrice: payload.maxPrice,
+        },
+      };
+
+    case PRODUCT_SORT:
+      return {
+        ...state,
+        productSort: {
+          sortType: payload.sortType,
+          sort: payload.sort,
+        },
+      };
     default:
       return state;
   }

@@ -132,16 +132,28 @@ class Insights extends Component {
                     <div className="card">
                       <div className="card-body d-flex">
                         <div className="profile-at-product-image-container upload-photo">
-                          <img
+                        <Link
+                                className="name_style"
+                                to={`/productPage/${comment.product[0]._id}`}
+                              >
+                               <img
                             alt=""
                             src={comment.product[0].photos[0]}
                             class="profile-at-product-image"
                           />
+                              </Link>
+                         
                         </div>
                         <div className="upload-photo">
-                          <span className="mr-2">
+                        <Link
+                                className="name_style"
+                                to={`/productPage/${comment.product[0]._id}`}
+                              >
+                             <span className="mr-2">
                             {comment.product[0].productName}
                           </span>
+                              </Link>
+                         
 <div>
                           <StarRatings
               rating={comment.rating}

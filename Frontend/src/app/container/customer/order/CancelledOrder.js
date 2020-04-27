@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import OrderHeader from './OrderHeader'
 import { connect } from "react-redux";
 import { getCancelOrders } from "../../../../action/customerprofileaction/customerOrderAction";
+import { Link } from "react-router-dom";
+
 const _ = require("underscore");
 
 class CancelledOrder extends Component {
@@ -92,17 +94,29 @@ for(let k in this.state.modifiedorderarray)
          
           <div className="card-body d-flex justify-content-between">
           <div className='d-flex'>
-            <div className="profile-at-product-image-container upload-photo">
-              <img
-                alt=""
-                src={i.products.photos[0]}
-                className="profile-at-product-image"
-              />
-            </div>
-            <div className="upload-photo">
-              <span className="mr-2">
-                {i.products.productName}
-              </span>
+          <div className="profile-at-product-image-container upload-photo">
+                    <Link
+                                className="name_style"
+                                to={`/productPage/${i.Product_id}`}
+                              >
+                                 <img
+                        alt=""
+                        src={i.products.photos[0]}
+                        className="profile-at-product-image"
+                      />
+                              </Link>
+                      
+                     
+                    </div>
+                    <div className="upload-photo">
+                    <Link
+                                className="name_style"
+                                to={`/productPage/${i.Product_id}`}
+                              >
+                               <span className="mr-2">{i.products.productName}</span>
+                               
+                              </Link>
+                     
               <div>
                 <span
                   style={{
@@ -132,7 +146,14 @@ for(let k in this.state.modifiedorderarray)
                     {" "}
                     <ion-icon name="reload-outline"></ion-icon>
                   </span>
-                  <span> Buy it again</span>
+                  <Link
+                                className="name_style"
+                                to={`/productPage/${i.Product_id}`}
+                              >
+                              <span> Buy it again</span>
+                               
+                              </Link>
+                 
                 </a>
               </div>
             </div>

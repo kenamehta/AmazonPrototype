@@ -1,4 +1,10 @@
-import { GET_PRODUCT, ALLPRODUCTS, ADDCOMMENT } from "./actionType";
+import {
+  GET_PRODUCT,
+  ALLPRODUCTS,
+  PRODUCT_SEARCH,
+  PRODUCT_FILTER,
+  PRODUCT_SORT,
+} from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
 
@@ -81,22 +87,55 @@ export const getAllProducts = (data) => {
   };
 };
 
-export const addComment = (data) => async(dispatch) => {
+export const updateProductSearch = (search, category, seller) => {
+  return {
+    type: PRODUCT_SEARCH,
+    payload: {
+      search,
+      category,
+      seller,
+    },
+  };
+};
+
+export const updateProductSort = (sortType, sort) => {
+  return {
+    type: PRODUCT_SORT,
+    payload: {
+      sortType,
+      sort,
+    },
+  };
+};
+
+export const addComment = (data) => async (dispatch) => {
   axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
-  try{
+  try {
     const res = await axios.post(
-      configPath.api_host + `product/customer/addComment`, data
+      configPath.api_host + `/product/customer/addComment`,
+      data
     );
 
     if (res.status === 200) {
       console.log(res.data);
       dispatch(getProductDispatcher(res.data));
     } else {
-      window.alert(res.data);
+      // window.alert(res.data);
     }
   } catch (error) {
-    window.alert('Error in addComment action in productActions.js');
-    console.log('Error in addComment action in productActions.js');
+    // window.alert('Error in addComment action in productActions.js');
+    console.log("Error in addComment action in productActions.js");
     console.log(error);
   }
-}
+};
+
+export const updateProductFilter = (rating, minPrice, maxPrice) => {
+  return {
+    type: PRODUCT_FILTER,
+    payload: {
+      rating,
+      minPrice,
+      maxPrice,
+    },
+  };
+};
