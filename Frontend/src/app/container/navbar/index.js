@@ -70,28 +70,28 @@ class Topnav extends React.Component {
     if (localStorage.getItem("loginFlag")) {
       if (localStorage.getItem("category") === "seller") {
         xnav = (
-          <Navbar.Collapse id='basic-navbar-nav'>
+          <Navbar.Collapse id="basic-navbar-nav">
             <Form inline style={{ width: 70 + "%" }}>
               <InputGroup style={{ width: 90 + "%" }}>
                 <DropdownButton
                   as={InputGroup.Prepend}
-                  variant='outline-secondary'
-                  title='All'
-                  id='input-group-dropdown-1'
-                  className='grey bradius025'
+                  variant="outline-secondary"
+                  title="All"
+                  id="input-group-dropdown-1"
+                  className="grey bradius025"
                 >
                   {cat}
                 </DropdownButton>
 
                 <FormControl
-                  type='text'
-                  placeholder='Search'
-                  aria-label='Search'
-                  aria-describedby='basic-addon2'
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
                   style={{ borderRadius: 0 + "px" }}
                 />
                 <InputGroup.Append>
-                  <Button variant='outline-secondary' className='sprite'>
+                  <Button variant="outline-secondary" className="sprite">
                     <FaSearch />
                   </Button>
                 </InputGroup.Append>
@@ -99,9 +99,9 @@ class Topnav extends React.Component {
             </Form>
             <Nav>
               <Link
-                to='/productlist'
+                to="/productlist"
                 style={{ float: "left" }}
-                className='custom-nav'
+                className="custom-nav"
               >
                 My
                 <br />
@@ -117,18 +117,99 @@ class Topnav extends React.Component {
                     </span>
                   </div>
                 }
-                className='custom-nav'
-                id='collasible-nav-dropdown'
+                className="custom-nav"
+                id="collasible-nav-dropdown"
                 style={{ display: "Block", color: "#FFF" }}
               >
                 <NavDropdown.Item>
-                  <Link to='/seller/profile'>Profile</Link>
+                  <Link to="/seller/profile">Profile</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Link to='/' onClick={this.handleLogout}>
+                  <Link to="/" onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        );
+      } else if (localStorage.getItem("category") === "admin") {
+        xnav = (
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Form inline style={{ width: 70 + "%" }}>
+              <InputGroup style={{ width: 90 + "%" }}>
+                <DropdownButton
+                  as={InputGroup.Prepend}
+                  variant="outline-secondary"
+                  title="All"
+                  id="input-group-dropdown-1"
+                  className="grey bradius025"
+                >
+                  {cat}
+                </DropdownButton>
+
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                  style={{ borderRadius: 0 + "px" }}
+                />
+                <InputGroup.Append>
+                  <Button variant="outline-secondary" className="sprite">
+                    <FaSearch />
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
+            <Nav>
+              <Link
+                to="/admin/inventory"
+                style={{ float: "left" }}
+                className="custom-nav"
+              >
+                <b>Inventory</b>
+              </Link>
+              <Link
+                to="/admin/seller"
+                style={{ float: "left" }}
+                className="custom-nav"
+              >
+                <b>Seller</b>
+              </Link>
+              <Link
+                to="/admin/profile"
+                style={{ float: "left" }}
+                className="custom-nav"
+              >
+                <b>Orders</b>
+              </Link>
+
+              <NavDropdown
+                title={
+                  <div style={{ display: "inline-block" }}>
+                    Admin
+                    <br />
+                    <span>
+                      <b>Dashboard &amp; Logout</b>
+                    </span>
+                  </div>
+                }
+                className="custom-nav"
+                id="collasible-nav-dropdown"
+                style={{ display: "Block", color: "#FFF" }}
+              >
+                <NavDropdown.Item>
+                  <Link to="/seller/profile">Dashboard</Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to="/" onClick={this.handleLogout}>
                     Logout
                   </Link>
                 </NavDropdown.Item>
@@ -138,28 +219,28 @@ class Topnav extends React.Component {
         );
       } else {
         xnav = (
-          <Navbar.Collapse id='basic-navbar-nav'>
+          <Navbar.Collapse id="basic-navbar-nav">
             <Form inline style={{ width: 70 + "%" }}>
               <InputGroup style={{ width: 90 + "%" }}>
                 <DropdownButton
                   as={InputGroup.Prepend}
-                  variant='outline-secondary'
-                  title='All'
-                  id='input-group-dropdown-1'
-                  className='grey bradius025'
+                  variant="outline-secondary"
+                  title="All"
+                  id="input-group-dropdown-1"
+                  className="grey bradius025"
                 >
                   {cat}
                 </DropdownButton>
 
                 <FormControl
-                  type='text'
-                  placeholder='Search'
-                  aria-label='Search'
-                  aria-describedby='basic-addon2'
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
                   style={{ borderRadius: 0 + "px" }}
                 />
                 <InputGroup.Append>
-                  <Button variant='outline-secondary' className='sprite'>
+                  <Button variant="outline-secondary" className="sprite">
                     <FaSearch />
                   </Button>
                 </InputGroup.Append>
@@ -167,25 +248,25 @@ class Topnav extends React.Component {
             </Form>
             <Nav>
               <Link
-                to='/productlist'
+                to="/productlist"
                 style={{ float: "left" }}
-                className='custom-nav'
+                className="custom-nav"
               >
                 All
                 <br />
                 <b>Products</b>
               </Link>
               <Link
-                to='/events'
+                to="/events"
                 style={{ float: "left" }}
-                className='custom-nav'
+                className="custom-nav"
               >
                 My
                 <br />
                 <b>Order</b>
               </Link>
               <NavDropdown
-                className='custom-nav'
+                className="custom-nav"
                 title={
                   <div style={{ display: "inline-block", color: "#FFF" }}>
                     Hello Pranav Baby
@@ -195,28 +276,28 @@ class Topnav extends React.Component {
                     </span>
                   </div>
                 }
-                id='collasible-nav-dropdown'
+                id="collasible-nav-dropdown"
               >
                 <NavDropdown.Item>
-                  <Link to='/customer/profile'>Profile</Link>
+                  <Link to="/customer/profile">Profile</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
                 <NavDropdown.Divider />
                 <NavDropdown.Item>
-                  <Link to='/' onClick={this.handleLogout}>
+                  <Link to="/" onClick={this.handleLogout}>
                     Logout
                   </Link>
                 </NavDropdown.Item>
               </NavDropdown>
               <Link
-                to='/cart'
+                to="/cart"
                 style={{ position: "relative", whiteSpace: "nowrap" }}
-                className='custom-nav'
+                className="custom-nav"
               >
-                <span id='num-item'>0</span>
-                <div className='cart'></div>
-                <span id='span-cart'>Cart</span>
+                <span id="num-item">0</span>
+                <div className="cart"></div>
+                <span id="span-cart">Cart</span>
               </Link>
             </Nav>
           </Navbar.Collapse>
@@ -224,20 +305,20 @@ class Topnav extends React.Component {
       }
     } else {
       xnav = (
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Form inline className='mr-auto'>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Form inline className="mr-auto">
             <FormControl
-              type='text'
-              placeholder='Search'
-              className='mr-sm-3'
+              type="text"
+              placeholder="Search"
+              className="mr-sm-3"
               style={{ display: "none" }}
             />
           </Form>
-          <Nav activeKey='/login'>
-            <Link to='/login' className='custom-nav'>
+          <Nav activeKey="/login">
+            <Link to="/login" className="custom-nav">
               Login
             </Link>
-            <Link to='/registerCustomer' className='custom-nav'>
+            <Link to="/registerCustomer" className="custom-nav">
               Create Account
             </Link>
           </Nav>
@@ -245,14 +326,14 @@ class Topnav extends React.Component {
       );
     }
     return (
-      <div className='container-fluid bluebeacon'>
+      <div className="container-fluid bluebeacon">
         {redirectVar}
         <div>
-          <Navbar expand='lg'>
+          <Navbar expand="lg">
             <Navbar.Brand style={{ marginRight: 70 + "px" }}>
-              <img src='/logo.png' height='40' alt='amazon-logo' />
+              <img src="/logo.png" height="40" alt="amazon-logo" />
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls='basic-navbar-nav' />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
             {xnav}
           </Navbar>
         </div>

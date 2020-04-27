@@ -11,6 +11,7 @@ const sellerProfile = require("./routes/Seller/profile");
 const sellerProduct = require("./routes/Seller/product");
 const customerProduct = require("./routes/customer/product");
 const adminProduct = require("./routes/admin/product");
+const adminSeller = require("./routes/admin/seller");
 
 const app = express();
 // setting view engine
@@ -27,13 +28,13 @@ app.use(
     resave: false,
     saveUninitialized: false,
     duration: 60 * 60 * 1000, // Overall duration of Session : 30 minutes : 1800 seconds
-    activeDuration: 5 * 60 * 1000
+    activeDuration: 5 * 60 * 1000,
   })
 );
 app.use(
   cors({
     origin: `${Config.applicationAddress}:${Config.applicationPort}`,
-    credentials: true
+    credentials: true,
   })
 );
 app.use(express.static("./ProfilePictures/Seller"));
@@ -48,9 +49,13 @@ app.use("/seller/profile", sellerProfile);
 app.use("/product/customer", customerProduct);
 app.use("/product/seller", sellerProduct);
 app.use("/product/admin", adminProduct);
+app.use("/admin/seller", adminSeller);
 app.use("/customer/payment", require("./routes/customer/payment"));
 app.use("/customer/address", require("./routes/customer/address"));
-app.use("/customer/cartProducts", require("./routes/customer/savedAndCartProducts"));
+app.use(
+  "/customer/cartProducts",
+  require("./routes/customer/savedAndCartProducts")
+);
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");
