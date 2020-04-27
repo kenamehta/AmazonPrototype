@@ -6,6 +6,12 @@ import {
   NavbarBrand,
   NavbarToggler,
   Collapse,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
   Nav,
   NavLink,
   NavItem,
@@ -13,11 +19,17 @@ import {
   ListGroupItem,
   Button,
 } from "reactstrap";
+import {
+  //Redirect,
+  Link,
+} from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
+import CategoryModal from "./CategoryModal";
 import {
   getCategory,
   deleteCategory,
+  setModalFalse,
 } from "./../../../../action/admin/categoryActions.js";
 
 class CategoryList extends Component {
@@ -27,43 +39,74 @@ class CategoryList extends Component {
     this.props.getCategory();
   }
 
-  onDeleteClick = (id) => {
-    this.props.deleteCategory(id);
+  onDeleteClick = (name) => {
+    this.props.deleteCategory(name);
+  };
+
+  onSubmit = (e) => {
+    this.props.setModalFalse();
   };
   render() {
+    console.log(this.props);
     const { categorys } = this.props.category;
-    console.log(this.state);
+
     return (
       <Container>
+        {" "}
+        <CategoryModal />
         <ListGroup>
           <TransitionGroup className="shopping-list">
             {categorys.map(({ _id, name }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
                   <Button
-                    className="remove-btn"
-                    color="danger"
+                    //className=""
+                    variant="outline-secondary"
+                    className="sprite remove-btn"
                     size="sm"
                     margin="5px 5px"
                     padding="15px 15px"
-                    onClick={this.onDeleteClick.bind(this, _id)}
+                    onClick={this.onDeleteClick.bind(this, name)}
                   >
-                    &times;
+                    <b>&times;</b>
                   </Button>{" "}
-                  {name}
+                  <Link to="/productlist" className="text-dark">
+                    <b>{name}</b>
+                  </Link>
                 </ListGroupItem>
               </CSSTransition>
             ))}
           </TransitionGroup>
         </ListGroup>
+        <Modal isOpen={this.props.category.modal} toggle={this.toggle}>
+          <ModalHeader toggle={this.toggle}> Error</ModalHeader>
+          <ModalBody>
+            <Form onSubmit={this.onSubmit}>
+              <FormGroup>
+                <Label for="category">This category can not be deleted</Label>
+
+                <Button
+                  color="dark"
+                  style={{ marginTop: "2rem" }}
+                  block
+                  onClick={this.onSubmit}
+                >
+                  {" "}
+                  OK
+                </Button>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+        </Modal>
       </Container>
     );
   }
 }
 
-categoryList.propTypes = {
+CategoryList.propTypes = {
   getCategory: PropTypes.func.isRequired,
   deleteCategory: PropTypes.func.isRequired,
+  setModalFalse: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired,
 };
 
@@ -71,6 +114,8 @@ const mapStateToProps = (state) => ({
   category: state.category,
 });
 
-export default connect(mapStateToProps, { getCategory, deleteCategory })(
-  CategoryList
-);
+export default connect(mapStateToProps, {
+  getCategory,
+  setModalFalse,
+  deleteCategory,
+})(CategoryList);

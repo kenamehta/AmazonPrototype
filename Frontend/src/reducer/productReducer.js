@@ -16,7 +16,7 @@ const initialState = {
     pages: 0,
     total: 0,
   },
-  productSearch: { search: "", category: "" },
+  productSearch: { search: "", category: "", seller: "" },
   productFilter: {
     rating: 0,
     minPrice: "",

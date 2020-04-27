@@ -1,10 +1,99 @@
 "use strict";
 const product = require("../../../models/product.model");
+//const redisClient = require("../../../redisConfig");
 
+// need to assume limit is fixed
 const getMultipleProducts = (msg, callback) => {
   var res = {};
   console.log("Inside getMultipleProducts in kafka");
   console.log(msg);
+
+  // if(msg.orderOn === '' && msg.order === '' && msg.sellerEmailId === '' && msg.sellerName === '' && msg.productName === '' && msg.productCategory === '' && msg.minPrice === '' && msg.maxPrice === '' && msg.minRating === '' && msg.maxRating === ''){
+  //   console.log('Trying to fetch for customer from Redis');
+  //   redisClient.get(msg.page, (err, redisResult) => {
+  //     if(err){
+  //       res.status = 500;
+  //       res.message = 'Redis Error';
+  //       callback(null, res);
+  //     }
+  //     if(redisResult){
+  //       console.log('Found in redis');
+  //       res.status = 200;
+  //       res.message = JSON.parse(redisResult);
+  //       callback(null, res);
+  //     } else {
+  //       console.log('Not Found in redis');
+  //       var options = {
+  //         page: parseInt(msg.page),
+  //         limit: parseInt(msg.limit),
+  //       };
+
+  //       var filter = {};
+
+  //       console.log('Filter:');
+  //       console.log(filter)
+  //       console.log('options:');
+  //       console.log(options);
+
+  //       product.paginate(filter,options,(err, results)=>{
+  //         if(err){
+  //           res.status = 500;
+  //           res.message = 'Database Error';
+  //           callback(null, res);
+  //         }
+  //         res.status = 200;
+  //         res.message = results;
+  //         console.log('Saving in Redis');
+  //         redisClient.setex(msg.page, 36000, JSON.stringify(results));
+  //         console.log('Saved in Redis');
+  //         callback(null, res);
+  //       });
+  //     }
+  //   });
+  // } else if (msg.orderOn === '' && msg.order === '' && msg.sellerName === '' && msg.productName === '' && msg.productCategory === '' && msg.minPrice === '' && msg.maxPrice === '' && msg.minRating === '' && msg.maxRating === ''){
+  //   console.log('Trying to fetch for seller from Redis');
+  //   redisClient.get(msg.sellerEmailId+'_'+msg.page, (err, redisResult) => {
+  //     if(err){
+  //       res.status = 500;
+  //       res.message = 'Redis Error';
+  //       callback(null, res);
+  //     }
+  //     if(redisResult){
+  //       console.log('Found in redis');
+  //       res.status = 200;
+  //       res.message = JSON.parse(redisResult);
+  //       callback(null, res);
+  //     } else {
+  //       console.log('Not Found in redis');
+  //       var options = {
+  //         page: parseInt(msg.page),
+  //         limit: parseInt(msg.limit),
+  //       };
+
+  //       var filter = {sellerEmailId: msg.sellerEmailId};
+
+  //       console.log('Filter:');
+  //       console.log(filter)
+  //       console.log('options:');
+  //       console.log(options);
+
+  //       product.paginate(filter,options,(err, results)=>{
+  //         if(err){
+  //           res.status = 500;
+  //           res.message = 'Database Error';
+  //           callback(null, res);
+  //         }
+  //         res.status = 200;
+  //         res.message = results;
+  //         console.log('Saving in Redis');
+  //         redisClient.setex(msg.sellerEmailId+'_'+msg.page, 36000, JSON.stringify(results));
+  //         console.log('Saved in Redis');
+  //         callback(null, res);
+  //       });
+  //     }
+  //   });
+  // } else {
+
   var options = {
     page: parseInt(msg.page),
     limit: parseInt(msg.limit),
@@ -116,6 +205,7 @@ const getMultipleProducts = (msg, callback) => {
     res.message = results;
     callback(null, res);
   });
+  //  }
 };
 
 exports.getMultipleProducts = getMultipleProducts;

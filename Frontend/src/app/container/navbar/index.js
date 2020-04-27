@@ -54,7 +54,7 @@ class Topnav extends React.Component {
       maxRating: "",
     };
     this.props.getAllProducts(data);
-    this.props.updateProductSearch("", "");
+    this.props.updateProductSearch("", "", "");
     this.props.updateProductSort("rating", "desc");
     this.props.updateProductFilter("", 0, 2500);
   };
@@ -198,6 +198,87 @@ class Topnav extends React.Component {
                   <Link to='/seller/profile' onClick={this.dispatchAction}>
                     Profile
                   </Link>
+                </NavDropdown.Item>
+                {Applications}
+                {eventsApp}
+                <NavDropdown.Divider />
+                <NavDropdown.Item>
+                  <Link to='/' onClick={this.handleLogout}>
+                    Logout
+                  </Link>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        );
+      } else if (localStorage.getItem("category") === "admin") {
+        xnav = (
+          <Navbar.Collapse id='basic-navbar-nav'>
+            <Form inline style={{ width: 70 + "%" }}>
+              <InputGroup style={{ width: 90 + "%" }}>
+                <DropdownButton
+                  as={InputGroup.Prepend}
+                  variant='outline-secondary'
+                  title='All'
+                  id='input-group-dropdown-1'
+                  className='grey bradius025'
+                >
+                  {cat}
+                </DropdownButton>
+
+                <FormControl
+                  type='text'
+                  placeholder='Search'
+                  aria-label='Search'
+                  aria-describedby='basic-addon2'
+                  style={{ borderRadius: 0 + "px" }}
+                />
+                <InputGroup.Append>
+                  <Button variant='outline-secondary' className='sprite'>
+                    <FaSearch />
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form>
+            <Nav>
+              <Link
+                to='/admin/inventory'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                <b>Inventory</b>
+              </Link>
+              <Link
+                to='/admin/seller'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                <b>Seller</b>
+              </Link>
+              <Link
+                to='/admin/profile'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                <b>Orders</b>
+              </Link>
+
+              <NavDropdown
+                title={
+                  <div style={{ display: "inline-block" }}>
+                    Admin
+                    <br />
+                    <span>
+                      <b>Dashboard &amp; Logout</b>
+                    </span>
+                  </div>
+                }
+                className='custom-nav'
+                id='collasible-nav-dropdown'
+                style={{ display: "Block", color: "#FFF" }}
+              >
+                <NavDropdown.Item>
+                  <Link to='/seller/profile'>Dashboard</Link>
                 </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
@@ -360,10 +441,10 @@ const mapDispatchToProps = (dispatch) => {
     logOut: (payload) => dispatch(logOut(payload)),
     getCategory: () => dispatch(getCategory()),
     getAllProducts: (payload) => dispatch(getAllProducts(payload)),
-    updateProductSearch: (search, category) =>
-      dispatch(updateProductSearch(search, category)),
+    updateProductSearch: (search, category, seller) =>
+      dispatch(updateProductSearch(search, category, seller)),
     updateProductFilter: (rating, minPrice, maxPrice) =>
-      dispatch(updateProductSort(rating, minPrice, maxPrice)),
+      dispatch(updateProductFilter(rating, minPrice, maxPrice)),
     updateProductSort: (sortType, sort) =>
       dispatch(updateProductSort(sortType, sort)),
   };

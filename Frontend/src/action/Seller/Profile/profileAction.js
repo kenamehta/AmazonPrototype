@@ -50,6 +50,9 @@ export const updateSellerDetails = (data) => (dispatch) => {
         type:SELLERUPDATEPROFILE,
         payload:response.data
       });
+      // To get updated seller name in the products.
+      // not sending list of seller products from backend.
+      window.location.reload();
     }
   }).catch((err)=> {
     console.log(err);

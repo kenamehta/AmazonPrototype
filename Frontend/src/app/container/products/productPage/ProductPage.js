@@ -155,6 +155,21 @@ class ProductPage extends React.Component {
     }
     console.log("Render called inside productpage.js");
 
+    let addReview = "";
+    if (localStorage.getItem("category") === "customer") {
+      addReview = (
+        <>
+          <h3 className='sub-subtitle'>Review this product</h3>
+          <h1 className='seller' style={{ marginBottom: "18px" }}>
+            Share your thoughts with other customers
+          </h1>
+          <Button className='addReviewButton' onClick={this.handleShow}>
+            Write a Costumer Review
+          </Button>
+        </>
+      );
+    }
+
     return (
       <Container fluid style={{ minWidth: "500px" }}>
         <ModalReview
@@ -225,13 +240,7 @@ class ProductPage extends React.Component {
               <h1 className='avgStars'>{`${avgRating} out of 5`}</h1>
             </div>
             <hr></hr>
-            <h3 className='sub-subtitle'>Review this product</h3>
-            <h1 className='seller' style={{ marginBottom: "18px" }}>
-              Share your thoughts with other customers
-            </h1>
-            <Button className='addReviewButton' onClick={this.handleShow}>
-              Write a Costumer Review
-            </Button>
+            {addReview}
           </Col>
           <Col lg={7} xl={8}>
             {reviews}

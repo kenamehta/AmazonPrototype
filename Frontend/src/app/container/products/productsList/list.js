@@ -5,7 +5,6 @@ import { IoIosArrowRoundForward, IoIosArrowRoundBack } from "react-icons/io";
 import StarRatings from "react-star-ratings";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 import { getAllProducts } from "../../../../action/ProductAction/productAction";
 
 class List extends React.Component {
@@ -14,40 +13,25 @@ class List extends React.Component {
     this.state = { active: 1 };
   }
 
-  componentWillMount() {
-    const data = {
-      page: 1,
-      orderOn: "",
-      order: "",
-      sellerEmailId: "",
-      sellerName: "",
-      productName: "",
-      productCategory: "",
-      minPrice: "",
-      maxPrice: "",
-      minRating: "",
-      maxRating: "",
-    };
-    this.props.dispatch(getAllProducts(data));
-  }
-
   nextPage = () => {
     this.setState({
       active: this.props.product.page + 1,
     });
 
+    let cat = "";
+    if (this.props.search.category !== "All") cat = this.props.search.category;
     const data = {
       page: this.props.product.page + 1,
-      orderOn: "",
-      order: "",
+      orderOn: this.props.sort.sortType,
+      order: this.props.sort.sort,
       sellerEmailId: "",
-      sellerName: "",
-      productName: "",
-      productCategory: "",
-      minPrice: "",
-      maxPrice: "",
-      minRating: "",
-      maxRating: "",
+      sellerName: this.props.search.seller,
+      productName: this.props.search.search,
+      productCategory: cat,
+      minPrice: this.props.filter.minPrice,
+      maxPrice: this.props.filter.maxPrice,
+      minRating: 0,
+      maxRating: this.props.filter.rating,
     };
     this.props.dispatch(getAllProducts(data));
   };
@@ -57,18 +41,20 @@ class List extends React.Component {
       active: this.props.product.page - 1,
     });
 
+    let cat = "";
+    if (this.props.search.category !== "All") cat = this.props.search.category;
     const data = {
       page: this.props.product.page - 1,
-      orderOn: "",
-      order: "",
+      orderOn: this.props.sort.sortType,
+      order: this.props.sort.sort,
       sellerEmailId: "",
-      sellerName: "",
-      productName: "",
-      productCategory: "",
-      minPrice: "",
-      maxPrice: "",
-      minRating: "",
-      maxRating: "",
+      sellerName: this.props.search.seller,
+      productName: this.props.search.search,
+      productCategory: cat,
+      minPrice: this.props.filter.minPrice,
+      maxPrice: this.props.filter.maxPrice,
+      minRating: 0,
+      maxRating: this.props.filter.rating,
     };
     this.props.dispatch(getAllProducts(data));
   };
@@ -189,18 +175,21 @@ class List extends React.Component {
             // console.log(typeof active);
             let newPageNumber = parseInt(e.target.id);
             if (newPageNumber !== this.state.active) {
+              let cat = "";
+              if (this.props.search.category !== "All")
+                cat = this.props.search.category;
               const data = {
                 page: newPageNumber,
-                orderOn: "",
-                order: "",
+                orderOn: this.props.sort.sortType,
+                order: this.props.sort.sort,
                 sellerEmailId: "",
-                sellerName: "",
-                productName: "",
-                productCategory: "",
-                minPrice: "",
-                maxPrice: "",
-                minRating: "",
-                maxRating: "",
+                sellerName: this.props.search.seller,
+                productName: this.props.search.search,
+                productCategory: cat,
+                minPrice: this.props.filter.minPrice,
+                maxPrice: this.props.filter.maxPrice,
+                minRating: 0,
+                maxRating: this.props.filter.rating,
               };
               this.props.dispatch(getAllProducts(data));
             }

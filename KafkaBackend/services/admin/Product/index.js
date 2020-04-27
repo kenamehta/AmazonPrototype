@@ -1,15 +1,19 @@
 "use strict";
-const { addProductCategory } = require('./addProductCategory');
-const { deleteProductCategory } = require('./deleteProductCategory');
+const { addProductCategory } = require("./addProductCategory");
+const { deleteProductCategory } = require("./deleteProductCategory");
+const { getProductCategory } = require("./getProductCategory");
 
 function handle_request(msg, callback) {
   switch (msg.path) {
-    case "addProductCategory": 
-        addProductCategory(msg, callback);
-        break;
+    case "addProductCategory":
+      addProductCategory(msg, callback);
+      break;
+    case "getProductCategory":
+      getProductCategory(msg, callback);
+      break;
     case "deleteProductCategory":
-        deleteProductCategory(msg, callback);
-        break;
+      deleteProductCategory(msg, callback);
+      break;
   }
 }
 

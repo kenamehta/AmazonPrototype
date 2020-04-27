@@ -21,6 +21,7 @@ class Filter extends React.Component {
         max: 2500,
       },
       stars: 0,
+      starsActive0: "star-inactive",
       starsActive1: "star-inactive",
       starsActive2: "star-inactive",
       starsActive3: "star-inactive",
@@ -47,6 +48,7 @@ class Filter extends React.Component {
     let cat = "";
     if (this.state.category !== "All") cat = this.state.category;
     this.setState({
+      starsActive0: "star-inactive",
       starsActive1: "star-inactive",
       starsActive2: "star-inactive",
       starsActive3: "star-inactive",
@@ -81,11 +83,17 @@ class Filter extends React.Component {
 
     if (filter === "stars") {
       this.setState({
+        starsActive0: "star-inactive",
         starsActive1: "star-inactive",
         starsActive2: "star-inactive",
         starsActive3: "star-inactive",
         starsActive4: "star-inactive",
       });
+      if (x == 0) {
+        this.setState({
+          starsActive0: "star-active",
+        });
+      }
       if (x == 1) {
         this.setState({
           starsActive1: "star-active",
@@ -252,6 +260,27 @@ class Filter extends React.Component {
             <span
               style={{ fontSize: "14px" }}
               className={this.state.starsActive1}
+            >
+              {" "}
+              &amp; Up
+            </span>
+          </div>
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={(e) => {
+              this.applyFilter("stars", 0);
+            }}
+          >
+            <StarRatings
+              rating={0}
+              starDimension='20px'
+              starSpacing='2px'
+              starRatedColor='#FBB730'
+              starEmptyColor='#FFF'
+            />
+            <span
+              style={{ fontSize: "14px" }}
+              className={this.state.starsActive0}
             >
               {" "}
               &amp; Up

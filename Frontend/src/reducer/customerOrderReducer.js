@@ -1,5 +1,5 @@
 import {
-   GETORDERS,CANCELORDERPRODUCT,GETCANCELORDER
+   GETORDERS,CANCELORDERPRODUCT,GETCANCELORDER,GETOPENORDERS,CANCELCOMPLETEORDERS
   } from "../action/customerprofileaction/actionType";
   
   const initialState = {
@@ -9,6 +9,12 @@ import {
   export default function (state = initialState, action) {
     switch (action.type) {
       case GETORDERS:
+        return {
+          ...state,
+          orders: action.payload.data,
+        };
+        case GETOPENORDERS:
+        console.log(action.payload.data)
         return {
           ...state,
           orders: action.payload.data,
@@ -24,6 +30,12 @@ import {
             ...state,
             cancelorders: action.payload.data
           };
+          case CANCELCOMPLETEORDERS:
+            return{
+              ...state,
+              orders: action.payload.data,
+              cancelmsg:'Order Cancelled Succesfully'
+            }
       default:
         return state;
     }
