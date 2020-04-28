@@ -1,9 +1,9 @@
 "use strict";
-const category = require("../../../models/seller.model");
+const seller = require("../../../models/seller.model");
 
 const getSellerList = (msg, callback) => {
   var res = {};
-
+  console.log("hi from mehnaaz");
   seller.find({}, (err, results) => {
     if (err) {
       res.status = 500;

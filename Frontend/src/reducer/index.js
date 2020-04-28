@@ -4,10 +4,12 @@ import userReducer from "./userReducer";
 import profileReducer from "./profileReducer";
 import customerProfileReducer from "./customerProfileReducer";
 import categoryReducer from "./categoryReducer";
+import sellerReducer from "./admin/sellerReducer.js";
 import productReducer from "./productReducer";
 import savedAndCartProductReducer from "./savedAndCartProductReducer";
 import categoryReducer1 from "./admin/categoryReducer.js";
 import customerOrderReducer from "./customerOrderReducer";
+import customerCheckoutReducer from "./customerCheckoutReducer"
 
 const allReducers = combineReducers({
   userType,
@@ -16,9 +18,11 @@ const allReducers = combineReducers({
   customerProfileReducer,
   categoryReducer,
   category: categoryReducer1,
+  sellerAdmin: sellerReducer,
   product: productReducer,
   savedAndCartProductReducer,
   customerOrderReducer,
+  customerCheckoutReducer
 });
 
 export default allReducers;

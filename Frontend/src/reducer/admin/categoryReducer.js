@@ -4,11 +4,13 @@ import {
   DELETE_CATEGORY,
   CATEGORYS_LOADING,
   SET_MODAL,
+  ADD_MODAL,
 } from "./../../action/admin/types.js";
 const initialSate = {
   categorys: [],
   displayPromtmsg: "",
   modal: false,
+  addModal: false,
 };
 
 export default function (state = initialSate, action) {
@@ -36,14 +38,29 @@ export default function (state = initialSate, action) {
         return { ...state, displayPromtmsg: "CannotDelete", modal: true };
       }
     case ADD_CATEGORY:
-      return {
-        ...state,
-        categorys: [action.payload, ...state.categorys],
-      };
+      console.log("add paylod in action", action);
+      if (action.res.data == "CannotAdd") {
+        console.log("inside the add loop");
+        return {
+          ...state,
+          addModal: true,
+        };
+      } else {
+        return { ...state, categorys: [action.payload, ...state.categorys] };
+      }
+    // return {
+    //   ...state,
+    //   categorys: [action.payload, ...state.categorys],
+    // };
     case SET_MODAL:
       return {
         ...state,
         modal: !state.modal,
+      };
+    case ADD_MODAL:
+      return {
+        ...state,
+        addModal: !state.addModal,
       };
     case CATEGORYS_LOADING:
       return {
