@@ -178,7 +178,7 @@ class Topnav extends React.Component {
               >
                 My
                 <br />
-                <b>Products</b>
+                <b className="nav-text">Products</b>
               </Link>
               <NavDropdown
                 title={
@@ -186,7 +186,7 @@ class Topnav extends React.Component {
                     Hello Pranav
                     <br />
                     <span>
-                      <b>Accounts &amp; List</b>
+                      <b className="nav-text">Accounts &amp; List</b>
                     </span>
                   </div>
                 }
@@ -246,21 +246,21 @@ class Topnav extends React.Component {
                 style={{ float: "left" }}
                 className="custom-nav"
               >
-                <b>Inventory</b>
+                <b className="nav-text">Inventory</b>
               </Link>
               <Link
                 to="/admin/seller"
                 style={{ float: "left" }}
                 className="custom-nav"
               >
-                <b>Seller</b>
+                <b className="nav-text">Seller</b>
               </Link>
               <Link
                 to="/admin/profile"
                 style={{ float: "left" }}
                 className="custom-nav"
               >
-                <b>Orders</b>
+                <b className="nav-text">Orders</b>
               </Link>
 
               <NavDropdown
@@ -269,7 +269,7 @@ class Topnav extends React.Component {
                     Admin
                     <br />
                     <span>
-                      <b>Dashboard &amp; Logout</b>
+                      <b className="nav-text">Dashboard &amp; Logout</b>
                     </span>
                   </div>
                 }
@@ -338,7 +338,7 @@ class Topnav extends React.Component {
               >
                 All
                 <br />
-                <b>Products</b>
+                <b className="nav-text">Products</b>
               </Link>
               <Link
                 to="/customer/orders"
@@ -347,7 +347,7 @@ class Topnav extends React.Component {
               >
                 My
                 <br />
-                <b>Order</b>
+                <b className="nav-text">Order</b>
               </Link>
               <NavDropdown
                 className="custom-nav"
@@ -356,7 +356,7 @@ class Topnav extends React.Component {
                     Hello Pranav
                     <br />
                     <span>
-                      <b>Accounts &amp; List</b>
+                      <b className="nav-text">Accounts &amp; List</b>
                     </span>
                   </div>
                 }
