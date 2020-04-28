@@ -7,11 +7,8 @@ import ProductBuySection from "./ProductBuySection";
 import ProductReview from "./ProductReview";
 import StarRatings from "react-star-ratings";
 import ModalReview from "./AddReviewModal";
-import {
-  //Redirect,
-  Link,
-} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import UpdateProduct from "./UpdateProduct";
 import {
   getProduct,
   addComment,
@@ -29,6 +26,9 @@ class ProductPage extends React.Component {
       reviewTitle: null,
       review: null,
       errorMessage: "",
+      updateProductShow: false,
+      price: 0,
+      description: "",
     };
   }
 
@@ -67,6 +67,16 @@ class ProductPage extends React.Component {
     this.setState({
       show: true,
     });
+  };
+
+  handleUpdateClose = (updated) => {
+    console.log(updated);
+    if (updated) this.props.dispatch(getProduct(this.state.productId));
+    this.setState({ updateProductShow: false });
+  };
+
+  handleUpdateShow = () => {
+    this.setState({ updateProductShow: true });
   };
 
   onAddReview = (e) => {
@@ -120,9 +130,10 @@ class ProductPage extends React.Component {
     let price = 0;
     let description = "";
     let reviews = "";
-    let add = "";
+    let update = "";
+    let category = "";
     if (localStorage.getItem("category") == "seller") {
-      add = (
+      update = (
         <Button
           className='bluebeacon addProductButton'
           style={{
@@ -134,9 +145,9 @@ class ProductPage extends React.Component {
             position: "fixed",
             fontSize: 20 + "px",
           }}
-          onClick={this.handleShow}
+          onClick={this.handleUpdateShow}
         >
-          Add Product
+          Update Product
         </Button>
       );
     }
@@ -149,6 +160,7 @@ class ProductPage extends React.Component {
       numOfRatings = this.props.product.comments.length;
       price = this.props.product.productPrice;
       description = this.props.product.productDescription;
+      category = this.props.product.productCategory;
       reviews = this.props.product.comments.map((comment) => (
         <ProductReview key={comment._id} comment={comment}></ProductReview>
       ));
@@ -246,7 +258,16 @@ class ProductPage extends React.Component {
             {reviews}
           </Col>
         </Row>
-        {add}
+        {update}
+        <UpdateProduct
+          show={this.state.updateProductShow}
+          handleClose={this.handleUpdateClose}
+          id={this.state.productId}
+          title={title}
+          category={category}
+          price={price}
+          description={description}
+        />
       </Container>
     );
   }

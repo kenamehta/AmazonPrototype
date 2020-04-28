@@ -45,6 +45,7 @@ export default function (state = initialState, action) {
           maxPrice: "",
         },
         productSort: { sortType: "rating", sort: "desc" },
+        productSearch: { search: "", category: "", seller: "" },
       };
 
     case ALLPRODUCTS:
