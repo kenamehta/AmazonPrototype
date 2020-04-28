@@ -18,7 +18,7 @@ const initialState = {
   },
   productSearch: { search: "", category: "", seller: "" },
   productFilter: {
-    rating: 0,
+    rating: 5,
     minPrice: "",
     maxPrice: "",
   },
@@ -45,6 +45,7 @@ export default function (state = initialState, action) {
           maxPrice: "",
         },
         productSort: { sortType: "rating", sort: "desc" },
+        productSearch: { search: "", category: "", seller: "" },
       };
 
     case ALLPRODUCTS:

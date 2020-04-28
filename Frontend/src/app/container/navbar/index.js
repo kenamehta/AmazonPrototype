@@ -23,6 +23,7 @@ import {
   updateProductSort,
   updateProductFilter,
 } from "../../../action/ProductAction/productAction";
+import { getSavedAndCartProducts } from "../../../action/customer/savedAndCartProducts/getSavedAndCartProducts";
 
 class Topnav extends React.Component {
   constructor(props) {
@@ -32,6 +33,8 @@ class Topnav extends React.Component {
       category: "All",
       search: "",
       reDirect: "",
+      name: "",
+      cart: 0,
     };
   }
 
@@ -62,6 +65,15 @@ class Topnav extends React.Component {
   componentDidMount() {
     this.dispatchAction();
     this.props.getCategory();
+    this.props.getSavedAndCartProducts();
+    if (this.props.cart)
+      this.setState({
+        cart: this.props.cart.cartCnt,
+      });
+    if (this.props.custprof)
+      this.setState({
+        name: this.props.custprof.mainCustomer.name,
+      });
   }
 
   componentDidUpdate(prevProps) {
@@ -77,6 +89,16 @@ class Topnav extends React.Component {
       this.setState({
         category: "All",
         search: "",
+      });
+    }
+    if (this.props.custprof !== prevProps.custprof) {
+      this.setState({
+        name: this.props.custprof.mainCustomer.name,
+      });
+    }
+    if (this.props.cart !== prevProps.cart) {
+      this.setState({
+        cart: this.props.cart.cartCnt,
       });
     }
   }
@@ -178,15 +200,15 @@ class Topnav extends React.Component {
               >
                 My
                 <br />
-                <b>Products</b>
+                <b className='nav-text'>Products</b>
               </Link>
               <NavDropdown
                 title={
                   <div style={{ display: "inline-block" }}>
-                    Hello Pranav
+                    Hello {this.props.profile.name}
                     <br />
                     <span>
-                      <b>Accounts &amp; List</b>
+                      <b className='nav-text'>Accounts &amp; List</b>
                     </span>
                   </div>
                 }
@@ -214,8 +236,8 @@ class Topnav extends React.Component {
       } else if (localStorage.getItem("category") === "admin") {
         xnav = (
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Form inline style={{ width: 70 + "%" }}>
-              <InputGroup style={{ width: 90 + "%" }}>
+            <Form inline className='mr-auto' style={{ width: 70 + "%" }}>
+              <InputGroup style={{ width: 90 + "%", display: "none" }}>
                 <DropdownButton
                   as={InputGroup.Prepend}
                   variant='outline-secondary'
@@ -246,21 +268,21 @@ class Topnav extends React.Component {
                 style={{ float: "left" }}
                 className='custom-nav'
               >
-                <b>Inventory</b>
+                <b className='nav-text'>Inventory</b>
               </Link>
               <Link
                 to='/admin/seller'
                 style={{ float: "left" }}
                 className='custom-nav'
               >
-                <b>Seller</b>
+                <b className='nav-text'>Seller</b>
               </Link>
               <Link
                 to='/admin/profile'
                 style={{ float: "left" }}
                 className='custom-nav'
               >
-                <b>Orders</b>
+                <b className='nav-text'>Orders</b>
               </Link>
 
               <NavDropdown
@@ -269,7 +291,7 @@ class Topnav extends React.Component {
                     Admin
                     <br />
                     <span>
-                      <b>Dashboard &amp; Logout</b>
+                      <b className='nav-text'>Dashboard &amp; Logout</b>
                     </span>
                   </div>
                 }
@@ -338,7 +360,7 @@ class Topnav extends React.Component {
               >
                 All
                 <br />
-                <b>Products</b>
+                <b className='nav-text'>Products</b>
               </Link>
               <Link
                 to='/customer/orders'
@@ -347,16 +369,16 @@ class Topnav extends React.Component {
               >
                 My
                 <br />
-                <b>Order</b>
+                <b className='nav-text'>Order</b>
               </Link>
               <NavDropdown
                 className='custom-nav'
                 title={
                   <div style={{ display: "inline-block", color: "#FFF" }}>
-                    Hello Pranav
+                    Hello {this.state.name}
                     <br />
                     <span>
-                      <b>Accounts &amp; List</b>
+                      <b className='nav-text'>Accounts &amp; List</b>
                     </span>
                   </div>
                 }
@@ -379,7 +401,7 @@ class Topnav extends React.Component {
                 style={{ position: "relative", whiteSpace: "nowrap" }}
                 className='custom-nav'
               >
-                <span id='num-item'>0</span>
+                <span id='num-item'>{this.state.cart}</span>
                 <div className='cart'></div>
                 <span id='span-cart'>Cart</span>
               </Link>
@@ -429,11 +451,11 @@ class Topnav extends React.Component {
 const mapStateToProps = function (state) {
   console.log("In navbar");
   return {
-    getProfileInfo: state.getProfileInfo,
-    getType: state.getType,
-    getCompProfile: state.getCompProfile,
+    custprof: state.customerProfileReducer.profiledata.data,
+    profile: state.profile.user,
     category: state.categoryReducer.category,
     productSearch: state.product.productSearch,
+    cart: state.savedAndCartProductReducer,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -447,6 +469,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updateProductFilter(rating, minPrice, maxPrice)),
     updateProductSort: (sortType, sort) =>
       dispatch(updateProductSort(sortType, sort)),
+    getSavedAndCartProducts: () => dispatch(getSavedAndCartProducts()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

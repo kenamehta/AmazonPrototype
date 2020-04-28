@@ -13,6 +13,17 @@ class List extends React.Component {
     this.state = { active: 1 };
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.search !== prevProps.search ||
+      this.props.sort !== prevProps.sort ||
+      this.props.filter !== prevProps.filter
+    )
+      this.setState({
+        active: 1,
+      });
+  }
+
   nextPage = () => {
     this.setState({
       active: this.props.product.page + 1,
@@ -30,10 +41,15 @@ class List extends React.Component {
       productCategory: cat,
       minPrice: this.props.filter.minPrice,
       maxPrice: this.props.filter.maxPrice,
-      minRating: 0,
-      maxRating: this.props.filter.rating,
+      minRating: this.props.filter.rating,
+      maxRating: 5,
     };
     this.props.dispatch(getAllProducts(data));
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   prevPage = () => {
@@ -53,15 +69,20 @@ class List extends React.Component {
       productCategory: cat,
       minPrice: this.props.filter.minPrice,
       maxPrice: this.props.filter.maxPrice,
-      minRating: 0,
-      maxRating: this.props.filter.rating,
+      minRating: this.props.filter.rating,
+      maxRating: 5,
     };
     this.props.dispatch(getAllProducts(data));
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   };
 
   render() {
-    console.log("this.props.product in list.js in productsList");
-    console.log(this.props.product);
+    //console.log("this.props.product in list.js in productsList");
+    //console.log(this.props.product);
 
     let items = [];
 
@@ -76,7 +97,7 @@ class List extends React.Component {
       start = 1;
       end = this.state.active + 2;
 
-      if (this.props.product.pages === 1) {
+      if (this.props.product.pages < 3) {
         end = this.props.product.pages;
         pagNextButton = (
           <div className='PaginationDiv'>
@@ -188,10 +209,15 @@ class List extends React.Component {
                 productCategory: cat,
                 minPrice: this.props.filter.minPrice,
                 maxPrice: this.props.filter.maxPrice,
-                minRating: 0,
-                maxRating: this.props.filter.rating,
+                minRating: this.props.filter.rating,
+                maxRating: 5,
               };
               this.props.dispatch(getAllProducts(data));
+              window.scroll({
+                top: 0,
+                left: 0,
+                behavior: "smooth",
+              });
             }
 
             this.setState({
@@ -231,7 +257,7 @@ class List extends React.Component {
           dec = productPrice.split(".")[1];
         } else {
           num = productPrice;
-          dec = "0";
+          dec = "00";
         }
         return (
           <Col xl={2} lg={3} md={4} sm={5} xs={12} className='line'>
@@ -326,6 +352,9 @@ class List extends React.Component {
             {prevEllipsis}
             <Pagination>{items}</Pagination>
             {nextEllipsis}
+            <div className='PaginationDiv' style={{ paddingLeft: "0" }}>
+              of {this.props.product.pages}
+            </div>
             {pagNextButton}
           </Pagination>
         </Row>

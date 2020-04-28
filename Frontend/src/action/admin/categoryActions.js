@@ -4,6 +4,7 @@ import {
   DELETE_CATEGORY,
   CATEGORYS_LOADING,
   SET_MODAL,
+  ADD_MODAL,
 } from "./types.js";
 import axios from "axios";
 import configPath from "../../configApp";
@@ -31,6 +32,7 @@ export const addCategory = (category) => (dispatch) => {
       dispatch({
         type: ADD_CATEGORY,
         payload: res.data,
+        res: res,
       })
     );
 };
@@ -55,6 +57,11 @@ export const deleteCategory = (name) => (dispatch) => {
 export const setModalFalse = () => {
   return {
     type: SET_MODAL,
+  };
+};
+export const setAddModalFalse = () => {
+  return {
+    type: ADD_MODAL,
   };
 };
 export const setCategoryLoading = (item) => {

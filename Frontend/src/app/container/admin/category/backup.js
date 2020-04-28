@@ -44,7 +44,6 @@ class CategoryList extends Component {
 
   onSearch = (category) => {
     let cat = "";
-    console.log(category);
     if (category !== "All" || category !== "All Departments") cat = category;
     const data = {
       page: 1,
@@ -60,9 +59,9 @@ class CategoryList extends Component {
       maxRating: "",
     };
     this.props.dispatch(getAllProducts(data));
-    this.props.dispatch(updateProductSearch("", cat, ""));
-    this.props.dispatch(updateProductSort("rating", "desc"));
-    this.props.dispatch(updateProductFilter("", 0, 2500));
+    this.props.updateProductSearch("", cat, "");
+    this.props.updateProductSort("rating", "desc");
+    this.props.updateProductFilter("", 0, 2500);
     var path = window.location.pathname.split("/")[1];
     if (path !== "productlist" && path !== "productlisting")
       this.setState({
@@ -71,21 +70,21 @@ class CategoryList extends Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(getCategory());
+    this.props.getCategory();
   }
 
   onDeleteClick = (name) => {
-    this.props.dispatch(deleteCategory(name));
+    this.props.deleteCategory(name);
   };
 
   onSubmit = (e) => {
-    this.props.dispatch(setModalFalse());
+    this.props.setModalFalse();
   };
   onSubmit1 = (e) => {
-    this.props.dispatch(setAddModalFalse());
+    this.props.setAddModalFalse();
   };
   render() {
-    //console.log(this.props);
+    console.log(this.props);
     const { categorys } = this.props.category;
 
     return (
@@ -111,7 +110,9 @@ class CategoryList extends Component {
                   <Link
                     to="/productlist"
                     className="text-dark"
-                    onClick={this.onSearch.bind(this, name)}
+                    onClick={(name) => {
+                      this.onSearch(name);
+                    }}
                   >
                     <b>{name}</b>
                   </Link>
@@ -164,6 +165,14 @@ class CategoryList extends Component {
     );
   }
 }
+
+CategoryList.propTypes = {
+  getCategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
+  setModalFalse: PropTypes.func.isRequired,
+  setAddModalFalse: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired,
+};
 
 // const mapStateToProps = (state) =>
 //  ({
