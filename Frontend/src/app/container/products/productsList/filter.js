@@ -294,9 +294,9 @@ class Filter extends React.Component {
             maxValue={3000}
             minValue={0}
             onChange={(value) => {
-              this.applyFilter("slider", value);
+              this.setState({ price: value });
             }}
-            onChangeComplete={(value) => console.log(value)}
+            onChangeComplete={(value) => this.applyFilter("slider", value)}
             value={this.state.price}
           />
         </div>
