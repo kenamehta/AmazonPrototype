@@ -6,6 +6,7 @@ var kafka = require("kafka-node");
 */
 function ConnectionProvider() {
   this.getConsumer = function(topic_name) {
+    // const client = new kafka.KafkaClient({kafkaHost: 'kafka_server_ip:9092'});
     this.client = new kafka.KafkaClient("localhost:2181");
     //this.client = new kafka.Client("10.0.0.40:2181");
     this.kafkaConsumerConnection = new kafka.Consumer(this.client, [
@@ -21,6 +22,7 @@ function ConnectionProvider() {
   //Code will be executed when we start Producer
   this.getProducer = function() {
     if (!this.kafkaProducerConnection) {
+      // const client = new kafka.KafkaClient({kafkaHost: 'kafka_server_ip:9092'});
       this.client = new kafka.KafkaClient("localhost:2181");
       //this.client = new kafka.Client("10.0.0.40:2181");
       var HighLevelProducer = kafka.HighLevelProducer;
