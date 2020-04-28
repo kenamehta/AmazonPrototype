@@ -257,7 +257,7 @@ class List extends React.Component {
           dec = productPrice.split(".")[1];
         } else {
           num = productPrice;
-          dec = "0";
+          dec = "00";
         }
         return (
           <Col xl={2} lg={3} md={4} sm={5} xs={12} className='line'>
