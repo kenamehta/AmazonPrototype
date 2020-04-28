@@ -161,16 +161,16 @@ class Filter extends React.Component {
         </Form.Label>
         <InputGroup>
           <Form.Control
-            type='text'
-            placeholder='Seller Name'
+            type="text"
+            placeholder="Seller Name"
             onChange={(e) => {
               this.setState({ seller: e.target.value });
             }}
           />
           <InputGroup.Append>
             <Button
-              variant='outline-secondary'
-              className='sprite'
+              variant="outline-secondary"
+              className="sprite"
               onClick={this.onSearch}
             >
               <FaSearch />
@@ -189,10 +189,10 @@ class Filter extends React.Component {
           >
             <StarRatings
               rating={4}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
             <span
               style={{ fontSize: "14px" }}
@@ -210,10 +210,10 @@ class Filter extends React.Component {
           >
             <StarRatings
               rating={3}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
             <span
               style={{ fontSize: "14px" }}
@@ -231,10 +231,10 @@ class Filter extends React.Component {
           >
             <StarRatings
               rating={2}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
             <span
               style={{ fontSize: "14px" }}
@@ -252,10 +252,10 @@ class Filter extends React.Component {
           >
             <StarRatings
               rating={1}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
             <span
               style={{ fontSize: "14px" }}
@@ -273,10 +273,10 @@ class Filter extends React.Component {
           >
             <StarRatings
               rating={0}
-              starDimension='20px'
-              starSpacing='2px'
-              starRatedColor='#FBB730'
-              starEmptyColor='#FFF'
+              starDimension="20px"
+              starSpacing="2px"
+              starRatedColor="#FBB730"
+              starEmptyColor="#FFF"
             />
             <span
               style={{ fontSize: "14px" }}
@@ -294,9 +294,11 @@ class Filter extends React.Component {
             maxValue={3000}
             minValue={0}
             onChange={(value) => {
-              this.applyFilter("slider", value);
+              this.setState({
+                price: value,
+              });
             }}
-            onChangeComplete={(value) => console.log(value)}
+            onChangeComplete={(value) => this.applyFilter("slider", value)}
             value={this.state.price}
           />
         </div>

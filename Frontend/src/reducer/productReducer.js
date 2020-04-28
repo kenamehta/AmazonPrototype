@@ -18,7 +18,7 @@ const initialState = {
   },
   productSearch: { search: "", category: "", seller: "" },
   productFilter: {
-    rating: 0,
+    rating: 5,
     minPrice: "",
     maxPrice: "",
   },
