@@ -25,7 +25,7 @@ import {
 class BasicProfile extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in seller basic profile');
+    console.log("props in seller basic profile");
     console.log(props);
     this.state = {
       showEditPicButton: "none",
@@ -35,6 +35,7 @@ class BasicProfile extends React.Component {
       selectedFile: null,
       show: false,
       errorMessage: "",
+      errorMessages: "",
     };
     this.capitalize = this.capitalize.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
@@ -102,7 +103,10 @@ class BasicProfile extends React.Component {
       word = word.split(splitParam).map((eachWord) =>
         eachWord
           .split(" ")
-          .map((each) => each.charAt(0).toUpperCase() + each.substring(1))
+          .map(
+            (each) =>
+              each.charAt(0).toUpperCase() + each.substring(1).toLowerCase()
+          )
           .join(" ")
       );
       word = word.join(splitParam);
@@ -142,6 +146,294 @@ class BasicProfile extends React.Component {
     }
   };
 
+  onSave = (e) => {
+    e.preventDefault();
+
+    let {
+      name,
+      phone,
+      street,
+      city,
+      state,
+      country,
+      zipcode,
+    } = this.state.basicDetails;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US State
+    const US_States = [
+      {
+        name: "ALABAMA",
+        abbreviation: "AL",
+      },
+      {
+        name: "ALASKA",
+        abbreviation: "AK",
+      },
+      {
+        name: "ARIZONA",
+        abbreviation: "AZ",
+      },
+      {
+        name: "ARKANSAS",
+        abbreviation: "AR",
+      },
+      {
+        name: "CALIFORNIA",
+        abbreviation: "CA",
+      },
+      {
+        name: "COLORADO",
+        abbreviation: "CO",
+      },
+      {
+        name: "CONNECTICUT",
+        abbreviation: "CT",
+      },
+      {
+        name: "DELAWARE",
+        abbreviation: "DE",
+      },
+      {
+        name: "FLORIDA",
+        abbreviation: "FL",
+      },
+      {
+        name: "GEORGIA",
+        abbreviation: "GA",
+      },
+      {
+        name: "HAWAII",
+        abbreviation: "HI",
+      },
+      {
+        name: "IDAHO",
+        abbreviation: "ID",
+      },
+      {
+        name: "IILLINOIS",
+        abbreviation: "IL",
+      },
+      {
+        name: "INDIANA",
+        abbreviation: "IN",
+      },
+      {
+        name: "IOWA",
+        abbreviation: "IA",
+      },
+      {
+        name: "KANSAS",
+        abbreviation: "KS",
+      },
+      {
+        name: "KENTUCKY",
+        abbreviation: "KY",
+      },
+      {
+        name: "LOUISIANA",
+        abbreviation: "LA",
+      },
+      {
+        name: "MAINE",
+        abbreviation: "ME",
+      },
+      {
+        name: "MARYLAND",
+        abbreviation: "MD",
+      },
+      {
+        name: "MASSACHUSETTS",
+        abbreviation: "MA",
+      },
+      {
+        name: "MICHIGAN",
+        abbreviation: "MI",
+      },
+      {
+        name: "MINNESOTA",
+        abbreviation: "MN",
+      },
+      {
+        name: "MISSISSIPPI",
+        abbreviation: "MS",
+      },
+      {
+        name: "MISSOURI",
+        abbreviation: "MO",
+      },
+      {
+        name: "MONTANA",
+        abbreviation: "MT",
+      },
+      {
+        name: "NEBRASKA",
+        abbreviation: "NE",
+      },
+      {
+        name: "NEVADA",
+        abbreviation: "NV",
+      },
+      {
+        name: "NEW HAMPSHIRE",
+        abbreviation: "NH",
+      },
+      {
+        name: "NEW JERSEY",
+        abbreviation: "NJ",
+      },
+      {
+        name: "NEW MEXICO",
+        abbreviation: "NM",
+      },
+      {
+        name: "NEW YORK",
+        abbreviation: "NY",
+      },
+      {
+        name: "NORTH CAROLINA",
+        abbreviation: "NC",
+      },
+      {
+        name: "NORTH DAKOTA",
+        abbreviation: "ND",
+      },
+      {
+        name: "OHIO",
+        abbreviation: "OH",
+      },
+      {
+        name: "OKLAHOMA",
+        abbreviation: "OK",
+      },
+      {
+        name: "OREGON",
+        abbreviation: "OR",
+      },
+      {
+        name: "PENNSYLVANIA",
+        abbreviation: "PA",
+      },
+      {
+        name: "RHODE ISLAND",
+        abbreviation: "RI",
+      },
+      {
+        name: "SOUTH CAROLINA",
+        abbreviation: "SC",
+      },
+      {
+        name: "SOUTH DAKOTA",
+        abbreviation: "SD",
+      },
+      {
+        name: "TENNESSEE",
+        abbreviation: "TN",
+      },
+      {
+        name: "TEXAS",
+        abbreviation: "TX",
+      },
+      {
+        name: "UTAH",
+        abbreviation: "UT",
+      },
+      {
+        name: "VERMONT",
+        abbreviation: "VT",
+      },
+      {
+        name: "VIRGINIA",
+        abbreviation: "VA",
+      },
+      {
+        name: "WASHINGTON",
+        abbreviation: "WA",
+      },
+      {
+        name: "WEST VIRGINIA",
+        abbreviation: "WV",
+      },
+      {
+        name: "WISCONSIN",
+        abbreviation: "WI",
+      },
+      {
+        name: "WYOMING",
+        abbreviation: "WY",
+      },
+    ];
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      const data = {
+        id: localStorage.getItem("ID"),
+        emailId: localStorage.getItem("emailId"),
+        name,
+        phone,
+        street,
+        city,
+        state,
+        country,
+        zipcode,
+      };
+      //console.log(data);
+      this.props.updateSellerDetails(data);
+
+      this.setState({
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
+  };
+
   render() {
     let profilePictureUrl = configPath.api_host + "/default.png";
     if (
@@ -156,11 +448,11 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <Row style={{ position: "relative" }}>
           <Image
-            className='ProfilePicImage'
+            className="ProfilePicImage"
             src={profilePictureUrl}
-            roundedcircle='true'
+            roundedcircle="true"
           />
-          <Button className='ProfilePicButtononImage' onClick={this.handleShow}>
+          <Button className="ProfilePicButtononImage" onClick={this.handleShow}>
             <Row>
               <FaCamera size={25} style={{ margin: "0 auto" }} />
             </Row>
@@ -176,9 +468,9 @@ class BasicProfile extends React.Component {
       sellerPhoto = (
         <>
           <Image
-            className='ProfilePicImage'
+            className="ProfilePicImage"
             src={profilePictureUrl}
-            roundedcircle='true'
+            roundedcircle="true"
           />
         </>
       );
@@ -188,7 +480,7 @@ class BasicProfile extends React.Component {
     if (this.props.sellerVisitingOwnProfile) {
       button = (
         <Button
-          className='editbutton'
+          className="editbutton"
           onClick={(e) => {
             this.setState({ editNameButton: "none" });
             this.setState({ showText: "block" });
@@ -200,7 +492,7 @@ class BasicProfile extends React.Component {
     }
 
     return (
-      <Card className='ProfileCard'>
+      <Card className="ProfileCard">
         <ModalPicture
           show={this.state.show}
           close={this.handleClose}
@@ -229,11 +521,9 @@ class BasicProfile extends React.Component {
             }}
           >
             {this.capitalize(this.props.profile.street)} <br></br>
-            {`${this.capitalize(this.props.profile.city)} ${this.capitalize(
+            {`${this.capitalize(this.props.profile.city)} ${
               this.props.profile.state
-            )} ${this.capitalize(this.props.profile.country)} ${this.capitalize(
-              this.props.profile.zipcode
-            )}`}{" "}
+            } ${this.props.profile.country} ${this.props.profile.zipcode}`}{" "}
             <br></br>
             {`Phone Number: ${this.capitalize(this.props.profile.phone)}`}
           </Card.Subtitle>
@@ -247,11 +537,11 @@ class BasicProfile extends React.Component {
         >
           <Row>
             <Col md={12}>
-              <Form.Group controlId='name'>
+              <Form.Group controlId="name">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.name}
                   required
                 />
@@ -260,11 +550,11 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId='street'>
+              <Form.Group controlId="street">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.street}
                   required
                 />
@@ -273,59 +563,65 @@ class BasicProfile extends React.Component {
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId='city'>
+              <Form.Group controlId="city">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.city}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId='state'>
+              <Form.Group controlId="state">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.state}
                   required
                 />
+                <p className="state-errormessage">
+                  {this.state.errorMessages.stateErrorMessage}
+                </p>
               </Form.Group>
             </Col>
           </Row>
           <Row>
             <Col md={6}>
-              <Form.Group controlId='country'>
+              <Form.Group controlId="country">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.country}
                   required
                 />
               </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Group controlId='zipcode'>
+              <Form.Group controlId="zipcode">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.zipcode}
                   required
                 />
+                <p className="zipcode-errormessage">
+                  {this.state.errorMessages.zipCodeErrorMessage}
+                </p>
               </Form.Group>
             </Col>
           </Row>
           <Row>
             <Col md={12}>
-              <Form.Group controlId='phone'>
+              <Form.Group controlId="phone">
                 <Form.Control
                   onChange={this.onChangeHandler}
-                  type='text'
-                  className='form-control'
+                  type="text"
+                  className="form-control"
                   value={this.state.basicDetails.phone}
                   required
                 />
@@ -334,37 +630,20 @@ class BasicProfile extends React.Component {
           </Row>
           <Card.Footer style={{ textAlign: "right" }}>
             <Button
-              className='cancel'
+              className="cancel"
               onClick={(e) => {
                 e.preventDefault();
                 this.setState({
                   basicDetails: this.props.profile,
                   editNameButton: "block",
                   showText: "none",
+                  errorMessages: "",
                 });
               }}
             >
               Cancel
             </Button>
-            <Button
-              className='save'
-              onClick={(e) => {
-                e.preventDefault();
-                const data = {
-                  id: localStorage.getItem("ID"),
-                  emailId: localStorage.getItem("emailId"),
-                  name: this.state.basicDetails.name,
-                  phone: this.state.basicDetails.phone,
-                  street: this.state.basicDetails.street,
-                  city: this.state.basicDetails.city,
-                  state: this.state.basicDetails.state,
-                  country: this.state.basicDetails.country,
-                  zipcode: this.state.basicDetails.zipcode,
-                };
-                //console.log(data);
-                this.props.updateSellerDetails(data);
-              }}
-            >
+            <Button className="save" onClick={this.onSave}>
               Save
             </Button>
           </Card.Footer>
