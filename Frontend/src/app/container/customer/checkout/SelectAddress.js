@@ -19,7 +19,8 @@ class SelectAddress extends Component {
     editaddress: "",
     editedId: "",
     addSuccessMsg: "",
-    redirect: false
+    redirect: false,
+    errorMessages: "",
   };
 
   componentWillMount() {
@@ -35,42 +36,477 @@ class SelectAddress extends Component {
   deleteAddress = () => {
     let payload = {
       data: {
-        address_id: this.state.editedId
-      }
+        address_id: this.state.editedId,
+      },
     };
     this.props.deleteAddress(payload);
   };
 
-  addAddress = e => {
+  capitalize(word, splitParam = " ") {
+    if (word) {
+      word = word.split(splitParam).map((eachWord) =>
+        eachWord
+          .split(" ")
+          .map(
+            (each) =>
+              each.charAt(0).toUpperCase() + each.substring(1).toLowerCase()
+          )
+          .join(" ")
+      );
+      word = word.join(splitParam);
+      return word;
+    }
+    return "";
+  }
+
+  US_States_List() {
+    const US_States = [
+      {
+        name: "ALABAMA",
+        abbreviation: "AL",
+      },
+      {
+        name: "ALASKA",
+        abbreviation: "AK",
+      },
+      {
+        name: "ARIZONA",
+        abbreviation: "AZ",
+      },
+      {
+        name: "ARKANSAS",
+        abbreviation: "AR",
+      },
+      {
+        name: "CALIFORNIA",
+        abbreviation: "CA",
+      },
+      {
+        name: "COLORADO",
+        abbreviation: "CO",
+      },
+      {
+        name: "CONNECTICUT",
+        abbreviation: "CT",
+      },
+      {
+        name: "DELAWARE",
+        abbreviation: "DE",
+      },
+      {
+        name: "FLORIDA",
+        abbreviation: "FL",
+      },
+      {
+        name: "GEORGIA",
+        abbreviation: "GA",
+      },
+      {
+        name: "HAWAII",
+        abbreviation: "HI",
+      },
+      {
+        name: "IDAHO",
+        abbreviation: "ID",
+      },
+      {
+        name: "IILLINOIS",
+        abbreviation: "IL",
+      },
+      {
+        name: "INDIANA",
+        abbreviation: "IN",
+      },
+      {
+        name: "IOWA",
+        abbreviation: "IA",
+      },
+      {
+        name: "KANSAS",
+        abbreviation: "KS",
+      },
+      {
+        name: "KENTUCKY",
+        abbreviation: "KY",
+      },
+      {
+        name: "LOUISIANA",
+        abbreviation: "LA",
+      },
+      {
+        name: "MAINE",
+        abbreviation: "ME",
+      },
+      {
+        name: "MARYLAND",
+        abbreviation: "MD",
+      },
+      {
+        name: "MASSACHUSETTS",
+        abbreviation: "MA",
+      },
+      {
+        name: "MICHIGAN",
+        abbreviation: "MI",
+      },
+      {
+        name: "MINNESOTA",
+        abbreviation: "MN",
+      },
+      {
+        name: "MISSISSIPPI",
+        abbreviation: "MS",
+      },
+      {
+        name: "MISSOURI",
+        abbreviation: "MO",
+      },
+      {
+        name: "MONTANA",
+        abbreviation: "MT",
+      },
+      {
+        name: "NEBRASKA",
+        abbreviation: "NE",
+      },
+      {
+        name: "NEVADA",
+        abbreviation: "NV",
+      },
+      {
+        name: "NEW HAMPSHIRE",
+        abbreviation: "NH",
+      },
+      {
+        name: "NEW JERSEY",
+        abbreviation: "NJ",
+      },
+      {
+        name: "NEW MEXICO",
+        abbreviation: "NM",
+      },
+      {
+        name: "NEW YORK",
+        abbreviation: "NY",
+      },
+      {
+        name: "NORTH CAROLINA",
+        abbreviation: "NC",
+      },
+      {
+        name: "NORTH DAKOTA",
+        abbreviation: "ND",
+      },
+      {
+        name: "OHIO",
+        abbreviation: "OH",
+      },
+      {
+        name: "OKLAHOMA",
+        abbreviation: "OK",
+      },
+      {
+        name: "OREGON",
+        abbreviation: "OR",
+      },
+      {
+        name: "PENNSYLVANIA",
+        abbreviation: "PA",
+      },
+      {
+        name: "RHODE ISLAND",
+        abbreviation: "RI",
+      },
+      {
+        name: "SOUTH CAROLINA",
+        abbreviation: "SC",
+      },
+      {
+        name: "SOUTH DAKOTA",
+        abbreviation: "SD",
+      },
+      {
+        name: "TENNESSEE",
+        abbreviation: "TN",
+      },
+      {
+        name: "TEXAS",
+        abbreviation: "TX",
+      },
+      {
+        name: "UTAH",
+        abbreviation: "UT",
+      },
+      {
+        name: "VERMONT",
+        abbreviation: "VT",
+      },
+      {
+        name: "VIRGINIA",
+        abbreviation: "VA",
+      },
+      {
+        name: "WASHINGTON",
+        abbreviation: "WA",
+      },
+      {
+        name: "WEST VIRGINIA",
+        abbreviation: "WV",
+      },
+      {
+        name: "WISCONSIN",
+        abbreviation: "WI",
+      },
+      {
+        name: "WYOMING",
+        abbreviation: "WY",
+      },
+    ];
+
+    return US_States;
+  }
+
+  addAddress = (e) => {
     e.preventDefault();
     e.target.reset();
-    let payload = {
-      addressName: this.state.name,
-      street: this.state.street,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      zipcode: this.state.zipcode,
-      phone: this.state.phone
-    };
 
-    this.props.addAddress(payload);
+    let { name, street, city, state, country, zipcode, phone } = this.state;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US states
+    const US_States = this.US_States_List();
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      let payload = {
+        addressName: name,
+        street,
+        city,
+        state,
+        country,
+        zipcode,
+        phone,
+      };
+
+      this.props.addAddress(payload);
+
+      this.setState({
+        modalSelected: "block",
+        displayAddress: "none",
+        modalShow: "none",
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
   };
 
-  editAddress = e => {
+  addressNotAdded = (e) => {
     e.preventDefault();
-    let payload = {
-      address_id: this.state.editedId,
-      addressName: this.state.name,
-      street: this.state.street,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      zipcode: this.state.zipcode,
-      phone: this.state.phone
-    };
 
-    this.props.addAddress(payload);
+    let { name, street, city, state, country, zipcode, phone } = this.state;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US states
+    const US_States = this.US_States_List();
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      this.setState({
+        modalSelected: "block",
+        displayAddress: "none",
+        modalShow: "none",
+        addressNameSel: this.state.addressName,
+        streetSel: this.state.street,
+        citySel: this.state.city,
+        stateSel: this.state.state,
+        countrySel: this.state.country,
+        zipcodeSel: this.state.zipcode,
+        phoneSel: this.state.phone,
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
+  };
+
+  editAddress = (e) => {
+    e.preventDefault();
+
+    let {
+      editedId,
+      name,
+      street,
+      city,
+      state,
+      country,
+      zipcode,
+      phone,
+    } = this.state;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US states
+    const US_States = this.US_States_List();
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      let payload = {
+        address_id: editedId,
+        addressName: name,
+        street,
+        city,
+        state,
+        country,
+        zipcode,
+        phone,
+      };
+
+      this.props.addAddress(payload);
+
+      this.setState({
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
   };
 
   render() {
@@ -95,7 +531,7 @@ class SelectAddress extends Component {
             <div className="container">
               <span
                 className="close image-edit-avatar"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ redirect: true });
                 }}
               >
@@ -123,31 +559,30 @@ class SelectAddress extends Component {
 
             {/*block to place order*/}
             <div className="m-3">
-              {this.props.paymentSelectModal === "block" ? this.state
-                .modalSelected === "block" ? (
-                <div
-                  className="a-button a-button-primary-proceed a-spacing-medium"
-                  onClick={() => {
-                    this.setState({ modalOrder: "block" });
-                    this.props.proceedToOrder({
-                      Address_details: `${this.state.streetSel},${this.state
-                        .stateSel},${this.state.countrySel},${this.state
-                        .zipcodeSel}`,
-                      payment: {
-                        cardName: this.props.cardName,
-                        cardNumber: this.props.cardNumber,
-                        expirationDate: this.props.expirationDate,
-                        cvv: this.props.cvv
-                      }
-                    });
-                  }}
-                >
-                  <span className="proceed-order-text-style">
-                    Proceed to Order
-                  </span>
-                </div>
-              ) : (
-                ""
+              {this.props.paymentSelectModal === "block" ? (
+                this.state.modalSelected === "block" ? (
+                  <div
+                    className="a-button a-button-primary-proceed a-spacing-medium"
+                    onClick={() => {
+                      this.setState({ modalOrder: "block" });
+                      this.props.proceedToOrder({
+                        Address_details: `${this.state.streetSel},${this.state.stateSel},${this.state.countrySel},${this.state.zipcodeSel}`,
+                        payment: {
+                          cardName: this.props.cardName,
+                          cardNumber: this.props.cardNumber,
+                          expirationDate: this.props.expirationDate,
+                          cvv: this.props.cvv,
+                        },
+                      });
+                    }}
+                  >
+                    <span className="proceed-order-text-style">
+                      Proceed to Order
+                    </span>
+                  </div>
+                ) : (
+                  ""
+                )
               ) : (
                 ""
               )}
@@ -157,10 +592,14 @@ class SelectAddress extends Component {
           <div className="col-3 mx-3 rest-desktop-address-tile-checkout-selected">
             <div style={{ height: "153px" }}>
               <div className="" style={{ fontSize: "16px", fontWeight: "700" }}>
-                {this.state.addressNameSel}
+                {this.capitalize(this.state.addressNameSel)}
               </div>
-              <div style={{ fontSize: "13px" }}>{this.state.streetSel}</div>
-              <div style={{ fontSize: "13px" }}>{this.state.citySel}</div>
+              <div style={{ fontSize: "13px" }}>
+                {this.capitalize(this.state.streetSel)}
+              </div>
+              <div style={{ fontSize: "13px" }}>
+                {this.capitalize(this.state.citySel)}
+              </div>
               <div style={{ fontSize: "13px" }}>{this.state.stateSel}</div>
               <div style={{ fontSize: "13px" }}>{this.state.countrySel}</div>
               <div style={{ fontSize: "13px" }}>
@@ -176,7 +615,7 @@ class SelectAddress extends Component {
                 onClick={() => {
                   this.setState({
                     modalSelected: "none",
-                    displayAddress: "block"
+                    displayAddress: "block",
                   });
                 }}
               >
@@ -198,7 +637,7 @@ class SelectAddress extends Component {
             <div className="d-flex scroll">
               <div
                 className="col-3 mx-3 image-edit-avatar first-desktop-address-tile-checkout align-content-center"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ modalShow: "block" });
                 }}
               >
@@ -209,7 +648,7 @@ class SelectAddress extends Component {
                 </div>
               </div>
 
-              {this.props.addressArray.addresses.map(address => (
+              {this.props.addressArray.addresses.map((address) => (
                 <div
                   className="col-3 rest-desktop-address-tile-checkout"
                   key={address._id}
@@ -219,10 +658,14 @@ class SelectAddress extends Component {
                       className=""
                       style={{ fontSize: "16px", fontWeight: "700" }}
                     >
-                      {address.addressName}
+                      {this.capitalize(address.addressName)}
                     </div>
-                    <div style={{ fontSize: "13px" }}>{address.street}</div>
-                    <div style={{ fontSize: "13px" }}>{address.city}</div>
+                    <div style={{ fontSize: "13px" }}>
+                      {this.capitalize(address.street)}
+                    </div>
+                    <div style={{ fontSize: "13px" }}>
+                      {this.capitalize(address.city)}
+                    </div>
                     <div style={{ fontSize: "13px" }}>{address.state}</div>
                     <div style={{ fontSize: "13px" }}>{address.country}</div>
                     <div style={{ fontSize: "13px" }}>
@@ -245,7 +688,7 @@ class SelectAddress extends Component {
                           stateSel: address.state,
                           countrySel: address.country,
                           zipcodeSel: address.zipcode,
-                          phoneSel: address.phone
+                          phoneSel: address.phone,
                         });
                       }}
                     >
@@ -256,7 +699,7 @@ class SelectAddress extends Component {
                     <div className="edit-button-style">
                       <div
                         className="btn button-style-edit button-style-edit-delete"
-                        onClick={e => {
+                        onClick={(e) => {
                           this.setState({ modalShowEdit: "block" });
                           this.setState({ editaddress: address });
                           this.setState({ editedId: address._id }, () => {
@@ -271,7 +714,7 @@ class SelectAddress extends Component {
                     <div className="delete-button-style">
                       <div
                         className="btn button-style-delete button-style-edit-delete"
-                        onClick={e => {
+                        onClick={(e) => {
                           this.setState({ editedId: address._id }, () => {
                             this.deleteAddress();
                             console.log(this.state.editedId);
@@ -303,7 +746,7 @@ class SelectAddress extends Component {
               <div className="container">
                 <span
                   className="close image-edit-avatar"
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({ modalShow: "none" });
                     this.setState({ addSuccessMsg: "" });
                   }}
@@ -331,7 +774,7 @@ class SelectAddress extends Component {
                       name="name"
                       className="form-control"
                       placeholder="Enter Name"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ name: e.target.value });
                       }}
                       required
@@ -343,7 +786,7 @@ class SelectAddress extends Component {
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         Street
@@ -354,7 +797,7 @@ class SelectAddress extends Component {
                       style={{
                         fontWeight: "500",
                         fontSize: "13px",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Please enter Street
@@ -365,7 +808,7 @@ class SelectAddress extends Component {
                       name="street"
                       className="form-control"
                       placeholder="Eg. 190 Ryland Street"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ street: e.target.value });
                       }}
                       required
@@ -376,7 +819,7 @@ class SelectAddress extends Component {
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         State
@@ -387,17 +830,20 @@ class SelectAddress extends Component {
                         name="state"
                         className="form-control"
                         placeholder="Eg. California"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ state: e.target.value });
                         }}
                         required
                       />
+                      <p className="state-errormessage">
+                        {this.state.errorMessages.stateErrorMessage}
+                      </p>
                     </div>
                     <div className="form-group col-md-6">
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         Country
@@ -408,9 +854,9 @@ class SelectAddress extends Component {
                         name="country"
                         className="form-control"
                         placeholder="Eg. USA"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
-                            country: e.target.value
+                            country: e.target.value,
                           });
                         }}
                         required
@@ -430,7 +876,7 @@ class SelectAddress extends Component {
                         name="city"
                         className="form-control"
                         placeholder="Enter city"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ city: e.target.value });
                         }}
                         required
@@ -443,16 +889,18 @@ class SelectAddress extends Component {
                         Zipcode
                       </label>
                       <input
-                        type="number"
                         id="zipcode"
                         name="zipcode"
                         className="form-control"
                         placeholder="Enter Zipcode"
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ zipcode: e.target.value });
                         }}
                         required
                       />
+                      <p className="zipcode-errormessage">
+                        {this.state.errorMessages.zipCodeErrorMessage}
+                      </p>
                     </div>
                   </div>
                   <div className="form-group col-md-11">
@@ -465,7 +913,7 @@ class SelectAddress extends Component {
                       name="phnumber"
                       className="form-control"
                       placeholder="Enter Phone number"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ phone: e.target.value });
                       }}
                       required
@@ -476,16 +924,13 @@ class SelectAddress extends Component {
                       type="submit"
                       onClick={() => {
                         this.setState({
-                          modalSelected: "block",
-                          displayAddress: "none",
-                          modalShow: "none",
                           addressNameSel: this.state.addressName,
                           streetSel: this.state.street,
                           citySel: this.state.city,
                           stateSel: this.state.state,
                           countrySel: this.state.country,
                           zipcodeSel: this.state.zipcode,
-                          phoneSel: this.state.phone
+                          phoneSel: this.state.phone,
                         });
                       }}
                       value="Add and Select"
@@ -495,20 +940,7 @@ class SelectAddress extends Component {
                       type="button"
                       value="Select without adding"
                       className="btn btn sprite"
-                      onClick={() => {
-                        this.setState({
-                          modalSelected: "block",
-                          displayAddress: "none",
-                          modalShow: "none",
-                          addressNameSel: this.state.addressName,
-                          streetSel: this.state.street,
-                          citySel: this.state.city,
-                          stateSel: this.state.state,
-                          countrySel: this.state.country,
-                          zipcodeSel: this.state.zipcode,
-                          phoneSel: this.state.phone
-                        });
-                      }}
+                      onClick={this.addressNotAdded}
                     />
                   </div>
                 </form>
@@ -530,7 +962,7 @@ class SelectAddress extends Component {
               <div className="container">
                 <span
                   className="close image-edit-avatar"
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({ modalShowEdit: "none" });
                     this.setState({ addSuccessMsg: "" });
                   }}
@@ -558,7 +990,7 @@ class SelectAddress extends Component {
                       name="name"
                       className="form-control"
                       placeholder={this.state.editaddress.addressName}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ name: e.target.value });
                       }}
                     />
@@ -569,7 +1001,7 @@ class SelectAddress extends Component {
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         Street
@@ -580,7 +1012,7 @@ class SelectAddress extends Component {
                       style={{
                         fontWeight: "500",
                         fontSize: "13px",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Please enter Street
@@ -591,7 +1023,7 @@ class SelectAddress extends Component {
                       name="street"
                       className="form-control"
                       placeholder={this.state.editaddress.street}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ street: e.target.value });
                       }}
                     />
@@ -601,7 +1033,7 @@ class SelectAddress extends Component {
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         State
@@ -612,7 +1044,7 @@ class SelectAddress extends Component {
                         name="state"
                         className="form-control"
                         placeholder={this.state.editaddress.state}
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ state: e.target.value });
                         }}
                       />
@@ -621,7 +1053,7 @@ class SelectAddress extends Component {
                       <label
                         style={{
                           fontWeight: "bold",
-                          marginBottom: "5px"
+                          marginBottom: "5px",
                         }}
                       >
                         Country
@@ -632,9 +1064,9 @@ class SelectAddress extends Component {
                         name="country"
                         className="form-control"
                         placeholder={this.state.editaddress.country}
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({
-                            country: e.target.value
+                            country: e.target.value,
                           });
                         }}
                       />
@@ -653,7 +1085,7 @@ class SelectAddress extends Component {
                         name="city"
                         className="form-control"
                         placeholder={this.state.editaddress.city}
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ city: e.target.value });
                         }}
                       />
@@ -670,7 +1102,7 @@ class SelectAddress extends Component {
                         name="zipcode"
                         className="form-control"
                         placeholder={this.state.editaddress.zipcode}
-                        onChange={e => {
+                        onChange={(e) => {
                           this.setState({ zipcode: e.target.value });
                         }}
                       />
@@ -686,7 +1118,7 @@ class SelectAddress extends Component {
                       name="phnumber"
                       className="form-control"
                       placeholder={this.state.editaddress.phone}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ phone: e.target.value });
                       }}
                     />
@@ -705,7 +1137,7 @@ class SelectAddress extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state);
   return {
     paymentSelectModal: state.customerProfileReducer.paymentSelectModal,
@@ -713,7 +1145,7 @@ const mapStateToProps = state => {
     cardNumber: state.customerProfileReducer.cardNumber,
     expirationDate: state.customerProfileReducer.expirationDate,
     cvv: state.customerProfileReducer.cvv,
-    status: state.customerCheckoutReducer.status
+    status: state.customerCheckoutReducer.status,
   };
 };
 export default connect(mapStateToProps)(SelectAddress);
