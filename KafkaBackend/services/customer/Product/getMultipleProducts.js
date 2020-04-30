@@ -1,6 +1,6 @@
 "use strict";
 const product = require("../../../models/product.model");
-//const redisClient = require("../../../redisConfig");
+// const redisClient = require("../../../redisConfig");
 
 // need to assume limit is fixed
 const getMultipleProducts = (msg, callback) => {
