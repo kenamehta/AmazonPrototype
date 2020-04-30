@@ -180,22 +180,22 @@ const getMultipleProducts = (msg, callback) => {
       });
     }
 
-  console.log("Filter:");
-  console.log(filter);
-  console.log("options:");
-  console.log(options);
+    console.log("Filter:");
+    console.log(filter);
+    console.log("options:");
+    console.log(options);
 
-  product.paginate(filter, options, (err, results) => {
-    if (err) {
-      res.status = 500;
-      res.message = "Database Error";
+    product.paginate(filter, options, (err, results) => {
+      if (err) {
+        res.status = 500;
+        res.message = "Database Error";
+        callback(null, res);
+      }
+      res.status = 200;
+      res.message = results;
       callback(null, res);
-    }
-    res.status = 200;
-    res.message = results;
-    callback(null, res);
-  });
-  //  }
+    });
+  // }
 };
 
 exports.getMultipleProducts = getMultipleProducts;
