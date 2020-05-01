@@ -9,7 +9,7 @@ router.get("/getSellerList", (req, res) => {
   console.log(req.body);
 
   req.body.path = "getSellerList";
-  kafka.make_request("getSellerList", req.body, function (err, results) {
+  kafka.make_request("adminSellerService", req.body, function (err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {

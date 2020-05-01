@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   addAddress,
   deleteAddress,
-  getAddress
+  getAddress,
 } from "../../../../action/customerprofileaction/profileAction";
 
 class SavedAddress extends Component {
@@ -20,7 +20,8 @@ class SavedAddress extends Component {
     phone: "",
     editaddress: "",
     editedId: "",
-    addSuccessMsg: ""
+    addSuccessMsg: "",
+    errorMessages: "",
   };
 
   componentWillMount() {
@@ -36,41 +37,398 @@ class SavedAddress extends Component {
   deleteAddress = () => {
     let payload = {
       data: {
-        address_id: this.state.editedId
-      }
+        address_id: this.state.editedId,
+      },
     };
     this.props.deleteAddress(payload);
   };
 
-  addAddress = e => {
-    e.preventDefault();
-    let payload = {
-      addressName: this.state.name,
-      street: this.state.street,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      zipcode: this.state.zipcode,
-      phone: this.state.phone
-    };
+  capitalize(word, splitParam = " ") {
+    if (word) {
+      word = word.split(splitParam).map((eachWord) =>
+        eachWord
+          .split(" ")
+          .map(
+            (each) =>
+              each.charAt(0).toUpperCase() + each.substring(1).toLowerCase()
+          )
+          .join(" ")
+      );
+      word = word.join(splitParam);
+      return word;
+    }
+    return "";
+  }
 
-    this.props.addAddress(payload);
+  US_States_List() {
+    const US_States = [
+      {
+        name: "ALABAMA",
+        abbreviation: "AL",
+      },
+      {
+        name: "ALASKA",
+        abbreviation: "AK",
+      },
+      {
+        name: "ARIZONA",
+        abbreviation: "AZ",
+      },
+      {
+        name: "ARKANSAS",
+        abbreviation: "AR",
+      },
+      {
+        name: "CALIFORNIA",
+        abbreviation: "CA",
+      },
+      {
+        name: "COLORADO",
+        abbreviation: "CO",
+      },
+      {
+        name: "CONNECTICUT",
+        abbreviation: "CT",
+      },
+      {
+        name: "DELAWARE",
+        abbreviation: "DE",
+      },
+      {
+        name: "FLORIDA",
+        abbreviation: "FL",
+      },
+      {
+        name: "GEORGIA",
+        abbreviation: "GA",
+      },
+      {
+        name: "HAWAII",
+        abbreviation: "HI",
+      },
+      {
+        name: "IDAHO",
+        abbreviation: "ID",
+      },
+      {
+        name: "IILLINOIS",
+        abbreviation: "IL",
+      },
+      {
+        name: "INDIANA",
+        abbreviation: "IN",
+      },
+      {
+        name: "IOWA",
+        abbreviation: "IA",
+      },
+      {
+        name: "KANSAS",
+        abbreviation: "KS",
+      },
+      {
+        name: "KENTUCKY",
+        abbreviation: "KY",
+      },
+      {
+        name: "LOUISIANA",
+        abbreviation: "LA",
+      },
+      {
+        name: "MAINE",
+        abbreviation: "ME",
+      },
+      {
+        name: "MARYLAND",
+        abbreviation: "MD",
+      },
+      {
+        name: "MASSACHUSETTS",
+        abbreviation: "MA",
+      },
+      {
+        name: "MICHIGAN",
+        abbreviation: "MI",
+      },
+      {
+        name: "MINNESOTA",
+        abbreviation: "MN",
+      },
+      {
+        name: "MISSISSIPPI",
+        abbreviation: "MS",
+      },
+      {
+        name: "MISSOURI",
+        abbreviation: "MO",
+      },
+      {
+        name: "MONTANA",
+        abbreviation: "MT",
+      },
+      {
+        name: "NEBRASKA",
+        abbreviation: "NE",
+      },
+      {
+        name: "NEVADA",
+        abbreviation: "NV",
+      },
+      {
+        name: "NEW HAMPSHIRE",
+        abbreviation: "NH",
+      },
+      {
+        name: "NEW JERSEY",
+        abbreviation: "NJ",
+      },
+      {
+        name: "NEW MEXICO",
+        abbreviation: "NM",
+      },
+      {
+        name: "NEW YORK",
+        abbreviation: "NY",
+      },
+      {
+        name: "NORTH CAROLINA",
+        abbreviation: "NC",
+      },
+      {
+        name: "NORTH DAKOTA",
+        abbreviation: "ND",
+      },
+      {
+        name: "OHIO",
+        abbreviation: "OH",
+      },
+      {
+        name: "OKLAHOMA",
+        abbreviation: "OK",
+      },
+      {
+        name: "OREGON",
+        abbreviation: "OR",
+      },
+      {
+        name: "PENNSYLVANIA",
+        abbreviation: "PA",
+      },
+      {
+        name: "RHODE ISLAND",
+        abbreviation: "RI",
+      },
+      {
+        name: "SOUTH CAROLINA",
+        abbreviation: "SC",
+      },
+      {
+        name: "SOUTH DAKOTA",
+        abbreviation: "SD",
+      },
+      {
+        name: "TENNESSEE",
+        abbreviation: "TN",
+      },
+      {
+        name: "TEXAS",
+        abbreviation: "TX",
+      },
+      {
+        name: "UTAH",
+        abbreviation: "UT",
+      },
+      {
+        name: "VERMONT",
+        abbreviation: "VT",
+      },
+      {
+        name: "VIRGINIA",
+        abbreviation: "VA",
+      },
+      {
+        name: "WASHINGTON",
+        abbreviation: "WA",
+      },
+      {
+        name: "WEST VIRGINIA",
+        abbreviation: "WV",
+      },
+      {
+        name: "WISCONSIN",
+        abbreviation: "WI",
+      },
+      {
+        name: "WYOMING",
+        abbreviation: "WY",
+      },
+    ];
+
+    return US_States;
+  }
+
+  addAddress = (e) => {
+    e.preventDefault();
+
+    let { name, street, city, state, country, zipcode, phone } = this.state;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US states
+    const US_States = this.US_States_List();
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      let payload = {
+        addressName: name,
+        street,
+        city,
+        state,
+        country,
+        zipcode,
+        phone,
+      };
+
+      this.props.addAddress(payload);
+
+      this.setState({
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
   };
 
-  editAddress = e => {
+  editAddress = (e) => {
     e.preventDefault();
-    let payload = {
-      address_id: this.state.editedId,
-      addressName: this.state.name,
-      street: this.state.street,
-      city: this.state.city,
-      state: this.state.state,
-      country: this.state.country,
-      zipcode: this.state.zipcode,
-      phone: this.state.phone
-    };
 
-    this.props.addAddress(payload);
+    let {
+      editedId,
+      name,
+      street,
+      city,
+      state,
+      country,
+      zipcode,
+      phone,
+    } = this.state;
+
+    name = name.trim();
+    phone = phone.trim();
+    street = street.trim();
+    city = city.trim();
+    state = state.trim();
+    country = country.trim();
+    zipcode = zipcode.trim();
+
+    let stateErrorMessage = "";
+    let zipCodeErrorMessage = "";
+
+    //Check US states
+    const US_States = this.US_States_List();
+
+    if (state === "") {
+      stateErrorMessage = "Required. Enter State.";
+    }
+
+    let result = US_States.find((us_state) => {
+      return (
+        state.toUpperCase() === us_state.name ||
+        state.toUpperCase() === us_state.abbreviation
+      );
+    });
+
+    if (result === undefined) {
+      stateErrorMessage = "Not a valid state.";
+    }
+
+    // Check zipcode
+    const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
+
+    if (zipcode === "") {
+      zipCodeErrorMessage = "Required. Enter Zip Code.";
+    } else if (!zipCodePatt.test(zipcode)) {
+      zipCodeErrorMessage = "Not a valid zip code format.";
+    }
+
+    if (stateErrorMessage === "" && zipCodeErrorMessage === "") {
+      if (state.length === 2) {
+        state = state.toUpperCase();
+      } else {
+        state = this.capitalize(state);
+      }
+
+      country = country.toUpperCase();
+
+      let payload = {
+        address_id: editedId,
+        addressName: name,
+        street,
+        city,
+        state,
+        country,
+        zipcode,
+        phone,
+      };
+
+      this.props.addAddress(payload);
+
+      this.setState({
+        errorMessages: "",
+      });
+    } else {
+      this.setState({
+        errorMessages: {
+          stateErrorMessage,
+          zipCodeErrorMessage,
+        },
+      });
+    }
   };
 
   render() {
@@ -81,7 +439,7 @@ class SavedAddress extends Component {
           <div className="my-4 d-flex scroll">
             <div
               className="col-3 mx-3 image-edit-avatar first-desktop-address-tile align-content-center"
-              onClick={e => {
+              onClick={(e) => {
                 this.setState({ modalShow: "block" });
               }}
             >
@@ -91,7 +449,7 @@ class SavedAddress extends Component {
                 <h3 style={{ color: "#767676" }}>Add Address</h3>
               </div>
             </div>
-            {this.props.addressArray.addresses.map(address => (
+            {this.props.addressArray.addresses.map((address) => (
               <div
                 className="col-3 mx-3 rest-desktop-address-tile"
                 key={address._id}
@@ -100,10 +458,14 @@ class SavedAddress extends Component {
                   className="pt-4"
                   style={{ fontSize: "13px", fontWeight: "700" }}
                 >
-                  {address.addressName}
+                  {this.capitalize(address.addressName)}
                 </h5>
-                <h5 style={{ fontSize: "13px" }}>{address.street}</h5>
-                <h5 style={{ fontSize: "13px" }}>{address.city}</h5>
+                <h5 style={{ fontSize: "13px" }}>
+                  {this.capitalize(address.street)}
+                </h5>
+                <h5 style={{ fontSize: "13px" }}>
+                  {this.capitalize(address.city)}
+                </h5>
                 <h5 style={{ fontSize: "13px" }}>{address.state}</h5>
                 <h5 style={{ fontSize: "13px" }}>{address.country}</h5>
                 <h5 style={{ fontSize: "13px" }}>Zip: {address.zipcode}</h5>
@@ -116,9 +478,9 @@ class SavedAddress extends Component {
                     fontSize: "13px",
                     bottom: "20px",
                     left: "22px",
-                    position: "absolute"
+                    position: "absolute",
                   }}
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({ modalShowEdit: "block" });
                     this.setState({ editaddress: address });
                     this.setState({ editedId: address._id }, () => {
@@ -135,9 +497,9 @@ class SavedAddress extends Component {
                     fontSize: "13px",
                     bottom: "20px",
                     left: "62px",
-                    position: "absolute"
+                    position: "absolute",
                   }}
-                  onClick={e => {
+                  onClick={(e) => {
                     this.setState({ editedId: address._id }, () => {
                       this.deleteAddress();
                       console.log(this.state.editedId);
@@ -164,7 +526,7 @@ class SavedAddress extends Component {
             <div className="container">
               <span
                 className="close image-edit-avatar"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ modalShow: "none" });
                   this.setState({ addSuccessMsg: "" });
                 }}
@@ -192,7 +554,7 @@ class SavedAddress extends Component {
                     name="name"
                     className="form-control"
                     placeholder="Enter Name"
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ name: e.target.value });
                     }}
                     required
@@ -204,7 +566,7 @@ class SavedAddress extends Component {
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Street
@@ -215,7 +577,7 @@ class SavedAddress extends Component {
                     style={{
                       fontWeight: "500",
                       fontSize: "13px",
-                      marginBottom: "5px"
+                      marginBottom: "5px",
                     }}
                   >
                     Please enter Street
@@ -226,7 +588,7 @@ class SavedAddress extends Component {
                     name="street"
                     className="form-control"
                     placeholder="Eg. 190 Ryland Street"
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ street: e.target.value });
                     }}
                     required
@@ -237,7 +599,7 @@ class SavedAddress extends Component {
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       State
@@ -248,17 +610,20 @@ class SavedAddress extends Component {
                       name="state"
                       className="form-control"
                       placeholder="Eg. California"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ state: e.target.value });
                       }}
                       required
                     />
+                    <p className="state-errormessage">
+                      {this.state.errorMessages.stateErrorMessage}
+                    </p>
                   </div>
                   <div className="form-group col-md-6">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Country
@@ -269,9 +634,9 @@ class SavedAddress extends Component {
                       name="country"
                       className="form-control"
                       placeholder="Eg. USA"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({
-                          country: e.target.value
+                          country: e.target.value,
                         });
                       }}
                       required
@@ -289,7 +654,7 @@ class SavedAddress extends Component {
                       name="city"
                       className="form-control"
                       placeholder="Enter city"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ city: e.target.value });
                       }}
                       required
@@ -300,16 +665,18 @@ class SavedAddress extends Component {
                       Zipcode
                     </label>
                     <input
-                      type="number"
                       id="zipcode"
                       name="zipcode"
                       className="form-control"
                       placeholder="Enter Zipcode"
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ zipcode: e.target.value });
                       }}
                       required
                     />
+                    <p className="zipcode-errormessage">
+                      {this.state.errorMessages.zipCodeErrorMessage}
+                    </p>
                   </div>
                 </div>
                 <div className="form-group col-md-11">
@@ -322,7 +689,7 @@ class SavedAddress extends Component {
                     name="phnumber"
                     className="form-control"
                     placeholder="Enter Phone number"
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ phone: e.target.value });
                     }}
                     required
@@ -348,7 +715,7 @@ class SavedAddress extends Component {
             <div className="container">
               <span
                 className="close image-edit-avatar"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ modalShowEdit: "none" });
                   this.setState({ addSuccessMsg: "" });
                 }}
@@ -376,7 +743,7 @@ class SavedAddress extends Component {
                     name="name"
                     className="form-control"
                     placeholder={this.state.editaddress.addressName}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ name: e.target.value });
                     }}
                   />
@@ -387,7 +754,7 @@ class SavedAddress extends Component {
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Street
@@ -398,7 +765,7 @@ class SavedAddress extends Component {
                     style={{
                       fontWeight: "500",
                       fontSize: "13px",
-                      marginBottom: "5px"
+                      marginBottom: "5px",
                     }}
                   >
                     Please enter Street
@@ -409,7 +776,7 @@ class SavedAddress extends Component {
                     name="street"
                     className="form-control"
                     placeholder={this.state.editaddress.street}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ street: e.target.value });
                     }}
                   />
@@ -419,7 +786,7 @@ class SavedAddress extends Component {
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       State
@@ -430,16 +797,19 @@ class SavedAddress extends Component {
                       name="state"
                       className="form-control"
                       placeholder={this.state.editaddress.state}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ state: e.target.value });
                       }}
                     />
+                    <p className="state-errormessage">
+                      {this.state.errorMessages.stateErrorMessage}
+                    </p>
                   </div>
                   <div className="form-group col-md-6">
                     <label
                       style={{
                         fontWeight: "bold",
-                        marginBottom: "5px"
+                        marginBottom: "5px",
                       }}
                     >
                       Country
@@ -450,9 +820,9 @@ class SavedAddress extends Component {
                       name="country"
                       className="form-control"
                       placeholder={this.state.editaddress.country}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({
-                          country: e.target.value
+                          country: e.target.value,
                         });
                       }}
                     />
@@ -469,7 +839,7 @@ class SavedAddress extends Component {
                       name="city"
                       className="form-control"
                       placeholder={this.state.editaddress.city}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ city: e.target.value });
                       }}
                     />
@@ -479,15 +849,17 @@ class SavedAddress extends Component {
                       Zipcode
                     </label>
                     <input
-                      type="number"
                       id="zipcode"
                       name="zipcode"
                       className="form-control"
                       placeholder={this.state.editaddress.zipcode}
-                      onChange={e => {
+                      onChange={(e) => {
                         this.setState({ zipcode: e.target.value });
                       }}
                     />
+                    <p className="zipcode-errormessage">
+                      {this.state.errorMessages.zipCodeErrorMessage}
+                    </p>
                   </div>
                 </div>
                 <div className="form-group col-md-11">
@@ -500,7 +872,7 @@ class SavedAddress extends Component {
                     name="phnumber"
                     className="form-control"
                     placeholder={this.state.editaddress.phone}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({ phone: e.target.value });
                     }}
                   />
@@ -517,18 +889,18 @@ class SavedAddress extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state);
   return {
     addressArray: state.customerProfileReducer.addressArray,
-    msgSuccess: state.customerProfileReducer.msgSuccess
+    msgSuccess: state.customerProfileReducer.msgSuccess,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getAddress: () => dispatch(getAddress()),
-    addAddress: payload => dispatch(addAddress(payload)),
-    deleteAddress: payload => dispatch(deleteAddress(payload))
+    addAddress: (payload) => dispatch(addAddress(payload)),
+    deleteAddress: (payload) => dispatch(deleteAddress(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SavedAddress);

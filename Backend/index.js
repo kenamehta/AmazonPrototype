@@ -38,6 +38,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.static("./ProfilePictures/Seller"));
 app.use(express.static("./ProfilePictures/Customer"));
 app.use(express.static("./ProfilePictures/Common"));

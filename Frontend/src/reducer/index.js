@@ -4,6 +4,7 @@ import userReducer from "./userReducer";
 import profileReducer from "./profileReducer";
 import customerProfileReducer from "./customerProfileReducer";
 import categoryReducer from "./categoryReducer";
+import sellerReducer from "./admin/sellerReducer.js";
 import productReducer from "./productReducer";
 import savedAndCartProductReducer from "./savedAndCartProductReducer";
 import categoryReducer1 from "./admin/categoryReducer.js";
@@ -17,6 +18,7 @@ const allReducers = combineReducers({
   customerProfileReducer,
   categoryReducer,
   category: categoryReducer1,
+  sellerAdmin: sellerReducer,
   product: productReducer,
   savedAndCartProductReducer,
   customerOrderReducer,

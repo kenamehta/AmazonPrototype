@@ -30,9 +30,9 @@ router.get("/list/:productId", (req, res) => {
 
 // Common API for customer seller and admin get Products
 router.get('/listAllProducts', (req, res) => {
-  console.log('Inside product/customer/listAllProducts')
-  
+  console.log('Inside product/customer/listAllProducts');
   console.log(req.query);
+
   const body = {
     path: "products_get",
     ...req.query
