@@ -29,13 +29,13 @@ app.use(
     resave: false,
     saveUninitialized: false,
     duration: 60 * 60 * 1000, // Overall duration of Session : 30 minutes : 1800 seconds
-    activeDuration: 5 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000
   })
 );
 app.use(
   cors({
     origin: `${Config.applicationAddress}:${Config.applicationPort}`,
-    credentials: true,
+    credentials: true
   })
 );
 
@@ -62,7 +62,7 @@ app.use(
   require("./routes/customer/savedAndCartProducts")
 );
 app.use("/customer/checkout", require("./routes/customer/checkout"));
-app.use("/order/status", require("./routes/tracking/tracking"));
+app.use("/product/status", require("./routes/tracking/tracking"));
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");
