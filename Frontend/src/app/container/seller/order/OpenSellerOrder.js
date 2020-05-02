@@ -3,12 +3,12 @@ import "../../../../style/Order.css";
 import OrderHeader from "./OrderHeader";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import Moment from "react-moment";
+import "moment-timezone";
 
 import {
-  getOrders,
-  cancelOrderProducts,
-  getOpenOrders,
-} from "../../../../action/customerprofileaction/customerOrderAction";
+ getSellerOpenOrders,cancelSellerOrderProducts
+} from "../../../../action/Seller/sellerOrderAction/sellerOrderAction";
 const _ = require("underscore");
 class OpenOrder extends Component {
   state = {
@@ -38,7 +38,7 @@ class OpenOrder extends Component {
   }
 
   componentWillMount() {
-    this.props.getOpenOrders();
+    this.props.getSellerOpenOrders();
   }
 
   cancelOrderProducts = (e) => {
@@ -48,7 +48,7 @@ class OpenOrder extends Component {
     let payload = {
       _id: this.state.cancelOrderProduct._id,
     };
-    this.props.cancelOrderProducts(payload);
+    this.props.cancelSellerOrderProducts(payload);
   };
 
   render() {
@@ -71,9 +71,13 @@ class OpenOrder extends Component {
                 <span className="m-0" style={{ fontWeight: "300" }}>
                   {" "}
                   {
-                    this.state.modifiedorderarray[k][0].Order.createdAt.split(
-                      "T"
-                    )[0]
+                    <Moment format='D MMM YYYY'>
+                      {
+                        this.state.modifiedorderarray[
+                          k
+                        ][0].Order.createdAt.split("T")[0]
+                      }
+                    </Moment>
                   }
                 </span>
               </div>
@@ -340,14 +344,14 @@ class OpenOrder extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    orders: state.customerOrderReducer.orders,
-    cancelmsg: state.customerOrderReducer.cancelmsg,
+    orders: state.sellerOrderReducer.orders,
+    cancelmsg: state.sellerOrderReducer.cancelmsg,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getOpenOrders: () => dispatch(getOpenOrders()),
-    cancelOrderProducts: (payload) => dispatch(cancelOrderProducts(payload)),
+    getSellerOpenOrders: () => dispatch(getSellerOpenOrders()),
+    cancelSellerOrderProducts: (payload) => dispatch(cancelSellerOrderProducts(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OpenOrder);

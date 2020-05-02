@@ -1,5 +1,5 @@
 import {
-    GETSELLERORDERS,CANCELSELLERORDERPRODUCT
+    GETSELLERORDERS,CANCELSELLERORDERPRODUCT,GETOPENSELLERORDER
    } from "../action/Seller/sellerOrderAction/actionType";
    
    const initialState = {
@@ -13,6 +13,12 @@ import {
            ...state,
            orders: action.payload.data,
          };
+         case GETOPENSELLERORDER:
+            console.log(action.payload.data)
+            return {
+              ...state,
+              orders: action.payload.data,
+            };
          
          case CANCELSELLERORDERPRODUCT:
            return{

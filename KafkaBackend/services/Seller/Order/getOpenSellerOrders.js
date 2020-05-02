@@ -1,21 +1,21 @@
 "use strict";
 const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
+const { Op } = require("sequelize");
 
-let getSellerProduct = async (msg, callback) => {
+let getOpenSellerOrders = async (msg, callback) => {
   let response = {};
   let err = {};
-  
+  let orderid = [];
   try {
     const orderproducts = await OrderProduct.findAll({
       where: {
         seller_email_id: msg.params.emailId,
-        cancelProduct: false
+        cancelProduct: false,
+        Status:{
+            [Op.ne]:6
+        } 
       },
-      order: [
-        ['createdAt', 'DESC'],
-     
-    ],
       include: [
         {
           model: Order,
@@ -37,7 +37,6 @@ let getSellerProduct = async (msg, callback) => {
         return products;
       })
     ).then((allData) => {
-        console.log(orderwithproduct)
       response.data = orderwithproduct;
       response.status = 200;
       return callback(null, response);
@@ -54,4 +53,4 @@ let getSellerProduct = async (msg, callback) => {
   }
 };
 
-exports.getSellerProduct = getSellerProduct;
+exports.getOpenSellerOrders = getOpenSellerOrders;
