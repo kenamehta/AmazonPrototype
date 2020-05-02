@@ -4,6 +4,8 @@ import CustomerProfile from "./customer/profile/CustomerProfile";
 import PaymentAndAddressPage from "./customer/profile/PaymentAndAddressPage";
 
 import SellerProfile from "./seller/profile/SellerProfile";
+import SellerOrderPage from "./seller/order/OrderPage";
+
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 //import cookie from 'react-cookies';
@@ -27,6 +29,8 @@ class bodyCont extends React.Component {
         <Route path='/' component={topNav} />
         <Route path='/customer/profile' component={CustomerProfile} />
         <Route path='/seller/profile' component={SellerProfile} />
+        <Route path='/seller/order' component={SellerOrderPage} />
+
         <Route path='/login' component={Login} />
         <Route path='/registerCustomer' component={RegisterCustomer} />
         <Route path='/registerSeller' component={RegisterSeller} />

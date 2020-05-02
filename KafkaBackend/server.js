@@ -14,6 +14,9 @@ const customerProfileService = require("./services/customer/profile");
 const customerProductService = require("./services/customer/Product");
 //seller product service
 const sellerProductService = require("./services/Seller/Product");
+//seller order service
+const sellerOrderService = require("./services/Seller/Order");
+
 //admin product service
 const adminProductService = require("./services/admin/Product");
 //admin seller service
@@ -92,6 +95,7 @@ handleTopicRequest("sellerProfileService", sellerProfileService);
 handleTopicRequest("customerProfile", customerProfileService);
 handleTopicRequest("customerProductService", customerProductService);
 handleTopicRequest("sellerProductService", sellerProductService);
+handleTopicRequest("sellerOrderService", sellerOrderService);
 handleTopicRequest("adminProductService", adminProductService);
 handleTopicRequest("adminSellerService", adminSellerService);
 handleTopicRequest("customerPaymentService", customerPaymentService);
