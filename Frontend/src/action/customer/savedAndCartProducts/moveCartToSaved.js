@@ -40,10 +40,12 @@ export const moveCartToSaved = payload => {
 
           const uniqueCartProductsArray = []
           map = new Map();
+          let totalProductCountInCart = 0;
           for (const item of response.data.cartProductsArray) {
             if(!map.has(item.productId)){
                 map.set(item.productId, true);    // set any value to Map
                 uniqueCartProductsArray.push(item);
+                totalProductCountInCart += parseInt(item.quantity);
             }
           }
 
@@ -51,7 +53,7 @@ export const moveCartToSaved = payload => {
             savedProductsArr:uniqueSavedProductsArray,
             cartProductsArr:uniqueCartProductsArray,
             savedCnt:uniqueSavedProductsArray.length,
-            cartCnt:uniqueCartProductsArray.length
+            cartCnt:totalProductCountInCart
           }
 
           console.log(dataToDispatch);
