@@ -120,7 +120,7 @@ const getMultipleProducts = (msg, callback) => {
       }
     }
   
-    var filter = {};
+    var filter = { validFlag: "true" };
     if (msg.sellerEmailId && msg.sellerEmailId !== '') {
       filter = Object.assign(filter, {
         sellerEmailId: msg.sellerEmailId,
