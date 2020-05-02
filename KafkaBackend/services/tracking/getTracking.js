@@ -12,7 +12,7 @@ let getTracking = async (msg, callback) => {
       if (result) {
         const statusArr = await status.findAll();
         statusArr.map(status => {
-          if (status.code === parseInt(result.Status)) {
+          if (status.code <= parseInt(result.Status)) {
             status.flag = 1;
           } else {
             status.flag = 0;

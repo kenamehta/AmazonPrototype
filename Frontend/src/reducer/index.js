@@ -11,6 +11,7 @@ import categoryReducer1 from "./admin/categoryReducer.js";
 import customerOrderReducer from "./customerOrderReducer";
 import customerCheckoutReducer from "./customerCheckoutReducer";
 import sellerOrderReducer from "./sellerOrderReducer";
+import trackingReducer from "./trackingReducer"
 
 const allReducers = combineReducers({
   userType,
@@ -24,7 +25,8 @@ const allReducers = combineReducers({
   savedAndCartProductReducer,
   customerOrderReducer,
   customerCheckoutReducer,
-  sellerOrderReducer
+  sellerOrderReducer,
+  trackingReducer
 });
 
 export default allReducers;
