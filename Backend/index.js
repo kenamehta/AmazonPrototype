@@ -65,6 +65,7 @@ app.use(
 );
 app.use("/customer/checkout", require("./routes/customer/checkout"));
 app.use("/product/status", require("./routes/tracking/tracking"));
+app.use("/seller/analytics", require("./routes/reports/sellerReport"));
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");
