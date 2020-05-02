@@ -29,14 +29,16 @@ export const updateCart = payload => {
           // Since we are not maintaining uniqueness property in the backend.
           const uniqueCartProductsArray = []
           let map = new Map();
+          let totalProductCountInCart = 0;
           for (const item of response.data) {
             if(!map.has(item.productId)){
                 map.set(item.productId, true);    // set any value to Map
                 uniqueCartProductsArray.push(item);
+                totalProductCountInCart += parseInt(item.quantity);
             }
           }
 
-          dispatch(updateCartDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:uniqueCartProductsArray.length}));
+          dispatch(updateCartDispatcher({cartProductsArr:uniqueCartProductsArray,cartCnt:totalProductCountInCart}));
         }
       })
       .catch(error => {

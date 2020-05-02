@@ -2,7 +2,7 @@
 const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
 
-let cancelOrders = async (msg, callback) => {
+let cancelOrderbySeller = async (msg, callback) => {
   let response = {};
   let err = {};
   try {
@@ -17,9 +17,10 @@ let cancelOrders = async (msg, callback) => {
    
     const orderproducts = await OrderProduct.findAll({
         where: {
-          customer_email_id: msg.params.email,
+          seller_email_id: msg.params.email,
           cancelProduct: false
         },
+        
       order: [
         ['createdAt', 'DESC'],
      
@@ -62,4 +63,4 @@ let cancelOrders = async (msg, callback) => {
   }
 };
 
-exports.cancelOrders = cancelOrders;
+exports.cancelOrderbySeller = cancelOrderbySeller;
