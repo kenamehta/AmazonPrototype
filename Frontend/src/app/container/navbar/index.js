@@ -25,6 +25,8 @@ import {
 } from "../../../action/ProductAction/productAction";
 import { getSavedAndCartProducts } from "../../../action/customer/savedAndCartProducts/getSavedAndCartProducts";
 
+import { getProfile } from "../../../action/customerprofileaction/profileAction";
+
 class Topnav extends React.Component {
   constructor(props) {
     super(props);
@@ -66,6 +68,7 @@ class Topnav extends React.Component {
     this.dispatchAction();
     this.props.getCategory();
     this.props.getSavedAndCartProducts();
+    this.props.getProfile();
     if (this.props.cart)
       this.setState({
         cart: this.props.cart.cartCnt,
@@ -94,9 +97,10 @@ class Topnav extends React.Component {
     if (this.props.custprof !== prevProps.custprof) {
       this.setState({
         name: this.props.custprof.mainCustomer.name,
+        cart: this.props.custprof.mainCustomer.cartProducts.length,
       });
     }
-    if (this.props.cart !== prevProps.cart) {
+    if (this.props.cart.cartCnt !== prevProps.cart.cartCnt) {
       this.setState({
         cart: this.props.cart.cartCnt,
       });
@@ -480,6 +484,7 @@ const mapDispatchToProps = (dispatch) => {
     updateProductSort: (sortType, sort) =>
       dispatch(updateProductSort(sortType, sort)),
     getSavedAndCartProducts: () => dispatch(getSavedAndCartProducts()),
+    getProfile: () => dispatch(getProfile()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

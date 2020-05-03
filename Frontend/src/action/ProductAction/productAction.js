@@ -47,8 +47,10 @@ export const getAllProducts = (data) => {
       "IDToken"
     );
     let sellerEmailId = "";
-    if (localStorage.getItem("category") === "seller")
+    if (data.sellerEmailId !== "") sellerEmailId = data.sellerEmailId;
+    else if (localStorage.getItem("category") === "seller")
       sellerEmailId = localStorage.getItem("emailId");
+
     const url =
       "/product/customer/listAllProducts?limit=20&page=" +
       data.page +
