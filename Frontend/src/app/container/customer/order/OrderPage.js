@@ -287,7 +287,7 @@ class OrderPage extends Component {
                                   {" "}
                                   <img
                                     className="icon-tracking"
-                                    src="https://i.imgur.com/9nnc9Et.png"
+                                    src="https://i.imgur.com/u1AzR7w.png"
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
@@ -299,7 +299,7 @@ class OrderPage extends Component {
                                   {" "}
                                   <img
                                     className="icon-tracking"
-                                    src="https://i.imgur.com/9nnc9Et.png"
+                                    src="https://i.imgur.com/TkPm63y.png"
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
@@ -345,7 +345,6 @@ class OrderPage extends Component {
                                 </div>
                               </div>
                             </div>
-                            {/* </div> */}
                           </div>
                         </div>
                       </div>

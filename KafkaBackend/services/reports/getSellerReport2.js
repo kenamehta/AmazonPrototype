@@ -7,7 +7,7 @@ let getSellerReport2 = async (msg, callback) => {
   try {
     console.log(msg);
     connection_sql.query(
-      `select monthname(updatedAt) as month, sum(TotalPrice) as totalProductPrice, sum(quantity) as totalProductQuantity from OrderProducts where seller_email_id='2013uec1108@mnit.ac.in' and cancelProduct=0 and Status=6 group by seller_email_id,monthname(updatedAt)`,
+      `select monthname(updatedAt) as month,YEAR(updatedAt) as year, sum(TotalPrice) as totalProductPrice, sum(quantity) as totalProductQuantity from OrderProducts where seller_email_id=? and cancelProduct=0 and Status=6 group by seller_email_id,substr(updatedAt,1,7)`,
       [msg.params.sellerEmailId],
       async (err, results, fields) => {
         if (err) {
