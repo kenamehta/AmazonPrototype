@@ -32,7 +32,8 @@ const savedAndCartProductService = require("./services/customer/savedAndCartProd
 const checkoutService = require("./services/customer/checkout");
 //tracking Service
 const trackingService = require("./services/tracking");
-
+//admin order service
+const adminOrderServices =require("./services/admin/Orders")
 //connect to MongoDB
 const Mongoose = require("mongoose");
 var options = {
@@ -104,3 +105,5 @@ handleTopicRequest("orderAddressService", orderAddressService);
 handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
 handleTopicRequest("checkoutService", checkoutService);
 handleTopicRequest("trackingService", trackingService);
+handleTopicRequest("adminOrderServices", adminOrderServices);
+

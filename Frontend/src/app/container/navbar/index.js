@@ -288,7 +288,7 @@ class Topnav extends React.Component {
                 <b className='nav-text'>Seller</b>
               </Link>
               <Link
-                to='/admin/profile'
+                to='/admin/order'
                 style={{ float: "left" }}
                 className='custom-nav'
               >
