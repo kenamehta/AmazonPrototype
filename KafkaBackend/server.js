@@ -32,6 +32,8 @@ const savedAndCartProductService = require("./services/customer/savedAndCartProd
 const checkoutService = require("./services/customer/checkout");
 //tracking Service
 const trackingService = require("./services/tracking");
+//admin order service
+const adminOrderServices =require("./services/admin/Orders")
 //report Service
 const reportService = require("./services/reports");
 //connect to MongoDB
@@ -105,4 +107,7 @@ handleTopicRequest("orderAddressService", orderAddressService);
 handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
 handleTopicRequest("checkoutService", checkoutService);
 handleTopicRequest("trackingService", trackingService);
+handleTopicRequest("adminOrderServices", adminOrderServices);
+
 handleTopicRequest("reportService", reportService);
+ 

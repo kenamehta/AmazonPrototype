@@ -30,13 +30,13 @@ app.use(
     resave: false,
     saveUninitialized: false,
     duration: 60 * 60 * 1000, // Overall duration of Session : 30 minutes : 1800 seconds
-    activeDuration: 5 * 60 * 1000
+    activeDuration: 5 * 60 * 1000,
   })
 );
 app.use(
   cors({
     origin: `${Config.applicationAddress}:${Config.applicationPort}`,
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -58,6 +58,8 @@ app.use("/admin/seller", adminSeller);
 app.use("/customer/payment", require("./routes/customer/payment"));
 app.use("/customer/address", require("./routes/customer/address"));
 app.use("/customer/orders", require("./routes/customer/order/order"));
+app.use("/admin/orders", require("./routes/admin/order"));
+
 
 app.use(
   "/customer/cartProducts",

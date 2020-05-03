@@ -7,6 +7,7 @@ import SellerProfile from "./seller/profile/SellerProfile";
 import SellerOrderPage from "./seller/order/OrderPage";
 import SellerCancelledOrder from "./seller/order/CancelledOrder";
 import OpenSellerOrder from "./seller/order/OpenSellerOrder"
+import AdminOrder from "./admin/order/OrderPage"
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 //import cookie from 'react-cookies';
@@ -55,6 +56,8 @@ class bodyCont extends React.Component {
         />
         <Route path='/customer/order/openorders' component={OpenOrder} />
         <Route path='/seller/openorders' component={OpenSellerOrder} />
+        <Route path='/admin/order' component={AdminOrder} />
+
       </div>
     );
   }
