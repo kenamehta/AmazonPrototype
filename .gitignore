@@ -1,5 +1,6 @@
 /kafka
 /kafka_2.11-1.1.0
 /w_kafka
+/redis-stable
 .DS_STORE
 redisConfig.js
