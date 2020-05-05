@@ -5,12 +5,11 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import "moment-timezone";
 import { Link } from "react-router-dom";
-
 import {
-  getAdminOrders
-  
-} from "../../../../action/admin/orderAction";
-import { getTracking } from "../../../../action/customerprofileaction/trackingAction";
+  getTracking,
+  updateTracking
+} from "../../../../action/customerprofileaction/trackingAction";
+import { getAdminOrders } from "../../../../action/admin/orderAction";
 const _ = require("underscore");
 class OrderPage extends Component {
   state = {
@@ -20,7 +19,8 @@ class OrderPage extends Component {
     navarr: ["black", "#0066c0", "#0066c0"],
     modalShowOrder: "none",
     orderdetails: "",
-    modalTracking: "none"
+    modalTracking: "none",
+    statusChange: "0"
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
@@ -45,9 +45,6 @@ class OrderPage extends Component {
   componentWillMount() {
     this.props.getAdminOrders();
   }
-
-  
-  
 
   render() {
     const items = [];
@@ -172,7 +169,228 @@ class OrderPage extends Component {
                       </div>
                     </div>
                   </div>
-                 
+                  {i.Status != "Delivered" ? (
+                    <div>
+                      {/* <button
+                        className="a-button-order p-2 btn-sm"
+                        style={{ width: "70%" }}
+                        onClick={e => {
+                          this.setState({
+                            cancelOrderProduct: i
+                          });
+                          this.setState({ modalShow: "block" });
+                        }}
+                      >
+                        Cancel Request
+                      </button> */}
+                      {/*Tracking button - Kena*/}
+                      <button
+                        className="a-button-order p-2 mt-1 btn-sm"
+                        style={{ width: "100%" }}
+                        onClick={e => {
+                          this.setState({ modalTracking: "block" });
+                          this.props.getTracking({
+                            orderProductId: i._id
+                          });
+                        }}
+                      >
+                        Status
+                      </button>
+                      {/*Tracking*/}
+                      {/*Tracking - Kena*/}
+                      <div
+                        className="modal modal-custom-tracking mt-5"
+                        align="center"
+                        style={{ display: this.state.modalTracking }}
+                      >
+                        <div
+                          className="modal-content modal-content-custom"
+                          style={{ fontFamily: "Suisse" }}
+                        >
+                          <div className="container">
+                            <span
+                              className=" ml-2 close image-edit-avatar"
+                              onClick={e => {
+                                this.setState({ modalTracking: "none" });
+                              }}
+                            >
+                              &times;
+                            </span>
+                            <div className="card card-tracking">
+                              <div className="row d-flex justify-content-between px-3 top-tracking">
+                                <div className="d-flex">
+                                  <div style={{ fontSize: "14px" }}>
+                                    ORDER{" "}
+                                    <span className="text-primary font-weight-bold">
+                                      {i.order_id}
+                                    </span>
+                                  </div>
+                                </div>
+                                <div
+                                  className="d-flex flex-column text-sm-right"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  {/* <p className="mb-0">
+                                    Expected Arrival <span>01/12/19</span>
+                                  </p> */}
+                                  <p>
+                                    USPS{" "}
+                                    <span className="font-weight-bold">
+                                      234094567242423422898
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row d-flex justify-content-center">
+                                <div className="col-12">
+                                  <ul
+                                    id="progressbar-tracking"
+                                    className="text-center"
+                                  >
+                                    {this.props.statusArr.map(
+                                      status =>
+                                        status.flag === 1 ? (
+                                          <li className="active step0-tracking li-tracking" />
+                                        ) : (
+                                          <li className="step0-tracking li-tracking" />
+                                        )
+                                    )}
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="row justify-content-between top-tracking">
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/9nnc9Et.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Order
+                                      <br />
+                                      Placed
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/u1AzR7w.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Packaging
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/TkPm63y.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Out for
+                                      <br />
+                                      Shipping
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/u1AzR7w.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Package
+                                      <br />
+                                      Arrived
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/TkPm63y.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Out for
+                                      <br />
+                                      Delivery
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/HdsziHP.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Order
+                                      <br />
+                                      Delivered
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              {this.props.statusArr[2] ? this.props.statusArr[2]
+                                .flag === 1 ? this.props.statusArr[5].flag ===
+                              0 ? (
+                                <div>
+                                  <span>Change Status: </span>
+                                  <select
+                                    class="selectStatus"
+                                    value={this.state.statusChange}
+                                    onChange={e => {
+                                      if (e.target.value !== "0") {
+                                        this.setState(
+                                          {
+                                            statusChange: e.target.value
+                                          },
+                                          () => {
+                                            this.props.updateTracking({
+                                              orderProductId: i._id,
+                                              status: this.state.statusChange
+                                            });
+                                          }
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <option value="0">Not-Selected</option>
+                                    <option value="4">Package Arrived</option>
+                                    <option value="5">Out for delivery</option>
+                                    <option value="6">Delivered</option>
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              ) : (
+                                ""
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                            {/* </div> */}
+                          </div>
+                        </div>
+                      </div>
+                      {/*End of tracking*/}
+                    </div>
+                  ) : (
+                    <div>
+                      <h5 style={{ color: "green" }}> Delivered</h5>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -443,14 +661,15 @@ class OrderPage extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    orders: state.adminOrderReducer.orders||[]
-   
+    orders: state.adminOrderReducer.orders || [],
+    statusArr: state.trackingReducer.statusArr || []
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     getAdminOrders: () => dispatch(getAdminOrders()),
-   
+    getTracking: payload => dispatch(getTracking(payload)),
+    updateTracking: payload => dispatch(updateTracking(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);
