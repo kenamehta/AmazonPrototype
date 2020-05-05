@@ -6,8 +6,8 @@ import PaymentAndAddressPage from "./customer/profile/PaymentAndAddressPage";
 import SellerProfile from "./seller/profile/SellerProfile";
 import SellerOrderPage from "./seller/order/OrderPage";
 import SellerCancelledOrder from "./seller/order/CancelledOrder";
-import OpenSellerOrder from "./seller/order/OpenSellerOrder"
-import AdminOrder from "./admin/order/OrderPage"
+import OpenSellerOrder from "./seller/order/OpenSellerOrder";
+import AdminOrder from "./admin/order/OrderPage";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
 //import cookie from 'react-cookies';
@@ -23,6 +23,7 @@ import CartAndSaved from "./customer/cartAndSaved/CartAndSaved";
 import CategoryList from "./admin/category/CategoryList";
 import SellerList from "./admin/seller/SellerList";
 import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
+import SellerReport from "./seller/reports/sellerReportContainer";
 
 class bodyCont extends React.Component {
   render() {
@@ -57,7 +58,7 @@ class bodyCont extends React.Component {
         <Route path='/customer/order/openorders' component={OpenOrder} />
         <Route path='/seller/openorders' component={OpenSellerOrder} />
         <Route path='/admin/order' component={AdminOrder} />
-
+        <Route path='/seller/reports' component={SellerReport} />
       </div>
     );
   }

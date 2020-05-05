@@ -216,6 +216,15 @@ class Topnav extends React.Component {
                 <br />
                 <b className='nav-text'>Orders</b>
               </Link>
+              <Link
+                to='/seller/reports'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                My
+                <br />
+                <b className='nav-text'>Reports</b>
+              </Link>
               <NavDropdown
                 title={
                   <div style={{ display: "inline-block" }}>
