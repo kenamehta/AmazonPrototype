@@ -14,6 +14,10 @@ import { Row } from "react-bootstrap";
 class CartAndSaved extends Component {
   state = {};
 
+  componentWillMount() {
+    this.props.getSavedAndCartProducts();
+  }
+
   render() {
     return (
       <div>

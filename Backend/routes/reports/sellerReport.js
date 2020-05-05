@@ -10,7 +10,7 @@ router.get("/report1/:sellerEmailId", (req, res) => {
   msg = req.body;
   msg.params = req.params;
   msg.route = "getSellerReport1";
-  kafka.make_request("reportService", msg, function(err, results) {
+  kafka.make_request("reportService", msg, function (err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -25,7 +25,7 @@ router.get("/report2/:sellerEmailId", (req, res) => {
   msg = req.body;
   msg.params = req.params;
   msg.route = "getSellerReport2";
-  kafka.make_request("reportService", msg, function(err, results) {
+  kafka.make_request("reportService", msg, function (err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
