@@ -6,6 +6,10 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import "moment-timezone";
 import { Link } from "react-router-dom";
+import {
+  getTracking,
+  updateTracking
+} from "../../../../action/customerprofileaction/trackingAction";
 
 import {
   getSellerOrders,
@@ -20,7 +24,8 @@ class SellerOrderPage extends Component {
     navarr: ["black", "#0066c0", "#0066c0"],
     modalShowOrder: "none",
     orderdetails: "",
-    modalTracking: "none"
+    modalTracking: "none",
+    statusChange: "0"
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
@@ -58,7 +63,14 @@ class SellerOrderPage extends Component {
 
   render() {
     const items = [];
+    // let statusChange = "Order Placed";
+    // if (this.props.statusArr[1].flag !== 0) {
+    //   for (let i = 1; i < this.props.statusArr; i++) {
+    //     if (this.props.statusArr[i].flag === 1) {
 
+    //     }
+    //   }
+    // }
     for (let k in this.state.modifiedorderarray) {
       items.push(
         <div>
@@ -342,6 +354,39 @@ class SellerOrderPage extends Component {
                                   </div>
                                 </div>
                               </div>
+                              {this.props.statusArr[3] ? this.props.statusArr[3]
+                                .flag === 0 ? (
+                                <div>
+                                  <span>Change Status: </span>
+                                  <select
+                                    class="selectStatus"
+                                    value={this.state.statusChange}
+                                    onChange={e => {
+                                      if (e.target.value !== "0") {
+                                        this.setState(
+                                          {
+                                            statusChange: e.target.value
+                                          },
+                                          () => {
+                                            this.props.updateTracking({
+                                              orderProductId: i._id,
+                                              status: this.state.statusChange
+                                            });
+                                          }
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <option value="0">Not-Selected</option>
+                                    <option value="2">Packaging</option>
+                                    <option value="3">Out for Shipping</option>
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              ) : (
+                                ""
+                              )}
                             </div>
                             {/* </div> */}
                           </div>
@@ -621,7 +666,8 @@ const mapDispatchToProps = dispatch => {
     getSellerOrders: () => dispatch(getSellerOrders()),
     cancelSellerOrderProducts: payload =>
       dispatch(cancelSellerOrderProducts(payload)),
-    getTracking: payload => dispatch(getTracking(payload))
+    getTracking: payload => dispatch(getTracking(payload)),
+    updateTracking: payload => dispatch(updateTracking(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(SellerOrderPage);
