@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import SellerReports from "./productReports";
-import { ProductSales } from "./productSales";
+// import { ProductSales } from "./productSales";
 
 class ReportContainer extends React.Component {
   render() {
@@ -12,7 +12,7 @@ class ReportContainer extends React.Component {
             <SellerReports />
           </Col>
           <Col xs={6}>
-            <ProductSales />
+            {/* <ProductSales /> */}
           </Col>
         </Row>
       </Container>

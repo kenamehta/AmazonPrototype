@@ -25,10 +25,7 @@ class SellerOrderPage extends Component {
     modalShowOrder: "none",
     orderdetails: "",
     modalTracking: "none",
-<<<<<<< HEAD
     statusChange: "0"
-=======
->>>>>>> 0d9b08b524de6c56e1fc9beaa7d2fdf2d6915b3f
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
