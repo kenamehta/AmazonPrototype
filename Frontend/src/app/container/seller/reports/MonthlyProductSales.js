@@ -35,8 +35,10 @@ class MonthlyProductSales extends React.Component {
   componentDidMount() {
     let sellerEmail = "";
     if (this.props.sellerVisitingOwnProfile) {
+      
       sellerEmail = localStorage.getItem("emailId");
     } else {
+      
       sellerEmail = this.props.sellerEmailId;
     }
     let url = `/seller/analytics/report2/` + sellerEmail;
