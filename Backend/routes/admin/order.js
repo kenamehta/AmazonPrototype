@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const kafka = require("../../kafka/client");
 
-router.get("/", (req, res) => {
+router.get("/:statusFilter/:sellerNameFilter", (req, res) => {
     console.log("Inside get of admin/orders");
     console.log(req.body);
-  
+   
     //   req.body.path = "";
     //   req.body.emailId = req.params.emailId;
     let msg = req.body;
