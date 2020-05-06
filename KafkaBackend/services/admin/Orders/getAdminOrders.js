@@ -2,14 +2,14 @@
 const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
 
-let getSellerProduct = async (msg, callback) => {
+let getAdminOrders = async (msg, callback) => {
   let response = {};
   let err = {};
   
   try {
     const orderproducts = await OrderProduct.findAll({
       where: {
-        seller_email_id: msg.params.emailId,
+        
         cancelProduct: false
       },
       order: [
@@ -54,4 +54,4 @@ let getSellerProduct = async (msg, callback) => {
   }
 };
 
-exports.getSellerProduct = getSellerProduct;
+exports.getAdminOrders = getAdminOrders;

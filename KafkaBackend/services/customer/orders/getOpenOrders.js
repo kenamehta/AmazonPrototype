@@ -13,9 +13,13 @@ let getOpenOrders = async (msg, callback) => {
         customer_email_id: msg.params.email,
         cancelProduct: false,
         Status:{
-            [Op.ne]:"Delivered"
+            [Op.ne]:6
         } 
       },
+      order: [
+        ['createdAt', 'DESC'],
+     
+    ],
       include: [
         {
           model: Order,

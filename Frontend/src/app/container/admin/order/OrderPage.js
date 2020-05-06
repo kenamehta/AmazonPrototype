@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import "../../../../style/Order.css";
-import "./tracking.css";
 import OrderHeader from "./OrderHeader";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import "moment-timezone";
 import { Link } from "react-router-dom";
-
 import {
-  getOrders,
-  cancelOrderProducts,
-  cancelCompleteOrder
-} from "../../../../action/customerprofileaction/customerOrderAction";
-import { getTracking } from "../../../../action/customerprofileaction/trackingAction";
+  getTracking,
+  updateTracking
+} from "../../../../action/customerprofileaction/trackingAction";
+import { getAdminOrders } from "../../../../action/admin/orderAction";
 const _ = require("underscore");
 class OrderPage extends Component {
   state = {
@@ -22,7 +19,8 @@ class OrderPage extends Component {
     navarr: ["black", "#0066c0", "#0066c0"],
     modalShowOrder: "none",
     orderdetails: "",
-    modalTracking: "none"
+    modalTracking: "none",
+    statusChange: "0"
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
@@ -45,18 +43,8 @@ class OrderPage extends Component {
   }
 
   componentWillMount() {
-    this.props.getOrders();
+    this.props.getAdminOrders();
   }
-
-  cancelOrderProducts = e => {
-    e.preventDefault();
-    console.log("in here");
-    console.log(this.state.cancelOrderProduct._id);
-    let payload = {
-      _id: this.state.cancelOrderProduct._id
-    };
-    this.props.cancelOrderProducts(payload);
-  };
 
   render() {
     const items = [];
@@ -182,8 +170,8 @@ class OrderPage extends Component {
                     </div>
                   </div>
                   {i.Status != "Delivered" ? (
-                    <div align="right">
-                      <button
+                    <div>
+                      {/* <button
                         className="a-button-order p-2 btn-sm"
                         style={{ width: "70%" }}
                         onClick={e => {
@@ -194,11 +182,11 @@ class OrderPage extends Component {
                         }}
                       >
                         Cancel Request
-                      </button>
+                      </button> */}
                       {/*Tracking button - Kena*/}
                       <button
                         className="a-button-order p-2 mt-1 btn-sm"
-                        style={{ width: "70%" }}
+                        style={{ width: "100%" }}
                         onClick={e => {
                           this.setState({ modalTracking: "block" });
                           this.props.getTracking({
@@ -279,7 +267,9 @@ class OrderPage extends Component {
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
-                                      Order<br />Placed
+                                      Order
+                                      <br />
+                                      Placed
                                     </p>
                                   </div>
                                 </div>
@@ -303,7 +293,9 @@ class OrderPage extends Component {
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
-                                      Out for<br />Shipping
+                                      Out for
+                                      <br />
+                                      Shipping
                                     </p>
                                   </div>
                                 </div>
@@ -315,7 +307,9 @@ class OrderPage extends Component {
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
-                                      Package<br />Arrived
+                                      Package
+                                      <br />
+                                      Arrived
                                     </p>
                                   </div>
                                 </div>
@@ -327,7 +321,9 @@ class OrderPage extends Component {
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
-                                      Out for<br />Delivery
+                                      Out for
+                                      <br />
+                                      Delivery
                                     </p>
                                   </div>
                                 </div>
@@ -339,12 +335,52 @@ class OrderPage extends Component {
                                   />
                                   <div className="d-flex flex-column">
                                     <p className="font-weight-bold">
-                                      Order<br />Delivered
+                                      Order
+                                      <br />
+                                      Delivered
                                     </p>
                                   </div>
                                 </div>
                               </div>
+                              {this.props.statusArr[2] ? this.props.statusArr[2]
+                                .flag === 1 ? this.props.statusArr[5].flag ===
+                              0 ? (
+                                <div>
+                                  <span>Change Status: </span>
+                                  <select
+                                    class="selectStatus"
+                                    value={this.state.statusChange}
+                                    onChange={e => {
+                                      if (e.target.value !== "0") {
+                                        this.setState(
+                                          {
+                                            statusChange: e.target.value
+                                          },
+                                          () => {
+                                            this.props.updateTracking({
+                                              orderProductId: i._id,
+                                              status: this.state.statusChange
+                                            });
+                                          }
+                                        );
+                                      }
+                                    }}
+                                  >
+                                    <option value="0">Not-Selected</option>
+                                    <option value="4">Package Arrived</option>
+                                    <option value="5">Out for delivery</option>
+                                    <option value="6">Delivered</option>
+                                  </select>
+                                </div>
+                              ) : (
+                                ""
+                              ) : (
+                                ""
+                              ) : (
+                                ""
+                              )}
                             </div>
+                            {/* </div> */}
                           </div>
                         </div>
                       </div>
@@ -395,7 +431,7 @@ class OrderPage extends Component {
       <div>
         <div className="container">
           <OrderHeader navarr={this.state.navarr} />
-          <b>{this.props.orders.length} orders placed in past</b>
+          <b>{this.props.orders.length} orders placed in past via amazon</b>
 
           {true ? <div>{items}</div> : ""}
         </div>
@@ -625,17 +661,15 @@ class OrderPage extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    orders: state.customerOrderReducer.orders,
-    cancelmsg: state.customerOrderReducer.cancelmsg,
+    orders: state.adminOrderReducer.orders || [],
     statusArr: state.trackingReducer.statusArr || []
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getOrders: () => dispatch(getOrders()),
-    cancelOrderProducts: payload => dispatch(cancelOrderProducts(payload)),
-    cancelCompleteOrder: payload => dispatch(cancelCompleteOrder(payload)),
-    getTracking: payload => dispatch(getTracking(payload))
+    getAdminOrders: () => dispatch(getAdminOrders()),
+    getTracking: payload => dispatch(getTracking(payload)),
+    updateTracking: payload => dispatch(updateTracking(payload))
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);

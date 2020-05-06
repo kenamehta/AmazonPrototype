@@ -32,12 +32,15 @@ const savedAndCartProductService = require("./services/customer/savedAndCartProd
 const checkoutService = require("./services/customer/checkout");
 //tracking Service
 const trackingService = require("./services/tracking");
-
+//admin order service
+const adminOrderServices =require("./services/admin/Orders")
+//report Service
+const reportService = require("./services/reports");
 //connect to MongoDB
 const Mongoose = require("mongoose");
 var options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
   //   ,
   //   reconnectInterval: 500,
   //   poolSize: 50,
@@ -45,7 +48,7 @@ var options = {
 };
 Mongoose.connect(connection_string.connection_string, options)
   .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => {
+  .catch(err => {
     console.log("Failed to connect to MongoDB");
     console.log(err);
   });
@@ -56,13 +59,13 @@ function handleTopicRequest(topic_name, fname) {
   var consumer = connection.getConsumer(topic_name);
   var producer = connection.getProducer();
   console.log("Kafka server is running ");
-  consumer.on("message", function (message) {
+  consumer.on("message", function(message) {
     console.log("message received for " + topic_name);
     console.log(JSON.stringify(message.value));
     var data = JSON.parse(message.value);
 
     // Handling the make request that was called from backend server here in this function.
-    fname.handle_request(data.data, function (err, res) {
+    fname.handle_request(data.data, function(err, res) {
       console.log("after handle: " + JSON.stringify(err));
       var result;
       if (err) {
@@ -75,12 +78,12 @@ function handleTopicRequest(topic_name, fname) {
           topic: data.replyTo,
           messages: JSON.stringify({
             correlationId: data.correlationId,
-            data: result,
+            data: result
           }),
-          partition: 0,
-        },
+          partition: 0
+        }
       ];
-      producer.send(payloads, function (err, data) {
+      producer.send(payloads, function(err, data) {
         console.log(data);
       });
       return;
@@ -104,3 +107,7 @@ handleTopicRequest("orderAddressService", orderAddressService);
 handleTopicRequest("savedAndCartProductService", savedAndCartProductService);
 handleTopicRequest("checkoutService", checkoutService);
 handleTopicRequest("trackingService", trackingService);
+handleTopicRequest("adminOrderServices", adminOrderServices);
+
+handleTopicRequest("reportService", reportService);
+ 

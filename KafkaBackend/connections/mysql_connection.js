@@ -8,7 +8,7 @@ var mysql_connection = mysql.createPool({
   port: "3306",
   user: "admin",
   password: credentials.password,
-  database: "MEHTAK",
+  database: "amazon",
   dateStrings: true
 });
 

@@ -12,6 +12,10 @@ let getOrders = async (msg, callback) => {
         customer_email_id: msg.params.email,
         cancelProduct: false
       },
+      order: [
+        ['createdAt', 'DESC'],
+     
+    ],
       include: [
         {
           model: Order,
