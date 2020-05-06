@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 import axios from "axios";
-import configPath from "./../../../../configApp";
+import configPath from "../../../../configApp";
 
 const Plot = createPlotlyComponent(Plotly);
 
