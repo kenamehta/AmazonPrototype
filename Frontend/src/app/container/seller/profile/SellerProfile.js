@@ -7,6 +7,12 @@ import { connect } from "react-redux";
 import { Button } from "react-bootstrap";
 import AddProduct from "./AddProduct";
 import List from "../../products/productsList/list";
+import {
+  getAllProducts,
+  updateProductSearch,
+  updateProductSort,
+  updateProductFilter,
+} from "../../../../action/ProductAction/productAction";
 
 class SellerProfile extends React.Component {
   constructor(props) {
@@ -21,6 +27,34 @@ class SellerProfile extends React.Component {
   handleShow = () => {
     this.setState({ setShow: true });
   };
+
+  dispatchAction = () => {
+    var email =
+      this.props.location.pathname.split("/").length > 3
+        ? this.props.location.pathname.split("/")[3]
+        : "";
+    const data = {
+      page: 1,
+      orderOn: "rating",
+      order: "desc",
+      sellerEmailId: email,
+      sellerName: "",
+      productName: "",
+      productCategory: "",
+      minPrice: 0,
+      maxPrice: 2500,
+      minRating: "",
+      maxRating: "",
+    };
+    this.props.dispatch(getAllProducts(data));
+    this.props.dispatch(updateProductSearch("", "", ""));
+    this.props.dispatch(updateProductSort("rating", "desc"));
+    this.props.dispatch(updateProductFilter("", 0, 2500));
+  };
+
+  componentDidMount() {
+    this.dispatchAction();
+  }
 
   render() {
     let sellerVisitingOwnProfile = true;
@@ -39,7 +73,7 @@ class SellerProfile extends React.Component {
     if (localStorage.getItem("category") === "seller") {
       add = (
         <Button
-          className="bluebeacon addProductButton"
+          className='bluebeacon addProductButton'
           style={{
             float: "right",
             borderRadius: 15 + "px",
@@ -77,4 +111,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile.user,
 });
 
-export default connect(mapStateToProps, {})(SellerProfile);
+export default connect(mapStateToProps)(SellerProfile);

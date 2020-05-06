@@ -9,6 +9,7 @@ const cors = require("cors");
 const Config = require("./config");
 const sellerProfile = require("./routes/Seller/profile");
 const sellerProduct = require("./routes/Seller/product");
+const sellerOrder = require("./routes/Seller/order");
 const customerProduct = require("./routes/customer/product");
 const adminProduct = require("./routes/admin/product");
 const adminSeller = require("./routes/admin/seller");
@@ -38,6 +39,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.static("./ProfilePictures/Seller"));
 app.use(express.static("./ProfilePictures/Customer"));
 app.use(express.static("./ProfilePictures/Common"));
@@ -48,6 +50,7 @@ app.use("/registerCustomer", require("./routes/account/registerCustomer"));
 app.use("/registerSeller", require("./routes/account/registerSeller"));
 app.use("/customer/profile", require("./routes/customer/profile"));
 app.use("/seller/profile", sellerProfile);
+app.use("/seller/orders", sellerOrder);
 app.use("/product/customer", customerProduct);
 app.use("/product/seller", sellerProduct);
 app.use("/product/admin", adminProduct);
@@ -55,13 +58,16 @@ app.use("/admin/seller", adminSeller);
 app.use("/customer/payment", require("./routes/customer/payment"));
 app.use("/customer/address", require("./routes/customer/address"));
 app.use("/customer/orders", require("./routes/customer/order/order"));
+app.use("/admin/orders", require("./routes/admin/order"));
+
 
 app.use(
   "/customer/cartProducts",
   require("./routes/customer/savedAndCartProducts")
 );
 app.use("/customer/checkout", require("./routes/customer/checkout"));
-app.use("/order/status", require("./routes/tracking/tracking"));
+app.use("/product/status", require("./routes/tracking/tracking"));
+app.use("/seller/analytics", require("./routes/reports/sellerReport"));
 
 const server = app.listen(3001, () => {
   console.log("Server listening on port 3001");

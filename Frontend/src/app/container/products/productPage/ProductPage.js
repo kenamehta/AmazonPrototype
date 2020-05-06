@@ -7,14 +7,12 @@ import ProductBuySection from "./ProductBuySection";
 import ProductReview from "./ProductReview";
 import StarRatings from "react-star-ratings";
 import ModalReview from "./AddReviewModal";
-import {
-  //Redirect,
-  Link,
-} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import UpdateProduct from "./UpdateProduct";
 import {
   getProduct,
   addComment,
+  deleteProduct
 } from "../../../../action/ProductAction/productAction";
 
 class ProductPage extends React.Component {
@@ -29,6 +27,9 @@ class ProductPage extends React.Component {
       reviewTitle: null,
       review: null,
       errorMessage: "",
+      updateProductShow: false,
+      price: 0,
+      description: "",
     };
   }
 
@@ -67,6 +68,16 @@ class ProductPage extends React.Component {
     this.setState({
       show: true,
     });
+  };
+
+  handleUpdateClose = (updated) => {
+    console.log(updated);
+    if (updated) this.props.dispatch(getProduct(this.state.productId));
+    this.setState({ updateProductShow: false });
+  };
+
+  handleUpdateShow = () => {
+    this.setState({ updateProductShow: true });
   };
 
   onAddReview = (e) => {
@@ -120,9 +131,12 @@ class ProductPage extends React.Component {
     let price = 0;
     let description = "";
     let reviews = "";
-    let add = "";
+    let update = "";
+    let category = "";
+    let buySection = "";
+    let remove = "";
     if (localStorage.getItem("category") == "seller") {
-      add = (
+      update = (
         <Button
           className='bluebeacon addProductButton'
           style={{
@@ -134,9 +148,29 @@ class ProductPage extends React.Component {
             position: "fixed",
             fontSize: 20 + "px",
           }}
-          onClick={this.handleShow}
+          onClick={this.handleUpdateShow}
         >
-          Add Product
+          Update Product
+        </Button>
+      );
+      remove = (
+        <Button
+          className='bluebeacon addProductButton'
+          style={{
+            float: "right",
+            borderRadius: 15 + "px",
+            borderColor: "#232f3e",
+            right: 220,
+            bottom: 30,
+            position: "fixed",
+            fontSize: 20 + "px",
+          }}
+          onClick={(e)=>{
+            e.preventDefault();
+            this.props.dispatch(deleteProduct({productId:this.state.productId}));
+          }}
+        >
+          Remove Product
         </Button>
       );
     }
@@ -149,6 +183,7 @@ class ProductPage extends React.Component {
       numOfRatings = this.props.product.comments.length;
       price = this.props.product.productPrice;
       description = this.props.product.productDescription;
+      category = this.props.product.productCategory;
       reviews = this.props.product.comments.map((comment) => (
         <ProductReview key={comment._id} comment={comment}></ProductReview>
       ));
@@ -168,6 +203,10 @@ class ProductPage extends React.Component {
           </Button>
         </>
       );
+
+      buySection = <Col lg={2} xl={2}>
+                      <ProductBuySection></ProductBuySection>
+                    </Col>
     }
 
     return (
@@ -215,9 +254,9 @@ class ProductPage extends React.Component {
             </h1>
             <h1 className='seller'>{description}</h1>
           </Col>
-          <Col lg={2} xl={2}>
-            <ProductBuySection></ProductBuySection>
-          </Col>
+
+          {buySection}
+          
         </Row>
         <hr></hr>
         <Row sm={1} xs={1} md={2}>
@@ -246,7 +285,17 @@ class ProductPage extends React.Component {
             {reviews}
           </Col>
         </Row>
-        {add}
+        {update}
+        {remove}
+        <UpdateProduct
+          show={this.state.updateProductShow}
+          handleClose={this.handleUpdateClose}
+          id={this.state.productId}
+          title={title}
+          category={category}
+          price={price}
+          description={description}
+        />
       </Container>
     );
   }

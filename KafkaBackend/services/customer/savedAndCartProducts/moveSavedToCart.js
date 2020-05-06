@@ -53,6 +53,8 @@ let moveSavedToCart = async (msg, callback) => {
           });
           const cartProductsArr = await product.find({ _id: { $in: cartIds } });
 
+          let totalProductCountInCart = 0;
+
           // The entire for loop is created by Sarthak to get cart Product information along with product info
           // getting cart products info like quantity, giftflag, giftmessage. 
           for(let i=0; i<cartProductsArr.length; i++) {
@@ -64,6 +66,7 @@ let moveSavedToCart = async (msg, callback) => {
               giftMessage: foundCartProduct.giftMessage,
               totalProductPrice: foundCartProduct.totalProductPrice
             }
+            totalProductCountInCart += foundCartProduct.quantity;
             // _doc contains product info.
             cartProductsArr[i] = Object.assign({},cartProductsArr[i]._doc,newData);
           }
@@ -76,7 +79,7 @@ let moveSavedToCart = async (msg, callback) => {
                 savedProductsArr,
                 cartProductsArr,
                 savedCnt: savedProductsArr.length,
-                cartCnt: cartProductsArr.length
+                cartCnt: totalProductCountInCart
               });
             })
             .catch(err => {

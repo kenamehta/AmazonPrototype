@@ -1,7 +1,7 @@
 "use strict";
 const { Order, OrderProduct } = require("../../../models/order");
 const product = require("../../../models/product.model");
-
+const { Op } = require("sequelize");
 let getCancelOrders = async (msg, callback) => {
   let response = {};
   let err = {};
@@ -9,8 +9,23 @@ let getCancelOrders = async (msg, callback) => {
   try {
     const orderproducts = await OrderProduct.findAll({
       where: {
-        customer_email_id: msg.params.email,
-        cancelProduct: true
+        [Op.and]: [
+          {
+            [Op.or]: [
+              {
+                customer_email_id: {
+                  [Op.eq]: msg.params.email,
+                },
+              },
+              {
+                seller_email_id: {
+                  [Op.eq]: msg.params.email,
+                },
+              },
+            ],
+          },
+          { cancelProduct: true },
+        ],
       },
       include: [
         {
