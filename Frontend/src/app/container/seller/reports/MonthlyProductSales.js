@@ -33,7 +33,13 @@ class MonthlyProductSales extends React.Component {
   }
 
   componentDidMount() {
-    let url = `/seller/analytics/report2/` + localStorage.getItem("emailId");
+    let sellerEmail = "";
+    if (this.props.sellerVisitingOwnProfile) {
+      sellerEmail = localStorage.getItem("emailId");
+    } else {
+      sellerEmail = this.props.sellerEmailId;
+    }
+    let url = `/seller/analytics/report2/` + sellerEmail;
     axios
       .get(configPath.api_host + url)
       .then((response) => {
