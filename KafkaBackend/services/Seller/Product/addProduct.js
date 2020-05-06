@@ -2,6 +2,8 @@
 const product = require("../../../models/product.model");
 const category = require("../../../models/category.model");
 
+// const redisClient = require("../../../redisConfig");
+
 const addProduct = (msg, callback) => {
   var res = {};
 
@@ -22,12 +24,20 @@ const addProduct = (msg, callback) => {
     clickCount: [{ date: myCustomDate, count: 0 }],
   });
   console.log(productToCreate);
-  productToCreate.save((productSaveError) => {
+  productToCreate.save((productSaveError, savedProduct) => {
     if (productSaveError) {
       res.status = 500;
       res.message = "Database Error";
       callback(null, res);
     } else {
+      // id gives _id in string. in redis can only store string, buffer etc.
+      // console.log(savedProduct.id);
+
+      // redisClient.setex(savedProduct.id, 36000, JSON.stringify(savedProduct));
+      
+      console.log('Saved Below Product in Redis');
+      console.log(savedProduct);
+
       // assuming msg.productCategory will always be valid from frontend
       category.findOne({ name: msg.productCategory }, (err, result) => {
         if (err) {

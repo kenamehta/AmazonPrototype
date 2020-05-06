@@ -4,6 +4,7 @@ import {
   PRODUCT_SEARCH,
   PRODUCT_FILTER,
   PRODUCT_SORT,
+  DELETE_PRODUCT
 } from "./actionType";
 import configPath from "../../configApp";
 import axios from "axios";
@@ -128,6 +129,24 @@ export const addComment = (data) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const deleteProduct = (data) => async (dispatch) => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
+  try{
+    const res = await axios.post(
+      configPath.api_host + `/product/seller/removeProduct`,
+      data
+    );
+    if(res.status === 200) {
+      console.log(res.data);
+      window.alert('Deleted the product');
+    }
+  } catch (error) {
+    window.alert('Error in removing the Product');
+    console.log("Error in deleteProduct action in productActions.js");
+    console.log(error);
+  }
+}
 
 export const updateProductFilter = (rating, minPrice, maxPrice) => {
   return {
