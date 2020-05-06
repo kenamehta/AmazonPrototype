@@ -24,6 +24,7 @@ import CategoryList from "./admin/category/CategoryList";
 import SellerList from "./admin/seller/SellerList";
 import SelectAddressAndPayment from "./customer/checkout/SelectAddressAndPayment";
 import SellerReport from "./seller/reports/sellerReportContainer";
+import Dashboard from "./admin/dashboard/Dashboard";
 
 class bodyCont extends React.Component {
   render() {
@@ -58,6 +59,7 @@ class bodyCont extends React.Component {
         <Route path='/customer/order/openorders' component={OpenOrder} />
         <Route path='/seller/openorders' component={OpenSellerOrder} />
         <Route path='/admin/order' component={AdminOrder} />
+        <Route path='/admin/dashboard' component={Dashboard} />
         <Route path='/seller/reports' component={SellerReport} />
       </div>
     );

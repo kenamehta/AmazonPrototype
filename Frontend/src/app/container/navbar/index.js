@@ -295,6 +295,8 @@ class Topnav extends React.Component {
                 style={{ float: "left" }}
                 className='custom-nav'
               >
+                Amazon
+                <br />
                 <b className='nav-text'>Inventory</b>
               </Link>
               <Link
@@ -302,6 +304,8 @@ class Topnav extends React.Component {
                 style={{ float: "left" }}
                 className='custom-nav'
               >
+                All
+                <br />
                 <b className='nav-text'>Seller</b>
               </Link>
               <Link
@@ -309,9 +313,19 @@ class Topnav extends React.Component {
                 style={{ float: "left" }}
                 className='custom-nav'
               >
+                All
+                <br />
                 <b className='nav-text'>Orders</b>
               </Link>
-
+              <Link
+                to='/admin/dashboard'
+                style={{ float: "left" }}
+                className='custom-nav'
+              >
+                My
+                <br />
+                <b className='nav-text'>Dashboard</b>
+              </Link>
               <NavDropdown
                 title={
                   <div style={{ display: "inline-block" }}>
@@ -326,9 +340,6 @@ class Topnav extends React.Component {
                 id='collasible-nav-dropdown'
                 style={{ display: "Block", color: "#FFF" }}
               >
-                <NavDropdown.Item>
-                  <Link to='/seller/profile'>Dashboard</Link>
-                </NavDropdown.Item>
                 {Applications}
                 {eventsApp}
                 <NavDropdown.Divider />
