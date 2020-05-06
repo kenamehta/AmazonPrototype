@@ -18,6 +18,8 @@ import {
   ListGroup,
   ListGroupItem,
   Button,
+  Row,
+  Col
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -60,6 +62,8 @@ class SellerList extends Component {
   componentDidMount() {
     this.props.dispatch(getSeller());
   }
+
+
   render() {
     // console.log(this.props);
     const { sellers } = this.props.sellerAdmin;
@@ -69,20 +73,25 @@ class SellerList extends Component {
         <ListGroup className="card-img-top">
           <TransitionGroup className="shopping-list">
             {sellers.map(({ _id, name, emailId, profilePictureUrl }) => (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
+              <CSSTransition key={_id} timeout={500} classNames="fade" style={{marginTop:"10px"}}>
                 <ListGroupItem className="w3-card-4">
-                  <Link
-                    to="/productlist"
-                    className="text-dark"
-                    onClick={this.onSearch.bind(this, name)}
-                  >
-                    <b>{name}</b>
-                    <br />
-                    <b>{emailId}</b>
-                    <br />
-                    <b> {profilePictureUrl}</b>
-                    <br />
-                  </Link>
+                  <Row>
+                    <Col xs="1">
+                      <img src={profilePictureUrl} />
+                    </Col>
+                    <Col xs="11">
+                      <Link
+                        to={"/seller/profile/"+emailId}
+                        className="text-dark"
+                        onClick={this.onSearch.bind(this, name)}
+                      >
+                        <b>{name}</b>
+                        <br />
+                        <b>{emailId}</b>
+                        <br />
+                      </Link>
+                    </Col>
+                  </Row>
                 </ListGroupItem>
               </CSSTransition>
             ))}
