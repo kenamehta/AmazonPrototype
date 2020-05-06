@@ -11,16 +11,17 @@ let getAdminReport6 = async (msg, callback) => {
     if (products) {
       let clickArr = [];
       products.map(item => {
-        let lastClick = item.clickCountproducts
-          ? item.clickCountproducts.clickCount.slice(-1).pop()
-          : {};
+        let lastClick = item.clickCount ? item.clickCount.slice(-1).pop() : {};
+        console.log("lastClick");
+        console.log(lastClick);
         clickArr.push({
-          productName: products.productName,
-          productId: products._id,
+          productName: item.productName,
+          productId: item._id,
           clickCount: lastClick.count
         });
       });
-
+      //   console.log("clickArr");
+      //   console.log(clickArr);
       function compare(a, b) {
         const countA = a.count;
         const countB = b.count;
@@ -32,7 +33,9 @@ let getAdminReport6 = async (msg, callback) => {
         }
         return comparison;
       }
-      clickArr.sort(compare);
+      //   clickArr.sort(compare);
+      //   console.log("clickArr");
+      //   console.log(clickArr);
       let first10 = clickArr.slice(1, 11);
       return callback(null, {
         status: 200,

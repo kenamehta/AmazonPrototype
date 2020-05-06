@@ -43,11 +43,10 @@ class OrderPage extends Component {
   }
 
   componentWillMount() {
-    let payload=
-    {
-      statusFilter:'empty',
-      sellerNameFilter:'empty'
-    }
+    let payload = {
+      statusFilter: "empty",
+      sellerNameFilter: "empty"
+    };
     this.props.getAdminOrders(payload);
   }
 
@@ -188,16 +187,20 @@ class OrderPage extends Component {
                       >
                         Cancel Request
                       </button> */}
-                      <p style={{color:'red'}}><i>{i.cancelProduct?"Cancelled Order":''}</i></p>
+                      <p style={{ color: "red" }}>
+                        <i>{i.cancelProduct ? "Cancelled Order" : ""}</i>
+                      </p>
                       {/*Tracking button - Kena*/}
                       <button
                         className="a-button-order p-2 mt-1 btn-sm"
                         style={{ width: "100%" }}
                         onClick={e => {
-                          this.setState({ modalTracking: "block" });
-                          this.props.getTracking({
-                            orderProductId: i._id,
+                          this.setState({
+                            modalTracking: "block",
                             editId: i._id
+                          });
+                          this.props.getTracking({
+                            orderProductId: i._id
                           });
                         }}
                       >
@@ -681,7 +684,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAdminOrders: (payload) => dispatch(getAdminOrders(payload)),
+    getAdminOrders: payload => dispatch(getAdminOrders(payload)),
     getTracking: payload => dispatch(getTracking(payload)),
     updateTracking: payload => dispatch(updateTracking(payload))
   };
