@@ -3,10 +3,12 @@ const product = require("../../../models/product.model");
 const comment = require("../../../models/comment.model");
 const customer = require("../../../models/customer.model");
 
+// const redisClient = require("../../../redisConfig");
+
 // sends all fields of a product document from mongoDb in response.
 const getProduct = (msg, callback) => {
   var res = {};
-
+  console.log('Not present in Redis');
   // msg.productId is _id of product
   // product.findOne({_id:msg.productId, validFlag:"true"}, (err, product) => {
   // for getting Product not checking validFlag true, since if customer orders product,
@@ -68,11 +70,17 @@ const getProduct = (msg, callback) => {
         }
         // console.log(allCommentsWithUserDetails);
         // updating clickCount in database
-        foundProduct.save((saveError) => {
+        foundProduct.save((saveError, savedProduct) => {
           if(saveError){
             res.status = 500;
             res.message = 'Database Error';
           } else {
+
+            // redisClient.setex(savedProduct.id, 36000, JSON.stringify(savedProduct));
+
+            console.log('Saved Below Product in Redis');
+            console.log(savedProduct);
+
             res.status = 200;
             const obj = {
               validFlag:foundProduct.validFlag,
@@ -99,7 +107,7 @@ const getProduct = (msg, callback) => {
       res.message = "Not found";
       callback(null, res);
     }
-  });
+  }); 
 };
 
 exports.getProduct = getProduct;

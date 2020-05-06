@@ -1,6 +1,8 @@
 "use strict";
 const product = require("../../../models/product.model");
 
+// const redisClient = require("../../../redisConfig");
+
 /*
   Check of whether the product we are trying to edit exist or not, and check of the new productName we are giving 
 */
@@ -19,11 +21,17 @@ const updateProduct = (msg, callback) => {
       if(msg.productImagesURL){
         foundProduct.photos = msg.productImagesURL;
       }
-      foundProduct.save((saveError) => {
+      foundProduct.save((saveError, savedProduct) => {
         if(saveError){
           res.status = 500;
           res.message = 'Database Error';
         } else {
+
+          // redisClient.setex(savedProduct.id, 36000, JSON.stringify(savedProduct));
+          
+          console.log('Saved Below Product in Redis');
+          console.log(savedProduct);
+
           res.status = 200;
           res.message = foundProduct;
         }
