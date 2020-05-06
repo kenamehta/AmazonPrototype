@@ -16,6 +16,7 @@ import {
   updateProductSort,
   updateProductFilter,
 } from "../../../../action/ProductAction/productAction";
+import configPath from "../../../../configApp";
 
 class SellerList extends Component {
   state = {
@@ -92,7 +93,7 @@ class SellerList extends Component {
                 >
                   <Card.Img
                     variant="top"
-                    src={profilePictureUrl}
+                    src={profilePictureUrl==='default.png'?configPath.api_host+'/default.png':profilePictureUrl}
                     style={{ width: "150px", verticalAlign: "middle" }}
                   />
                 </Link>

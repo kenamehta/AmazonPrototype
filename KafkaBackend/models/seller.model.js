@@ -6,13 +6,13 @@ const sellerProfile = new Schema(
   {
     emailId: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    phone: { type: String },
+    phone: { type: String, default:"" },
     profilePictureUrl: { type: String, default: "default.png" },
-    street: { type: String },
-    city: { type: String },
-    state: { type: String },
-    country: { type: String },
-    zipcode: { type: String }
+    street: { type: String, default:"" },
+    city: { type: String, default:"" },
+    state: { type: String, default:"" },
+    country: { type: String, default:"" },
+    zipcode: { type: String, default:"" }
   },
   {
     timestamps: true

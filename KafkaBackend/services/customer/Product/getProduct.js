@@ -27,9 +27,13 @@ const getProduct = (msg, callback) => {
       const myCustomDate = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
 
       // checking if myCustomDate already exists in clickCount array
-      const index = foundProduct.clickCount.map((each) => {
-        return each.date;
-      }).indexOf(myCustomDate);
+      let index = -1;
+      for(let i in foundProduct.clickCount){
+        if(foundProduct.clickCount[i].date === myCustomDate){
+          index = i;
+          break;
+        }
+      }
 
       if ( index === -1 ) {
         foundProduct.clickCount.push({date: myCustomDate, count: 1});
