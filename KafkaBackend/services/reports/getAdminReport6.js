@@ -7,6 +7,10 @@ var connection_sql = require("./../../connections/mysql_connection");
 let getAdminReport6 = async (msg, callback) => {
   try {
     console.log(msg);
+
+
+
+    
     const products = await product.find();
     if (products) {
       let clickArr = [];
