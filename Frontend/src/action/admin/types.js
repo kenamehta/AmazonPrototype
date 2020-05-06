@@ -5,3 +5,4 @@ export const CATEGORYS_LOADING = "CATEGORYS_LOADING";
 export const SET_MODAL = "SET_MODAL";
 export const ADD_MODAL = "ADD_MODAL";
 export const GET_SELLERS = "GET_SELLERS";
+export const UPDATE_SELLER_LIST = "UPDATE_SELLER_LIST";
