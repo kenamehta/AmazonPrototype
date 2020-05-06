@@ -8,10 +8,7 @@ let getAdminOrders = async (msg, callback) => {
   
   try {
     const orderproducts = await OrderProduct.findAll({
-      where: {
-        
-        cancelProduct: false
-      },
+     
       order: [
         ['createdAt', 'DESC'],
      
