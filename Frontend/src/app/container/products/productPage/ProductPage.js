@@ -12,6 +12,7 @@ import UpdateProduct from "./UpdateProduct";
 import {
   getProduct,
   addComment,
+  deleteProduct
 } from "../../../../action/ProductAction/productAction";
 
 class ProductPage extends React.Component {
@@ -132,6 +133,8 @@ class ProductPage extends React.Component {
     let reviews = "";
     let update = "";
     let category = "";
+    let buySection = "";
+    let remove = "";
     if (localStorage.getItem("category") == "seller") {
       update = (
         <Button
@@ -148,6 +151,26 @@ class ProductPage extends React.Component {
           onClick={this.handleUpdateShow}
         >
           Update Product
+        </Button>
+      );
+      remove = (
+        <Button
+          className='bluebeacon addProductButton'
+          style={{
+            float: "right",
+            borderRadius: 15 + "px",
+            borderColor: "#232f3e",
+            right: 220,
+            bottom: 30,
+            position: "fixed",
+            fontSize: 20 + "px",
+          }}
+          onClick={(e)=>{
+            e.preventDefault();
+            this.props.dispatch(deleteProduct({productId:this.state.productId}));
+          }}
+        >
+          Remove Product
         </Button>
       );
     }
@@ -180,6 +203,10 @@ class ProductPage extends React.Component {
           </Button>
         </>
       );
+
+      buySection = <Col lg={2} xl={2}>
+                      <ProductBuySection></ProductBuySection>
+                    </Col>
     }
 
     return (
@@ -227,9 +254,9 @@ class ProductPage extends React.Component {
             </h1>
             <h1 className='seller'>{description}</h1>
           </Col>
-          <Col lg={2} xl={2}>
-            <ProductBuySection></ProductBuySection>
-          </Col>
+
+          {buySection}
+          
         </Row>
         <hr></hr>
         <Row sm={1} xs={1} md={2}>
@@ -259,6 +286,7 @@ class ProductPage extends React.Component {
           </Col>
         </Row>
         {update}
+        {remove}
         <UpdateProduct
           show={this.state.updateProductShow}
           handleClose={this.handleUpdateClose}

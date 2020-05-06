@@ -90,7 +90,7 @@ router.post("/addProduct", productImagesUpload.any(), (req, res) => {
   checking for exact match, case insensitive in the backend
   so AMAZON and amazon is same product
 */
-router.get("/existProduct/:productName", checkAuth, (req, res) => {
+router.get("/existProduct/:productName", (req, res) => {
   console.log("Inside get of product/seller/existProduct");
 
   req.body.path = "product_exist";
@@ -108,7 +108,7 @@ router.get("/existProduct/:productName", checkAuth, (req, res) => {
 
 // Removing of a product by seller. Will only soft delete, set validFlag = false
 // expecting productId in req.body
-router.post("/removeProduct", checkAuth, (req, res) => {
+router.post("/removeProduct", (req, res) => {
   console.log("Inside post of product/seller/removeProduct");
   console.log(req.body);
 

@@ -43,7 +43,12 @@ class OrderPage extends Component {
   }
 
   componentWillMount() {
-    this.props.getAdminOrders();
+    let payload=
+    {
+      statusFilter:'empty',
+      sellerNameFilter:'empty'
+    }
+    this.props.getAdminOrders(payload);
   }
 
   render() {
@@ -183,6 +188,7 @@ class OrderPage extends Component {
                       >
                         Cancel Request
                       </button> */}
+                      <p style={{color:'red'}}><i>{i.cancelProduct?"Cancelled Order":''}</i></p>
                       {/*Tracking button - Kena*/}
                       <button
                         className="a-button-order p-2 mt-1 btn-sm"
@@ -675,7 +681,7 @@ const mapStateToProps = state => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    getAdminOrders: () => dispatch(getAdminOrders()),
+    getAdminOrders: (payload) => dispatch(getAdminOrders(payload)),
     getTracking: payload => dispatch(getTracking(payload)),
     updateTracking: payload => dispatch(updateTracking(payload))
   };

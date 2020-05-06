@@ -1,21 +1,26 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import SellerReports from "./productReports";
-// import { ProductSales } from "./productSales";
+import MonthlyProductSales from "./MonthlyProductSales";
+import ProductStatistics from "./ProductStatistics";
 
 class ReportContainer extends React.Component {
   render() {
     return (
-      <Container>
-        <Row style={{ marginTop: "30px" }}>
-          <Col xs={6}>
-            <SellerReports />
-          </Col>
-          <Col xs={6}>
-            {/* <ProductSales /> */}
-          </Col>
+      <>
+        <Row
+          xs={12}
+          md={12}
+          sm={12}
+          lg={12}
+          xl={12}
+          style={{ marginTop: "30px", height: "500px" }}
+        >
+          <MonthlyProductSales />
         </Row>
-      </Container>
+        <Row xs={12} md={12} sm={12} lg={12} xl={12}>
+          <ProductStatistics />
+        </Row>
+      </>
     );
   }
 }
