@@ -1,24 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  Navbar,
-  Container,
-  NavbarBrand,
-  NavbarToggler,
-  Collapse,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Nav,
-  NavLink,
-  NavItem,
-  ListGroup,
-  ListGroupItem,
-  Button,
-} from "reactstrap";
+
 import { FaSearch } from "react-icons/fa";
 import { Container, Form, InputGroup, Button } from "react-bootstrap";
 import { Card, Row, Col } from "react-bootstrap";
@@ -88,41 +70,7 @@ class SellerList extends Component {
     this.props.dispatch(updateSellerList(nameOfSeller));
   };
 
-  // render() {
-  //   // console.log(this.props);
-  //   const { sellers } = this.props.sellerAdmin;
-  //   return (
-  //     <Container>
-  //       {" "}
-  //       <ListGroup className="card-img-top">
-  //         <TransitionGroup className="shopping-list">
-  //           {sellers.map(({ _id, name, emailId, profilePictureUrl }) => (
-  //             <CSSTransition key={_id} timeout={500} classNames="fade" style={{marginTop:"10px"}}>
-  //               <ListGroupItem className="w3-card-4">
-  //                 <Row>
-  //                   <Col xs="1">
-  //                     <img src={profilePictureUrl} />
-  //                   </Col>
-  //                   <Col xs="11">
-  //                     <Link
-  //                       to={"/seller/profile/"+emailId}
-  //                       className="text-dark"
-  //                       onClick={this.onSearch.bind(this, name)}
-  //                     >
-  //                       <b>{name}</b>
-  //                       <br />
-  //                       <b>{emailId}</b>
-  //                       <br />
-  //                     </Link>
-  //                   </Col>
-  //                 </Row>
-  //               </ListGroupItem>
-  //             </CSSTransition>
-  //           ))}
-  //         </TransitionGroup>
-  //       </ListGroup>
-  
-  
+
   render() {
     // console.log(this.props);
     const { sellers } = this.props.sellerAdmin;
