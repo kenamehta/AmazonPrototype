@@ -6,16 +6,24 @@ class OrderHeader extends Component {
   state = {
     color: "red",
     statusvalue: "empty",
-    sellerFilter:"empty"
+    sellerFilter: "empty",
   };
   sellerNameChangeHandler = () => {
-    console.log("in here")
+    console.log(this.state.statusv);
     let payload={
-      statusFilter:this.state.statusFilter,
-      sellerNameFilter:this.state.sellerNameFilter
+      statusFilter:this.state.statusvalue,
+      sellerNameFilter:this.state.sellerFilter
     }
     this.props.getAdminOrders(payload);
-
+  };
+  handleStatusChange = () => {
+    console.log(this.state.statusv);
+    let payload={
+      statusFilter:this.state.statusvalue,
+      sellerNameFilter:this.state.sellerFilter
+    }
+    this.props.getAdminOrders(payload);
+  
   };
   render() {
     return (
@@ -34,17 +42,23 @@ class OrderHeader extends Component {
               className="form-control mb-2 mr-sm-2"
               id="inlineFormInputName2"
               placeholder="Enter Seller Name"
-              onChange={e=>(this.setState({sellerFilter:e.target.value}),()=>(this.sellerNameChangeHandler()))}
+              onChange={(e) => {
+                this.setState({ sellerFilter: e.target.value||'empty' }, () => {
+                  this.sellerNameChangeHandler();
+                });
+              }}
             />
             <select
               className="form-control mb-2 mr-sm-2"
               value={this.state.statusvalue}
               onChange={(e) => {
-                this.setState({ statusvalue: e.target.value }, () => {
-                  this.handleStatusChange(this.state.statusvalue);
-                });
+                this.setState(
+                  { statusvalue: e.target.value||'empty' },
+                  () => this.handleStatusChange()
+                );
               }}
             >
+              <option value="empty">Select Status</option>
               <option value="1">Order Placed</option>
               <option value="2">Packaging</option>
               <option value="3">Out for Shipping</option>

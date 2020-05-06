@@ -12,6 +12,7 @@ const getAdminOrderDispatcher = (payload) => {
   
 
 export const getAdminOrders = (payload) => {
+  console.log(payload)
     axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
     return (dispatch) => {
       //make a get request to fetch customer profile
