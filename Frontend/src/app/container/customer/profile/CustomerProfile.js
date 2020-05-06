@@ -11,9 +11,11 @@ import {
 
 class CustomerProfile extends Component {
   state = {};
+
   componentWillMount() {
     this.props.getProfile();
   }
+
   render() {
     return (
       <div>
@@ -21,7 +23,6 @@ class CustomerProfile extends Component {
           profileData={this.props.profiledata}
           updateProfile={this.props.updateProfile}
           updateProfilePicture={this.props.updateProfilePicture}
-          
         />
         <Insights profileData={this.props.profiledata} />
       </div>
@@ -39,8 +40,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getProfile: () => dispatch(getProfile()),
     updateProfile: (payload) => dispatch(updateProfile(payload)),
-    updateProfilePicture: (payload) => dispatch(updateProfilePicture(payload))
-   
+    updateProfilePicture: (payload) => dispatch(updateProfilePicture(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerProfile);

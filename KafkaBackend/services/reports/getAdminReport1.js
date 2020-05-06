@@ -8,7 +8,11 @@ let getAdminReport1 = async (msg, callback) => {
   try {
     console.log(msg);
     connection_sql.query(
-      `select count(1) as count, substr(createdAt,1,10) as date from Orders where substr(createdAt,1,10)=(select max(substr(createdAt,1,10)) from Orders)`,
+      `Select
+      count(createdAt) as count,
+      substr(createdAt,1,10) as count_date
+      from Orders 
+      group by substr(createdAt,1,10)`,
       async (err, results, fields) => {
         if (err) {
           console.log(err);

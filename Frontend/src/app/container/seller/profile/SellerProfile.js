@@ -4,7 +4,7 @@ import React from "react";
 import BasicProfile from "./BasicProfile";
 import Container from "react-bootstrap/Container";
 import { connect } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import AddProduct from "./AddProduct";
 import List from "../../products/productsList/list";
 import {
@@ -13,6 +13,7 @@ import {
   updateProductSort,
   updateProductFilter,
 } from "../../../../action/ProductAction/productAction";
+import Report from "../reports/MonthlyProductSales";
 
 class SellerProfile extends React.Component {
   constructor(props) {
@@ -69,7 +70,7 @@ class SellerProfile extends React.Component {
     if (this.props.location.pathname.split("/").length > 3) {
       sellerVisitingOwnProfile = false;
     }
-    var add;
+    var add, report;
     if (localStorage.getItem("category") === "seller") {
       add = (
         <Button
@@ -88,7 +89,19 @@ class SellerProfile extends React.Component {
           Add Product
         </Button>
       );
+    } else if (localStorage.getItem("category") === "admin") {
+      report = (
+        <Report
+          sellerVisitingOwnProfile={sellerVisitingOwnProfile}
+          sellerEmailId={
+            this.props.location.pathname.split("/").length > 3
+              ? this.props.location.pathname.split("/")[3]
+              : ""
+          }
+        />
+      );
     }
+
     return (
       <Container fluid style={{ padding: "0 10%" }}>
         <BasicProfile
@@ -99,7 +112,19 @@ class SellerProfile extends React.Component {
               : ""
           }
         />
-        <List sellerProfile={true} />
+        <Row
+          xs={12}
+          md={12}
+          sm={12}
+          lg={12}
+          xl={12}
+          style={{ position: "relative", marginTop: "50px", height: "500px" }}
+        >
+          {report}
+        </Row>
+        <Row>
+          <List sellerProfile={true} />
+        </Row>
         {add}
         <AddProduct show={this.state.setShow} handleClose={this.handleClose} />
       </Container>
