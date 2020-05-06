@@ -70,7 +70,7 @@ class Login extends Component {
       } else if (this.state.category === "seller") {
         return <Redirect to="/seller/profile" />;
       } else {
-        return <Redirect to="/admin/profile" />;
+        return <Redirect to="/admin/dashboard" />;
       }
     }
     return (

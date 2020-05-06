@@ -27,7 +27,7 @@ const getProduct = (msg, callback) => {
     if(foundProduct){
       const date = new Date();
       // getting date in mm/dd/yyyy format
-      const myCustomDate = (date.getMonth() + 1) + "/" + (date.getDate()) + "/" + (date.getFullYear());
+      const myCustomDate = ((date.getMonth() + 1)<10?'0'+(date.getMonth() + 1):(date.getMonth() + 1)) + "/" + (date.getDate()<10?'0'+date.getDate():date.getDate()) + "/" + (date.getFullYear());
       try {
         let foundProductWithPreviousClick = await Click.findOne({productId:msg.productId});
         if(foundProductWithPreviousClick)
