@@ -21,13 +21,15 @@ class ProductContainer extends React.Component {
     axios
       .get(configPath.api_host + url)
       .then((response) => {
+        console.log('Response for top 10 viewed products');
+        console.log(response);
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           let x = [];
           let y = [];
-          response.data.adminReport6.map(({ clickCount, productName }) => {
+          response.data.clicksArr.map(({ count, productName }) => {
             x.push(productName);
-            y.push(clickCount);
+            y.push(count);
           });
           this.setState({
             x,
