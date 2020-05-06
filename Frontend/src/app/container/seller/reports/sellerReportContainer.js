@@ -13,11 +13,18 @@ class ReportContainer extends React.Component {
           sm={12}
           lg={12}
           xl={12}
-          style={{ marginTop: "30px", height: "500px" }}
+          style={{ marginTop: "50px", height: "500px" }}
         >
           <MonthlyProductSales />
         </Row>
-        <Row xs={12} md={12} sm={12} lg={12} xl={12}>
+        <Row
+          xs={12}
+          md={12}
+          sm={12}
+          lg={12}
+          xl={12}
+          style={{ marginTop: "30px" }}
+        >
           <ProductStatistics />
         </Row>
       </>

@@ -1,5 +1,4 @@
 import React from "react";
-import "./reports.css";
 import { Card } from "react-bootstrap";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -13,8 +12,21 @@ class MonthlyProductSales extends React.Component {
     super(props);
     this.state = {
       data: "",
-      month: [],
-      year: [],
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      year: null,
       totalPrice: [],
       totalQuantity: [],
     };
@@ -27,20 +39,20 @@ class MonthlyProductSales extends React.Component {
       .then((response) => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
-          let m = [];
-          let y = [];
-          let tp = [];
-          let tq = [];
+          let tp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+          let tq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
           response.data.results.map((result) => {
-            m.push(result.month);
-            y.push(result.year);
-            tp.push(result.totalProductPrice);
-            tq.push(result.totalProductQuantity);
+            this.state.months.map((month) => {
+              if (month.toLowerCase() === result.month.toLowerCase()) {
+                var i = this.state.months.indexOf(month);
+                tp[i] = result.totalProductPrice;
+                tq[i] = result.totalProductQuantity;
+              }
+            });
           });
 
           this.setState({
-            month: m,
-            year: y,
+            year: response.data.results[0].year,
             totalPrice: tp,
             totalQuantity: tq,
           });
@@ -53,42 +65,60 @@ class MonthlyProductSales extends React.Component {
 
   render() {
     return (
-      <Card style={{ width: "80%", margin: "0 auto" }}>
+      <Card style={{ width: "100%", margin: "0 200px", border: "none" }}>
         <Plot
           data={[
             {
-              x: this.state.month,
+              x: this.state.months,
               y: this.state.totalPrice,
               type: "scatter",
               mode: "lines+markers",
-              marker: { color: "red" },
+              marker: { color: "#f08804" },
+              line: { width: "6" },
               yaxis: "y2",
               name: "Total Price",
+              tickfont: { color: "#000000" },
             },
             {
               type: "bar",
-              x: this.state.month,
+              x: this.state.months,
               y: this.state.totalQuantity,
               name: "Total Quantity",
+              marker: { color: "#232f3e" },
             },
           ]}
           layout={{
-            borderwidth: "5px",
-            height: "500px",
-            title: "Monthly Product Sales",
+            margin: { l: 100, r: 200 },
+            plot_bgcolor: "#ffffff",
+            paper_bgcolor: "#d3d3d3",
+            title: `MONTHLY PRODUCT SALES - ${this.state.year}`,
+            titlefont: { color: "#000000", size: "24", family: "Arial" },
             autosize: true,
             xaxis: {
-              title: "Months",
-              showgrid: false,
+              tickfont: { color: "#000000", size: "16", family: "Arial" },
+              showgrid: true,
             },
-            yaxis: { title: "Total Quantity", showgrid: false },
+            yaxis: {
+              title: "Total Quantity",
+              titlefont: { color: "#000000", size: "16", family: "Arial" },
+              tickfont: { color: "#000000", size: "16", family: "Arial" },
+              showgrid: false,
+              rangemode: "tozero",
+            },
             yaxis2: {
               title: "Total Price",
-              titlefont: { color: "rgb(148, 103, 189)" },
-              tickfont: { color: "rgb(148, 103, 189)" },
+              titlefont: { color: "#000000", size: "16", family: "Arial" },
+              tickfont: { color: "#000000", size: "16", family: "Arial" },
               overlaying: "y",
               side: "right",
               showgrid: false,
+              rangemode: "tozero",
+            },
+            legend: {
+              font: { color: "#000000", size: "16", family: "Arial" },
+              borderwidth: "3",
+              bordercolor: "#000000",
+              autosize: true,
             },
           }}
           config={{ responsive: true }}
