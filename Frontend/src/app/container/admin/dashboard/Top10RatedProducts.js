@@ -13,12 +13,11 @@ class ProductContainer extends React.Component {
     this.state = {
       x: [],
       y: [],
-      z: [],
     };
   }
 
   componentDidMount() {
-    let url = `/admin/analytics/report1/`;
+    let url = `/admin/analytics/report5/`;
     axios
       .get(configPath.api_host + url)
       .then((response) => {
@@ -26,13 +25,13 @@ class ProductContainer extends React.Component {
         if (response.status === 200) {
           let x = [];
           let y = [];
-          response.data.adminReport1.map(({ count, count_date }) => {
-            x.push(count_date);
-            y.push(count);
+          response.data.adminReport5.map(({ averageRating, productName }) => {
+            x.push(productName);
+            y.push(averageRating);
           });
           this.setState({
-            x: x,
-            y: y,
+            x,
+            y,
           });
         }
       })
@@ -42,6 +41,7 @@ class ProductContainer extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <Card>
         <Plot
@@ -49,15 +49,13 @@ class ProductContainer extends React.Component {
             {
               x: this.state.x,
               y: this.state.y,
-              type: "scatter",
-              mode: "lines+markers",
-              line: { color: "#febd69" },
+              type: "bar",
+              marker: {
+                color: "#232f3e",
+              },
             },
           ]}
-          layout={{
-            title: "Daily Orders",
-            yaxis: { rangemode: "tozero", autorange: true },
-          }}
+          layout={{ title: "Top 10 rated products" }}
         />
       </Card>
     );

@@ -1,4 +1,4 @@
-import { GET_SELLERS } from "./types.js";
+import { GET_SELLERS, UPDATE_SELLER_LIST } from "./types.js";
 import axios from "axios";
 import configPath from "../../configApp";
 
@@ -15,5 +15,26 @@ export const getSeller = () => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+    });
+};
+
+// export const updateSellerList = (name) => {
+//   console.log(name);
+//   return {
+//     type: UPDATE_SELLER_LIST,
+//     payload: name,
+//   };
+// };
+
+export const updateSellerList = (name) => (dispatch) => {
+  console.log(name, "this is what you have sent");
+  axios
+    .post(configPath.api_host + `/admin/seller/findSeller`, name)
+    .then((res) => {
+      console.log("johny", res.data);
+      return dispatch({
+        type: UPDATE_SELLER_LIST,
+        payload: res.data,
+      });
     });
 };

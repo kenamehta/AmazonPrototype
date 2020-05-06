@@ -13,19 +13,26 @@ class ProductContainer extends React.Component {
     this.state = {
       x: [],
       y: [],
-      z: [],
     };
   }
 
   componentDidMount() {
-    let url = `/seller/analytics/report2/` + localStorage.getItem("emailId");
+    let url = `/admin/analytics/report2/`;
     axios
       .get(configPath.api_host + url)
       .then((response) => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
-          this.props.handleClose();
-          alert("Successfully added");
+          let x = [];
+          let y = [];
+          response.data.adminReport2.map(({ count, productName }) => {
+            x.push(productName);
+            y.push(count);
+          });
+          this.setState({
+            x: x,
+            y: y,
+          });
         }
       })
       .catch((error) => {
@@ -34,20 +41,21 @@ class ProductContainer extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <Card>
         <Plot
           data={[
             {
-              x: [1, 2, 3],
-              y: [2, 6, 3],
-              type: "scatter",
-              mode: "lines+markers",
-              marker: { color: "red" },
+              x: this.state.x,
+              y: this.state.y,
+              type: "bar",
+              marker: {
+                color: "#232f3e",
+              },
             },
-            { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
           ]}
-          layout={{ title: "A Fancy Plot" }}
+          layout={{ title: "Top 5 Sold Products" }}
         />
       </Card>
     );

@@ -1,8 +1,29 @@
 import React, { Component } from "react";
+import { getAdminOrders } from "../../../../action/admin/orderAction";
+import { connect } from "react-redux";
 
 class OrderHeader extends Component {
   state = {
     color: "red",
+    statusvalue: "empty",
+    sellerFilter: "empty",
+  };
+  sellerNameChangeHandler = () => {
+    console.log(this.state.statusv);
+    let payload={
+      statusFilter:this.state.statusvalue,
+      sellerNameFilter:this.state.sellerFilter
+    }
+    this.props.getAdminOrders(payload);
+  };
+  handleStatusChange = () => {
+    console.log(this.state.statusv);
+    let payload={
+      statusFilter:this.state.statusvalue,
+      sellerNameFilter:this.state.sellerFilter
+    }
+    this.props.getAdminOrders(payload);
+  
   };
   render() {
     return (
@@ -12,18 +33,39 @@ class OrderHeader extends Component {
           <h2 className="p-4" style={{ fontWeight: "500" }}>
             Your Orders
           </h2>
-          <div className='p-4'>
-            <form className="form-inline">
-              <label class="sr-only" for="inlineFormInputName2">
-                Seller Name
-              </label>
-              <input
-                type="text"
-                class="form-control mb-2 mr-sm-2"
-                id="inlineFormInputName2"
-                placeholder="Enter Seller Name"
-              />
-            </form>
+          <div className="p-4 d-flex">
+            <label class="sr-only" for="inlineFormInputName2">
+              Seller Name
+            </label>
+            <input
+              type="text"
+              className="form-control mb-2 mr-sm-2"
+              id="inlineFormInputName2"
+              placeholder="Enter Seller Name"
+              onChange={(e) => {
+                this.setState({ sellerFilter: e.target.value||'empty' }, () => {
+                  this.sellerNameChangeHandler();
+                });
+              }}
+            />
+            <select
+              className="form-control mb-2 mr-sm-2"
+              value={this.state.statusvalue}
+              onChange={(e) => {
+                this.setState(
+                  { statusvalue: e.target.value||'empty' },
+                  () => this.handleStatusChange()
+                );
+              }}
+            >
+              <option value="empty">Select Status</option>
+              <option value="1">Order Placed</option>
+              <option value="2">Packaging</option>
+              <option value="3">Out for Shipping</option>
+              <option value="4">Package Arrived</option>
+              <option value="5">Out for delivery</option>
+              <option value="6">Delivered</option>
+            </select>
           </div>
         </div>
 
@@ -61,4 +103,15 @@ class OrderHeader extends Component {
   }
 }
 
-export default OrderHeader;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    orders: state.adminOrderReducer.orders || [],
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getAdminOrders: (payload) => dispatch(getAdminOrders(payload)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(OrderHeader);

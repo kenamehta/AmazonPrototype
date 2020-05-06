@@ -95,9 +95,13 @@ class Topnav extends React.Component {
       });
     }
     if (this.props.custprof !== prevProps.custprof) {
+      let totalCartItems = 0;
+      for(let each of this.props.custprof.mainCustomer.cartProducts){
+        totalCartItems += each.quantity;
+      }
       this.setState({
         name: this.props.custprof.mainCustomer.name,
-        cart: this.props.custprof.mainCustomer.cartProducts.length,
+        cart: totalCartItems,
       });
     }
     if (this.props.cart.cartCnt !== prevProps.cart.cartCnt) {

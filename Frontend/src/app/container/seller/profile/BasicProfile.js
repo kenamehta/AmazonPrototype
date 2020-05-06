@@ -98,7 +98,7 @@ class BasicProfile extends React.Component {
     //console.log(e.target.value);
   }
 
-  capitalize(word, splitParam = " ") {
+  capitalize(word = "", splitParam = " ") {
     if (word) {
       word = word.split(splitParam).map((eachWord) =>
         eachWord

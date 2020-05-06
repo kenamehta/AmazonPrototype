@@ -6,7 +6,7 @@ const kafka = require("../../kafka/client");
 
 router.post("/addProductCategory", (req, res) => {
   console.log("Inside post of product/admin/addProductCategory");
-  console.log(req.body);
+  console.log("HP is great", req.body);
 
   req.body.path = "addProductCategory";
   kafka.make_request("adminProductService", req.body, function (err, results) {
