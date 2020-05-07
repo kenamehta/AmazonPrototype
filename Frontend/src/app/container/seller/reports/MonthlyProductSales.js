@@ -6,6 +6,8 @@ import axios from "axios";
 import configPath from "../../../../configApp";
 
 const Plot = createPlotlyComponent(Plotly);
+const date = new Date();
+const currentYear = date.getFullYear();
 
 class MonthlyProductSales extends React.Component {
   constructor(props) {
@@ -26,13 +28,14 @@ class MonthlyProductSales extends React.Component {
         "November",
         "December",
       ],
-      year: null,
+      year: currentYear,
       totalPrice: [],
       totalQuantity: [],
     };
   }
 
   componentDidMount() {
+    
     let sellerEmail = "";
     if (this.props.sellerVisitingOwnProfile) {
       
@@ -45,6 +48,8 @@ class MonthlyProductSales extends React.Component {
     axios
       .get(configPath.api_host + url)
       .then((response) => {
+        console.log('Response for monthly Product sales');
+        console.log(response);
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           let tp = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -60,7 +65,7 @@ class MonthlyProductSales extends React.Component {
           });
 
           this.setState({
-            year: response.data.results[0].year,
+            year: (response.data.results.length>0)?response.data.results[0].year:currentYear,
             totalPrice: tp,
             totalQuantity: tq,
           });
