@@ -2,6 +2,7 @@
 const { getSellerProduct } = require("./getSellerProduct");
 const { getOpenSellerOrders } = require("./getOpenSellerOrders");
 const { cancelOrderbySeller } = require("./cancelOrderBySeller");
+const { getSellerCancelOrder } = require("./getSellerCancelOrder");
 
 function handle_request(msg, callback) {
   console.log("in order index");
@@ -15,6 +16,9 @@ function handle_request(msg, callback) {
     case "cancelOrderbySeller":
       cancelOrderbySeller(msg, callback);
       break;
+      case "getSellerCancelOrder":
+        getSellerCancelOrder(msg, callback);
+        break;
   }
 }
 

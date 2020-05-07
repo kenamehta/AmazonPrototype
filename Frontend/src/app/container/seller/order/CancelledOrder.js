@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import OrderHeader from './OrderHeader'
 import { connect } from "react-redux";
-import { getCancelOrders } from "../../../../action/customerprofileaction/customerOrderAction";
+import { getSellerCancelOrders } from  "../../../../action/Seller/sellerOrderAction/sellerOrderAction";
 import { Link } from "react-router-dom";
 
 const _ = require("underscore");
@@ -12,7 +12,7 @@ class CancelledOrder extends Component {
         modifiedorderarray: []
      }
 componentWillMount(){
-    this.props.getCancelOrders()
+    this.props.getSellerCancelOrders()
 }
      componentWillReceiveProps(nextProps) {
         console.log(nextProps)
@@ -158,7 +158,11 @@ for(let k in this.state.modifiedorderarray)
               </div>
             </div>
             </div>
-            
+            <div>
+            {i.Status=='6'?
+            <h5 style={{ color: "green" }}> Delivered</h5>
+           :<h5 style={{ color: "red" }}> Cancelled</h5> }
+            </div>
           </div>
         </div>
         ))}
@@ -171,7 +175,7 @@ for(let k in this.state.modifiedorderarray)
         return ( 
             <div className='container'>
             <OrderHeader navarr={this.state.navarr}></OrderHeader>
-            <b>{this.props.orders?this.props.orders.length:''} orders cancelled in past</b>
+            <b>{this.props.orders?this.props.orders.length:''} orders delivered and cancelled in past</b>
          
          {true?(
            <div>
@@ -188,13 +192,13 @@ for(let k in this.state.modifiedorderarray)
 const mapStateToProps = (state) => {
     console.log(state);
     return {
-      orders: state.customerOrderReducer.cancelorders,
+      orders: state.sellerOrderReducer.cancelorders,
       
     };
   };
   const mapDispatchToProps = (dispatch) => {
     return {
-      getCancelOrders: () => dispatch(getCancelOrders()),
+      getSellerCancelOrders: () => dispatch(getSellerCancelOrders()),
     };
   };
   export default connect(mapStateToProps, mapDispatchToProps)(CancelledOrder);
