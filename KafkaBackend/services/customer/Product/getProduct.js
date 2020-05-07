@@ -22,7 +22,7 @@ const getProduct = (msg, callback) => {
     if(err){
       res.status = 500;
       res.message = 'Database Error';
-      callback(null, res);
+      return callback(null, res);
     }
     if(foundProduct){
       const date = new Date();
@@ -56,7 +56,7 @@ const getProduct = (msg, callback) => {
           if(err){
             res.status = 500;
             res.message = 'Database Error';
-            callback(null, res);
+            return callback(null, res);
           } 
           //console.log(allComments);
           let allCommentsWithUserDetails = []
@@ -79,7 +79,7 @@ const getProduct = (msg, callback) => {
             } catch(error){
               res.status = 500;
               res.message = 'Database Error';
-              callback(null, res);
+              return callback(null, res);
             }
           }
           
@@ -105,18 +105,18 @@ const getProduct = (msg, callback) => {
             comments: allCommentsWithUserDetails
           }
           res.message = obj;
-          callback(null, res);
+          return callback(null, res);
         });
 
       } catch(err){
         res.status = 500;
         res.message = 'Database Error';
-        callback(null, res);
+        return callback(null, res);
       }
     } else {
       res.status = 400;
       res.message = "Not found";
-      callback(null, res);
+      return callback(null, res);
     }
   }); 
 };

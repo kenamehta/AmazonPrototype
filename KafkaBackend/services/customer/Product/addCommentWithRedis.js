@@ -3,9 +3,10 @@ const product = require("../../../models/product.model");
 const comment = require("../../../models/comment.model");
 const customer = require("../../../models/customer.model");
 
+//const redisClient = require("../../../redisConfig");
 const mongoose = require("mongoose");
 
-const addComment = (msg, callback) => {
+const addCommentWithRedis = (msg, callback) => {
   var res = {};
 
   // msg.productId is _id of product
@@ -101,6 +102,9 @@ const addComment = (msg, callback) => {
 
                   res.status = 200;
                   res.message = obj
+                  console.log('Saving in Redis');
+                  redisClient.setex(msg.productId, 36000, JSON.stringify(obj));
+                  console.log('Saved in Redis');
                   return callback(null, res);
                 }
               });
@@ -116,4 +120,4 @@ const addComment = (msg, callback) => {
   });
 };
 
-exports.addComment = addComment;
+exports.addCommentWithRedis = addCommentWithRedis;

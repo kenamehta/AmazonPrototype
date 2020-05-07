@@ -103,6 +103,10 @@ class AddProduct extends React.Component {
     if (error === 0 && this.state.nameExist === false) {
       const fd = new FormData();
       fd.append("productId", this.props.id);
+      
+      console.log("Product category in updateProduct");
+      console.log(this.state.category);
+
       fd.append("productCategory", this.state.category);
       fd.append("productPrice", this.state.price);
       fd.append("productDescription", this.state.desc);
@@ -117,6 +121,9 @@ class AddProduct extends React.Component {
           if (response.status === 200) {
             this.props.handleClose(true);
             alert("Successfully updated");
+
+            // added by Sarthak to fetch updated details.
+            window.location.reload();
           }
         })
         .catch((error) => {

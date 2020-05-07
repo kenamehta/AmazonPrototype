@@ -1,12 +1,11 @@
 "use strict";
 const product = require("../../../models/product.model");
-
-// const redisClient = require("../../../redisConfig");
+//const redisClient = require("../../../redisConfig");
 
 /*
   Check of whether the product we are trying to edit exist or not, and check of the new productName we are giving 
 */
-const updateProduct = (msg, callback) => {
+const updateProductWithRedis = (msg, callback) => {
   var res = {};
   product.findById(msg.productId, (err, foundProduct) => {
     if(err){
@@ -25,12 +24,13 @@ const updateProduct = (msg, callback) => {
         if(saveError){
           res.status = 500;
           res.message = 'Database Error';
-        } else {
-
-          // redisClient.setex(savedProduct.id, 36000, JSON.stringify(savedProduct));
-          
+        } else {  
           res.status = 200;
           res.message = foundProduct;
+          
+          console.log('Deleting from Redis');
+          redisClient.del(msg.productId);
+          console.log('Deleted from Redis');
         }
         callback(null, res);
       });
@@ -42,4 +42,4 @@ const updateProduct = (msg, callback) => {
   });
 }
 
-exports.updateProduct = updateProduct;
+exports.updateProductWithRedis = updateProductWithRedis;

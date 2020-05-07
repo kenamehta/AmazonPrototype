@@ -133,7 +133,7 @@ router.post(
     console.log("Inside post of product/seller/updateProduct");
     console.log(req.body);
 
-    if (req.files) {
+    if (req.files && req.files.length > 0) {
       console.log(
         "Product Images req.files array after s3 upload: ",
         req.files
@@ -144,6 +144,9 @@ router.post(
     }
 
     req.body.path = "product_update";
+
+    console.log('Req.body in updateProduct');
+    console.log(req.body);
 
     kafka.make_request("sellerProductService", req.body, function (
       err,
