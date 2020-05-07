@@ -69,7 +69,7 @@ class Insights extends Component {
                 <div className="card-body">
                   <h4 className="card-title">Commuity Activity</h4>
                   <hr />
-                  {this.props.profileData.data.insights?this.props.profileData.data.insights.map(comment=>(
+                  {(this.props.profileData.data.insights && this.props.profileData.data.insights.length > 0)?this.props.profileData.data.insights.map(comment=>(
                     <div className="card" style={{ padding: "10px" }}>
                       <h5 className="card-subtitle mb-2 d-flex">
                         <div
@@ -103,25 +103,6 @@ class Insights extends Component {
                           </h6>
                         </div>
                       </h5>
-
-                      <hr className="p-0" />
-                      <div className="d-flex">
-                        <StarRatings
-                          rating={5}
-                          starRatedColor="#f0c14b"
-                          starEmptyColor="rgb(255, 255, 255)"
-                          starDimension="16px"
-                          starSpacing="1px"
-                          numberOfStars={5}
-                          name="rating"
-                        />
-                        <p
-                          className="mx-2"
-                          style={{ color: "#c45500", fontWeight: "bold" }}
-                        >
-                          Verified Purchase
-                        </p>
-                      </div>
 
                     <hr className="p-0" />
                     <div className="d-flex">

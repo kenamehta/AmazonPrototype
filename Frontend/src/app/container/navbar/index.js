@@ -96,7 +96,7 @@ class Topnav extends React.Component {
     }
     if (this.props.custprof !== prevProps.custprof) {
       let totalCartItems = 0;
-      if (this.props.custprof.mainCustomer)
+      if (this.props.custprof.mainCustomer.cartProducts)
         for (let each of this.props.custprof.mainCustomer.cartProducts) {
           totalCartItems += each.quantity;
         }
