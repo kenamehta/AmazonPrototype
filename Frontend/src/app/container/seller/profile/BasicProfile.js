@@ -543,6 +543,7 @@ class BasicProfile extends React.Component {
                   type="text"
                   className="form-control"
                   value={this.state.basicDetails.name}
+                  placeholder="Name"
                   required
                 />
               </Form.Group>
@@ -555,6 +556,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="Street Address"
                   value={this.state.basicDetails.street}
                   required
                 />
@@ -568,6 +570,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="City"
                   value={this.state.basicDetails.city}
                   required
                 />
@@ -579,6 +582,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="State"
                   value={this.state.basicDetails.state}
                   required
                 />
@@ -595,6 +599,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="Country"
                   value={this.state.basicDetails.country}
                   required
                 />
@@ -606,6 +611,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="Zipcode"
                   value={this.state.basicDetails.zipcode}
                   required
                 />
@@ -622,6 +628,7 @@ class BasicProfile extends React.Component {
                   onChange={this.onChangeHandler}
                   type="text"
                   className="form-control"
+                  placeholder="Phone"
                   value={this.state.basicDetails.phone}
                   required
                 />

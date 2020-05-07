@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../../../style/ProfilePic.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import configPath from "../../../../configApp";
 
 class ProfilePic extends Component {
   state = {
@@ -60,8 +61,8 @@ class ProfilePic extends Component {
                       >
                         <img
                           src={
-                            this.props.profileData.data.mainCustomer
-                              .profilePictureUrl
+                            (this.props.profileData.data.mainCustomer
+                              .profilePictureUrl)==='default.png'?configPath.api_host+'/default.png':this.props.profileData.data.mainCustomer.profilePictureUrl
                           }
                           alt=""
                           class="avatar-image"

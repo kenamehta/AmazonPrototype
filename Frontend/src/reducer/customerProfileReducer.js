@@ -9,6 +9,7 @@ import {
   ADDORUPDATEPAYMENT,
   DELETEPAYMENT
 } from "../action/customerprofileaction/actionType";
+import { LOGOUT } from "../action/UserAction/actionTypes";
 
 const initialState = {
   profiledata: {},
@@ -91,6 +92,17 @@ export default function (state = initialState, action) {
       return {
         ...state,
         ...action.payload,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        profiledata: {
+          ...state.profiledata,
+          data: {
+            ...state.profiledata.data,
+            mainCustomer: {},
+          },
+        },
       };
     default:
       return state;
