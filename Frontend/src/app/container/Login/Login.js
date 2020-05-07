@@ -66,7 +66,7 @@ class Login extends Component {
       localStorage.setItem("IDToken", this.props.idToken);
       localStorage.setItem("emailId", this.state.email);
       if (this.state.category === "customer") {
-        return <Redirect to="/productlist" />;
+        return <Redirect to="/productlisting" />;
       } else if (this.state.category === "seller") {
         return <Redirect to="/seller/profile" />;
       } else {

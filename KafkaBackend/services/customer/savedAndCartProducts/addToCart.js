@@ -48,9 +48,9 @@ const addToCart = (msg, callback) => {
         result.cartProducts[alreadyPresentIndex].giftFlag = productDetails.giftFlag;
         result.cartProducts[alreadyPresentIndex].giftMessage = productDetails.giftMessage;
         if(msg.giftFlag === 'true'){
-          result.cartProducts[alreadyPresentIndex].totalProductPrice = result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice + 0.5);
+          result.cartProducts[alreadyPresentIndex].totalProductPrice = +(parseFloat(result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice + 0.5)).toFixed(2));
         } else {
-          result.cartProducts[alreadyPresentIndex].totalProductPrice = result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice);
+          result.cartProducts[alreadyPresentIndex].totalProductPrice = +(parseFloat(result.cartProducts[alreadyPresentIndex].quantity * (individualProductPrice)).toFixed(2));
         }
       } else {
         result.cartProducts.push(productDetails);

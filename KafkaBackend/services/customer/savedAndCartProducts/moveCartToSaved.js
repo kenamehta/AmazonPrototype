@@ -45,6 +45,7 @@ const moveCartToSaved = (msg, callback) => {
                   productId: eachProductInCart.productId,
                   sellerEmailId: eachProductInCart.sellerEmailId,
                   quantity: eachProductInCart.quantity,
+                  totalProductPrice: eachProductInCart.totalProductPrice,
                   createdAt: eachProductInCart.createdAt,
                   updatedAt: eachProductInCart.updatedAt,
                   sellerName: result.sellerName,

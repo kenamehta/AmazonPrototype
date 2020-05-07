@@ -437,7 +437,7 @@ class CartProducts extends Component {
                           className="mr-5 price_style"
                           title="Includes $0.5 per quantity of gift, if any"
                         >
-                          ${this.state.totalCartPrice}
+                          ${(parseFloat(this.state.totalCartPrice).toFixed(2))}
                         </span>
                       </div>
                     </div>
@@ -450,7 +450,7 @@ class CartProducts extends Component {
               {this.state.totalQuantity !== 0 ? (
                 <div className="checkout-box-style mt-5">
                   <b style={{ fontSize: "15px" }}>
-                    Subtotal ( {this.state.totalQuantity} items) : ${this.state.totalCartPrice}
+                    Subtotal ( {this.state.totalQuantity} items) : ${(parseFloat(this.state.totalCartPrice).toFixed(2))}
                   </b>
                   <div className=" mt-2 ship-to-this-address a-button a-button-primary a-button-span12 a-spacing-medium  ">
                     <span

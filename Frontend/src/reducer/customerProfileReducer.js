@@ -106,17 +106,6 @@ export default function(state = initialState, action) {
           }
         }
       };
-    case LOGOUT:
-      return {
-        ...state,
-        profiledata: {
-          ...state.profiledata,
-          data: {
-            ...state.profiledata.data,
-            mainCustomer: {},
-          },
-        },
-      };
     default:
       return state;
   }
