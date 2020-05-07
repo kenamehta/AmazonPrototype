@@ -32,9 +32,9 @@ const updateCart = (msg, callback) => {
         result.cartProducts[idx].giftMessage = msg.giftMessage;
 
         if(msg.giftFlag === 'true'){
-          result.cartProducts[idx].totalProductPrice = (parseInt(msg.quantity)) * (individualProductPrice + 0.5);
+          result.cartProducts[idx].totalProductPrice = +(parseFloat((parseInt(msg.quantity)) * (individualProductPrice + 0.5)).toFixed(2));
         } else {
-          result.cartProducts[idx].totalProductPrice = (parseInt(msg.quantity)) * (individualProductPrice);
+          result.cartProducts[idx].totalProductPrice = +(parseFloat((parseInt(msg.quantity)) * (individualProductPrice)).toFixed(2));
         }
         
         result.save(async(saveError) => {
