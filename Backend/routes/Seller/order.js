@@ -55,4 +55,22 @@ router.get("/:emailId", checkAuth, (req, res) => {
     });
   });
 
+  router.get("/list/cancel/product/:email", checkAuth, (req, res) => {
+    console.log("Inside get of seller/order/:emailId");
+   
+    let msg = req.body;
+    msg.route = "getSellerCancelOrder";
+    msg.params = req.params;
+    
+  
+    kafka.make_request("sellerOrderService", req.body, function(err, results) {
+      if (results.status != 200) {
+        res.status(500).send("System Error");
+      } else {
+        res.status(results.status).send(results);
+      }
+    });
+  });
+
+
 module.exports = router;

@@ -22,7 +22,7 @@ class OrderHeader extends Component {
        <a className="nav-link link-color" style={{color:this.props.navarr[1]}} href="/seller/openorders"><span>Open orders</span></a>
      </li>
      <li className="nav-item mx-5">
-       <a className="nav-link link-color" style={{color:this.props.navarr[2]}} href="/seller/cancelledorders"><span>Cancel orders</span></a>
+       <a className="nav-link link-color" style={{color:this.props.navarr[2]}} href="/seller/cancelledorders"><span>Delivered and Cancelled orders</span></a>
      </li>
    </ul>
    

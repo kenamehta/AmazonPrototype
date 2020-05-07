@@ -191,8 +191,9 @@ class SellerOrderPage extends Component {
                       </div>
                     </div>
                   </div>
-                  {i.Status != "Delivered" ? (
-                    <div>
+                   <div>
+                  {i.Status != "6" ? (
+                   
                       <button
                         className="a-button-order p-2 btn-sm"
                         style={{ width: "70%" }}
@@ -205,6 +206,11 @@ class SellerOrderPage extends Component {
                       >
                         Cancel Request
                       </button>
+                      ) : (
+                    <div>
+                      <h5 style={{ color: "green" }}> Delivered</h5>
+                    </div>
+                  )}
                       {/*Tracking button - Kena*/}
                       <button
                         className="a-button-order p-2 mt-1 btn-sm"
@@ -414,11 +420,7 @@ class SellerOrderPage extends Component {
 
                       {/*End of tracking*/}
                     </div>
-                  ) : (
-                    <div>
-                      <h5 style={{ color: "green" }}> Delivered</h5>
-                    </div>
-                  )}
+                  
                 </div>
               </div>
             ))}

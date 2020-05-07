@@ -104,6 +104,25 @@ class Insights extends Component {
                         </div>
                       </h5>
 
+                      {/* <hr className="p-0" />
+                      <div className="d-flex">
+                        <StarRatings
+                          rating={5}
+                          starRatedColor="#f0c14b"
+                          starEmptyColor="rgb(255, 255, 255)"
+                          starDimension="16px"
+                          starSpacing="1px"
+                          numberOfStars={5}
+                          name="rating"
+                        />
+                        <p
+                          className="mx-2"
+                          style={{ color: "#c45500", fontWeight: "bold" }}
+                        >
+                          Verified Purchase
+                        </p>
+                      </div> */}
+
                     <hr className="p-0" />
                     <div className="d-flex">
                     <StarRatings
