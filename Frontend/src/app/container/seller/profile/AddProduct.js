@@ -92,7 +92,7 @@ class AddProduct extends React.Component {
       });
       error = 1;
     }
-    if (this.state.file === null) {
+    if (this.state.file === null || this.state.file.length < 1) {
       this.setState({
         fileError: "File is mandatory",
       });
