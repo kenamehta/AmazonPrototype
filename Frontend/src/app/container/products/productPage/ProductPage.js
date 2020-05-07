@@ -12,7 +12,7 @@ import UpdateProduct from "./UpdateProduct";
 import {
   getProduct,
   addComment,
-  deleteProduct
+  deleteProduct,
 } from "../../../../action/ProductAction/productAction";
 
 class ProductPage extends React.Component {
@@ -165,9 +165,11 @@ class ProductPage extends React.Component {
             position: "fixed",
             fontSize: 20 + "px",
           }}
-          onClick={(e)=>{
+          onClick={(e) => {
             e.preventDefault();
-            this.props.dispatch(deleteProduct({productId:this.state.productId}));
+            this.props.dispatch(
+              deleteProduct({ productId: this.state.productId })
+            );
           }}
         >
           Remove Product
@@ -189,7 +191,7 @@ class ProductPage extends React.Component {
       ));
     }
     console.log("Render called inside productpage.js");
-
+    console.log(category);
     let addReview = "";
     if (localStorage.getItem("category") === "customer") {
       addReview = (
@@ -204,9 +206,11 @@ class ProductPage extends React.Component {
         </>
       );
 
-      buySection = <Col lg={2} xl={2}>
-                      <ProductBuySection></ProductBuySection>
-                    </Col>
+      buySection = (
+        <Col lg={2} xl={2}>
+          <ProductBuySection></ProductBuySection>
+        </Col>
+      );
     }
 
     return (
@@ -256,7 +260,6 @@ class ProductPage extends React.Component {
           </Col>
 
           {buySection}
-          
         </Row>
         <hr></hr>
         <Row sm={1} xs={1} md={2}>
@@ -292,7 +295,7 @@ class ProductPage extends React.Component {
           handleClose={this.handleUpdateClose}
           id={this.state.productId}
           title={title}
-          category={category}
+          productCategory={category}
           price={price}
           description={description}
         />

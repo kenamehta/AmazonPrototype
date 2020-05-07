@@ -103,7 +103,7 @@ class AddProduct extends React.Component {
     if (error === 0 && this.state.nameExist === false) {
       const fd = new FormData();
       fd.append("productId", this.props.id);
-      
+
       console.log("Product category in updateProduct");
       console.log(this.state.category);
 
@@ -141,7 +141,7 @@ class AddProduct extends React.Component {
     if (this.props.title !== prevProps.title) {
       this.setState({
         name: this.props.title,
-        category: this.props.category,
+        category: this.props.productCategory,
         price: this.props.price,
         desc: this.props.description,
       });
@@ -152,14 +152,14 @@ class AddProduct extends React.Component {
     console.log(this.props);
     this.setState({
       name: this.props.title,
-      category: this.props.category,
+      category: this.props.productCategory,
       price: this.props.price,
       desc: this.props.description,
     });
   }
 
   render() {
-    //console.log(this.props.category);
+    console.log("cat:" + this.state.category);
     let cat = this.props.category.map(({ _id, name }) => {
       return <option key={_id}>{name}</option>;
     });

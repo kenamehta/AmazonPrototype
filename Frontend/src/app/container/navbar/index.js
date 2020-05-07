@@ -67,8 +67,8 @@ class Topnav extends React.Component {
   componentDidMount() {
     this.dispatchAction();
     this.props.getCategory();
-    this.props.getSavedAndCartProducts();
-    this.props.getProfile();
+    if (localStorage.getItem("category") === "customer")
+      this.props.getProfile();
     if (this.props.cart)
       this.setState({
         cart: this.props.cart.cartCnt,
@@ -96,7 +96,7 @@ class Topnav extends React.Component {
     }
     if (this.props.custprof !== prevProps.custprof) {
       let totalCartItems = 0;
-      for(let each of this.props.custprof.mainCustomer.cartProducts){
+      for (let each of this.props.custprof.mainCustomer.cartProducts) {
         totalCartItems += each.quantity;
       }
       this.setState({
@@ -108,6 +108,9 @@ class Topnav extends React.Component {
       this.setState({
         cart: this.props.cart.cartCnt,
       });
+    }
+    if (this.props.categorys !== prevProps.categorys) {
+      this.props.getCategory();
     }
   }
 
@@ -494,6 +497,7 @@ const mapStateToProps = function (state) {
     category: state.categoryReducer.category,
     productSearch: state.product.productSearch,
     cart: state.savedAndCartProductReducer,
+    categorys: state.category.categorys,
   };
 };
 const mapDispatchToProps = (dispatch) => {
