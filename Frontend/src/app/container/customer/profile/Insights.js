@@ -104,7 +104,7 @@ class Insights extends Component {
                         </div>
                       </h5>
 
-                      <hr className="p-0" />
+                      {/* <hr className="p-0" />
                       <div className="d-flex">
                         <StarRatings
                           rating={5}
@@ -121,7 +121,7 @@ class Insights extends Component {
                         >
                           Verified Purchase
                         </p>
-                      </div>
+                      </div> */}
 
                     <hr className="p-0" />
                     <div className="d-flex">

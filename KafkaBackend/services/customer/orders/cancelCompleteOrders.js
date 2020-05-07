@@ -10,7 +10,7 @@ let cancelCompleteOrders = async (msg, callback) => {
     const ifProductDelivered= await OrderProduct.findAll({
         where:{
             order_id: msg._id ,
-            Status:'Delivered'
+            Status:'6'
         }
     }
     )
