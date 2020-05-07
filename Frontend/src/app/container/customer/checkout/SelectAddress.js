@@ -268,6 +268,9 @@ class SelectAddress extends Component {
 
   addAddress = (e) => {
     e.preventDefault();
+    // document.getElementById("form_add").reset();
+    // console.log('Adding address');
+    console.log(e);
     e.target.reset();
 
     let { name, street, city, state, country, zipcode, phone } = this.state;
@@ -763,7 +766,7 @@ class SelectAddress extends Component {
                     Add Address
                   </h3>
                 </div>
-                <form onSubmit={this.addAddress}>
+                <form id="form_add" onSubmit={this.addAddress}>
                   <div className="form-group col-md-11">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Name

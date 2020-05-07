@@ -14,6 +14,7 @@ let getSellerReport2 = async (msg, callback) => {
           console.log(err);
           return callback({ status: 500, res: err }, null);
         } else {
+          console.log('Report 2 for seller: '+msg.params.sellerEmailId);
           console.log(results);
           return callback(null, { status: 200, results });
         }
