@@ -7,6 +7,12 @@ import { Modal, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getCategory } from "../../../../action/ProductAction/productCategory";
 import axios from "axios";
+import {
+  getAllProducts,
+  updateProductSearch,
+  updateProductSort,
+  updateProductFilter,
+} from "../../../../action/ProductAction/productAction";
 
 class AddProduct extends React.Component {
   constructor(props) {
@@ -28,6 +34,39 @@ class AddProduct extends React.Component {
     this.handleFile = this.handleFile.bind(this);
     this.checkNameEventHandler = this.checkNameEventHandler.bind(this);
   }
+
+  componentDidMount() {
+    this.setState({
+      category: this.props.category[0].name,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.category !== this.props.category)
+      this.setState({
+        category: this.props.category[0].name,
+      });
+  }
+
+  dispatchAction = () => {
+    const data = {
+      page: 1,
+      orderOn: "rating",
+      order: "desc",
+      sellerEmailId: "",
+      sellerName: "",
+      productName: "",
+      productCategory: "",
+      minPrice: 0,
+      maxPrice: 2500,
+      minRating: "",
+      maxRating: "",
+    };
+    this.props.dispatch(getAllProducts(data));
+    this.props.dispatch(updateProductSearch("", "", ""));
+    this.props.dispatch(updateProductSort("rating", "desc"));
+    this.props.dispatch(updateProductFilter("", 0, 2500));
+  };
 
   checkNameEventHandler(e) {
     console.log(e);
@@ -120,7 +159,21 @@ class AddProduct extends React.Component {
         .then((response) => {
           console.log("Status Code : ", response.status);
           if (response.status === 200) {
+            this.setState({
+              file: null,
+              fileName: "",
+              name: "",
+              nameError: "",
+              category: this.props.category[0].name,
+              categoryError: "",
+              price: "",
+              priceError: "",
+              desc: "",
+              descError: "",
+              nameExist: false,
+            });
             this.props.handleClose();
+            this.dispatchAction();
             alert("Successfully added");
           }
         })
@@ -142,7 +195,7 @@ class AddProduct extends React.Component {
     });
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Add Product</Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.editProfileHandlerSubmit}>

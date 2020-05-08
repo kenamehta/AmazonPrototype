@@ -19,7 +19,7 @@ class Login extends Component {
       errorNumber: "",
       res: "",
       inLogin: true,
-      loginFlag: ""
+      loginFlag: "",
     };
   }
 
@@ -31,13 +31,13 @@ class Login extends Component {
 
   componentWillMount() {
     this.setState({
-      loginFlag: this.props.loginFlag
+      loginFlag: this.props.loginFlag,
     });
     this.props.refreshFlags({ res: "", registerFlag: false });
   }
 
   //submit Login handler to send a request to the node backend
-  submitLogin = e => {
+  submitLogin = (e) => {
     console.log("inside submit Login handler");
     //prevent page from refresh
     e.preventDefault();
@@ -45,7 +45,7 @@ class Login extends Component {
     const userData = {
       category: this.state.category,
       email: this.state.email,
-      password: this.state.password
+      password: this.state.password,
     };
     console.log(userData);
     this.props.login(userData);
@@ -80,7 +80,15 @@ class Login extends Component {
           <div className="login-form mt-5">
             <div className="main-div">
               <div className="panel">
-                <h2>Sign-In</h2>
+                <h2
+                  style={{
+                    fontSize: "24px",
+                    fontWeight: "800",
+                    color: "#FF9900",
+                  }}
+                >
+                  Sign-In
+                </h2>
                 <p>Please enter your email and password</p>
               </div>
               <div className="form-group">
@@ -89,9 +97,9 @@ class Login extends Component {
                   <select
                     className="ml-2"
                     value={this.state.category}
-                    onChange={e => {
+                    onChange={(e) => {
                       this.setState({
-                        category: e.target.value
+                        category: e.target.value,
                       });
                     }}
                     id="myList"
@@ -110,9 +118,9 @@ class Login extends Component {
               </div>
               <div className="form-group">
                 <input
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({
-                      email: e.target.value
+                      email: e.target.value,
                     });
                   }}
                   type="text"
@@ -123,9 +131,9 @@ class Login extends Component {
               </div>
               <div className="form-group">
                 <input
-                  onChange={e => {
+                  onChange={(e) => {
                     this.setState({
-                      password: e.target.value
+                      password: e.target.value,
                     });
                   }}
                   type="password"
@@ -134,10 +142,14 @@ class Login extends Component {
                   placeholder="Password"
                 />
               </div>
-              <button onClick={this.submitLogin} className="btn btn-style">
+              <button
+                style={{ marginTop: "30px" }}
+                onClick={this.submitLogin}
+                className="btn btn-style"
+              >
                 Login
               </button>
-              <h3 style={{ color: "red" }}>{printError}</h3>
+              <p className="errormessage">{printError}</p>
             </div>
           </div>
         </div>
@@ -146,19 +158,19 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log("Login id in mapStateToProps ", state.userReducer.id);
   return {
     mongooseId: state.userReducer.mongooseId || "",
     idToken: state.userReducer.idToken || "",
     res: state.userReducer.res || "",
-    loginFlag: state.userReducer.loginFlag || false
+    loginFlag: state.userReducer.loginFlag || false,
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    login: payload => dispatch(login(payload)),
-    refreshFlags: payload => dispatch(refreshFlags(payload))
+    login: (payload) => dispatch(login(payload)),
+    refreshFlags: (payload) => dispatch(refreshFlags(payload)),
   };
 };
 
