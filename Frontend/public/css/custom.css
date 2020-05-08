@@ -129,3 +129,13 @@
 .star-inactive {
   font-weight: 400;
 }
+
+.removeProduct {
+  color: #fff;
+  text-decoration: none;
+}
+
+.removeProduct:hover {
+  color: #fff;
+  text-decoration: none;
+}

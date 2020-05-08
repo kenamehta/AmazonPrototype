@@ -27,6 +27,8 @@ import { getSavedAndCartProducts } from "../../../action/customer/savedAndCartPr
 
 import { getProfile } from "../../../action/customerprofileaction/profileAction";
 
+import { getSellerProfile } from "../../../action/Seller/Profile/profileAction";
+
 class Topnav extends React.Component {
   constructor(props) {
     super(props);
@@ -69,10 +71,16 @@ class Topnav extends React.Component {
     this.props.getCategory();
     if (localStorage.getItem("category") === "customer")
       this.props.getProfile();
-    if (this.props.cart)
-      this.setState({
-        cart: this.props.cart.cartCnt,
-      });
+    if (localStorage.getItem("category") === "seller") {
+      let data = {
+        emailId: localStorage.getItem("emailId"),
+      };
+      console.log(data);
+      this.props.getSellerProfile(data);
+    }
+    this.setState({
+      cart: this.props.cart.cartCnt,
+    });
     if (this.props.custprof)
       this.setState({
         name: this.props.custprof.mainCustomer.name,
@@ -86,6 +94,13 @@ class Topnav extends React.Component {
       this.props.getCategory();
       if (localStorage.getItem("category") === "customer")
         this.props.getProfile();
+      if (localStorage.getItem("category") === "seller") {
+        let data = {
+          emailId: localStorage.getItem("emailId"),
+        };
+        console.log(data);
+        this.props.getSellerProfile(data);
+      }
       if (this.props.cart)
         this.setState({
           cart: this.props.cart.cartCnt,
@@ -529,6 +544,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(updateProductSort(sortType, sort)),
     getSavedAndCartProducts: () => dispatch(getSavedAndCartProducts()),
     getProfile: () => dispatch(getProfile()),
+    getSellerProfile: (data) => dispatch(getSellerProfile(data)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Topnav);

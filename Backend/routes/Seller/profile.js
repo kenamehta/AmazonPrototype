@@ -30,7 +30,13 @@ const profilePictureFileUploadSeller = multer({
       //     s3.deleteObject(params).promise()
       //     .then(()=>{
       //         console.log("file deleted Successfully");
-      cb(null, "ProfilePictures/Seller/" + req.body.emailId + Date.now() + file.originalname);
+      cb(
+        null,
+        "ProfilePictures/Seller/" +
+          req.body.emailId +
+          Date.now() +
+          file.originalname
+      );
       //     }).catch((err)=>{
       //         console.log("ERROR in file " + operation+ "ing : " + JSON.stringify(err));
       //     })
@@ -59,7 +65,7 @@ router.get("/:emailId", checkAuth, (req, res) => {
 
 // send emailId and _id for seller
 // sellerEmailId to look up products in product model and update seller's name there too.
-router.post("/updateProfileDetails", (req, res) => {
+router.post("/updateProfileDetails", checkAuth, (req, res) => {
   console.log("Inside post of seller/profile/updateProfileDetails");
   console.log(req.body);
 

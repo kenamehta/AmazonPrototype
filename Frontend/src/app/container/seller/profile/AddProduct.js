@@ -29,6 +29,19 @@ class AddProduct extends React.Component {
     this.checkNameEventHandler = this.checkNameEventHandler.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({
+      category: this.props.category[0].name,
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.category !== this.props.category)
+      this.setState({
+        category: this.props.category[0].name,
+      });
+  }
+
   checkNameEventHandler(e) {
     console.log(e);
     if (this.state.name === "") {
@@ -120,6 +133,19 @@ class AddProduct extends React.Component {
         .then((response) => {
           console.log("Status Code : ", response.status);
           if (response.status === 200) {
+            this.setState({
+              file: null,
+              fileName: "",
+              name: "",
+              nameError: "",
+              category: this.props.category[0].name,
+              categoryError: "",
+              price: "",
+              priceError: "",
+              desc: "",
+              descError: "",
+              nameExist: false,
+            });
             this.props.handleClose();
             alert("Successfully added");
           }
@@ -142,7 +168,7 @@ class AddProduct extends React.Component {
     });
     return (
       <Modal show={this.props.show} onHide={this.props.handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Add Product</Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.editProfileHandlerSubmit}>
