@@ -5,7 +5,7 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //get address details of a customer
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -20,7 +20,7 @@ router.get("/:id", (req, res) => {
 });
 
 //add or update address details of a customer
-router.post("/:id", (req, res) => {
+router.post("/:id", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -35,7 +35,7 @@ router.post("/:id", (req, res) => {
 });
 
 //delete a address for customer
-router.delete("/:id", (req, res) => {
+router.delete("/:id", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;

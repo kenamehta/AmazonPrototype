@@ -20,6 +20,7 @@ const updateTrackingDispatcher = payload => {
 
 //get tracking function. Delays dispatcher
 export const getTracking = payload => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   return dispatch => {
     //make a get request to get tracking info
     axios
@@ -39,6 +40,7 @@ export const getTracking = payload => {
 
 //update tracking function. Delays dispatcher
 export const updateTracking = payload => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   return dispatch => {
     //make a get request to get tracking info
     axios

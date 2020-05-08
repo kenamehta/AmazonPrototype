@@ -4,7 +4,7 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //get saved and carts product route
-router.get("/:id", (req, res) => {
+router.get("/:id", checkAuth, (req, res) => {
   console.log(req.params);
   msg = req.body;
   msg.params = req.params;
@@ -20,11 +20,11 @@ router.get("/:id", (req, res) => {
 });
 
 // id is the productId
-router.delete("/cart/:id", (req, res) => {
+router.delete("/cart/:id", checkAuth, (req, res) => {
   console.log("Inside delete of /customer/cartProducts/cart/:id");
   req.body.productId = req.params.id;
   console.log(req.body);
-  
+
   req.body.route = "deleteCartProduct";
   kafka.make_request("savedAndCartProductService", req.body, function(
     err,
@@ -39,7 +39,7 @@ router.delete("/cart/:id", (req, res) => {
 });
 
 // Delete saved product
-router.delete("/saved/:id", (req, res) => {
+router.delete("/saved/:id", checkAuth, (req, res) => {
   console.log(req.params);
   console.log(req.body);
   msg = req.body;
@@ -61,7 +61,7 @@ If product is a gift, provide giftMessage which is a required field in frontend
 Keeping it above move saved product to cart api since :id is catching addToCart
 It returns all cart products of customer along with each product detail
 */
-router.post("/addToCart", (req, res) => {
+router.post("/addToCart", checkAuth, (req, res) => {
   console.log("Inside post of /customer/cartProducts/addToCart");
   console.log(req.body);
 
@@ -78,7 +78,7 @@ router.post("/addToCart", (req, res) => {
   });
 });
 
-router.post("/addToSaveForLater", (req, res) => {
+router.post("/addToSaveForLater", checkAuth, (req, res) => {
   console.log("Inside post of /customer/cartProducts/addToSaveForLater");
   console.log(req.body);
 
@@ -95,12 +95,12 @@ router.post("/addToSaveForLater", (req, res) => {
   });
 });
 
-router.post("/moveFromCartToSaveForLater", (req, res) => {
+router.post("/moveFromCartToSaveForLater", checkAuth, (req, res) => {
   console.log(
     "Inside post of /customer/cartProducts/moveFromCartToSaveForLater"
   );
   console.log(req.body);
-  
+
   req.body.route = "moveCartToSaved";
   kafka.make_request("savedAndCartProductService", req.body, function(
     err,
@@ -114,14 +114,13 @@ router.post("/moveFromCartToSaveForLater", (req, res) => {
   });
 });
 
-
 // need to test this
-router.post("/updateProductInCart", (req, res) => {
+router.post("/updateProductInCart", checkAuth, (req, res) => {
   console.log("Inside post of /customer/cartProducts/updateProductInCart");
   console.log(req.body);
 
   req.body.route = "updateCart";
-  kafka.make_request("savedAndCartProductService", req.body, function (
+  kafka.make_request("savedAndCartProductService", req.body, function(
     err,
     results
   ) {
@@ -131,10 +130,10 @@ router.post("/updateProductInCart", (req, res) => {
       res.status(results.status).send(results.message);
     }
   });
-})
+});
 
 // move saved product to cart
-router.post("/saved/:id", (req, res) => {
+router.post("/saved/:id", checkAuth, (req, res) => {
   console.log(req.params);
   console.log(req.body);
   msg = req.body;

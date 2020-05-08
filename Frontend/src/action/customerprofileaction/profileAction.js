@@ -81,6 +81,9 @@ export const sendModalStatus = payload => {
 //login thunk function. Delays dispatcher
 export const getProfile = () => {
   return dispatch => {
+    axios.defaults.headers.common.authorization = localStorage.getItem(
+      "IDToken"
+    );
     //make a get request to fetch customer profile
     axios
       .get(
