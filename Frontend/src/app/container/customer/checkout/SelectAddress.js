@@ -787,11 +787,11 @@ class SelectAddress extends Component {
                 >
                   &times;
                 </span>
-                {this.state.addSuccessMsg ? (
+                {/* {this.state.addSuccessMsg ? (
                   <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
                 ) : (
                   ""
-                )}
+                )} */}
                 <div align="center">
                   <h3 style={{ fontWeight: "bold", marginBottom: "5px" }}>
                     Add Address
