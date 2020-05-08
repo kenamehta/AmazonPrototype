@@ -339,12 +339,26 @@ class SelectAddress extends Component {
         displayAddress: "none",
         modalShow: "none",
         errorMessages: "",
+        addressName: "",
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipcode: "",
+        phone: "",
       });
     } else {
       this.setState({
         errorMessages: {
           stateErrorMessage,
           zipCodeErrorMessage,
+          addressName: "",
+          street: "",
+          city: "",
+          state: "",
+          country: "",
+          zipcode: "",
+          phone: "",
         },
       });
     }
@@ -421,12 +435,20 @@ class SelectAddress extends Component {
           stateErrorMessage,
           zipCodeErrorMessage,
         },
+        addressNameSel: "",
+        streetSel: "",
+        citySel: "",
+        stateSel: "",
+        countrySel: "",
+        zipcodeSel: "",
+        phoneSel: "",
       });
     }
   };
 
   editAddress = (e) => {
     e.preventDefault();
+    e.target.reset();
 
     let {
       editedId,
@@ -451,29 +473,24 @@ class SelectAddress extends Component {
     let zipCodeErrorMessage = "";
 
     //Check US states
-    const US_States = this.US_States_List();
+    if (state !== "") {
+      const US_States = this.US_States_List();
+      let result = US_States.find((us_state) => {
+        return (
+          state.toUpperCase() === us_state.name ||
+          state.toUpperCase() === us_state.abbreviation
+        );
+      });
 
-    if (state === "") {
-      stateErrorMessage = "Required. Enter State.";
-    }
-
-    let result = US_States.find((us_state) => {
-      return (
-        state.toUpperCase() === us_state.name ||
-        state.toUpperCase() === us_state.abbreviation
-      );
-    });
-
-    if (result === undefined) {
-      stateErrorMessage = "Not a valid state.";
+      if (result === undefined) {
+        stateErrorMessage = "Not a valid state.";
+      }
     }
 
     // Check zipcode
     const zipCodePatt = new RegExp("^\\d{5}(-\\d{4})?$");
 
-    if (zipcode === "") {
-      zipCodeErrorMessage = "Required. Enter Zip Code.";
-    } else if (!zipCodePatt.test(zipcode)) {
+    if (zipcode !== "" && !zipCodePatt.test(zipcode)) {
       zipCodeErrorMessage = "Not a valid zip code format.";
     }
 
@@ -501,6 +518,13 @@ class SelectAddress extends Component {
 
       this.setState({
         errorMessages: "",
+        name: "",
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipcode: "",
+        phone: "",
       });
     } else {
       this.setState({
@@ -508,6 +532,13 @@ class SelectAddress extends Component {
           stateErrorMessage,
           zipCodeErrorMessage,
         },
+        name: "",
+        street: "",
+        city: "",
+        state: "",
+        country: "",
+        zipcode: "",
+        phone: "",
       });
     }
   };
@@ -1051,6 +1082,9 @@ class SelectAddress extends Component {
                           this.setState({ state: e.target.value });
                         }}
                       />
+                      <p className="state-errormessage">
+                        {this.state.errorMessages.stateErrorMessage}
+                      </p>
                     </div>
                     <div className="form-group col-md-6">
                       <label
@@ -1100,7 +1134,6 @@ class SelectAddress extends Component {
                         Zipcode
                       </label>
                       <input
-                        type="number"
                         id="zipcode"
                         name="zipcode"
                         className="form-control"
@@ -1109,6 +1142,9 @@ class SelectAddress extends Component {
                           this.setState({ zipcode: e.target.value });
                         }}
                       />
+                      <p className="zipcode-errormessage">
+                        {this.state.errorMessages.zipCodeErrorMessage}
+                      </p>
                     </div>
                   </div>
                   <div className="form-group col-md-11">
