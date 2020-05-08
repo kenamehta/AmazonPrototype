@@ -4,7 +4,7 @@ import React from "react";
 import BasicProfile from "./BasicProfile";
 import Container from "react-bootstrap/Container";
 import { connect } from "react-redux";
-import { Button, Row } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import AddProduct from "./AddProduct";
 import List from "../../products/productsList/list";
 import {
@@ -123,7 +123,9 @@ class SellerProfile extends React.Component {
           {report}
         </Row>
         <Row>
-          <List sellerProfile={true} />
+          <Col>
+            <List sellerProfile={true} />
+          </Col>
         </Row>
         {add}
         <AddProduct show={this.state.setShow} handleClose={this.handleClose} />
