@@ -4,7 +4,7 @@ const kafka = require("../../../kafka/client");
 const { checkAuth } = require("../../../passport");
 
 router.get("/:email", checkAuth, (req, res) => {
-  console.log("Inside get of customer/profile/:emailId");
+  console.log("Inside get of customer/orders/:emailId");
   console.log(req.body);
 
   //   req.body.path = "";
@@ -25,7 +25,7 @@ router.get("/:email", checkAuth, (req, res) => {
 });
 
 router.post("/cancel/product/:email", checkAuth, (req, res) => {
-  console.log("Inside get of customer/order/cancel/product/:emailId");
+  console.log("Inside post of customer/orders/cancel/product/:emailId");
   console.log(req.body);
 
   //   req.body.path = "";
@@ -46,7 +46,7 @@ router.post("/cancel/product/:email", checkAuth, (req, res) => {
 });
 
 router.post("/list/cancel/product/:email", checkAuth, (req, res) => {
-  console.log("Inside get of customer/order/cancel/product/:emailId");
+  console.log("Inside post of customer/orders/list/cancel/product/:emailId");
   console.log(req.body);
 
   //   req.body.path = "";
@@ -67,7 +67,7 @@ router.post("/list/cancel/product/:email", checkAuth, (req, res) => {
 });
 
 router.get("/list/open/product/:email", checkAuth, (req, res) => {
-  console.log("Inside get of customer/order/cancel/product/:emailId");
+  console.log("Inside get of customer/orders/list/open/product/:emailId");
   console.log(req.body);
 
   //   req.body.path = "";
@@ -88,7 +88,7 @@ router.get("/list/open/product/:email", checkAuth, (req, res) => {
 });
 
 router.post("/list/cancel/order/:email", checkAuth, (req, res) => {
-  console.log("Inside get of customer/order/list/cancel/order/:email");
+  console.log("Inside post of customer/orders/list/cancel/order/:email");
   console.log(req.body);
 
   //   req.body.path = "";
