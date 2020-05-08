@@ -2,7 +2,7 @@
 const bcrypt = require("bcrypt");
 const {
   customerRegister,
-  sellerRegister
+  sellerRegister,
 } = require("../../models/registration");
 const customer = require("../../models/customer.model");
 const seller = require("../../models/seller.model");
@@ -18,18 +18,22 @@ let login = async (msg, callback) => {
   model =
     msg.category === "customer"
       ? customerRegister
-      : msg.category === "seller" ? sellerRegister : "admin";
+      : msg.category === "seller"
+      ? sellerRegister
+      : "admin";
   model_mongoose =
     msg.category === "customer"
       ? customer
-      : msg.category === "seller" ? seller : "admin";
+      : msg.category === "seller"
+      ? seller
+      : "admin";
   let email = msg.email;
   if (model !== "admin") {
     model
       .findOne({ where: { emailId: email } })
-      .then(result => {
+      .then((result) => {
         if (result) {
-          bcrypt.compare(msg.password, result.password, async function(
+          bcrypt.compare(msg.password, result.password, async function (
             err,
             matchFlag
           ) {
@@ -39,7 +43,7 @@ let login = async (msg, callback) => {
                 {
                   status: 403,
                   res: "Error caught in password comparison",
-                  err
+                  err,
                 },
                 null
               );
@@ -50,7 +54,7 @@ let login = async (msg, callback) => {
             } else {
               console.log("Logged in successfully");
               var mongoose_data = await model_mongoose.findOne({
-                emailId: email
+                emailId: email,
               });
               var mongooseId = mongoose_data._id;
               console.log(mongoose_data);
@@ -58,8 +62,9 @@ let login = async (msg, callback) => {
                 status: 200,
                 id: result._id,
                 mongooseId,
-                email:mongoose_data.emailId,
-                res: "Logged in successfully"
+                email: mongoose_data.emailId,
+                res: "Logged in successfully",
+                loginFlag: true,
                 // ,
                 // idToken: jwtToken
               });
@@ -70,7 +75,7 @@ let login = async (msg, callback) => {
           return callback({ status: 403, res: "User not found" }, null);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("Error caught");
         return callback({ status: 500, res: "Error caught" }, null);
       });
