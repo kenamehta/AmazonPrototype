@@ -40,17 +40,23 @@
   line-height: 1.255 !important;
   font-weight: 700 !important;
   color: #b12704 !important;
+  margin-left: 2px;
 }
 .action_style {
   font-size: 12px !important;
   line-height: 1.5 !important;
 }
 .checkout-box-style {
-  border: 2px solid black;
+  border: 1px #ddd solid;
   border-radius: 4px;
   position: relative;
   padding: 14px 18px;
+  background-color: #f3f3f3 !important;
 }
 .unable-proceed-style:hover {
   cursor: not-allowed !important;
+}
+.subtotal {
+  font-size: 17px !important;
+  line-height: 1.255 !important;
 }

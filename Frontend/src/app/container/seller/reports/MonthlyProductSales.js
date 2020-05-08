@@ -35,20 +35,17 @@ class MonthlyProductSales extends React.Component {
   }
 
   componentDidMount() {
-    
     let sellerEmail = "";
     if (this.props.sellerVisitingOwnProfile) {
-      
       sellerEmail = localStorage.getItem("emailId");
     } else {
-      
       sellerEmail = this.props.sellerEmailId;
     }
     let url = `/seller/analytics/report2/` + sellerEmail;
     axios
       .get(configPath.api_host + url)
       .then((response) => {
-        console.log('Response for monthly Product sales');
+        console.log("Response for monthly Product sales");
         console.log(response);
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
@@ -65,7 +62,10 @@ class MonthlyProductSales extends React.Component {
           });
 
           this.setState({
-            year: (response.data.results.length>0)?response.data.results[0].year:currentYear,
+            year:
+              response.data.results.length > 0
+                ? response.data.results[0].year
+                : currentYear,
             totalPrice: tp,
             totalQuantity: tq,
           });

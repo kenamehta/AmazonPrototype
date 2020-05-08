@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import {
   getOrders,
   cancelOrderProducts,
-  cancelCompleteOrder
+  cancelCompleteOrder,
 } from "../../../../action/customerprofileaction/customerOrderAction";
 import { getTracking } from "../../../../action/customerprofileaction/trackingAction";
 const _ = require("underscore");
@@ -23,13 +23,13 @@ class OrderPage extends Component {
     modalShowOrder: "none",
     orderdetails: "",
     modalTracking: "none",
-    anyProductDelivered:false
+    anyProductDelivered: false,
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
     this.setState(
       {
-        modifiedorderarray: _.groupBy(nextProps.orders, "order_id")
+        modifiedorderarray: _.groupBy(nextProps.orders, "order_id"),
       },
       () => {
         console.log(this.state.modifiedorderarray[1]);
@@ -49,12 +49,12 @@ class OrderPage extends Component {
     this.props.getOrders();
   }
 
-  cancelOrderProducts = e => {
+  cancelOrderProducts = (e) => {
     e.preventDefault();
     console.log("in here");
     console.log(this.state.cancelOrderProduct._id);
     let payload = {
-      _id: this.state.cancelOrderProduct._id
+      _id: this.state.cancelOrderProduct._id,
     };
     this.props.cancelOrderProducts(payload);
   };
@@ -63,7 +63,7 @@ class OrderPage extends Component {
     const items = [];
     //var anyProductDelivered=false
     for (let k in this.state.modifiedorderarray) {
-      var anyProductDelivered="false"
+      var anyProductDelivered = "false";
       items.push(
         <div>
           <div className="card mt-3">
@@ -119,9 +119,8 @@ class OrderPage extends Component {
                 </span>
               </div>
             </div>
-            {this.state.modifiedorderarray[k].map(i => (
+            {this.state.modifiedorderarray[k].map((i) => (
               <div key={i._id} className="card-body">
-
                 <div className="card-body d-flex justify-content-between">
                   <div className="d-flex">
                     <div className="profile-at-product-image-container upload-photo">
@@ -149,7 +148,7 @@ class OrderPage extends Component {
                           style={{
                             fontWeight: "500",
                             fontSize: "12px",
-                            color: "#555"
+                            color: "#555",
                           }}
                         >
                           Sold by:{" "}
@@ -185,228 +184,233 @@ class OrderPage extends Component {
                     </div>
                   </div>
                   <div align="right">
-                  {i.Status != "6" ? (
-
-                    
+                    {i.Status != "6" ? (
                       <button
                         className="a-button-order p-2 btn-sm"
                         style={{ width: "70%" }}
-                        onClick={e => {
+                        onClick={(e) => {
                           this.setState({
-                            cancelOrderProduct: i
+                            cancelOrderProduct: i,
                           });
                           this.setState({ modalShow: "block" });
                         }}
                       >
                         Cancel Request
                       </button>
-                      ) : (
-                        
-                    <div>
-                    {anyProductDelivered="true" }
-                      <h5 style={{ color: "green" }}> Delivered</h5>
-                    </div>
-                  )}
-                      {/*Tracking button - Kena*/}
-                      <button
-                        key={i._id}
-                        className="a-button-order p-2 mt-1 btn-sm"
-                        style={{ width: "70%" }}
-                        onClick={e => {
-                          this.setState({
-                            modalTracking: "block",
-                            editId: i._id
-                          });
-                          this.props.getTracking({
-                            orderProductId: i._id
-                          });
+                    ) : (
+                      <div>
+                        {(anyProductDelivered = "true")}
+                        <h5 style={{ color: "green" }}> Delivered</h5>
+                      </div>
+                    )}
+                    {/*Tracking button - Kena*/}
+                    <button
+                      key={i._id}
+                      className="a-button-order p-2 mt-1 btn-sm"
+                      style={{ width: "70%" }}
+                      onClick={(e) => {
+                        this.setState({
+                          modalTracking: "block",
+                          editId: i._id,
+                        });
+                        this.props.getTracking({
+                          orderProductId: i._id,
+                        });
+                      }}
+                    >
+                      Status
+                    </button>
+                    {/*Tracking*/}
+                    {/*Tracking - Kena*/}
+                    {this.state.editId === i._id ? (
+                      <div
+                        className="modal modal-custom-tracking mt-5"
+                        align="center"
+                        style={{
+                          display: this.state.modalTracking,
                         }}
                       >
-                        Status
-                      </button>
-                      {/*Tracking*/}
-                      {/*Tracking - Kena*/}
-                      {this.state.editId === i._id ? (
                         <div
-                          className="modal modal-custom-tracking mt-5"
-                          align="center"
-                          style={{ display: this.state.modalTracking }}
+                          className="modal-content modal-content-custom"
+                          style={{ fontFamily: "Suisse" }}
                         >
-                          <div
-                            className="modal-content modal-content-custom"
-                            style={{ fontFamily: "Suisse" }}
-                          >
-                            <div className="container">
-                              <span
-                                className=" ml-2 close image-edit-avatar"
-                                onClick={e => {
-                                  this.setState({ modalTracking: "none" });
-                                }}
-                              >
-                                &times;
-                              </span>
-                              <div className="card card-tracking">
-                                <div className="row d-flex justify-content-between px-3 top-tracking">
-                                  <div className="d-flex">
-                                    <div style={{ fontSize: "14px" }}>
-                                      ORDER{" "}
-                                      <span className="text-primary font-weight-bold">
-                                        {i._id}
-                                      </span>
-                                    </div>
+                          <div className="container">
+                            <span
+                              className=" ml-2 close image-edit-avatar"
+                              onClick={(e) => {
+                                this.setState({ modalTracking: "none" });
+                              }}
+                            >
+                              &times;
+                            </span>
+                            <div className="card card-tracking">
+                              <div className="row d-flex justify-content-between px-3 top-tracking">
+                                <div className="d-flex">
+                                  <div style={{ fontSize: "14px" }}>
+                                    ORDER{" "}
+                                    <span className="text-primary font-weight-bold">
+                                      {i._id}
+                                    </span>
                                   </div>
-                                  <div
-                                    className="d-flex flex-column text-sm-right"
-                                    style={{ fontSize: "14px" }}
-                                  >
-                                    {/* <p className="mb-0">
+                                </div>
+                                <div
+                                  className="d-flex flex-column text-sm-right"
+                                  style={{ fontSize: "14px" }}
+                                >
+                                  {/* <p className="mb-0">
                                     Expected Arrival <span>01/12/19</span>
                                   </p> */}
-                                    <p>
-                                      USPS{" "}
-                                      <span className="font-weight-bold">
-                                        234094567242423422898
-                                      </span>
+                                  <p>
+                                    USPS{" "}
+                                    <span className="font-weight-bold">
+                                      234094567242423422898
+                                    </span>
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="row d-flex justify-content-center">
+                                <div className="col-12">
+                                  <ul
+                                    id="progressbar-tracking"
+                                    className="text-center"
+                                  >
+                                    {this.props.statusArr.map((status) =>
+                                      status.flag === 1 ? (
+                                        <li className="active step0-tracking li-tracking" />
+                                      ) : (
+                                        <li className="step0-tracking li-tracking" />
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              </div>
+                              <div className="row justify-content-between top-tracking">
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/9nnc9Et.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Order
+                                      <br />
+                                      Placed
                                     </p>
                                   </div>
                                 </div>
-                                <div className="row d-flex justify-content-center">
-                                  <div className="col-12">
-                                    <ul
-                                      id="progressbar-tracking"
-                                      className="text-center"
-                                    >
-                                      {this.props.statusArr.map(
-                                        status =>
-                                          status.flag === 1 ? (
-                                            <li className="active step0-tracking li-tracking" />
-                                          ) : (
-                                            <li className="step0-tracking li-tracking" />
-                                          )
-                                      )}
-                                    </ul>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/u1AzR7w.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Packaging
+                                    </p>
                                   </div>
                                 </div>
-                                <div className="row justify-content-between top-tracking">
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/9nnc9Et.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Order<br />Placed
-                                      </p>
-                                    </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/TkPm63y.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Out for
+                                      <br />
+                                      Shipping
+                                    </p>
                                   </div>
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/u1AzR7w.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Packaging
-                                      </p>
-                                    </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/u1AzR7w.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Package
+                                      <br />
+                                      Arrived
+                                    </p>
                                   </div>
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/TkPm63y.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Out for<br />Shipping
-                                      </p>
-                                    </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/TkPm63y.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Out for
+                                      <br />
+                                      Delivery
+                                    </p>
                                   </div>
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/u1AzR7w.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Package<br />Arrived
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/TkPm63y.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Out for<br />Delivery
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="row d-flex icon-content-tracking">
-                                    {" "}
-                                    <img
-                                      className="icon-tracking"
-                                      src="https://i.imgur.com/HdsziHP.png"
-                                    />
-                                    <div className="d-flex flex-column">
-                                      <p className="font-weight-bold">
-                                        Order<br />Delivered
-                                      </p>
-                                    </div>
+                                </div>
+                                <div className="row d-flex icon-content-tracking">
+                                  {" "}
+                                  <img
+                                    className="icon-tracking"
+                                    src="https://i.imgur.com/HdsziHP.png"
+                                  />
+                                  <div className="d-flex flex-column">
+                                    <p className="font-weight-bold">
+                                      Order
+                                      <br />
+                                      Delivered
+                                    </p>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      ) : (
-                        ""
-                      )}
+                      </div>
+                    ) : (
+                      ""
+                    )}
 
-                      {/*End of tracking*/}
-                    </div>
-                  
+                    {/*End of tracking*/}
+                  </div>
                 </div>
               </div>
             ))}
             <div className="d-flex card-footer link-color">
-              {this.state.anyProductDelivered==false?<div
-                className=" upload-photo-order"
-                onClick={() => {
+              {this.state.anyProductDelivered == false ? (
+                <div
+                  className=" upload-photo-order"
+                  onClick={() => {
+                    this.state.modifiedorderarray[k].map((i) =>
+                      i.status == 6
+                        ? this.setState({ anyProductDelivered: true })
+                        : ""
+                    );
 
-
-                  this.state.modifiedorderarray[k].map(i => (
-                   
-                    i.status==6?this.setState({anyProductDelivered:true}):''
-                  ))
-
-
-                  let payload = {
-                    _id: this.state.modifiedorderarray[k][0].Order.order_id
-                  };
-                  this.props.cancelCompleteOrder(payload);
-                }}
-                style={{ color: "blue" }}
-              >
-                Delete Order
-              </div>:''}
+                    let payload = {
+                      _id: this.state.modifiedorderarray[k][0].Order.order_id,
+                    };
+                    this.props.cancelCompleteOrder(payload);
+                  }}
+                  style={{ color: "blue" }}
+                >
+                  Delete Order
+                </div>
+              ) : (
+                ""
+              )}
 
               <div
                 className="ml-3 upload-photo-order"
-                onClick={e => {
-
-
-
-
+                onClick={(e) => {
                   this.setState({ modalShowOrder: "block" }, () => {
                     this.setState({
-                      orderdetails: this.state.modifiedorderarray[k][0]
+                      orderdetails: this.state.modifiedorderarray[k][0],
                     });
                   });
                 }}
@@ -440,7 +444,7 @@ class OrderPage extends Component {
             <div className="container">
               <span
                 className="close image-edit-avatar"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ modalShow: "none" });
                   this.setState({ cancelmsg: "" });
                   this.setState({ editcard: "" });
@@ -487,7 +491,7 @@ class OrderPage extends Component {
                                 style={{
                                   fontWeight: "500",
                                   fontSize: "12px",
-                                  color: "#555"
+                                  color: "#555",
                                 }}
                               >
                                 Sold by:{" "}
@@ -508,7 +512,7 @@ class OrderPage extends Component {
                                 style={{
                                   fontWeight: "500",
                                   fontSize: "12px",
-                                  color: "#555"
+                                  color: "#555",
                                 }}
                               >
                                 Order Place on:{" "}
@@ -533,7 +537,7 @@ class OrderPage extends Component {
                               type="radio"
                               value="option1"
                               checked={this.state.value}
-                              onClick={e => this.setState({ value: "true" })}
+                              onClick={(e) => this.setState({ value: "true" })}
                             />
                           </label>
                         </div>
@@ -569,7 +573,7 @@ class OrderPage extends Component {
             <div className="container">
               <span
                 className=" ml-2 close image-edit-avatar"
-                onClick={e => {
+                onClick={(e) => {
                   this.setState({ modalShowOrder: "none" });
                 }}
               >
@@ -582,11 +586,9 @@ class OrderPage extends Component {
                   <h6 style={{ fontWeight: "200" }}>
                     Ordered on{" "}
                     <Moment format="D MMM YYYY">
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.createdAt.split("T")[0]
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.createdAt.split("T")[0]
+                        : ""}
                     </Moment>
                   </h6>
                 </div>
@@ -595,49 +597,39 @@ class OrderPage extends Component {
                   <div className="col-3">
                     <h6 style={{ fontWeight: "700" }}>Shipping address</h6>
                     <h6 style={{ fontWeight: "400" }}>
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.Address_details
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.Address_details
+                        : ""}
                     </h6>
                   </div>
                   <div className="col-3">
                     <h6 style={{ fontWeight: "700" }}>Mailing address</h6>
                     <h6 style={{ fontWeight: "400" }}>
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.Address_details
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.Address_details
+                        : ""}
                     </h6>
                   </div>
                   <div className="col-3">
                     <h6 style={{ fontWeight: "700" }}>Payment Card</h6>
                     <h6 style={{ fontWeight: "400" }}>
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.cardName
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.cardName
+                        : ""}
                     </h6>
                     <h6 style={{ fontWeight: "400" }}>
                       <span className="ml-1">
                         <img src="https://images-na.ssl-images-amazon.com/images/G/01/checkout/payselect/card-logos-small/mc._CB485935095_.gif" />
                       </span>{" "}
                       XXXX
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.cardNumber.slice(-4)
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.cardNumber.slice(-4)
+                        : ""}
                     </h6>
                     <h6 style={{ fontWeight: "400" }}>
-                      {this.state.orderdetails ? (
-                        this.state.orderdetails.Order.validThru
-                      ) : (
-                        ""
-                      )}
+                      {this.state.orderdetails
+                        ? this.state.orderdetails.Order.validThru
+                        : ""}
                     </h6>
                   </div>
                 </div>
@@ -651,20 +643,20 @@ class OrderPage extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state);
   return {
     orders: state.customerOrderReducer.orders,
     cancelmsg: state.customerOrderReducer.cancelmsg,
-    statusArr: state.trackingReducer.statusArr || []
+    statusArr: state.trackingReducer.statusArr || [],
   };
 };
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     getOrders: () => dispatch(getOrders()),
-    cancelOrderProducts: payload => dispatch(cancelOrderProducts(payload)),
-    cancelCompleteOrder: payload => dispatch(cancelCompleteOrder(payload)),
-    getTracking: payload => dispatch(getTracking(payload))
+    cancelOrderProducts: (payload) => dispatch(cancelOrderProducts(payload)),
+    cancelCompleteOrder: (payload) => dispatch(cancelCompleteOrder(payload)),
+    getTracking: (payload) => dispatch(getTracking(payload)),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);

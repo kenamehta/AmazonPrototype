@@ -70,11 +70,12 @@ class SellerProfile extends React.Component {
     if (this.props.location.pathname.split("/").length > 3) {
       sellerVisitingOwnProfile = false;
     }
-    var add, report;
+    var add;
+    let report = "";
     if (localStorage.getItem("category") === "seller") {
       add = (
         <Button
-          className='bluebeacon addProductButton'
+          className="bluebeacon addProductButton"
           style={{
             float: "right",
             borderRadius: 15 + "px",
@@ -91,14 +92,25 @@ class SellerProfile extends React.Component {
       );
     } else if (localStorage.getItem("category") === "admin") {
       report = (
-        <Report
-          sellerVisitingOwnProfile={sellerVisitingOwnProfile}
-          sellerEmailId={
-            this.props.location.pathname.split("/").length > 3
-              ? this.props.location.pathname.split("/")[3]
-              : ""
-          }
-        />
+        <>
+          <Row
+            xs={12}
+            md={12}
+            sm={12}
+            lg={12}
+            xl={12}
+            style={{ position: "relative", marginTop: "50px", height: "500px" }}
+          >
+            <Report
+              sellerVisitingOwnProfile={sellerVisitingOwnProfile}
+              sellerEmailId={
+                this.props.location.pathname.split("/").length > 3
+                  ? this.props.location.pathname.split("/")[3]
+                  : ""
+              }
+            />
+          </Row>
+        </>
       );
     }
 
@@ -112,6 +124,7 @@ class SellerProfile extends React.Component {
               : ""
           }
         />
+        {report}
         <Row
           xs={12}
           md={12}
@@ -120,9 +133,6 @@ class SellerProfile extends React.Component {
           xl={12}
           style={{ position: "relative", marginTop: "50px", height: "500px" }}
         >
-          {report}
-        </Row>
-        <Row>
           <List sellerProfile={true} />
         </Row>
         {add}
