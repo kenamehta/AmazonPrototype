@@ -15,7 +15,7 @@ class ReportContainer extends React.Component {
           xl={12}
           style={{ marginTop: "50px", height: "500px" }}
         >
-          <MonthlyProductSales sellerVisitingOwnProfile="true"/>
+          <MonthlyProductSales sellerVisitingOwnProfile="true" />
         </Row>
         <Row
           xs={12}

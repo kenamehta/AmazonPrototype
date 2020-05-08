@@ -24,7 +24,7 @@
 .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
-  margin: 10px auto 30px;
+  margin: 10px auto 20px;
   max-width: 38%;
   padding: 50px 70px 70px 71px;
   border: 2px solid #232f3e;
@@ -69,7 +69,14 @@
   font-size: 13px;
   text-decoration: none;
 }
-.btn-style {
+.btn-style,
+.btn-style:focus,
+.btn-style:hover {
   background-color: #232f3e;
   color: white;
+}
+.btn-style:active {
+  background-color: #ffffff;
+  color: #232f3e;
+  border: solid 1px #232f3e;
 }

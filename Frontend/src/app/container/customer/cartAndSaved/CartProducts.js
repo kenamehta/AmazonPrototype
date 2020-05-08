@@ -188,8 +188,7 @@ class CartProducts extends Component {
                             {product.giftFlag === "true" && (
                               <form
                                 onSubmit={e => {
-                                  e.preventDefault();
-
+                                  //e.preventDefault();
                                   this.updateCartHandler(
                                     product.quantity,
                                     product._id,
@@ -432,7 +431,7 @@ class CartProducts extends Component {
                       }}
                     >
                       <div align="right">
-                        <span style={{ fontWeight: "600" }}>Subtotal: </span>
+                        <span className="subtotal">Subtotal: </span>
                         <span
                           className="mr-5 price_style"
                           title="Includes $0.5 per quantity of gift, if any"
@@ -450,11 +449,14 @@ class CartProducts extends Component {
               {this.state.totalQuantity !== 0 ? (
                 <div className="checkout-box-style mt-5">
                   <b style={{ fontSize: "15px" }}>
-                    Subtotal ( {this.state.totalQuantity} items) : ${parseFloat(this.state.totalCartPrice).toFixed(2)}
+                    Subtotal ( {this.state.totalQuantity} items) :
+                    <span className="price_style">
+                      ${parseFloat(this.state.totalCartPrice).toFixed(2)}
+                    </span>
                   </b>
                   <div className=" mt-2 ship-to-this-address a-button a-button-primary a-button-span12 a-spacing-medium  ">
                     <span
-                      className="a-button-inner a-button-text"
+                      className="addToCart a-button-inner a-button-text "
                       onClick={() => {
                         this.setRedirect();
                       }}
@@ -467,7 +469,7 @@ class CartProducts extends Component {
                 <div className="checkout-box-style mt-5">
                   <div className=" mt-2 ship-to-this-address a-button a-button-primary a-button-span12 a-spacing-medium  ">
                     <span
-                      className="a-button-inner a-button-text unable-proceed-style"
+                      className="addToCart a-button-inner a-button-text unable-proceed-style"
                       onClick={() => {}}
                     >
                       Proceed to checkout

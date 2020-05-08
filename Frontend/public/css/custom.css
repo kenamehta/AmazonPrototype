@@ -130,6 +130,20 @@
   font-weight: 400;
 }
 
+a .nav-links:hover {
+  color: #ff9900;
+}
+
+.dropdown-item:active {
+  text-decoration: none;
+  color: #ff9900 !important;
+  background-color: lightgray !important;
+}
+
+a .nav-links {
+  color: #000000;
+}
+
 .removeProduct {
   color: #fff;
   text-decoration: none;
