@@ -22,8 +22,7 @@ class OrderPage extends Component {
     navarr: ["black", "#0066c0", "#0066c0"],
     modalShowOrder: "none",
     orderdetails: "",
-    modalTracking: "none",
-    anyProductDelivered:false
+    modalTracking: "none"
   };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
@@ -61,9 +60,8 @@ class OrderPage extends Component {
 
   render() {
     const items = [];
-    //var anyProductDelivered=false
+
     for (let k in this.state.modifiedorderarray) {
-      var anyProductDelivered="false"
       items.push(
         <div>
           <div className="card mt-3">
@@ -121,7 +119,6 @@ class OrderPage extends Component {
             </div>
             {this.state.modifiedorderarray[k].map(i => (
               <div key={i._id} className="card-body">
-
                 <div className="card-body d-flex justify-content-between">
                   <div className="d-flex">
                     <div className="profile-at-product-image-container upload-photo">
@@ -184,10 +181,8 @@ class OrderPage extends Component {
                       </div>
                     </div>
                   </div>
-                  <div align="right">
                   {i.Status != "6" ? (
-
-                    
+                    <div align="right">
                       <button
                         className="a-button-order p-2 btn-sm"
                         style={{ width: "70%" }}
@@ -200,13 +195,6 @@ class OrderPage extends Component {
                       >
                         Cancel Request
                       </button>
-                      ) : (
-                        
-                    <div>
-                    {anyProductDelivered="true" }
-                      <h5 style={{ color: "green" }}> Delivered</h5>
-                    </div>
-                  )}
                       {/*Tracking button - Kena*/}
                       <button
                         key={i._id}
@@ -371,22 +359,18 @@ class OrderPage extends Component {
 
                       {/*End of tracking*/}
                     </div>
-                  
+                  ) : (
+                    <div>
+                      <h5 style={{ color: "green" }}> Delivered</h5>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
             <div className="d-flex card-footer link-color">
-              {this.state.anyProductDelivered==false?<div
+              <div
                 className=" upload-photo-order"
                 onClick={() => {
-
-
-                  this.state.modifiedorderarray[k].map(i => (
-                   
-                    i.status==6?this.setState({anyProductDelivered:true}):''
-                  ))
-
-
                   let payload = {
                     _id: this.state.modifiedorderarray[k][0].Order.order_id
                   };
@@ -395,15 +379,11 @@ class OrderPage extends Component {
                 style={{ color: "blue" }}
               >
                 Delete Order
-              </div>:''}
+              </div>
 
               <div
                 className="ml-3 upload-photo-order"
                 onClick={e => {
-
-
-
-
                   this.setState({ modalShowOrder: "block" }, () => {
                     this.setState({
                       orderdetails: this.state.modifiedorderarray[k][0]
