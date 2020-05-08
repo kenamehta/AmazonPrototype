@@ -7,6 +7,12 @@ import { Modal, Form, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import { getCategory } from "../../../../action/ProductAction/productCategory";
 import axios from "axios";
+import {
+  getAllProducts,
+  updateProductSearch,
+  updateProductSort,
+  updateProductFilter,
+} from "../../../../action/ProductAction/productAction";
 
 class AddProduct extends React.Component {
   constructor(props) {
@@ -41,6 +47,26 @@ class AddProduct extends React.Component {
         category: this.props.category[0].name,
       });
   }
+
+  dispatchAction = () => {
+    const data = {
+      page: 1,
+      orderOn: "rating",
+      order: "desc",
+      sellerEmailId: "",
+      sellerName: "",
+      productName: "",
+      productCategory: "",
+      minPrice: 0,
+      maxPrice: 2500,
+      minRating: "",
+      maxRating: "",
+    };
+    this.props.dispatch(getAllProducts(data));
+    this.props.dispatch(updateProductSearch("", "", ""));
+    this.props.dispatch(updateProductSort("rating", "desc"));
+    this.props.dispatch(updateProductFilter("", 0, 2500));
+  };
 
   checkNameEventHandler(e) {
     console.log(e);
@@ -147,6 +173,7 @@ class AddProduct extends React.Component {
               nameExist: false,
             });
             this.props.handleClose();
+            this.dispatchAction();
             alert("Successfully added");
           }
         })
