@@ -172,7 +172,7 @@ class ProductPage extends React.Component {
             );
           }}
         >
-          Remove Product
+          <Link className='removeProduct' to='/productlisting'>Remove Product</Link>
         </Button>
       );
     }

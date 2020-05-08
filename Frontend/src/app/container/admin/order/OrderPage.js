@@ -187,10 +187,11 @@ class OrderPage extends Component {
                       >
                         Cancel Request
                       </button> */}
-                      <p style={{ color: "red" }}>
+                      <p style={{ color: "red" }} className='mt-2'>
                         <i>{i.cancelProduct ? "Cancelled Order" : ""}</i>
                       </p>
                       {/*Tracking button - Kena*/}
+                      {i.cancelProduct ?"":
                       <button
                         className="a-button-order p-2 mt-1 btn-sm"
                         style={{ width: "100%" }}
@@ -205,7 +206,7 @@ class OrderPage extends Component {
                         }}
                       >
                         Status
-                      </button>
+                      </button>}
                       {/*Tracking*/}
                       {/*Tracking - Kena*/}
                       {this.state.editId === i._id ? (

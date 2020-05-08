@@ -169,7 +169,7 @@ class AddProduct extends React.Component {
         onHide={() => this.props.handleClose(false)}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add Product</Modal.Title>
+          <Modal.Title>Update Product</Modal.Title>
         </Modal.Header>
         <Form onSubmit={this.editProfileHandlerSubmit}>
           <Modal.Body>

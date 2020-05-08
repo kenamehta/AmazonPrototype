@@ -5,12 +5,12 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //get address details of a customer
-router.get("/report1/:sellerEmailId", (req, res) => {
+router.get("/report1/:sellerEmailId", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
   msg.route = "getSellerReport1";
-  kafka.make_request("reportService", msg, function (err, results) {
+  kafka.make_request("reportService", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -20,12 +20,12 @@ router.get("/report1/:sellerEmailId", (req, res) => {
 });
 
 //add or update address details of a customer
-router.get("/report2/:sellerEmailId", (req, res) => {
+router.get("/report2/:sellerEmailId", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
   msg.route = "getSellerReport2";
-  kafka.make_request("reportService", msg, function (err, results) {
+  kafka.make_request("reportService", msg, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
