@@ -21,7 +21,7 @@ let registerSeller = async (msg, callback) => {
       });
       const seller_register_mongo = await seller.create({
         name: msg.name,
-        emailId: msg.email
+        emailId: msg.email.toLowerCase()
       });
       if (seller_register_sql && seller_register_mongo) {
         return callback(null, { status: 200, res: "" });

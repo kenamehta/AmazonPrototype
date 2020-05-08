@@ -21,7 +21,7 @@ let registerCustomer = async (msg, callback) => {
       });
       const customer_register_mongo = await customer.create({
         name: msg.name,
-        emailId: msg.email
+        emailId: msg.email.toLowerCase()
       });
       if (customer_register_sql && customer_register_mongo) {
         return callback(null, { status: 200, res: "" });

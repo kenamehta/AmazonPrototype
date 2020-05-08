@@ -24,14 +24,14 @@ class Insights extends Component {
                     style={{ justifyContent: "center" }}
                   >
                     <div className="mx-3" align="center">
-                      <h5>5</h5>
+                      <h5>{this.props.profileData.data.insights.length}</h5>
                       <p>Helpful Votes</p>
                       <p>
                         <i>Public</i>
                       </p>
                     </div>
                     <div>
-                      <h5>3</h5>
+                      <h5>{this.props.profileData.data.comment_cnt}</h5>
                       <p className="mt-1">Reviews</p>
                       <p className="mt-1">
                         <i>Public</i>
