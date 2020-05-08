@@ -114,7 +114,7 @@ router.post("/moveFromCartToSaveForLater", checkAuth, (req, res) => {
   });
 });
 
-// need to test this
+
 router.post("/updateProductInCart", checkAuth, (req, res) => {
   console.log("Inside post of /customer/cartProducts/updateProductInCart");
   console.log(req.body);
