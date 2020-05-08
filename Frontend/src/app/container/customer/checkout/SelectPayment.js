@@ -16,7 +16,8 @@ class SelectPayment extends Component {
     expirationDateSel: "",
     cvvSel: "",
     editcard: "",
-    addSuccessMsg: ""
+    addSuccessMsg: "",
+    alertAddSameCard: ""
   };
 
   componentWillMount() {
@@ -38,8 +39,51 @@ class SelectPayment extends Component {
     this.props.deletePayment(payload);
   };
 
-  addOrUpdatePayment = e => {
+  addPayment = e => {
     e.preventDefault();
+    e.target.reset();
+    let flag = 0;
+    this.props.paymentArr.paymentCards.map(pay => {
+      if (pay.cardNumber === this.state.cardNumber) flag = 1;
+    });
+    if (!flag) {
+      this.setState({
+        modalSelected: "block",
+        displayPayment: "none",
+        modalShow: "none",
+        cardNameSel: this.state.cardName,
+        cardNumberSel: this.state.cardNumber,
+        expirationDateSel: this.state.expirationDate,
+        cvvSel: this.state.cvv,
+        createdAtSel: this.state.createdAt
+      });
+      let payload = {
+        card_id: this.state.editcard._id,
+        cardName: this.state.cardName,
+        cardNumber: this.state.cardNumber,
+        expirationDate: this.state.expirationDate,
+        cvv: this.state.cvv
+      };
+      console.log(payload);
+      this.props.addOrUpdatePayment(payload);
+    } else {
+      this.setState({ alertAddSameCard: "Card Number already present!" });
+      alert(this.state.alertAddSameCard);
+      this.setState({
+        modalSelected: "none",
+        displayPayment: "block",
+        modalShow: "block",
+        cardNameSel: this.state.cardName,
+        cardNumberSel: this.state.cardNumber,
+        expirationDateSel: this.state.expirationDate,
+        cvvSel: this.state.cvv,
+        createdAtSel: this.state.createdAt
+      });
+    }
+  };
+  updatePayment = e => {
+    e.preventDefault();
+    e.target.reset();
     let payload = {
       card_id: this.state.editcard._id,
       cardName: this.state.cardName,
@@ -216,7 +260,7 @@ class SelectPayment extends Component {
                 <span
                   className="close image-edit-avatar"
                   onClick={e => {
-                    this.setState({ modalShow: "none" });
+                    this.setState({ modalShow: "none", alertAddSameCard: "" });
                     this.setState({ addSuccessMsg: "" });
                     this.setState({ editcard: "" });
                   }}
@@ -239,7 +283,11 @@ class SelectPayment extends Component {
                     )}
                   </h3>
                 </div>
-                <form onSubmit={this.addOrUpdatePayment}>
+                <form
+                  onSubmit={
+                    this.state.editcard ? this.updatePayment : this.addPayment
+                  }
+                >
                   <div className="form-group col-md-11">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Card Name
@@ -322,6 +370,9 @@ class SelectPayment extends Component {
                       }}
                     /> */}
                   </div>
+                  <div style={{ color: "red", fontWeight: "bold" }}>
+                    {this.state.alertAddSameCard}
+                  </div>
                   <div className="form-group col-md-11">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Expiration Date
@@ -358,26 +409,52 @@ class SelectPayment extends Component {
                     />
                   </div>
                   <div className="form-group col-md-8 m-3">
-                    <input
-                      type="submit"
-                      onClick={() => {
-                        this.setState({
-                          modalSelected: "block",
-                          displayPayment: "none",
-                          modalShow: "none",
-                          cardNameSel: this.state.cardName,
-                          cardNumberSel: this.state.cardNumber,
-                          expirationDateSel: this.state.expirationDate,
-                          cvvSel: this.state.cvv,
-                          createdAtSel: this.state.createdAt
-                        });
-                        this.props.sendModalStatus({
-                          paymentSelectModal: "block"
-                        });
-                      }}
-                      value="Add and Select"
-                      className="btn btn sprite"
-                    />
+                    {this.state.alertAddSameCard !== "" ? (
+                      <div>
+                        <input
+                          type="submit"
+                          //onClick={() => {
+                          // console.log("in alert");
+                          //this.setState({
+                          //modalSelected: "none",
+                          //displayPayment: "block",
+                          //modalShow: "block",
+                          //cardNameSel: this.state.cardName,
+                          //cardNumberSel: this.state.cardNumber,
+                          //expirationDateSel: this.state.expirationDate,
+                          //cvvSel: this.state.cvv,
+                          //createdAtSel: this.state.createdAt
+                          //});
+                          // }}
+                          value="Add and Select"
+                          className="btn btn sprite"
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          type="submit"
+                          onClick={() => {
+                            //console.log("not in alert");
+                            //this.setState({
+                            //modalSelected: "block",
+                            //displayPayment: "none",
+                            //modalShow: "none",
+                            //cardNameSel: this.state.cardName,
+                            //cardNumberSel: this.state.cardNumber,
+                            //expirationDateSel: this.state.expirationDate,
+                            //cvvSel: this.state.cvv,
+                            //createdAtSel: this.state.createdAt
+                            //});
+                            this.props.sendModalStatus({
+                              paymentSelectModal: "block"
+                            });
+                          }}
+                          value="Add and Select"
+                          className="btn btn sprite"
+                        />
+                      </div>
+                    )}
                   </div>
                 </form>
               </div>

@@ -40,6 +40,7 @@ class PaymentCard extends Component {
   };
 
   addPayment = e => {
+    console.log("in add");
     e.preventDefault();
     e.target.reset();
     let flag = 0;
@@ -61,6 +62,7 @@ class PaymentCard extends Component {
     }
   };
   updatePayment = e => {
+    console.log("in update");
     e.preventDefault();
     e.target.reset();
     let payload = {
