@@ -197,6 +197,7 @@ class CartProducts extends Component {
                                     e.target["giftMessage"].value,
                                     product.productPrice
                                   );
+                                  alert("Message added");
                                 }}
                               >
                                 <div className="mb-2">

@@ -223,8 +223,10 @@ class SelectPayment extends Component {
                 >
                   &times;
                 </span>
-                {this.state.addSuccessMsg ? (
+                {this.state.editcard ? this.state.addSuccessMsg ? (
                   <p style={{ color: "green" }}>{this.state.addSuccessMsg}</p>
+                ) : (
+                  ""
                 ) : (
                   ""
                 )}
@@ -263,7 +265,47 @@ class SelectPayment extends Component {
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
                       Card Number
                     </label>
-                    <input
+                    {this.state.editcard ? (
+                      <div>
+                        <input
+                          type="number"
+                          id="number"
+                          name="number"
+                          className="form-control"
+                          placeholder={
+                            this.state.editcard ? (
+                              this.state.editcard.cardNumber
+                            ) : (
+                              "Enter Card number"
+                            )
+                          }
+                          disabled
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          type="number"
+                          id="number"
+                          name="number"
+                          className="form-control"
+                          placeholder={
+                            this.state.editcard ? (
+                              this.state.editcard.cardNumber
+                            ) : (
+                              "Enter Card number"
+                            )
+                          }
+                          onChange={e => {
+                            this.setState({
+                              cardNumber: e.target.value,
+                              alertAddSameCard: ""
+                            });
+                          }}
+                        />
+                      </div>
+                    )}
+                    {/* <input
                       type="number"
                       id="number"
                       name="number"
@@ -278,7 +320,7 @@ class SelectPayment extends Component {
                       onChange={e => {
                         this.setState({ cardNumber: e.target.value });
                       }}
-                    />
+                    /> */}
                   </div>
                   <div className="form-group col-md-11">
                     <label style={{ fontWeight: "bold", marginBottom: "5px" }}>
