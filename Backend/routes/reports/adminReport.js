@@ -5,7 +5,7 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //admin report 1 : No of orders per day.
-router.get("/report1", (req, res) => {
+router.get("/report1", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -20,7 +20,7 @@ router.get("/report1", (req, res) => {
 });
 
 //2: Top 5 most sold products.
-router.get("/report2", (req, res) => {
+router.get("/report2", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -35,7 +35,7 @@ router.get("/report2", (req, res) => {
 });
 
 //3: Top 5 sellers based on total sales amount.
-router.get("/report3", (req, res) => {
+router.get("/report3", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -50,7 +50,7 @@ router.get("/report3", (req, res) => {
 });
 
 //4: Top 5 customers based on total purchase amount.
-router.get("/report4", (req, res) => {
+router.get("/report4", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -65,7 +65,7 @@ router.get("/report4", (req, res) => {
 });
 
 //5: Top 10 products based on rating.
-router.get("/report5", (req, res) => {
+router.get("/report5", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;
@@ -80,7 +80,7 @@ router.get("/report5", (req, res) => {
 });
 
 //6: Top 10 products viewed per day.
-router.get("/report6", (req, res) => {
+router.get("/report6", checkAuth, (req, res) => {
   console.log(req.body);
   msg = req.body;
   msg.params = req.params;

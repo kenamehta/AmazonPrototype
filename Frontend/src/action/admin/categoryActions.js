@@ -4,68 +4,70 @@ import {
   DELETE_CATEGORY,
   CATEGORYS_LOADING,
   SET_MODAL,
-  ADD_MODAL,
+  ADD_MODAL
 } from "./types.js";
 import axios from "axios";
 import configPath from "../../configApp";
 
-export const getCategory = () => (dispatch) => {
+export const getCategory = () => dispatch => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   // dispatch(setCategoryLoading());
   axios
     .get(configPath.api_host + "/product/admin/getProductCategory")
-    .then((res) => {
+    .then(res => {
       console.log("My categories", res.data);
       return dispatch({
         type: GET_CATEGORYS,
-        payload: res.data,
+        payload: res.data
       });
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
     });
 };
 
-export const addCategory = (category) => (dispatch) => {
+export const addCategory = category => dispatch => {
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   axios
     .post(configPath.api_host + `/product/admin/addProductCategory`, category)
-    .then((res) =>
+    .then(res =>
       dispatch({
         type: ADD_CATEGORY,
         payload: res.data,
-        res: res,
+        res: res
       })
     );
 };
 
-export const deleteCategory = (name) => (dispatch) => {
+export const deleteCategory = name => dispatch => {
   const data = {
-    name: name,
+    name: name
   };
-
+  axios.defaults.headers.common.authorization = localStorage.getItem("IDToken");
   axios
     .post(configPath.api_host + `/product/admin/deleteProductCategory`, data)
-    .then((res) => {
+    .then(res => {
       const msg = res.message;
       console.log("delete res", res);
       dispatch({
         type: DELETE_CATEGORY,
         payload: data,
-        res: res,
+        res: res
       });
     });
 };
 export const setModalFalse = () => {
   return {
-    type: SET_MODAL,
+    type: SET_MODAL
   };
 };
 export const setAddModalFalse = () => {
   return {
-    type: ADD_MODAL,
+    type: ADD_MODAL
   };
 };
-export const setCategoryLoading = (item) => {
+export const setCategoryLoading = item => {
   return {
-    type: CATEGORYS_LOADING,
+    type: CATEGORYS_LOADING
   };
 };

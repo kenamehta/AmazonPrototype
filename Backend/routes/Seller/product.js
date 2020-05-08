@@ -12,7 +12,7 @@ const s3 = new AWS.S3({
   apiVersion: "2006-03-01",
   accessKeyId: Config.AWS_ACCESS_KEY_ID,
   secretAccessKey: Config.AWS_SECRET_ACCESS_KEY,
-  region: Config.AWS_REGION,
+  region: Config.AWS_REGION
 });
 
 // file.fieldname is the file1, file2 -> fd.append('file1',this.state.selectedFiles[0]);
@@ -20,7 +20,7 @@ const productImagesUpload = multer({
   storage: multerS3({
     s3: s3,
     bucket: Config.AWS_BUCKET_NAME,
-    key: function (req, file, cb) {
+    key: function(req, file, cb) {
       //console.log(req.body);
       cb(
         null,
@@ -31,8 +31,8 @@ const productImagesUpload = multer({
           Date.now() +
           ".jpg"
       );
-    },
-  }),
+    }
+  })
 });
 
 /* 
@@ -56,17 +56,17 @@ const productImagesUpload = multer({
 */
 // keep it in Seller Product Folder/File
 // get seller's _id as sellerId in req body
-router.post("/addProduct", productImagesUpload.any(), (req, res) => {
+router.post("/addProduct", checkAuth, productImagesUpload.any(), (req, res) => {
   console.log("Inside post of product/seller/addProduct");
   console.log(req.body);
   if (req.files) {
     console.log("Product Images req.files array after s3 upload: ");
-    const productImagesURL = req.files.map((each) => each.location);
+    const productImagesURL = req.files.map(each => each.location);
     console.log(productImagesURL);
     req.body.productImagesURL = productImagesURL;
 
     req.body.path = "product_add";
-    kafka.make_request("sellerProductService", req.body, function (
+    kafka.make_request("sellerProductService", req.body, function(
       err,
       results
     ) {
@@ -90,14 +90,14 @@ router.post("/addProduct", productImagesUpload.any(), (req, res) => {
   checking for exact match, case insensitive in the backend
   so AMAZON and amazon is same product
 */
-router.get("/existProduct/:productName", (req, res) => {
+router.get("/existProduct/:productName", checkAuth, (req, res) => {
   console.log("Inside get of product/seller/existProduct");
 
   req.body.path = "product_exist";
   req.body.productName = req.params.productName;
   console.log(req.body);
 
-  kafka.make_request("sellerProductService", req.body, function (err, results) {
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -108,13 +108,13 @@ router.get("/existProduct/:productName", (req, res) => {
 
 // Removing of a product by seller. Will only soft delete, set validFlag = false
 // expecting productId in req.body
-router.post("/removeProduct", (req, res) => {
+router.post("/removeProduct", checkAuth, (req, res) => {
   console.log("Inside post of product/seller/removeProduct");
   console.log(req.body);
 
   req.body.path = "product_delete";
 
-  kafka.make_request("sellerProductService", req.body, function (err, results) {
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {
@@ -138,17 +138,17 @@ router.post(
         "Product Images req.files array after s3 upload: ",
         req.files
       );
-      const productImagesURL = req.files.map((each) => each.location);
+      const productImagesURL = req.files.map(each => each.location);
       console.log(productImagesURL);
       req.body.productImagesURL = productImagesURL;
     }
 
     req.body.path = "product_update";
 
-    console.log('Req.body in updateProduct');
+    console.log("Req.body in updateProduct");
     console.log(req.body);
 
-    kafka.make_request("sellerProductService", req.body, function (
+    kafka.make_request("sellerProductService", req.body, function(
       err,
       results
     ) {
@@ -166,7 +166,7 @@ router.get("/productCategories", checkAuth, (req, res) => {
   console.log(req.body);
 
   req.body.path = "get_product_categories";
-  kafka.make_request("sellerProductService", req.body, function (err, results) {
+  kafka.make_request("sellerProductService", req.body, function(err, results) {
     if (err) {
       res.status(500).send("System Error");
     } else {

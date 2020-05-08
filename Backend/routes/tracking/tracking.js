@@ -5,7 +5,7 @@ const { checkAuth } = require("../../passport");
 const kafka = require("../../kafka/client");
 
 //get tracking
-router.get("/:orderProductId", (req, res) => {
+router.get("/:orderProductId", checkAuth, (req, res) => {
   console.log(req.params);
   msg = req.body;
   msg.params = req.params;
@@ -20,7 +20,7 @@ router.get("/:orderProductId", (req, res) => {
 });
 
 //update status
-router.post("/:orderProductId", (req, res) => {
+router.post("/:orderProductId", checkAuth, (req, res) => {
   console.log(req.params);
   msg = req.body;
   msg.params = req.params;
