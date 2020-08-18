@@ -9,4 +9,4 @@ Database schema:
 
 System Architecture and Design:
 
-![picture](./images/Picture3.jpg)
+![picture](./images/Pic3.jpg)
